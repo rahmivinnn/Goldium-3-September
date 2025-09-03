@@ -31,7 +31,27 @@ export default function Dashboard() {
   const wallet = useSolanaWallet();
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black text-white relative overflow-hidden">
+      {/* Metaverse Background Effects */}
+      <div className="fixed inset-0 metaverse-grid opacity-20"></div>
+      
+      {/* Metaverse Floating Particles */}
+      <div className="fixed inset-0 pointer-events-none">
+        {[...Array(8)].map((_, i) => (
+          <div
+            key={i}
+            className="metaverse-particle"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              width: `${Math.random() * 3 + 1}px`,
+              height: `${Math.random() * 3 + 1}px`,
+              animationDelay: `${Math.random() * 8}s`,
+              animationDuration: `${Math.random() * 4 + 8}s`
+            }}
+          />
+        ))}
+      </div>
       {/* Navigation Bar */}
       <nav className="sticky top-0 z-50 bg-black/95 backdrop-blur-md border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6 py-4">
@@ -86,9 +106,9 @@ export default function Dashboard() {
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="text-4xl font-bold text-white mb-2">Trading Dashboard</h1>
-              <p className="text-gray-400 text-lg">
-                Real-time portfolio management and DeFi trading platform
+              <h1 className="text-4xl font-bold text-white mb-2"><span className="metaverse-text metaverse-scan">Trading Dashboard</span></h1>
+              <p className="text-white/70 text-lg">
+                <span className="metaverse-typing">Real-time portfolio management and DeFi trading platform</span>
               </p>
             </div>
             

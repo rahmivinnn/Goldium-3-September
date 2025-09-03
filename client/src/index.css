@@ -1473,3 +1473,170 @@ button[aria-expanded] {
 .animation-delay-1100 { animation-delay: 1.1s; }
 .animation-delay-1200 { animation-delay: 1.2s; }
 .animation-delay-1300 { animation-delay: 1.3s; }
+
+/* ========================================
+   METAVERSE BLACK BACKGROUND EFFECTS
+   ======================================== */
+
+/* Metaverse Grid Background */
+.metaverse-grid {
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: metaverse-grid-move 20s linear infinite;
+}
+
+@keyframes metaverse-grid-move {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(50px, 50px); }
+}
+
+/* Metaverse Floating Particles */
+.metaverse-particle {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  animation: metaverse-float 8s ease-in-out infinite;
+}
+
+@keyframes metaverse-float {
+  0%, 100% { 
+    transform: translateY(0px) scale(1);
+    opacity: 0.1;
+  }
+  50% { 
+    transform: translateY(-20px) scale(1.1);
+    opacity: 0.3;
+  }
+}
+
+/* Metaverse Scanning Lines */
+.metaverse-scan {
+  position: relative;
+  overflow: hidden;
+}
+
+.metaverse-scan::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: metaverse-scan-line 3s linear infinite;
+}
+
+@keyframes metaverse-scan-line {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Metaverse Holographic Text */
+.metaverse-text {
+  background: linear-gradient(45deg, #ffffff 0%, rgba(255, 255, 255, 0.8) 50%, #ffffff 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: metaverse-text-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes metaverse-text-glow {
+  0% { 
+    background-position: 0% 50%;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  }
+  100% { 
+    background-position: 100% 50%;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+  }
+}
+
+/* Metaverse Glitch Effect */
+.metaverse-glitch {
+  position: relative;
+  animation: metaverse-glitch 0.3s ease-in-out infinite alternate;
+}
+
+@keyframes metaverse-glitch {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-1px); }
+  40% { transform: translateX(1px); }
+  60% { transform: translateX(-1px); }
+  80% { transform: translateX(1px); }
+  100% { transform: translateX(0); }
+}
+
+/* Metaverse Data Stream */
+.metaverse-stream {
+  position: absolute;
+  width: 1px;
+  height: 100px;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: metaverse-stream-fall 4s linear infinite;
+}
+
+@keyframes metaverse-stream-fall {
+  0% { 
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+  50% { 
+    opacity: 1;
+  }
+  100% { 
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+/* Metaverse Pulse Rings */
+.metaverse-pulse {
+  position: relative;
+}
+
+.metaverse-pulse::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: metaverse-pulse-ring 2s ease-out infinite;
+}
+
+@keyframes metaverse-pulse-ring {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0;
+  }
+}
+
+/* Metaverse Typing Animation */
+.metaverse-typing {
+  overflow: hidden;
+  border-right: 2px solid rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+  animation: 
+    metaverse-typing 3s steps(40, end),
+    metaverse-blink-caret 0.75s step-end infinite;
+}
+
+@keyframes metaverse-typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes metaverse-blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: rgba(255, 255, 255, 0.7); }
+}

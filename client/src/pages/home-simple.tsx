@@ -165,7 +165,42 @@ export default function HomeSimple() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black text-white relative overflow-hidden">
+      {/* Metaverse Background Effects */}
+      <div className="fixed inset-0 metaverse-grid opacity-30"></div>
+      
+      {/* Metaverse Floating Particles */}
+      <div className="fixed inset-0 pointer-events-none">
+        {[...Array(12)].map((_, i) => (
+          <div
+            key={i}
+            className="metaverse-particle"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              width: `${Math.random() * 4 + 2}px`,
+              height: `${Math.random() * 4 + 2}px`,
+              animationDelay: `${Math.random() * 8}s`,
+              animationDuration: `${Math.random() * 4 + 6}s`
+            }}
+          />
+        ))}
+      </div>
+      
+      {/* Metaverse Data Streams */}
+      <div className="fixed inset-0 pointer-events-none">
+        {[...Array(6)].map((_, i) => (
+          <div
+            key={i}
+            className="metaverse-stream"
+            style={{
+              left: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 4}s`,
+              animationDuration: `${Math.random() * 2 + 3}s`
+            }}
+          />
+        ))}
+      </div>
       {/* Navigation Bar - Modern Style */}
       <nav className="fixed top-0 w-full z-50 bg-black/95 backdrop-blur-2xl border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6 py-3">
@@ -249,12 +284,12 @@ export default function HomeSimple() {
             <div className="space-y-8">
 
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
-                <span className="chainzoku-title">
+                <span className="metaverse-text metaverse-scan">
                   GOLDIUM
                 </span>
               </h1>
               <div className="text-lg sm:text-xl md:text-2xl chainzoku-subtitle max-w-4xl mx-auto">
-                Next-generation digital gold protocol
+                <span className="metaverse-typing">Next-generation digital gold protocol</span>
               </div>
               <p className="text-base sm:text-lg text-white/70 max-w-3xl mx-auto leading-relaxed">
                 Secure, transparent, and backed by real gold reserves on the Solana blockchain. 
@@ -389,7 +424,7 @@ export default function HomeSimple() {
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-            <div className="chainzoku-card p-8 text-center">
+            <div className="chainzoku-card p-8 text-center metaverse-pulse">
               <div className="w-20 h-20 mx-auto mb-8 rounded-3xl bg-black border border-white/10 p-4 shadow-2xl shadow-white/20 chainzoku-pulse chainzoku-float">
                 <svg className="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
@@ -400,7 +435,7 @@ export default function HomeSimple() {
               <div className="bg-black border border-white/10 text-white text-sm font-black px-6 py-3 rounded-2xl shadow-lg shadow-white/20 font-['Orbitron'] uppercase chainzoku-glow">{tokenData ? `+${tokenData.priceChange24h.toFixed(1)}%` : '+0.0%'} 🚀</div>
             </div>
             
-            <div className="chainzoku-card p-8 text-center">
+            <div className="chainzoku-card p-8 text-center metaverse-pulse">
               <div className="w-20 h-20 mx-auto mb-8 bg-black border border-white/10 rounded-3xl flex items-center justify-center shadow-2xl shadow-white/20 chainzoku-pulse chainzoku-float">
                 <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -411,7 +446,7 @@ export default function HomeSimple() {
               <div className="bg-black border border-white/10 text-white text-sm font-black px-6 py-3 rounded-2xl shadow-lg shadow-white/20 font-['Orbitron'] uppercase chainzoku-glow">+5.7% 📈</div>
             </div>
             
-            <div className="chainzoku-card p-8 text-center">
+            <div className="chainzoku-card p-8 text-center metaverse-pulse">
               <div className="w-20 h-20 mx-auto mb-8 bg-black border border-white/10 rounded-3xl flex items-center justify-center shadow-2xl shadow-white/20 chainzoku-pulse chainzoku-float">
                 <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
@@ -422,7 +457,7 @@ export default function HomeSimple() {
               <div className="bg-black border border-white/10 text-white text-sm font-black px-6 py-3 rounded-2xl shadow-lg shadow-white/20 font-['Orbitron'] uppercase chainzoku-glow">+12.4% 💥</div>
             </div>
             
-            <div className="chainzoku-card p-8 text-center">
+            <div className="chainzoku-card p-8 text-center metaverse-pulse">
               <div className="w-20 h-20 mx-auto mb-8 bg-black border border-white/10 rounded-3xl flex items-center justify-center shadow-2xl shadow-white/20 chainzoku-pulse chainzoku-float">
                 <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -446,7 +481,7 @@ export default function HomeSimple() {
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-20 chainzoku-fade-in">
             <h2 className="text-6xl md:text-7xl lg:text-8xl font-black text-white mb-8 font-['Space_Grotesk'] uppercase tracking-wider">
-              DeFi Platform
+              <span className="metaverse-text metaverse-pulse">DeFi Platform</span>
             </h2>
             <p className="text-2xl text-white/80 max-w-4xl mx-auto font-['Inter'] font-medium leading-relaxed">
               Complete ecosystem for trading, staking, and managing your digital assets
@@ -506,7 +541,7 @@ export default function HomeSimple() {
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-5xl md:text-6xl font-bold text-white mb-8">
-              Tokenomics
+              <span className="metaverse-text">Tokenomics</span>
             </h2>
             <p className="text-xl text-white/70 max-w-3xl mx-auto">
               Transparent and sustainable token distribution designed for long-term value
@@ -576,7 +611,7 @@ export default function HomeSimple() {
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                 </svg>
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold text-white">Community Updates</h2>
+              <h2 className="text-4xl md:text-5xl font-bold text-white"><span className="metaverse-text metaverse-glitch">Community Updates</span></h2>
             </div>
             <p className="text-white/70 text-lg">Stay connected with the latest news from Goldium and Solana ecosystem</p>
           </div>
