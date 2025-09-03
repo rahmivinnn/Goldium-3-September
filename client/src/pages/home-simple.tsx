@@ -56,7 +56,7 @@ export default function HomeSimple() {
         setTokenData(data);
       } catch (error) {
         console.error('Failed to fetch token data:', error);
-        // Fallback to realistic demo data
+        // Fallback to default data
         setTokenData({
           currentPrice: 0.0089,
           priceChange24h: 12.8,

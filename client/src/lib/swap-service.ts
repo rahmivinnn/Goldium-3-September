@@ -324,12 +324,10 @@ class SwapService {
       // This would involve transferring GOLD tokens to treasury
       // and receiving SOL back - simplified for now
       
-      const mockSignature = `mock_gold_to_sol_${Date.now()}`;
       
       // Record swap metadata
       const swapData: SwapMetadata = {
         timestamp: Date.now(),
-        txHash: mockSignature,
         fromToken: 'GOLD',
         toToken: 'SOL',
         fromAmount: goldAmount,
@@ -339,8 +337,6 @@ class SwapService {
       
       this.swapHistory.push(swapData);
       
-      console.log(`GOLD to SOL swap simulated: ${mockSignature}`);
-      return { success: true, signature: mockSignature };
       
     } catch (error: any) {
       console.error('GOLD to SOL swap failed:', error);

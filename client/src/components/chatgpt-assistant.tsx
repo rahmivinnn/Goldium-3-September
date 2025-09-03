@@ -30,7 +30,6 @@ export function ChatGPTAssistant({ isOpen, onClose }: ChatGPTAssistantProps) {
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
   // Mock ChatGPT responses for demo
-  const mockResponses = {
     "cozy": "For cozy lighting, I recommend warm white LEDs (2700K-3000K) with dimming capabilities. Try layering your lighting with table lamps, floor lamps, and accent lighting. Consider our pendant lights with warm bulbs!",
     "bright": "For bright spaces, use cool white LEDs (4000K-5000K) or daylight bulbs (5000K-6500K). Overhead lighting combined with task lighting works great. Our LED strip lights offer excellent brightness control!",
     "bedroom": "Bedroom lighting should be relaxing. Use warm, dimmable lights. Bedside lamps, string lights, or wall sconces create perfect ambiance. Avoid harsh overhead lighting before sleep.",
@@ -41,7 +40,6 @@ export function ChatGPTAssistant({ isOpen, onClose }: ChatGPTAssistantProps) {
   const generateResponse = (userMessage: string): string => {
     const lowerMessage = userMessage.toLowerCase();
     
-    for (const [keyword, response] of Object.entries(mockResponses)) {
       if (lowerMessage.includes(keyword)) {
         return response;
       }

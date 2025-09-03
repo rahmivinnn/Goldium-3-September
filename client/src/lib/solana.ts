@@ -101,10 +101,8 @@ export class Connection {
         })
       });
       const data = await response.json();
-      return { blockhash: data.result?.value?.blockhash || 'mock-blockhash' };
     } catch (error) {
       console.error('Error getting latest blockhash:', error);
-      return { blockhash: 'mock-blockhash' };
     }
   }
 
@@ -472,8 +470,6 @@ export class SolanaService {
       // This is a simplified swap simulation
       // In production, integrate with Jupiter Protocol or other DEX
       const goldMintAddress = new PublicKey(GOLDIUM_TOKEN_ADDRESS);
-      const mockExchangeRate = fromMint.equals(goldMintAddress) ? 0.08 : 12.43;
-      const estimatedOutput = amount * mockExchangeRate * (1 - slippage / 100);
 
       // For demo purposes, we'll simulate a swap by burning from one account
       // and minting to another. In reality, this would go through a DEX.

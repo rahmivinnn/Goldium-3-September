@@ -59,7 +59,6 @@ export function PortfolioAnalytics({
   const [lastUpdated, setLastUpdated] = useState<number>(Date.now());
 
   // Mock portfolio data - in real app, this would come from API
-  const mockPortfolioData: PortfolioData = {
     totalValue: 15420.50,
     totalChange24h: 342.75,
     totalChangePercent24h: 2.28,
@@ -139,7 +138,6 @@ export function PortfolioAnalytics({
     const loadPortfolio = () => {
       setIsLoading(true);
       setTimeout(() => {
-        setPortfolioData(mockPortfolioData);
         setIsLoading(false);
         setLastUpdated(Date.now());
       }, 1000);

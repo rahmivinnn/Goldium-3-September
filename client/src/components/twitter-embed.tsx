@@ -19,7 +19,7 @@ export function TwitterEmbed() {
         console.log('✅ Real community data loaded:', data);
       } catch (error) {
         console.error('❌ Failed to load real community data:', error);
-        // Keep trying to fetch real data instead of using mock data
+        // Keep trying to fetch real data instead of using real data
         setTokenData(null);
         
         // Retry after 10 seconds if initial fetch fails

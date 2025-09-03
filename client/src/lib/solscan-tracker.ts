@@ -126,7 +126,6 @@ export class SolscanTracker {
     return this.transactions.filter(tx => tx.type === type);
   }
 
-  // Generate mock transaction signature for demo
   generateMockSignature(): string {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let result = '';

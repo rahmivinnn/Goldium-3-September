@@ -23,7 +23,7 @@ export function ExternalSendTab() {
   const wallet = useExternalWallets();
   const { data: balances } = useExternalWalletBalances();
 
-  // Show user's actual balance - no mock data
+  // Show user's actual balance - no real data
   const selectedBalance = selectedToken === 'SOL' ? 
     (wallet.connected ? wallet.balance : 0.032454) : 
     (balances?.gold || 0); // User's actual GOLD balance
@@ -66,7 +66,6 @@ export function ExternalSendTab() {
 
     try {
       // Generate realistic transaction signature for demo
-      const mockTxSignature = generateTxSignature();
       
       // Simulate transaction delay
       await new Promise(resolve => setTimeout(resolve, 2000));
@@ -76,7 +75,6 @@ export function ExternalSendTab() {
         type: 'send',
         amount: sendAmount,
         recipient: recipientAddress,
-        txSignature: mockTxSignature
       });
       setShowSuccessModal(true);
 

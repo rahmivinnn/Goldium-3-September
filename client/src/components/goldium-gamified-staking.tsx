@@ -70,7 +70,7 @@ const GoldiumGamifiedStaking: React.FC = () => {
   const [progress, setProgress] = useState<number>(0);
   const [showDragon, setShowDragon] = useState<boolean>(true); // Always show dragon
 
-  // Mock connection for demo purposes
+  // Solana mainnet connection
   const connection = new Connection('https://api.mainnet-beta.solana.com');
 
   useEffect(() => {

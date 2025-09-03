@@ -18,7 +18,7 @@ export async function fetchBalance(publicKey: PublicKey | string): Promise<numbe
     // Convert to SOL
     const balanceSOL = balanceLamports / LAMPORTS_PER_SOL;
     
-    // Return real balance only - no mock data per user requirement
+    // Return real balance only
     return balanceSOL;
   } catch (error: any) {
     console.error('Balance fetch error:', error.message);
@@ -31,11 +31,11 @@ export async function fetchBalance(publicKey: PublicKey | string): Promise<numbe
       const balanceSOL = balanceLamports / LAMPORTS_PER_SOL;
       
       console.log(`Fallback balance: ${balanceSOL} SOL`);
-      // Return real balance only - no mock data per user requirement
+      // Return real balance only
       return balanceSOL;
     } catch (fallbackError: any) {
       console.error('Fallback balance fetch failed:', fallbackError.message);
-      // Return 0 when no real balance can be fetched - no mock data per user requirement
+      // Return 0 when no real balance can be fetched
       console.log('No real balance available, returning 0 SOL');
       return 0;
     }

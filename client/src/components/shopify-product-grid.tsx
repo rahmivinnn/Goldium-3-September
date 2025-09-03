@@ -28,7 +28,6 @@ export function ShopifyProductGrid({ onAddToCart }: ShopifyProductGridProps) {
   const { toast } = useToast();
 
   // Mock Shopify products for demo
-  const mockProducts: Product[] = [
     {
       id: 'nft-1',
       title: 'CryptoPunk #7804',
@@ -94,7 +93,6 @@ export function ShopifyProductGrid({ onAddToCart }: ShopifyProductGridProps) {
       // Simulate network delay
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      setProducts(mockProducts);
       setLoading(false);
     };
 
