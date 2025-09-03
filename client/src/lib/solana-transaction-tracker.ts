@@ -17,8 +17,9 @@ export interface RealTransaction {
 
 // Use public RPC endpoints with better reliability
 const RPC_ENDPOINTS = [
-  'https://api.devnet.solana.com', // Use devnet for testing
-  'https://api.testnet.solana.com'
+  'https://api.mainnet-beta.solana.com', // Use mainnet for production
+  'https://solana.publicnode.com',
+  'https://solana-mainnet.g.alchemy.com/v2/alch-demo'
 ];
 
 let currentRpcIndex = 0;

@@ -164,8 +164,8 @@ function InnerWalletProvider({ children }: WalletProviderProps) {
 
 // Main Solana wallet provider
 export function SolanaWalletProvider({ children }: WalletProviderProps) {
-  // The network can be set to 'devnet', 'testnet', or 'mainnet-beta'
-  const network = WalletAdapterNetwork.Devnet;
+  // Using mainnet-beta for production
+  const network = WalletAdapterNetwork.Mainnet;
   
   // You can also provide a custom RPC endpoint
   const endpoint = useMemo(() => clusterApiUrl(network), [network]);
