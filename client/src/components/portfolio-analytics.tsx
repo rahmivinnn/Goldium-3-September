@@ -184,24 +184,24 @@ export function PortfolioAnalytics({
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'completed':
-        return 'bg-yellow-600';
+        return 'bg-black border border-white/20';
       case 'pending':
-        return 'bg-yellow-600';
+        return 'bg-black border border-white/20';
       case 'failed':
-        return 'bg-yellow-600';
+        return 'bg-black border border-white/20';
       default:
-        return 'bg-gray-600';
+        return 'bg-black border border-white/20';
     }
   };
 
   const getTransactionIcon = (type: string) => {
     switch (type) {
       case 'buy':
-        return <TrendingUp className="w-4 h-4 text-yellow-400" />;
+        return <TrendingUp className="w-4 h-4 text-white" />;
       case 'sell':
-        return <TrendingDown className="w-4 h-4 text-yellow-400" />;
+        return <TrendingDown className="w-4 h-4 text-white" />;
       case 'swap':
-        return <RefreshCw className="w-4 h-4 text-gray-400" />;
+        return <RefreshCw className="w-4 h-4 text-white" />;
       default:
         return <DollarSign className="w-4 h-4 text-gray-400" />;
     }
@@ -237,7 +237,7 @@ export function PortfolioAnalytics({
   return (
     <div className={cn('space-y-6', className)}>
       {/* Portfolio Overview */}
-      <Card className="p-6 bg-gradient-to-r from-yellow-900 to-amber-800 border-gray-700">
+      <Card className="p-6 bg-black border-white/10">
         <CardHeader className="pb-4">
           <div className="flex items-center justify-between">
             <CardTitle className="text-2xl font-bold text-white flex items-center gap-2">
@@ -263,7 +263,7 @@ export function PortfolioAnalytics({
             </div>
             <div className={cn(
               'text-lg font-semibold flex items-center justify-center gap-2',
-              portfolioData.totalChangePercent24h >= 0 ? 'text-yellow-400' : 'text-yellow-400'
+              portfolioData.totalChangePercent24h >= 0 ? 'text-white' : 'text-white'
             )}>
               {portfolioData.totalChangePercent24h >= 0 ? (
                 <TrendingUp className="w-5 h-5" />
@@ -278,11 +278,11 @@ export function PortfolioAnalytics({
           {/* Performance Metrics */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {Object.entries(portfolioData.performance).map(([period, value]) => (
-              <div key={period} className="text-center p-3 bg-gray-800/50 rounded-lg">
-                <div className="text-sm text-gray-400 capitalize mb-1">{period}</div>
+              <div key={period} className="text-center p-3 bg-black border border-white/10 rounded-lg">
+                <div className="text-sm text-white/60 capitalize mb-1">{period}</div>
                 <div className={cn(
                   'text-lg font-semibold',
-                  value >= 0 ? 'text-yellow-400' : 'text-yellow-400'
+                  value >= 0 ? 'text-white' : 'text-white'
                 )}>
                   {formatPercent(value)}
                 </div>
@@ -317,7 +317,7 @@ export function PortfolioAnalytics({
                   </div>
                   <div className={cn(
                     'text-sm',
-                    asset.changePercent24h >= 0 ? 'text-yellow-400' : 'text-yellow-400'
+                    asset.changePercent24h >= 0 ? 'text-white' : 'text-white'
                   )}>
                     {formatPercent(asset.changePercent24h)}
                   </div>

@@ -137,7 +137,7 @@ export function RealTimePriceTicker({
                 {priceData && (
                   <div className={cn(
                     'flex items-center gap-1 text-xs',
-                    isPositive ? 'text-yellow-400' : 'text-yellow-400'
+                    isPositive ? 'text-white' : 'text-white'
                   )}>
                     {isPositive ? (
                       <TrendingUp className="w-3 h-3" />
@@ -154,7 +154,7 @@ export function RealTimePriceTicker({
                   <>
                     <div className={cn(
                       'text-lg font-bold transition-colors duration-300',
-                      isAnimating ? 'text-yellow-400' : 'text-white'
+                      isAnimating ? 'text-white' : 'text-white'
                     )}>
                       ${formatPrice(priceData.price, symbol)}
                     </div>

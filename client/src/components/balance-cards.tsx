@@ -82,7 +82,7 @@ export function BalanceCards() {
                 SOL Balance
               </h3>
               {walletInfo && (
-                <p className="text-xs font-medium text-yellow-300/70 mt-1 tracking-wider uppercase">
+                <p className="text-xs font-medium text-white/60 mt-1 tracking-wider uppercase">
                   {walletInfo.replace(/[()]/g, '')}
                 </p>
               )}
@@ -95,7 +95,7 @@ export function BalanceCards() {
           <div className="space-y-3">
             <p className="text-4xl font-black text-white tracking-tight font-mono">
               {currentBalance.toFixed(4)}
-              <span className="text-lg font-normal text-yellow-300/80 ml-2">SOL</span>
+              <span className="text-lg font-normal text-white/70 ml-2">SOL</span>
             </p>
             <div className="flex items-center justify-between">
               <p className="text-sm font-semibold text-slate-300">
@@ -115,7 +115,7 @@ export function BalanceCards() {
               <h3 className="text-xl font-bold bg-gradient-to-r from-yellow-400 to-amber-300 bg-clip-text text-transparent tracking-tight">
                 GOLD Balance
               </h3>
-              <p className="text-xs font-medium text-yellow-300/70 mt-1 tracking-wider uppercase">
+              <p className="text-xs font-medium text-white/60 mt-1 tracking-wider uppercase">
                 GOLDIUM TOKEN
               </p>
             </div>
@@ -140,7 +140,7 @@ export function BalanceCards() {
           <div className="space-y-3">
             <p className="text-4xl font-black text-white tracking-tight font-mono">
               {safeBalances.gold.toFixed(2)}
-              <span className="text-lg font-normal text-yellow-300/80 ml-2">GOLD</span>
+              <span className="text-lg font-normal text-white/70 ml-2">GOLD</span>
             </p>
             <div className="flex items-center justify-between">
               <p className="text-sm font-semibold text-slate-300">

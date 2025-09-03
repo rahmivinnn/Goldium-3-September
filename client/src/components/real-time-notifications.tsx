@@ -106,14 +106,14 @@ export function RealTimeNotifications({
     switch (type) {
       case 'price_alert':
         return priority === 'high' ? 
-          <TrendingUp className="w-4 h-4 text-yellow-400" /> :
-                <TrendingDown className="w-4 h-4 text-yellow-400" />;
+          <TrendingUp className="w-4 h-4 text-white" /> :
+                <TrendingDown className="w-4 h-4 text-white" />;
       case 'transaction':
         return <CheckCircle className="w-4 h-4 text-gray-400" />;
       case 'portfolio':
         return <Info className="w-4 h-4 text-gray-400" />;
       case 'system':
-        return <AlertTriangle className="w-4 h-4 text-yellow-400" />;
+        return <AlertTriangle className="w-4 h-4 text-white" />;
       default:
         return <Bell className="w-4 h-4 text-gray-400" />;
     }
@@ -122,11 +122,11 @@ export function RealTimeNotifications({
   const getPriorityColor = (priority: Notification['priority']) => {
     switch (priority) {
       case 'high':
-        return 'border-yellow-500/50 bg-yellow-900/20';
+        return 'border-white/20 bg-black';
       case 'medium':
-        return 'border-yellow-500/50 bg-yellow-900/20';
+        return 'border-white/20 bg-black';
       case 'low':
-        return 'border-gray-500/50 bg-gray-900/20';
+        return 'border-white/20 bg-black';
       default:
         return 'border-gray-500/50 bg-gray-900/20';
     }
@@ -238,9 +238,9 @@ export function RealTimeNotifications({
                       variant="outline" 
                       className={cn(
                         'text-xs',
-                        notification.priority === 'high' && 'border-yellow-500/50 text-yellow-400',
-                        notification.priority === 'medium' && 'border-yellow-500/50 text-yellow-400',
-                        notification.priority === 'low' && 'border-yellow-500/50 text-yellow-400'
+                        notification.priority === 'high' && 'border-white/20 text-white',
+                        notification.priority === 'medium' && 'border-white/20 text-white',
+                        notification.priority === 'low' && 'border-white/20 text-white'
                       )}
                     >
                       {notification.type.replace('_', ' ')}
