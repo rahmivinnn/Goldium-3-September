@@ -199,17 +199,29 @@ export default function HomeSimple() {
           </p>
           
           {/* Token Status Disclaimer */}
-          <div className="bg-blue-500/20 border border-blue-400 rounded-lg p-4 max-w-2xl mx-auto">
-            <div className="flex items-center gap-2 text-blue-400 font-bold mb-2">
-              <ExternalLink className="w-4 h-4" />
-              GOLDIUM Token Status
+          <div className="bg-gradient-to-r from-blue-600/30 to-purple-600/30 backdrop-blur-xl border-2 border-blue-400/50 rounded-xl p-6 max-w-2xl mx-auto shadow-2xl">
+            <div className="flex items-center justify-center gap-2 text-blue-300 font-bold mb-3">
+              <ExternalLink className="w-5 h-5" />
+              <span className="text-lg">GOLDIUM Token Status</span>
             </div>
-            <p className="text-blue-300 text-sm">
-              ✅ Token exists on Solana mainnet<br/>
-              📊 Total Supply: {tokenData.totalSupply.toLocaleString()} tokens<br/>
-              ⚠️ Not actively traded on major DEX yet<br/>
-              💡 Price estimates based on theoretical calculations
-            </p>
+            <div className="bg-black/40 backdrop-blur-sm rounded-lg p-4 space-y-2">
+              <div className="flex items-center gap-2 text-green-400">
+                <span className="text-green-400">✅</span>
+                <span className="text-white">Token exists on Solana mainnet</span>
+              </div>
+              <div className="flex items-center gap-2 text-blue-400">
+                <span className="text-blue-400">📊</span>
+                <span className="text-white">Total Supply: <span className="font-bold text-yellow-400">{tokenData.totalSupply.toLocaleString()}</span> tokens</span>
+              </div>
+              <div className="flex items-center gap-2 text-orange-400">
+                <span className="text-orange-400">⚠️</span>
+                <span className="text-white">Not actively traded on major DEX yet</span>
+              </div>
+              <div className="flex items-center gap-2 text-purple-400">
+                <span className="text-purple-400">💡</span>
+                <span className="text-white">Price estimates based on theoretical calculations</span>
+              </div>
+            </div>
           </div>
           
           {/* Price Cards */}
@@ -281,8 +293,13 @@ export default function HomeSimple() {
       {/* Client Wallet Testing */}
       <div className="container mx-auto px-4 py-8 relative z-10">
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-white mb-4">🧪 DeFi Testing Lab</h2>
-          <p className="text-gray-300">Test GOLDIUM DeFi features dengan wallet client</p>
+          <div className="bg-gradient-to-r from-yellow-600/20 to-orange-600/20 backdrop-blur-xl border-2 border-yellow-400/50 rounded-xl p-6 max-w-4xl mx-auto shadow-2xl">
+            <h2 className="text-3xl font-bold text-white mb-4">🧪 DeFi Testing Lab</h2>
+            <p className="text-gray-300 text-lg">Test GOLDIUM DeFi features dengan wallet client</p>
+            <div className="mt-4 text-yellow-400 text-sm">
+              Wallet: A9anvNZEkxQvU7H5xa1Lj33MVQGuX5rZMKqWDM9S4jSs
+            </div>
+          </div>
         </div>
         <ClientWalletTester />
       </div>

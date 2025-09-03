@@ -119,7 +119,7 @@ export function ClientWalletTester() {
   return (
     <div className="space-y-6">
       {/* Wallet Status */}
-      <Card className="bg-black/20 backdrop-blur-xl border border-white/10">
+      <Card className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 backdrop-blur-xl border-2 border-white/20 shadow-2xl">
         <CardHeader>
           <CardTitle className="text-white flex items-center gap-2">
             <Wallet className="w-5 h-5 text-yellow-400" />
@@ -176,13 +176,13 @@ export function ClientWalletTester() {
       </Card>
 
       {/* DeFi Testing */}
-      <Card className="bg-black/20 backdrop-blur-xl border border-white/10">
+      <Card className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 backdrop-blur-xl border-2 border-white/20 shadow-2xl">
         <CardHeader>
           <CardTitle className="text-white">DeFi Features Testing</CardTitle>
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="swap" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 bg-black/40">
+            <TabsList className="grid w-full grid-cols-2 bg-gray-800/80 border border-white/20">
               <TabsTrigger value="swap" className="data-[state=active]:bg-yellow-400 data-[state=active]:text-black">
                 <ArrowUpDown className="w-4 h-4 mr-2" />
                 Swap Test
@@ -200,7 +200,7 @@ export function ClientWalletTester() {
                   value={swapAmount}
                   onChange={(e) => setSwapAmount(e.target.value)}
                   placeholder="0.1"
-                  className="bg-white/5 border-white/20 text-white"
+                  className="bg-white/10 border-white/30 text-white placeholder-gray-400"
                 />
               </div>
               
@@ -224,7 +224,7 @@ export function ClientWalletTester() {
                   value={sendAmount}
                   onChange={(e) => setSendAmount(e.target.value)}
                   placeholder="0.01"
-                  className="bg-white/5 border-white/20 text-white"
+                  className="bg-white/10 border-white/30 text-white placeholder-gray-400"
                 />
               </div>
               
@@ -234,7 +234,7 @@ export function ClientWalletTester() {
                   value={sendRecipient}
                   onChange={(e) => setSendRecipient(e.target.value)}
                   placeholder="Enter recipient Solana address..."
-                  className="bg-white/5 border-white/20 text-white"
+                  className="bg-white/10 border-white/30 text-white placeholder-gray-400"
                 />
               </div>
               
