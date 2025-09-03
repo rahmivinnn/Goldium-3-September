@@ -24,6 +24,9 @@ import { AnimatedNumber } from '@/components/animated-number';
 
 
 export default function HomeSimple() {
+  // Debug: Add console log to verify component is rendering
+  console.log('🏠 HomeSimple component is rendering...');
+  
   const wallet = useSolanaWallet();
   const [tokenData, setTokenData] = useState<RealTimeTokenData | null>(null);
   const [loading, setLoading] = useState(true);
