@@ -62,7 +62,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
             {[...Array(20)].map((_, i) => (
               <motion.div
                 key={i}
-                className="absolute w-1 h-1 bg-yellow-400 rounded-full opacity-40"
+                className="absolute w-1 h-1 bg-white rounded-full opacity-40"
                 initial={{
                   x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1200),
                   y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 800),
@@ -223,7 +223,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
               {[...Array(4)].map((_, i) => (
                 <motion.div
                   key={i}
-                  className="w-3 h-3 bg-yellow-400 rounded-full"
+                  className="w-3 h-3 bg-white rounded-full"
                   animate={{
                     scale: [1, 1.5, 1],
                     opacity: [0.5, 1, 0.5]

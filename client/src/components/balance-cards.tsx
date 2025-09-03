@@ -88,8 +88,8 @@ export function BalanceCards() {
               )}
             </div>
             <div className="relative">
-              <SolanaIcon size={32} className="text-yellow-400 group-hover:scale-110 transition-transform duration-300" />
-            <div className="absolute inset-0 bg-yellow-400/20 rounded-full blur-xl group-hover:bg-yellow-400/30 transition-all duration-300"></div>
+              <SolanaIcon size={32} className="text-white group-hover:scale-110 transition-transform duration-300" />
+            <div className="absolute inset-0 bg-white/10 rounded-full blur-xl group-hover:bg-white/20 transition-all duration-300"></div>
             </div>
           </div>
           <div className="space-y-3">
@@ -101,7 +101,7 @@ export function BalanceCards() {
               <p className="text-sm font-semibold text-slate-300">
                 ≈ ${(currentBalance * 195.5).toFixed(2)} USD
               </p>
-              <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
+              <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
             </div>
           </div>
         </CardContent>
@@ -132,9 +132,9 @@ export function BalanceCards() {
                     if (fallback) fallback.style.display = 'block';
                   }}
                 />
-                <div className="text-yellow-400 text-2xl font-bold hidden">🥇</div>
+                <div className="text-white text-2xl font-bold hidden">🥇</div>
               </div>
-              <div className="absolute inset-0 bg-yellow-400/20 rounded-full blur-xl group-hover:bg-yellow-400/30 transition-all duration-300"></div>
+              <div className="absolute inset-0 bg-white/10 rounded-full blur-xl group-hover:bg-white/20 transition-all duration-300"></div>
             </div>
           </div>
           <div className="space-y-3">
@@ -148,12 +148,12 @@ export function BalanceCards() {
               </p>
               {goldBalance.isLoading ? (
                 <div className="flex items-center space-x-1">
-                  <div className="w-1 h-1 bg-yellow-400 rounded-full animate-bounce"></div>
-                  <div className="w-1 h-1 bg-yellow-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                  <div className="w-1 h-1 bg-yellow-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                  <div className="w-1 h-1 bg-white rounded-full animate-bounce"></div>
+                  <div className="w-1 h-1 bg-white rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                  <div className="w-1 h-1 bg-white rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
                 </div>
               ) : (
-                <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
+                <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
               )}
             </div>
           </div>
@@ -200,7 +200,7 @@ export function BalanceCards() {
                   <div className="w-1 h-1 bg-emerald-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
                 </div>
               ) : (
-                <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
+                <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
               )}
             </div>
           </div>

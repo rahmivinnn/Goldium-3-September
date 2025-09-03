@@ -50,11 +50,11 @@ export function TransactionHistory() {
       case 'swap':
         return 'bg-gray-500/20 text-gray-300 border-gray-500/30';
       case 'send':
-        return 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30';
+        return 'bg-black text-white border-white/20';
       case 'stake':
-        return 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30';
+        return 'bg-black text-white border-white/20';
       case 'unstake':
-        return 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30';
+        return 'bg-black text-white border-white/20';
       default:
         return 'bg-gray-500/20 text-gray-300 border-gray-500/30';
     }
@@ -138,7 +138,7 @@ export function TransactionHistory() {
       <CardHeader>
         <CardTitle className="text-galaxy-bright flex items-center justify-between">
           Transaction History
-          <Badge variant="outline" className="bg-yellow-500/20 text-galaxy-bright border-yellow-500/30">
+          <Badge variant="outline" className="bg-black text-white border-white/20">
             {transactions.length} transaction{transactions.length !== 1 ? 's' : ''}
           </Badge>
         </CardTitle>
@@ -174,7 +174,7 @@ export function TransactionHistory() {
                 variant="ghost"
                 size="sm"
                 onClick={() => window.open(getSolscanLink(tx), '_blank')}
-                className="h-8 w-8 p-0 hover:bg-yellow-500/20"
+                className="h-8 w-8 p-0 hover:bg-white/20"
               >
                 <ExternalLink className="h-4 w-4" />
               </Button>
@@ -187,7 +187,7 @@ export function TransactionHistory() {
             <Button
               variant="outline"
               onClick={() => setShowAll(!showAll)}
-              className="border-yellow-500/30 hover:bg-yellow-500/10"
+              className="border-white/20 hover:bg-white/10"
             >
               {showAll ? 'Show Less' : `Show All ${transactions.length} Transactions`}
             </Button>
@@ -199,7 +199,7 @@ export function TransactionHistory() {
               variant="outline"
               size="sm"
               onClick={handleClearHistory}
-              className="border-yellow-500/30 text-yellow-400 hover:bg-yellow-500/10 hover:border-yellow-500/50"
+              className="border-white/20 text-white hover:bg-white/10 hover:border-white/40"
             >
               <Trash2 className="h-4 w-4 mr-2" />
               Clear History

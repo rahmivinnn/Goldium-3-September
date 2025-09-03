@@ -92,7 +92,7 @@ export function RealTimePriceTicker({
               variant={isConnected ? 'default' : 'destructive'} 
               className={cn(
                 'text-xs',
-                isConnected ? 'bg-yellow-600 hover:bg-yellow-700' : 'bg-yellow-600 hover:bg-yellow-700'
+                isConnected ? 'bg-black hover:bg-gray-900 border border-white/20' : 'bg-black hover:bg-gray-900 border border-white/20'
               )}
             >
               {isConnected ? (
@@ -122,8 +122,8 @@ export function RealTimePriceTicker({
                 isAnimating ? 'scale-105 shadow-lg' : 'scale-100',
                 priceData 
                   ? isPositive 
-                    ? 'bg-yellow-900/20 border-yellow-500/30 shadow-yellow-500/10'
-          : 'bg-yellow-900/20 border-yellow-500/30 shadow-yellow-500/10'
+                    ? 'bg-black border-white/10 shadow-white/10'
+          : 'bg-black border-white/10 shadow-white/10'
                   : 'bg-gray-800/50 border-gray-600/30',
                 isAnimating && 'ring-2 ring-yellow-400/50'
               )}
@@ -176,8 +176,8 @@ export function RealTimePriceTicker({
       </div>
       
       {!isConnected && !isConnecting && (
-        <div className="mt-4 p-3 bg-yellow-900/20 border border-yellow-500/30 rounded-lg">
-          <div className="flex items-center gap-2 text-yellow-400 text-sm">
+        <div className="mt-4 p-3 bg-black border border-white/10 rounded-lg">
+          <div className="flex items-center gap-2 text-white text-sm">
             <WifiOff className="w-4 h-4" />
             <span>Real-time updates unavailable. Prices may be outdated.</span>
           </div>

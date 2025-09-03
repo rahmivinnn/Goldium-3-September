@@ -388,13 +388,13 @@ export function SelfContainedSwapTab() {
     <div className="max-w-md mx-auto space-y-6">
       {/* From Token */}
       <div className="space-y-4">
-        <label className="text-lg font-bold bg-gradient-to-r from-yellow-400 to-amber-300 bg-clip-text text-transparent tracking-tight">From</label>
-        <Card className="group bg-gradient-to-br from-slate-900/95 to-slate-800/95 backdrop-blur-xl border border-yellow-500/30 hover:border-yellow-400/50 transition-all duration-500 hover:shadow-xl hover:shadow-yellow-500/10">
+        <label className="text-lg font-bold text-white tracking-tight">From</label>
+        <Card className="group bg-black backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-500 hover:shadow-xl hover:shadow-white/10">
           <CardContent className="p-6">
             <div className="flex justify-between items-center mb-4">
               <Button
                 variant="outline"
-                className="bg-gradient-to-r from-yellow-600/20 to-amber-600/20 border-yellow-400/40 hover:border-yellow-400/70 text-white font-semibold px-4 py-2 rounded-xl transition-all duration-300 hover:scale-105"
+                className="bg-black border-white/20 hover:border-white/40 text-white font-semibold px-4 py-2 rounded-xl transition-all duration-300 hover:scale-105"
                 onClick={handleSwapDirection}
               >
                 {fromToken === 'SOL' ? (
@@ -435,7 +435,7 @@ export function SelfContainedSwapTab() {
         <Button
           variant="outline"
           size="sm"
-          className="rounded-full bg-black/70 border-yellow-400/40 hover:border-yellow-400/70"
+          className="rounded-full bg-black border-white/20 hover:border-white/40"
           onClick={handleSwapDirection}
         >
           <ArrowUpDown className="h-4 w-4 text-yellow-400" />
@@ -444,13 +444,13 @@ export function SelfContainedSwapTab() {
 
       {/* To Token */}
       <div className="space-y-4">
-        <label className="text-lg font-bold bg-gradient-to-r from-emerald-400 to-green-300 bg-clip-text text-transparent tracking-tight">To</label>
-        <Card className="group bg-gradient-to-br from-slate-900/95 to-slate-800/95 backdrop-blur-xl border border-emerald-500/30 hover:border-emerald-400/50 transition-all duration-500 hover:shadow-xl hover:shadow-emerald-500/10">
+        <label className="text-lg font-bold text-white tracking-tight">To</label>
+        <Card className="group bg-black backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-500 hover:shadow-xl hover:shadow-white/10">
           <CardContent className="p-6">
             <div className="flex justify-between items-center mb-4">
               <Button
                 variant="outline"
-                className="bg-gradient-to-r from-emerald-600/20 to-green-600/20 border-emerald-400/40 text-white font-semibold px-4 py-2 rounded-xl opacity-80 cursor-not-allowed"
+                className="bg-black border-white/20 text-white font-semibold px-4 py-2 rounded-xl opacity-80 cursor-not-allowed"
                 disabled
               >
                 {fromToken === 'GOLD' ? (
@@ -512,7 +512,7 @@ export function SelfContainedSwapTab() {
 
       {/* Swap Button */}
       <Button
-        className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 py-6 font-black text-lg text-black transition-all duration-300 transform hover:scale-[1.02] shadow-2xl hover:shadow-yellow-500/25 rounded-xl border border-yellow-400/30 hover:border-yellow-300/50 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+        className="w-full bg-black hover:bg-gray-900 py-6 font-black text-lg text-white transition-all duration-300 transform hover:scale-[1.02] shadow-2xl hover:shadow-white/10 rounded-xl border border-white/20 hover:border-white/40 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
         onClick={handleSwap}
         disabled={!connected || !isValidAmount || isSwapping}
       >
@@ -530,13 +530,13 @@ export function SelfContainedSwapTab() {
 
       {/* Last Transaction */}
       {lastTxId && (
-        <div className="mt-4 p-3 bg-yellow-900/20 border border-yellow-500/30 rounded-lg">
-          <p className="text-sm text-yellow-400 mb-2">Last swap transaction:</p>
+        <div className="mt-4 p-3 bg-black border border-white/10 rounded-lg">
+          <p className="text-sm text-white mb-2">Last swap transaction:</p>
           <Button
             variant="outline"
             size="sm"
             onClick={() => window.open(`${SOLSCAN_BASE_URL}/tx/${lastTxId}`, '_blank')}
-            className="border-yellow-500/30 text-yellow-400 hover:bg-yellow-500/10"
+            className="border-white/20 text-white hover:bg-white/10"
           >
             View on Solscan <ExternalLink className="w-3 h-3 ml-1" />
           </Button>

@@ -285,7 +285,7 @@ export function RealSendTab() {
           placeholder="Enter Solana wallet address"
           value={recipientAddress}
           onChange={(e) => setRecipientAddress(e.target.value)}
-          className="bg-gradient-to-r from-gray-900/80 to-gray-800/80 border border-yellow-400/30 text-white placeholder:text-gray-400 backdrop-blur-sm"
+          className="bg-black border border-white/20 text-white placeholder:text-white/60 backdrop-blur-sm"
         />
       </div>
 
@@ -298,7 +298,7 @@ export function RealSendTab() {
             placeholder={`Enter ${selectedToken} amount`}
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            className="bg-gradient-to-r from-gray-900/80 to-gray-800/80 border border-yellow-400/30 text-white placeholder:text-gray-400 pr-16 backdrop-blur-sm"
+            className="bg-black border border-white/20 text-white placeholder:text-white/60 pr-16 backdrop-blur-sm"
             step={selectedToken === 'SOL' ? '0.000001' : '0.0001'}
           />
           <Button

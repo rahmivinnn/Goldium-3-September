@@ -268,7 +268,7 @@ export function SelfContainedStakingTab() {
     <div className="max-W-2xl mx-auto space-y-6">
       {/* Wallet Balance Display */}
       {externalWallet.connected && (
-        <Card className="bg-black/70 border-yellow-400/40 hover:border-yellow-400/70 transition-all duration-300">
+        <Card className="bg-black border-white/10 hover:border-white/20 transition-all duration-300">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
@@ -290,13 +290,13 @@ export function SelfContainedStakingTab() {
 
       {/* Staking Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <Card className="bg-black/70 border-yellow-400/40 hover:border-yellow-400/70 transition-all duration-300 transform hover:scale-105">
+        <Card className="bg-black border-white/10 hover:border-white/20 transition-all duration-300 transform hover:scale-105">
           <CardContent className="p-4 text-center">
             <p className="text-2xl font-bold text-yellow-400">{STAKING_APY}%</p>
             <p className="text-sm text-yellow-200/70">Annual APY</p>
           </CardContent>
         </Card>
-        <Card className="bg-black/70 border-yellow-400/40 hover:border-yellow-400/70 transition-all duration-300 transform hover:scale-105">
+        <Card className="bg-black border-white/10 hover:border-white/20 transition-all duration-300 transform hover:scale-105">
           <CardContent className="p-4 text-center">
             <p className="text-2xl font-bold text-yellow-400">
               {balances.stakedGold.toFixed(2)}
@@ -304,7 +304,7 @@ export function SelfContainedStakingTab() {
             <p className="text-sm text-yellow-200/70">GOLD Staked</p>
           </CardContent>
         </Card>
-        <Card className="bg-black/70 border-yellow-400/40 hover:border-yellow-400/70 transition-all duration-300 transform hover:scale-105">
+        <Card className="bg-black border-white/10 hover:border-white/20 transition-all duration-300 transform hover:scale-105">
           <CardContent className="p-4 text-center">
             <p className="text-2xl font-bold text-yellow-400">
               {balances.claimableRewards.toFixed(4)}
@@ -317,7 +317,7 @@ export function SelfContainedStakingTab() {
       {/* Staking Actions */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Stake */}
-        <Card className="bg-black/70 border-yellow-400/40 hover:border-yellow-400/70 transition-all duration-300">
+        <Card className="bg-black border-white/10 hover:border-white/20 transition-all duration-300">
           <CardContent className="p-6">
             <h3 className="text-lg font-semibold text-yellow-100 mb-4 flex items-center">
               <span className="mr-2 text-yellow-400">🔒</span>
@@ -331,7 +331,7 @@ export function SelfContainedStakingTab() {
                   placeholder="0.0"
                   value={stakeAmount}
                   onChange={(e) => setStakeAmount(e.target.value)}
-                  className="bg-background border-yellow-400/40 focus:border-yellow-400 text-yellow-100"
+                  className="bg-black border-white/20 focus:border-white/40 text-white"
                 />
                 <p className="text-xs text-yellow-200/70 mt-1">
                   Available: {balances.gold.toFixed(4)} GOLD
@@ -355,7 +355,7 @@ export function SelfContainedStakingTab() {
         </Card>
 
         {/* Unstake */}
-        <Card className="bg-black/70 border-yellow-400/40 hover:border-yellow-400/70 transition-all duration-300">
+        <Card className="bg-black border-white/10 hover:border-white/20 transition-all duration-300">
           <CardContent className="p-6">
             <h3 className="text-lg font-semibold text-yellow-100 mb-4 flex items-center">
               <span className="mr-2 text-yellow-400">🔓</span>
@@ -369,7 +369,7 @@ export function SelfContainedStakingTab() {
                   placeholder="0.0"
                   value={unstakeAmount}
                   onChange={(e) => setUnstakeAmount(e.target.value)}
-                  className="bg-background border-yellow-400/40 focus:border-yellow-400 text-yellow-100"
+                  className="bg-black border-white/20 focus:border-white/40 text-white"
                 />
                 <p className="text-xs text-yellow-200/70 mt-1">
                   Staked: {balances.stakedGold.toFixed(4)} GOLD
@@ -419,13 +419,13 @@ export function SelfContainedStakingTab() {
 
       {/* Last Transaction */}
       {lastTxId && (
-        <div className="mt-4 p-3 bg-yellow-900/20 border border-yellow-500/30 rounded-lg">
-            <p className="text-sm text-yellow-400 mb-2">Last staking transaction:</p>
+        <div className="mt-4 p-3 bg-black border border-white/10 rounded-lg">
+            <p className="text-sm text-white mb-2">Last staking transaction:</p>
           <Button
             variant="outline"
             size="sm"
             onClick={() => window.open(`${SOLSCAN_BASE_URL}/tx/${lastTxId}`, '_blank')}
-            className="border-yellow-500/30 text-yellow-400 hover:bg-yellow-500/10"
+            className="border-white/20 text-white hover:bg-white/10"
           >
             View on Solscan <ExternalLink className="w-3 h-3 ml-1" />
           </Button>

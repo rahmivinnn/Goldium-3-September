@@ -75,13 +75,13 @@ export function TransactionSuccessModal({
       case 'send':
         return {
           icon: '📤',
-          color: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
+          color: 'bg-black text-white border-white/20',
           description: `Successfully sent ${amount} SOL to ${recipient?.slice(0, 8)}...${recipient?.slice(-8)}`
         };
       case 'stake':
         return {
           icon: '🔒',
-          color: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
+          color: 'bg-black text-white border-white/20',
           description: `Successfully staked ${amount} GOLD tokens`
         };
       case 'unstake':
@@ -93,7 +93,7 @@ export function TransactionSuccessModal({
       default:
         return {
           icon: '✅',
-          color: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
+          color: 'bg-black text-white border-white/20',
           description: 'Transaction completed successfully'
         };
     }
@@ -153,7 +153,7 @@ export function TransactionSuccessModal({
 
                 <Button
                   variant="outline"
-                  className="w-full border-yellow-500/30 text-yellow-400 hover:bg-yellow-500/10"
+                  className="w-full border-white/20 text-white hover:bg-white/10"
                   onClick={() => window.open(solscanUrl, '_blank')}
                 >
                   <ExternalLink className="w-4 h-4 mr-2" />
@@ -169,7 +169,7 @@ export function TransactionSuccessModal({
             <p>Network fees: ~0.00025 SOL</p>
           </div>
 
-          <Button onClick={onClose} className="w-full bg-yellow-600 hover:bg-yellow-700">
+          <Button onClick={onClose} className="w-full bg-black hover:bg-gray-900 border border-white/20">
             Continue Trading
           </Button>
         </div>

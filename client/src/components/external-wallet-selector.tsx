@@ -145,7 +145,7 @@ export function ExternalWalletSelector() {
         
         <DropdownMenuContent 
           align="end" 
-          className="w-80 bg-black/95 border-yellow-400/30 backdrop-blur-xl z-50 shadow-2xl shadow-yellow-400/20 rounded-xl"
+          className="w-80 bg-black/95 border-white/20 backdrop-blur-xl z-50 shadow-2xl shadow-white/10 rounded-xl"
         >
           <DropdownMenuLabel className="text-white px-4 py-3 font-['Space_Grotesk'] font-bold text-base tracking-tight">Connect Your Wallet</DropdownMenuLabel>
           
@@ -158,8 +158,8 @@ export function ExternalWalletSelector() {
                   key={walletOption.type}
                   onClick={() => isAvailable && handleWalletSelect(walletOption.type)}
                   className={`
-                    text-white hover:bg-yellow-400/10 hover:border-yellow-400/40 cursor-pointer p-4 rounded-xl transition-all duration-300 border border-transparent
-                    ${!isAvailable ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg hover:shadow-yellow-400/20 hover:scale-[1.02]'}
+                    text-white hover:bg-white/10 hover:border-white/20 cursor-pointer p-4 rounded-xl transition-all duration-300 border border-transparent
+                    ${!isAvailable ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg hover:shadow-white/10 hover:scale-[1.02]'}
                   `}
                   disabled={!isAvailable}
                 >
@@ -179,7 +179,7 @@ export function ExternalWalletSelector() {
                     </div>
                     <div className="text-right">
                       {isAvailable ? (
-                        <span className="text-xs text-yellow-400 px-2 py-1 bg-yellow-500/20 rounded">
+                        <span className="text-xs text-white px-2 py-1 bg-white/20 rounded">
                           Available
                         </span>
                       ) : (
@@ -195,7 +195,7 @@ export function ExternalWalletSelector() {
           </div>
 
           {availableWallets.length === 0 && (
-            <div className="p-4 text-center text-sm text-slate-300 border-t border-yellow-500/30 mt-2">
+            <div className="p-4 text-center text-sm text-white/70 border-t border-white/20 mt-2">
               <p className="mb-2">No wallet extensions found.</p>
               <p className="text-xs">Please install and refresh the page:</p>
               <div className="text-xs mt-1 space-y-1">
@@ -217,7 +217,7 @@ export function ExternalWalletSelector() {
       <DropdownMenuTrigger asChild>
         <Button 
           variant="outline"
-          className="bg-slate-800/30 backdrop-blur-xl border-yellow-500/30 hover:border-yellow-400/70 text-white hover:shadow-lg hover:shadow-yellow-400/20 transition-all duration-300"
+          className="bg-black backdrop-blur-xl border-white/20 hover:border-white/40 text-white hover:shadow-lg hover:shadow-white/10 transition-all duration-300"
         >
           <div className="mr-2 flex items-center justify-center w-5 h-5">
             {currentWallet ? (
@@ -240,21 +240,21 @@ export function ExternalWalletSelector() {
       
       <DropdownMenuContent 
         align="end" 
-        className="w-80 bg-black/70 border-yellow-400/40"
+        className="w-80 bg-black border-white/20"
       >
         {/* Connected Wallet Info */}
         <div className="p-4 space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-yellow-100">Connected Wallet</span>
+            <span className="text-sm font-medium text-white">Connected Wallet</span>
             <div className="flex items-center space-x-1">
-              <div className="w-2 h-2 bg-yellow-400 rounded-full" />
-              <span className="text-xs text-yellow-400">Active</span>
+              <div className="w-2 h-2 bg-white rounded-full" />
+              <span className="text-xs text-white">Active</span>
             </div>
           </div>
           
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs text-yellow-200/70">Wallet:</span>
+              <span className="text-xs text-white/60">Wallet:</span>
               <div className="flex items-center space-x-2">
                 <div className="flex items-center justify-center w-4 h-4">
                   {currentWallet ? (
@@ -267,21 +267,21 @@ export function ExternalWalletSelector() {
                   <Wallet className="w-3 h-3" />
                 )}
                 </div>
-                <span className="text-xs text-yellow-100">{currentWallet?.name || 'Unknown Wallet'}</span>
+                <span className="text-xs text-white">{currentWallet?.name || 'Unknown Wallet'}</span>
               </div>
             </div>
             
             <div className="flex items-center justify-between">
-              <span className="text-xs text-yellow-200/70">Address:</span>
+              <span className="text-xs text-white/60">Address:</span>
               <div className="flex items-center space-x-2">
-                <span className="text-xs font-mono text-yellow-100">
+                <span className="text-xs font-mono text-white">
                   {wallet.address ? `${wallet.address.slice(0, 8)}...${wallet.address.slice(-8)}` : 'N/A'}
                 </span>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={copyAddress}
-                  className="h-6 w-6 p-0 hover:bg-yellow-400/20"
+                  className="h-6 w-6 p-0 hover:bg-white/20"
                   disabled={!wallet.address}
                 >
                   <Copy className="w-3 h-3" />
@@ -290,18 +290,18 @@ export function ExternalWalletSelector() {
             </div>
             
             <div className="flex items-center justify-between">
-              <span className="text-xs text-yellow-200/70">Balance:</span>
-              <span className="text-xs font-medium text-yellow-100">
+              <span className="text-xs text-white/60">Balance:</span>
+              <span className="text-xs font-medium text-white">
                 {wallet.balance.toFixed(4)} SOL
               </span>
             </div>
           </div>
         </div>
 
-        <DropdownMenuSeparator className="bg-yellow-400/30" />
+        <DropdownMenuSeparator className="bg-white/20" />
 
         {/* Switch Wallet */}
-        <DropdownMenuLabel className="text-yellow-100 px-4">Switch Wallet</DropdownMenuLabel>
+        <DropdownMenuLabel className="text-white px-4">Switch Wallet</DropdownMenuLabel>
         
         <div className="p-2 space-y-1">
           {walletOptions.map((walletOption) => {
@@ -313,8 +313,8 @@ export function ExternalWalletSelector() {
                 key={walletOption.type}
                 onClick={() => isAvailable && !isSelected && handleWalletSelect(walletOption.type)}
                 className={`
-                  text-yellow-100 hover:bg-yellow-500/20 cursor-pointer p-3 rounded-md
-                  ${isSelected ? 'bg-yellow-500/30' : ''}
+                  text-white hover:bg-white/10 cursor-pointer p-3 rounded-md
+                  ${isSelected ? 'bg-white/20' : ''}
                   ${!isAvailable ? 'opacity-50' : ''}
                 `}
                 disabled={!isAvailable || isSelected}
@@ -331,13 +331,13 @@ export function ExternalWalletSelector() {
                     <div>
                       <div className="flex items-center space-x-2">
                         <span className="font-medium">{walletOption.name}</span>
-                        {isSelected && <Check className="w-4 h-4 text-yellow-400" />}
+                        {isSelected && <Check className="w-4 h-4 text-white" />}
                       </div>
-                      <span className="text-xs text-yellow-200/70">{walletOption.description}</span>
+                      <span className="text-xs text-white/60">{walletOption.description}</span>
                     </div>
                   </div>
                   {!isAvailable && (
-                    <span className="text-xs text-yellow-200/70">Not Detected</span>
+                    <span className="text-xs text-white/60">Not Detected</span>
                   )}
                 </div>
               </DropdownMenuItem>
@@ -345,13 +345,13 @@ export function ExternalWalletSelector() {
           })}
         </div>
 
-        <DropdownMenuSeparator className="bg-yellow-400/30" />
+        <DropdownMenuSeparator className="bg-white/20" />
 
         {/* Wallet Actions */}
         <div className="p-2">
           <DropdownMenuItem 
             onClick={copyAddress}
-            className="text-yellow-100 hover:bg-yellow-500/20 cursor-pointer"
+            className="text-white hover:bg-white/10 cursor-pointer"
           >
             <Copy className="w-4 h-4 mr-2" />
             Copy Address
@@ -359,7 +359,7 @@ export function ExternalWalletSelector() {
           
           <DropdownMenuItem 
             onClick={viewOnSolscan}
-            className="text-yellow-100 hover:bg-yellow-500/20 cursor-pointer"
+            className="text-white hover:bg-white/10 cursor-pointer"
           >
             <ExternalLink className="w-4 h-4 mr-2" />
             View on Solscan
@@ -367,7 +367,7 @@ export function ExternalWalletSelector() {
           
           <DropdownMenuItem 
             onClick={wallet.disconnectWallet}
-            className="text-yellow-400 hover:bg-yellow-500/20 cursor-pointer"
+            className="text-white hover:bg-white/10 cursor-pointer"
           >
             <Wallet className="w-4 h-4 mr-2" />
             Disconnect
@@ -375,12 +375,12 @@ export function ExternalWalletSelector() {
         </div>
 
         {/* Network Info */}
-        <DropdownMenuSeparator className="bg-yellow-400/30" />
+        <DropdownMenuSeparator className="bg-white/20" />
         <div className="p-4">
           <div className="text-center">
-            <div className="inline-flex items-center px-3 py-1 bg-yellow-500/20 rounded-full border border-yellow-500/30">
-          <div className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse mr-2" />
-          <span className="text-xs font-medium text-yellow-400">Solana Mainnet</span>
+            <div className="inline-flex items-center px-3 py-1 bg-white/10 rounded-full border border-white/20">
+          <div className="w-2 h-2 bg-white rounded-full animate-pulse mr-2" />
+          <span className="text-xs font-medium text-white">Solana Mainnet</span>
             </div>
           </div>
         </div>
