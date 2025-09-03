@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 
 interface SettingsState {
   // Theme settings
@@ -45,9 +44,7 @@ interface SettingsState {
   setAutoRefresh: (enabled: boolean) => void;
 }
 
-export const useSettings = create<SettingsState>()(
-  persist(
-    (set, get) => ({
+export const useSettings = create<SettingsState>()((set, get) => ({
       // Default values
       theme: 'dark',
       performanceMode: false,
@@ -101,13 +98,7 @@ export const useSettings = create<SettingsState>()(
       
       setTooltips: (show) => set({ showTooltips: show }),
       setAutoRefresh: (enabled) => set({ autoRefresh: enabled }),
-    }),
-    {
-      name: 'goldium-settings',
-      version: 1,
-    }
-  )
-);
+    }));
 
 // Performance mode hook
 export function usePerformanceMode() {
