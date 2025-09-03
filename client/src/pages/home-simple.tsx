@@ -548,45 +548,89 @@ export default function HomeSimple() {
             </p>
           </div>
           
+          {/* Tokenomics Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-12">
+            {/* Total Supply */}
+            <div className="chainzoku-card p-6 text-center metaverse-pulse">
+              <div className="w-16 h-16 mx-auto mb-4 bg-black border border-white/10 rounded-2xl flex items-center justify-center">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                </svg>
+              </div>
+              <div className="font-small text-white/80 mb-2 uppercase tracking-wider">💎 TOTAL SUPPLY</div>
+              <div className="font-stats text-white mb-4">1,000M</div>
+              <div className="font-small text-white/60">GOLD Tokens</div>
+            </div>
+
+            {/* Circulating Supply */}
+            <div className="chainzoku-card p-6 text-center metaverse-pulse">
+              <div className="w-16 h-16 mx-auto mb-4 bg-black border border-white/10 rounded-2xl flex items-center justify-center">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+              </div>
+              <div className="font-small text-white/80 mb-2 uppercase tracking-wider">🔄 CIRCULATING</div>
+              <div className="font-stats text-white mb-4">600M</div>
+              <div className="font-small text-white/60">60% Available</div>
+            </div>
+
+            {/* Liquidity Pool */}
+            <div className="chainzoku-card p-6 text-center metaverse-pulse">
+              <div className="w-16 h-16 mx-auto mb-4 bg-black border border-white/10 rounded-2xl flex items-center justify-center">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <div className="font-small text-white/80 mb-2 uppercase tracking-wider">💧 LIQUIDITY</div>
+              <div className="font-stats text-white mb-4">300M</div>
+              <div className="font-small text-white/60">30% Pool</div>
+            </div>
+
+            {/* Community Rewards */}
+            <div className="chainzoku-card p-6 text-center metaverse-pulse">
+              <div className="w-16 h-16 mx-auto mb-4 bg-black border border-white/10 rounded-2xl flex items-center justify-center">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+              <div className="font-small text-white/80 mb-2 uppercase tracking-wider">🎁 REWARDS</div>
+              <div className="font-stats text-white mb-4">250M</div>
+              <div className="font-small text-white/60">25% Community</div>
+            </div>
+          </div>
+
+          {/* Detailed Breakdown */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8">
-              <div className="bg-black/80 border border-white/10 rounded-2xl p-6 animate-fade-in-up">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-8 h-8 rounded-lg bg-black border border-white/10 p-1.5 shadow-lg">
-                    <svg className="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="space-y-6">
+              <div className="chainzoku-card p-8">
+                <h3 className="font-card-title text-white mb-6 flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-black border border-white/10 p-2 flex items-center justify-center">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                     </svg>
                   </div>
-                  <h3 className="text-2xl font-bold text-white">Token Distribution</h3>
-                </div>
+                  Detailed Distribution
+                </h3>
                 <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-white/60">Total Supply</span>
-                    <span className="text-white font-bold">1,000,000,000 GOLD</span>
+                  <div className="flex justify-between items-center py-3 border-b border-white/10">
+                    <span className="font-body text-white/70">Liquidity Pool</span>
+                    <span className="font-stats text-white">300,000,000 (30%)</span>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-white/60">Circulating Supply</span>
-                    <span className="text-white font-bold">600,000,000 GOLD</span>
+                  <div className="flex justify-between items-center py-3 border-b border-white/10">
+                    <span className="font-body text-white/70">Community Rewards</span>
+                    <span className="font-stats text-white">250,000,000 (25%)</span>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-white/60">Liquidity Pool</span>
-                    <span className="text-white font-bold">300,000,000 (30%)</span>
+                  <div className="flex justify-between items-center py-3 border-b border-white/10">
+                    <span className="font-body text-white/70">Development</span>
+                    <span className="font-stats text-white">200,000,000 (20%)</span>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-white/60">Community Rewards</span>
-                    <span className="text-white font-bold">250,000,000 (25%)</span>
+                  <div className="flex justify-between items-center py-3 border-b border-white/10">
+                    <span className="font-body text-white/70">Marketing</span>
+                    <span className="font-stats text-white">150,000,000 (15%)</span>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-white/60">Development</span>
-                    <span className="text-white font-bold">200,000,000 (20%)</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-white/60">Marketing</span>
-                    <span className="text-white font-bold">150,000,000 (15%)</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-white/60">Team (Locked)</span>
-                    <span className="text-white font-bold">100,000,000 (10%)</span>
+                  <div className="flex justify-between items-center py-3">
+                    <span className="font-body text-white/70">Team (Locked)</span>
+                    <span className="font-stats text-white">100,000,000 (10%)</span>
                   </div>
                 </div>
               </div>
