@@ -293,7 +293,7 @@ export default function HomeSimple() {
             <div className="space-y-8">
 
               <h1 className="font-main-title tracking-tight">
-                <span className="metaverse-text metaverse-scan">
+                <span className="metaverse-text metaverse-scan luxury-glow">
                   GOLDIUM
                 </span>
               </h1>
@@ -433,7 +433,7 @@ export default function HomeSimple() {
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-            <div className="chainzoku-card p-8 text-center metaverse-pulse">
+            <div className="chainzoku-card premium-card p-8 text-center metaverse-pulse premium-shimmer">
               <div className="w-20 h-20 mx-auto mb-8 rounded-3xl bg-black border border-white/10 p-4 shadow-2xl shadow-white/20 chainzoku-pulse chainzoku-float">
                 <svg className="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
@@ -444,7 +444,7 @@ export default function HomeSimple() {
               <div className="bg-black border border-white/10 text-white font-small px-6 py-3 rounded-2xl shadow-lg shadow-white/20 uppercase chainzoku-glow">{tokenData ? `+${tokenData.priceChange24h.toFixed(1)}%` : '+0.0%'} 🚀</div>
             </div>
             
-            <div className="chainzoku-card p-8 text-center metaverse-pulse">
+            <div className="chainzoku-card premium-card p-8 text-center metaverse-pulse premium-shimmer">
               <div className="w-20 h-20 mx-auto mb-8 bg-black border border-white/10 rounded-3xl flex items-center justify-center shadow-2xl shadow-white/20 chainzoku-pulse chainzoku-float">
                 <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -455,7 +455,7 @@ export default function HomeSimple() {
               <div className="bg-black border border-white/10 text-white font-small px-6 py-3 rounded-2xl shadow-lg shadow-white/20 uppercase chainzoku-glow">+5.7% 📈</div>
             </div>
             
-            <div className="chainzoku-card p-8 text-center metaverse-pulse">
+            <div className="chainzoku-card premium-card p-8 text-center metaverse-pulse premium-shimmer">
               <div className="w-20 h-20 mx-auto mb-8 bg-black border border-white/10 rounded-3xl flex items-center justify-center shadow-2xl shadow-white/20 chainzoku-pulse chainzoku-float">
                 <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
@@ -466,7 +466,7 @@ export default function HomeSimple() {
               <div className="bg-black border border-white/10 text-white font-small px-6 py-3 rounded-2xl shadow-lg shadow-white/20 uppercase chainzoku-glow">+12.4% 💥</div>
             </div>
             
-            <div className="chainzoku-card p-8 text-center metaverse-pulse">
+            <div className="chainzoku-card premium-card p-8 text-center metaverse-pulse premium-shimmer">
               <div className="w-20 h-20 mx-auto mb-8 bg-black border border-white/10 rounded-3xl flex items-center justify-center shadow-2xl shadow-white/20 chainzoku-pulse chainzoku-float">
                 <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -492,7 +492,7 @@ export default function HomeSimple() {
         <div className="max-w-full mx-auto relative z-10 px-4">
           <div className="text-center mb-16 chainzoku-fade-in">
             <h2 className="font-main-title text-white mb-8 uppercase tracking-wider">
-              <span className="metaverse-text metaverse-pulse">DeFi Platform</span>
+              <span className="metaverse-text metaverse-pulse luxury-glow">DeFi Platform</span>
             </h2>
             <p className="font-subtitle text-white/80 max-w-4xl mx-auto leading-relaxed">
               Complete ecosystem for trading, staking, and managing your digital assets
@@ -560,7 +560,7 @@ export default function HomeSimple() {
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-16">
             <h2 className="font-section-title text-white mb-8">
-              <span className="metaverse-text">Tokenomics</span>
+              <span className="metaverse-text luxury-glow">Tokenomics</span>
             </h2>
             <p className="font-subtitle text-white/70 max-w-3xl mx-auto">
               Transparent and sustainable token distribution designed for long-term value
@@ -570,7 +570,7 @@ export default function HomeSimple() {
           {/* Tokenomics Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-12">
             {/* Total Supply */}
-            <div className="chainzoku-card p-6 text-center metaverse-pulse">
+            <div className="chainzoku-card premium-card p-6 text-center metaverse-pulse premium-shimmer">
               <div className="w-16 h-16 mx-auto mb-4 bg-black border border-white/10 rounded-2xl flex items-center justify-center">
                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
@@ -582,7 +582,7 @@ export default function HomeSimple() {
             </div>
 
             {/* Circulating Supply */}
-            <div className="chainzoku-card p-6 text-center metaverse-pulse">
+            <div className="chainzoku-card premium-card p-6 text-center metaverse-pulse premium-shimmer">
               <div className="w-16 h-16 mx-auto mb-4 bg-black border border-white/10 rounded-2xl flex items-center justify-center">
                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
@@ -594,7 +594,7 @@ export default function HomeSimple() {
             </div>
 
             {/* Liquidity Pool */}
-            <div className="chainzoku-card p-6 text-center metaverse-pulse">
+            <div className="chainzoku-card premium-card p-6 text-center metaverse-pulse premium-shimmer">
               <div className="w-16 h-16 mx-auto mb-4 bg-black border border-white/10 rounded-2xl flex items-center justify-center">
                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -606,7 +606,7 @@ export default function HomeSimple() {
             </div>
 
             {/* Community Rewards */}
-            <div className="chainzoku-card p-6 text-center metaverse-pulse">
+            <div className="chainzoku-card premium-card p-6 text-center metaverse-pulse premium-shimmer">
               <div className="w-16 h-16 mx-auto mb-4 bg-black border border-white/10 rounded-2xl flex items-center justify-center">
                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -621,8 +621,8 @@ export default function HomeSimple() {
           {/* Detailed Breakdown */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
-              <div className="chainzoku-card p-8">
-                <h3 className="font-card-title text-white mb-6 flex items-center gap-3">
+              <div className="chainzoku-card premium-card premium-shimmer p-8">
+                <h3 className="font-card-title text-white luxury-glow mb-6 flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-black border border-white/10 p-2 flex items-center justify-center">
                     <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />

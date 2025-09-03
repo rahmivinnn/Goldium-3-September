@@ -150,7 +150,7 @@ export default function Dashboard() {
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="font-main-title text-golden-large mb-2">Trading Dashboard</h1>
+              <h1 className="font-main-title text-golden-large luxury-glow mb-2">Trading Dashboard</h1>
               <p className="font-subtitle text-golden">
                 Real-time portfolio management and DeFi trading platform
               </p>
@@ -182,7 +182,7 @@ export default function Dashboard() {
           {/* Right Column - Trading Interface */}
           <div className="space-y-6">
             {/* Quick Stats */}
-            <Card className="p-6 bg-black border-white/10">
+            <Card className="p-6 bg-black border-white/10 premium-card premium-shimmer">
               <CardHeader className="pb-4">
                 <CardTitle className="font-card-title text-golden flex items-center gap-2">
                   <Activity className="w-5 h-5 text-golden-small" />
@@ -213,7 +213,7 @@ export default function Dashboard() {
             </Card>
 
             {/* Trading Interface */}
-            <Card className="p-6 bg-black border-white/10">
+            <Card className="p-6 bg-black border-white/10 premium-card premium-shimmer">
               <CardHeader className="pb-4">
                 <CardTitle className="font-card-title text-golden flex items-center gap-2">
                   <TrendingUp className="w-5 h-5 text-golden-small" />
@@ -245,7 +245,7 @@ export default function Dashboard() {
             </Card>
 
             {/* Market Insights */}
-            <Card className="p-6 bg-black border-white/10">
+            <Card className="p-6 bg-black border-white/10 premium-card premium-shimmer">
               <CardHeader className="pb-4">
                 <CardTitle className="font-card-title text-golden flex items-center gap-2">
                   <BarChart3 className="w-5 h-5 text-golden-small" />
