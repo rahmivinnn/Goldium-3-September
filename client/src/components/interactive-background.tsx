@@ -1,8 +1,14 @@
-import React, { useCallback, useMemo } from 'react';
-import Particles from '@tsparticles/react';
-import { loadBasic } from '@tsparticles/basic';
-import type { Engine } from '@tsparticles/engine';
+import React, { useCallback, useMemo, Suspense } from 'react';
 import { usePerformanceMode } from '@/lib/settings-store';
+
+// Lazy load particles untuk performance
+const LazyParticles = React.lazy(() => 
+  import('@tsparticles/react').then(module => ({ default: module.default }))
+);
+
+const LazyLoadBasic = React.lazy(() => 
+  import('@tsparticles/basic').then(module => ({ default: module.loadBasic }))
+);
 
 interface InteractiveBackgroundProps {
   intensity?: 'low' | 'medium' | 'high';

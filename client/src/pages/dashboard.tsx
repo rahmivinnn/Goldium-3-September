@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { RealTimePriceTicker } from '@/components/real-time-price-ticker';
 import { RealTimeNotifications } from '@/components/real-time-notifications';
 import { PortfolioAnalytics } from '@/components/portfolio-analytics';
-import { SelfContainedSwapTab } from '@/components/self-contained-swap-tab';
+import { CleanSwapTab } from '@/components/clean-swap-tab';
 import { SelfContainedStakingTab } from '@/components/self-contained-staking-tab';
 import { RealSendTab } from '@/components/real-send-tab';
 import { TransactionHistory } from '@/components/transaction-history';
@@ -212,7 +212,7 @@ export default function Dashboard() {
           {/* Right Column - Trading Interface */}
           <div className="space-y-6">
             {/* Quick Stats */}
-            <Card className="p-6 bg-black border-white/10 premium-card refined-shimmer sophisticated-border ">
+            <Card className="p-6 glass-card glass-hover neumorphic premium-card refined-shimmer sophisticated-border ">
               <CardHeader className="pb-4">
                 <CardTitle className="font-card-title text-golden flex items-center gap-2">
                   <Activity className="w-5 h-5 text-golden-small" />
@@ -243,7 +243,7 @@ export default function Dashboard() {
             </Card>
 
             {/* Trading Interface */}
-            <Card className="p-6 bg-black border-white/10 premium-card refined-shimmer sophisticated-border ">
+            <Card className="p-6 glass-card glass-hover neumorphic premium-card refined-shimmer sophisticated-border ">
               <CardHeader className="pb-4">
                 <CardTitle className="font-card-title text-golden flex items-center gap-2">
                   <TrendingUp className="w-5 h-5 text-golden-small" />
@@ -260,7 +260,7 @@ export default function Dashboard() {
                   </TabsList>
                   
                   <TabsContent value="swap" className="mt-4">
-                    <SelfContainedSwapTab />
+                    <CleanSwapTab />
                   </TabsContent>
                   
                   <TabsContent value="stake" className="mt-4">
@@ -275,7 +275,7 @@ export default function Dashboard() {
             </Card>
 
             {/* Market Insights */}
-            <Card className="p-6 bg-black border-white/10 premium-card refined-shimmer sophisticated-border ">
+            <Card className="p-6 glass-card glass-hover neumorphic premium-card refined-shimmer sophisticated-border ">
               <CardHeader className="pb-4">
                 <CardTitle className="font-card-title text-golden flex items-center gap-2">
                   <BarChart3 className="w-5 h-5 text-golden-small" />
@@ -316,7 +316,7 @@ export default function Dashboard() {
 
         {/* Transaction History */}
         <div className="mt-8">
-          <Card className="p-6 bg-black border-white/10">
+          <Card className="p-6 glass-card glass-hover neumorphic">
             <CardHeader className="pb-4">
               <CardTitle className="font-card-title text-golden flex items-center gap-2">
                 <Wallet className="w-6 h-6 text-golden-small" />

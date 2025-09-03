@@ -1,6 +1,15 @@
 // Enhanced transaction history utilities for Goldium DeFi dApp
 // Implements auto-save transaction history per wallet address to localStorage
 
+export interface Transaction {
+  txSignature: string;
+  type: 'swap' | 'stake' | 'unstake' | 'send';
+  timestamp: string;
+  amount: number;
+  tokenFrom: string;
+  tokenTo: string;
+}
+
 export interface GoldiumTransactionHistory {
   txId: string;
   type: 'swap' | 'stake' | 'unstake' | 'send';
@@ -179,4 +188,20 @@ export const autoSaveTransaction = (
   saveTransactionHistory(walletAddress, transaction);
   
   console.log(`✅ Auto-saved ${type} transaction: ${amountSOL} SOL / ${amountGOLD} GOLD`);
+};
+
+/**
+ * Get transaction history for current wallet
+ */
+export const getTransactionHistory = async (): Promise<Transaction[]> => {
+  try {
+    const stored = localStorage.getItem('goldium_transaction_history');
+    if (!stored) return [];
+    
+    const history = JSON.parse(stored);
+    return Array.isArray(history) ? history : [];
+  } catch (error) {
+    console.error('❌ Failed to get transaction history:', error);
+    return [];
+  }
 };
