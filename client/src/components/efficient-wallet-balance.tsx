@@ -48,27 +48,24 @@ export function EfficientWalletBalance() {
           setBalance(data.balance || 0);
           console.log(`✅ Balance fetched: ${data.balance} SOL`);
           
-          // Mock GOLD balance for demo (in real app, would fetch from SPL token account)
-          setGoldBalance(Math.floor(data.balance * 1000)); // 1 SOL = 1000 GOLD demo rate
+          // REAL GOLD balance from SPL token account (to be implemented)
+          setGoldBalance(0); // Real GOLD balance - for now 0 until SPL token account is fetched
         } else {
           console.log('⚠️ Backend returned no balance');
           setBalance(0);
           setGoldBalance(0);
         }
       } else {
-        console.log('❌ Backend proxy failed - using demo balance');
-        // Set demo balance jika backend gagal
-        setBalance(2.5);
-        setGoldBalance(1000);
-        console.log('💰 Demo balance set: 2.5 SOL, 1000 GOLD');
+        console.log('❌ Backend proxy failed - NO BALANCE');
+        setBalance(0);
+        setGoldBalance(0);
       }
 
     } catch (error) {
-      console.error('❌ Balance fetch failed - using fallback balance:', error);
-      // Fallback demo balance jika semua gagal
-      setBalance(1.5);
-      setGoldBalance(500);
-      console.log('💰 Fallback balance set: 1.5 SOL, 500 GOLD');
+      console.error('❌ Balance fetch failed - NO BALANCE:', error);
+      // NO DEMO BALANCE - REAL ONLY OR 0
+      setBalance(0);
+      setGoldBalance(0);
     } finally {
       setIsLoading(false);
     }
