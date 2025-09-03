@@ -29,8 +29,8 @@ export function SimpleParticles({ count = 50, className = '' }: SimpleParticlesP
       y: Math.random() * 100,
       vx: (Math.random() - 0.5) * 0.2,
       vy: (Math.random() - 0.5) * 0.2,
-      size: Math.random() * 3 + 1,
-      opacity: Math.random() * 0.3 + 0.1
+      size: Math.random() * 8 + 4,
+      opacity: Math.random() * 0.8 + 0.3
     });
 
     const initialParticles = Array.from({ length: count }, (_, i) => createParticle(i));
@@ -42,7 +42,7 @@ export function SimpleParticles({ count = 50, className = '' }: SimpleParticlesP
           ...particle,
           x: (particle.x + particle.vx + 100) % 100,
           y: (particle.y + particle.vy + 100) % 100,
-          opacity: 0.1 + Math.sin(Date.now() * 0.001 + particle.id) * 0.1
+          opacity: 0.3 + Math.sin(Date.now() * 0.001 + particle.id) * 0.4
         }))
       );
     };
@@ -60,7 +60,7 @@ export function SimpleParticles({ count = 50, className = '' }: SimpleParticlesP
       {particles.map(particle => (
         <div
           key={particle.id}
-          className="absolute rounded-full bg-gradient-to-r from-yellow-400 to-amber-500"
+          className="absolute rounded-full bg-gradient-to-r from-yellow-400 to-amber-500 shadow-2xl shadow-yellow-400/60"
           style={{
             left: `${particle.x}%`,
             top: `${particle.y}%`,

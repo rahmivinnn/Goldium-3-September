@@ -31,7 +31,7 @@ export default function Dashboard() {
   const wallet = useSolanaWallet();
 
   return (
-    <div className="min-h-screen bg-black cyber-grid text-white relative overflow-hidden">
+    <div className="min-h-screen bg-black/20 backdrop-blur-xl border-2 border-white/10 shadow-2xl cyber-grid text-white relative overflow-hidden">
       {/* Golden Sparkles Background */}
       <div className="fixed inset-0 pointer-events-none z-0">
         {/* Golden Sparkles */}
@@ -97,7 +97,7 @@ export default function Dashboard() {
         ))}
       </div>
       {/* Navigation Bar */}
-      <nav className="sticky top-0 z-50 bg-black/95 backdrop-blur-md border-b border-white/10">
+      <nav className="sticky top-0 z-50 bg-black/20 backdrop-blur-xl border-2 border-white/10 shadow-2xl/95 backdrop-blur-md border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-8">
@@ -132,7 +132,7 @@ export default function Dashboard() {
               <Button variant="ghost" size="sm" className="text-gray-300 hover:text-white">
                 <Settings className="w-4 h-4" />
               </Button>
-              <WalletMultiButton className="!bg-black hover:!bg-gray-900 !border-white/20" />
+              <WalletMultiButton className="!bg-black/20 backdrop-blur-xl border-2 border-white/10 shadow-2xl hover:!bg-gray-900 !border-white/20" />
               <ExternalWalletSelector />
             </div>
           </div>
@@ -191,7 +191,7 @@ export default function Dashboard() {
                 <RefreshCw className="w-4 h-4 mr-2" />
                 Refresh Data
               </Button>
-              <Button className="bg-black hover:bg-gray-900 text-white font-semibold border border-white/20">
+              <Button className="bg-black/20 backdrop-blur-xl border-2 border-white/10 shadow-2xl hover:bg-gray-900 text-white font-semibold border border-white/20">
                 <Zap className="w-4 h-4 mr-2" />
                 Quick Trade
               </Button>
@@ -222,19 +222,19 @@ export default function Dashboard() {
               
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="text-center p-3 bg-black border border-white/10 rounded-lg">
+                  <div className="text-center p-3 bg-black/20 backdrop-blur-xl border-2 border-white/10 shadow-2xl border border-white/10 rounded-lg">
                     <div className="font-stats holographic-gold mb-1">+12.5%</div>
                     <div className="font-small text-golden-small">24h P&L</div>
                   </div>
-                  <div className="text-center p-3 bg-black border border-white/10 rounded-lg">
+                  <div className="text-center p-3 bg-black/20 backdrop-blur-xl border-2 border-white/10 shadow-2xl border border-white/10 rounded-lg">
                     <div className="font-stats holographic-gold mb-1">8</div>
                     <div className="font-small text-golden-small">Active Positions</div>
                   </div>
-                  <div className="text-center p-3 bg-black border border-white/10 rounded-lg">
+                  <div className="text-center p-3 bg-black/20 backdrop-blur-xl border-2 border-white/10 shadow-2xl border border-white/10 rounded-lg">
                     <div className="font-stats holographic-gold mb-1">$2.1K</div>
                     <div className="font-small text-golden-small">24h Volume</div>
                   </div>
-                  <div className="text-center p-3 bg-black border border-white/10 rounded-lg">
+                  <div className="text-center p-3 bg-black/20 backdrop-blur-xl border-2 border-white/10 shadow-2xl border border-white/10 rounded-lg">
                     <div className="font-stats holographic-gold mb-1">95%</div>
                     <div className="font-small text-golden-small">Win Rate</div>
                   </div>
@@ -253,7 +253,7 @@ export default function Dashboard() {
               
               <CardContent>
                 <Tabs defaultValue="swap" className="w-full">
-                  <TabsList className="grid w-full grid-cols-3 bg-black border border-white/10">
+                  <TabsList className="grid w-full grid-cols-3 bg-black/20 backdrop-blur-xl border-2 border-white/10 shadow-2xl border border-white/10">
                     <TabsTrigger value="swap" className="text-xs font-['Inter'] font-semibold">Swap</TabsTrigger>
                     <TabsTrigger value="stake" className="text-xs font-['Inter'] font-semibold">Stake</TabsTrigger>
                     <TabsTrigger value="send" className="text-xs font-['Inter'] font-semibold">Send</TabsTrigger>
@@ -285,28 +285,28 @@ export default function Dashboard() {
               
               <CardContent className="space-y-4">
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-black border border-white/10 rounded-lg">
+                  <div className="flex items-center justify-between p-3 bg-black/20 backdrop-blur-xl border-2 border-white/10 shadow-2xl border border-white/10 rounded-lg">
                     <div>
                       <div className="text-sm font-medium text-golden">SOL Bullish Signal</div>
                       <div className="text-xs text-golden-small">RSI oversold, potential reversal</div>
                     </div>
-                    <Badge className="bg-black border border-white/20 text-golden-small">Strong</Badge>
+                    <Badge className="bg-black/20 backdrop-blur-xl border-2 border-white/10 shadow-2xl border border-white/20 text-golden-small">Strong</Badge>
                   </div>
                   
-                  <div className="flex items-center justify-between p-3 bg-black border border-white/10 rounded-lg">
+                  <div className="flex items-center justify-between p-3 bg-black/20 backdrop-blur-xl border-2 border-white/10 shadow-2xl border border-white/10 rounded-lg">
                     <div>
                       <div className="text-sm font-medium text-golden">GOLD Consolidation</div>
                       <div className="text-xs text-golden-small">Range-bound trading expected</div>
                     </div>
-                    <Badge className="bg-black border border-white/20 text-golden-small">Neutral</Badge>
+                    <Badge className="bg-black/20 backdrop-blur-xl border-2 border-white/10 shadow-2xl border border-white/20 text-golden-small">Neutral</Badge>
                   </div>
                   
-                  <div className="flex items-center justify-between p-3 bg-black border border-white/10 rounded-lg">
+                  <div className="flex items-center justify-between p-3 bg-black/20 backdrop-blur-xl border-2 border-white/10 shadow-2xl border border-white/10 rounded-lg">
                     <div>
                       <div className="text-sm font-medium text-golden">DeFi TVL Rising</div>
                       <div className="text-xs text-golden-small">Increased liquidity inflow</div>
                     </div>
-                    <Badge className="bg-black border border-white/20 text-golden-small">Positive</Badge>
+                    <Badge className="bg-black/20 backdrop-blur-xl border-2 border-white/10 shadow-2xl border border-white/20 text-golden-small">Positive</Badge>
                   </div>
                 </div>
               </CardContent>
