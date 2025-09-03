@@ -249,7 +249,9 @@ export function SelfContainedSwapTab() {
     try {
       console.log(`Starting swap: ${amount} ${fromToken}, wallet balance: ${balance.toFixed(6)} SOL`);
       
-      // Pass external wallet info to swap service for REAL transactions
+      // REAL BLOCKCHAIN SWAP with GOLDIUM CA: APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump
+      console.log('🔥 EXECUTING REAL SWAP with GOLDIUM CA:', 'APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump');
+      
       if (externalWallet.connected) {
         const externalWalletData = {
           ...externalWallet,

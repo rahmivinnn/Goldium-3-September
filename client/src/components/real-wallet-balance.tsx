@@ -21,12 +21,12 @@ export function RealWalletBalance() {
     try {
       console.log('🔄 Fetching REAL balance for:', publicKey.toString());
       
-      // Pakai connection dari wallet adapter
+      // Pakai connection dari wallet adapter - REAL BLOCKCHAIN
       const balanceLamports = await connection.getBalance(publicKey);
       const balanceSOL = balanceLamports / LAMPORTS_PER_SOL;
       
       setBalance(balanceSOL);
-      console.log(`💰 REAL BALANCE: ${balanceSOL} SOL`);
+      console.log(`💰 REAL BLOCKCHAIN BALANCE: ${balanceSOL} SOL from ${publicKey.toString()}`);
       
     } catch (error) {
       console.error('❌ Balance fetch failed:', error);
