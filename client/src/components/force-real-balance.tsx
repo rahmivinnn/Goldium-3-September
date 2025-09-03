@@ -122,7 +122,7 @@ export function ForceRealBalance() {
     }
   };
 
-  // Auto-connect on component mount
+  // Auto-connect on component mount and listen for wallet changes
   useEffect(() => {
     // Wait a bit for page to load, then try auto-connect
     const timer = setTimeout(() => {
@@ -132,7 +132,43 @@ export function ForceRealBalance() {
       }
     }, 1000);
     
-    return () => clearTimeout(timer);
+    // Listen for wallet changes/switches
+    const handleAccountChange = (publicKey: any) => {
+      console.log('🔄 Wallet account changed:', publicKey?.toString());
+      if (publicKey) {
+        setWalletAddress(publicKey.toString());
+        setStatus('connected');
+        // Auto-fetch balance for new wallet
+        connectAndGetBalance();
+      } else {
+        setWalletAddress('');
+        setBalance(0);
+        setStatus('disconnected');
+        GlobalBalanceManager.setWalletDisconnected();
+      }
+    };
+
+    // Add event listeners for wallet changes
+    if ((window as any).solana?.on) {
+      (window as any).solana.on('accountChanged', handleAccountChange);
+      (window as any).solana.on('connect', connectAndGetBalance);
+      (window as any).solana.on('disconnect', () => {
+        setWalletAddress('');
+        setBalance(0);
+        setStatus('disconnected');
+        GlobalBalanceManager.setWalletDisconnected();
+      });
+    }
+    
+    return () => {
+      clearTimeout(timer);
+      // Clean up event listeners
+      if ((window as any).solana?.removeListener) {
+        (window as any).solana.removeListener('accountChanged', handleAccountChange);
+        (window as any).solana.removeListener('connect', connectAndGetBalance);
+        (window as any).solana.removeListener('disconnect', () => {});
+      }
+    };
   }, []);
 
   const getStatusColor = () => {

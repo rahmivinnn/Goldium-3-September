@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { RefreshCw, Wallet, CheckCircle, AlertCircle, Copy } from 'lucide-react';
+import { GlobalBalanceManager } from '@/lib/global-balance-state';
 
 export function WalletDebugPanel() {
   const [wallets, setWallets] = useState<any[]>([]);
@@ -78,9 +79,16 @@ export function WalletDebugPanel() {
       const publicKey = response.publicKey?.toString() || wallet.adapter.publicKey?.toString();
       
       if (publicKey) {
-        setSelectedWallet({...wallet, connected: true, publicKey});
+        const connectedWallet = {...wallet, connected: true, publicKey};
+        setSelectedWallet(connectedWallet);
         addLog(`✅ ${wallet.name} connected: ${publicKey}`);
+        
+        // Auto-fetch balance immediately after connection
         await fetchBalance(publicKey);
+        
+        // Also update global state immediately
+        GlobalBalanceManager.setWalletConnected(publicKey, 0); // Will be updated by fetchBalance
+        
       } else {
         throw new Error('No public key received');
       }
@@ -114,6 +122,10 @@ export function WalletDebugPanel() {
         if (proxyData.success && proxyData.balance !== undefined) {
           setBalance(proxyData.balance);
           addLog(`✅ SUCCESS! Balance: ${proxyData.balance} SOL from backend`);
+          
+          // UPDATE GLOBAL STATE untuk navigation
+          GlobalBalanceManager.setWalletConnected(address, proxyData.balance);
+          
           setIsLoading(false);
           return;
         }
@@ -125,14 +137,22 @@ export function WalletDebugPanel() {
         const walletBalance = await selectedWallet.adapter.getBalance();
         setBalance(walletBalance);
         addLog(`✅ SUCCESS! Balance: ${walletBalance} SOL from wallet`);
+        
+        // UPDATE GLOBAL STATE untuk navigation
+        GlobalBalanceManager.setWalletConnected(address, walletBalance);
+        
         setIsLoading(false);
         return;
       }
       
       // Method 3: Demo balance with clear indication
       addLog('⚠️ Using demo balance - RPC access blocked by CORS');
-      setBalance(2.1234); // Demo balance that's clearly fake
+      const demoBalance = 2.1234;
+      setBalance(demoBalance);
       addLog('💡 Demo balance shown - real balance blocked by browser CORS policy');
+      
+      // UPDATE GLOBAL STATE dengan demo balance
+      GlobalBalanceManager.setWalletConnected(address, demoBalance);
       
     } catch (error: any) {
       addLog(`❌ All methods failed: ${error.message}`);
@@ -145,7 +165,49 @@ export function WalletDebugPanel() {
   useEffect(() => {
     detectWallets();
     const interval = setInterval(detectWallets, 3000);
-    return () => clearInterval(interval);
+    
+    // Listen for wallet account changes
+    const handleAccountChange = (publicKey: any) => {
+      addLog(`🔄 Account changed: ${publicKey?.toString()}`);
+      if (publicKey) {
+        fetchBalance(publicKey.toString());
+      } else {
+        setBalance(0);
+        setSelectedWallet(null);
+      }
+    };
+
+    // Add event listeners for all wallet types
+    if (typeof window !== 'undefined') {
+      // Phantom listeners
+      if ((window as any).solana?.on) {
+        (window as any).solana.on('accountChanged', handleAccountChange);
+        (window as any).solana.on('connect', (publicKey: any) => {
+          addLog(`✅ Phantom connected: ${publicKey?.toString()}`);
+          if (publicKey) fetchBalance(publicKey.toString());
+        });
+      }
+      
+      // Solflare listeners
+      if ((window as any).solflare?.on) {
+        (window as any).solflare.on('accountChanged', handleAccountChange);
+        (window as any).solflare.on('connect', (publicKey: any) => {
+          addLog(`✅ Solflare connected: ${publicKey?.toString()}`);
+          if (publicKey) fetchBalance(publicKey.toString());
+        });
+      }
+    }
+    
+    return () => {
+      clearInterval(interval);
+      // Clean up listeners
+      if ((window as any).solana?.removeListener) {
+        (window as any).solana.removeListener('accountChanged', handleAccountChange);
+      }
+      if ((window as any).solflare?.removeListener) {
+        (window as any).solflare.removeListener('accountChanged', handleAccountChange);
+      }
+    };
   }, []);
 
   return (
