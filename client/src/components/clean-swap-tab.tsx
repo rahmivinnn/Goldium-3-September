@@ -10,8 +10,10 @@ import { useExternalWallets } from '@/hooks/use-external-wallets';
 import { useInstantBalance } from '@/hooks/use-instant-balance';
 import { useToast } from '@/hooks/use-toast';
 import { TransactionSuccessModal } from './transaction-success-modal';
+import { TransactionAnimation } from './transaction-animations';
 import { SOL_TO_GOLD_RATE, GOLD_TO_SOL_RATE, SOLSCAN_BASE_URL } from '@/lib/constants';
 import { autoSaveTransaction } from '@/lib/historyUtils';
+import { useSoundSystem } from '@/lib/sound-system';
 import logoImage from '@assets/k1xiYLna_400x400-removebg-preview_1754275575442.png';
 
 export function CleanSwapTab() {
@@ -21,6 +23,7 @@ export function CleanSwapTab() {
   const externalWallet = useExternalWallets();
   const instantBalance = useInstantBalance();
   const { toast } = useToast();
+  const { playSuccess } = useSoundSystem();
   
   const [fromToken, setFromToken] = useState<'SOL' | 'GOLD'>('SOL');
   const [fromAmount, setFromAmount] = useState('');
@@ -28,6 +31,7 @@ export function CleanSwapTab() {
   const [isSwapping, setIsSwapping] = useState(false);
   const [lastTxId, setLastTxId] = useState<string | null>(null);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showAnimation, setShowAnimation] = useState(false);
 
   const exchangeRate = fromToken === 'SOL' ? SOL_TO_GOLD_RATE : GOLD_TO_SOL_RATE;
   const slippage = 0.1;
@@ -60,6 +64,8 @@ export function CleanSwapTab() {
     if (!externalWallet.connected || !fromAmount || Number(fromAmount) <= 0) return;
 
     setIsSwapping(true);
+    setShowAnimation(true);
+    
     try {
       console.log('🔄 EXECUTING REAL SWAP with GOLDIUM CA');
       
@@ -77,30 +83,37 @@ export function CleanSwapTab() {
       });
 
       setLastTxId(txSignature);
-      setShowSuccessModal(true);
       
-      // Reset form
-      setFromAmount('');
-      setToAmount('');
-      
-      // Refresh balances
-      refetch();
-      refreshTransactionHistory?.();
-      
-      toast({
-        title: "Swap Successful",
-        description: `Swapped ${fromAmount} ${fromToken} successfully!`,
-      });
+      // Wait for animation to complete
+      setTimeout(() => {
+        setShowAnimation(false);
+        setShowSuccessModal(true);
+        playSuccess();
+        
+        // Reset form
+        setFromAmount('');
+        setToAmount('');
+        
+        // Refresh balances
+        refetch();
+        refreshTransactionHistory?.();
+        
+        toast({
+          title: "Swap Successful",
+          description: `Swapped ${fromAmount} ${fromToken} successfully!`,
+        });
+      }, 3500);
       
     } catch (error) {
       console.error('Swap failed:', error);
+      setShowAnimation(false);
       toast({
         title: "Swap Failed",
         description: "Transaction failed. Please try again.",
         variant: "destructive",
       });
     } finally {
-      setIsSwapping(false);
+      setTimeout(() => setIsSwapping(false), 3500);
     }
   };
 
@@ -112,7 +125,7 @@ export function CleanSwapTab() {
     <div className="max-w-xl mx-auto">
       
       {/* MAIN SWAP INTERFACE */}
-      <Card className="bg-black border-white/10 premium-card sophisticated-border">
+      <Card className="glass-card glass-hover neumorphic gold-hover">
         <CardContent className="p-8">
           
           {/* HEADER */}
@@ -239,7 +252,7 @@ export function CleanSwapTab() {
       </Card>
 
       {/* SWAP DETAILS */}
-      <Card className="bg-black border-white/10 premium-card sophisticated-border mt-6">
+      <Card className="glass-card glass-hover mt-6">
         <CardContent className="p-6">
           <h3 className="font-card-title text-white mb-4">Transaction Details</h3>
           <div className="space-y-3">
@@ -264,6 +277,16 @@ export function CleanSwapTab() {
           </div>
         </CardContent>
       </Card>
+
+      {/* TRANSACTION ANIMATION */}
+      <TransactionAnimation
+        type="swap"
+        isActive={showAnimation}
+        onComplete={() => setShowAnimation(false)}
+        fromToken={fromToken}
+        toToken={fromToken === 'SOL' ? 'GOLD' : 'SOL'}
+        amount={Number(fromAmount)}
+      />
 
       {/* SUCCESS MODAL */}
       <TransactionSuccessModal

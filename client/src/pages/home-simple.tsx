@@ -20,6 +20,9 @@ import { useGoldBalance } from '@/hooks/use-gold-balance';
 import GoldiumGamifiedStaking from '@/components/goldium-gamified-staking';
 import { TwitterEmbed } from '@/components/twitter-embed';
 import { EfficientWalletBalance } from '@/components/efficient-wallet-balance';
+import { AnimatedNumber } from '@/components/animated-number';
+import { InteractiveBackground } from '@/components/interactive-background';
+import { SettingsPanel } from '@/components/settings-panel';
 
 export default function HomeSimple() {
   const wallet = useSolanaWallet();
@@ -166,6 +169,12 @@ export default function HomeSimple() {
 
   return (
     <div className="min-h-screen bg-black cyber-grid text-white relative overflow-hidden">
+      {/* INTERACTIVE PARTICLES BACKGROUND */}
+      <InteractiveBackground intensity="medium" className="z-0" />
+      
+      {/* SETTINGS PANEL */}
+      <SettingsPanel />
+      
       {/* Golden Sparkles Background */}
       <div className="fixed inset-0 pointer-events-none z-0">
         {/* Golden Sparkles */}
@@ -430,29 +439,42 @@ export default function HomeSimple() {
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-            <div className="chainzoku-card premium-card p-8 text-center metaverse-pulse refined-shimmer sophisticated-border">
+            <div className="glass-card glass-hover neumorphic gold-hover p-8 text-center entrance-fade entrance-stagger-1">
               <div className="w-20 h-20 mx-auto mb-8 rounded-3xl bg-black border border-white/10 p-4 shadow-2xl shadow-white/20 chainzoku-pulse chainzoku-float">
                 <svg className="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                 </svg>
               </div>
               <div className="font-small text-white/80 mb-4 uppercase tracking-wider">💰 GOLDIUM PRICE</div>
-              <div className="font-stats holographic-gold mb-6">${tokenData ? tokenData.currentPrice.toFixed(6) : '0.000000'}</div>
+              <div className="font-stats holographic-gold mb-6">
+                $<AnimatedNumber 
+                  value={tokenData ? tokenData.currentPrice : 0} 
+                  decimals={6}
+                  className="holographic-gold"
+                />
+              </div>
               <div className="bg-black border border-white/10 text-white font-small px-6 py-3 rounded-2xl shadow-lg shadow-white/20 uppercase chainzoku-glow">{tokenData ? `+${tokenData.priceChange24h.toFixed(1)}%` : '+0.0%'} 🚀</div>
             </div>
             
-            <div className="chainzoku-card premium-card p-8 text-center metaverse-pulse refined-shimmer sophisticated-border">
+            <div className="glass-card glass-hover neumorphic gold-hover p-8 text-center entrance-fade entrance-stagger-2">
               <div className="w-20 h-20 mx-auto mb-8 bg-black border border-white/10 rounded-3xl flex items-center justify-center shadow-2xl shadow-white/20 chainzoku-pulse chainzoku-float">
                 <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
               </div>
               <div className="font-small text-white/80 mb-4 uppercase tracking-wider">📊 MARKET CAP</div>
-              <div className="font-stats holographic-gold mb-6">${tokenData ? (tokenData.marketCap / 1000000).toFixed(1) : '0.0'}M</div>
+              <div className="font-stats holographic-gold mb-6">
+                $<AnimatedNumber 
+                  value={tokenData ? tokenData.marketCap / 1000000 : 0} 
+                  decimals={1}
+                  suffix="M"
+                  className="holographic-gold"
+                />
+              </div>
               <div className="bg-black border border-white/10 text-white font-small px-6 py-3 rounded-2xl shadow-lg shadow-white/20 uppercase chainzoku-glow">+5.7% 📈</div>
             </div>
             
-            <div className="chainzoku-card premium-card p-8 text-center metaverse-pulse refined-shimmer sophisticated-border">
+            <div className="glass-card glass-hover neumorphic gold-hover p-8 text-center entrance-fade entrance-stagger-2">
               <div className="w-20 h-20 mx-auto mb-8 bg-black border border-white/10 rounded-3xl flex items-center justify-center shadow-2xl shadow-white/20 chainzoku-pulse chainzoku-float">
                 <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
@@ -463,7 +485,7 @@ export default function HomeSimple() {
               <div className="bg-black border border-white/10 text-white font-small px-6 py-3 rounded-2xl shadow-lg shadow-white/20 uppercase chainzoku-glow">+12.4% 💥</div>
             </div>
             
-            <div className="chainzoku-card premium-card p-8 text-center metaverse-pulse refined-shimmer sophisticated-border">
+            <div className="glass-card glass-hover neumorphic gold-hover p-8 text-center entrance-fade entrance-stagger-2">
               <div className="w-20 h-20 mx-auto mb-8 bg-black border border-white/10 rounded-3xl flex items-center justify-center shadow-2xl shadow-white/20 chainzoku-pulse chainzoku-float">
                 <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />

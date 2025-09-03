@@ -5,26 +5,35 @@
 @tailwind utilities;
 
 :root {
-  /* MODERN BLACK THEME - Consistent Black + White + Subtle Accents */
-  --background: #000000;                     /* Pure black background */
-  --foreground: #FFFFFF;                     /* Pure white text */
-  --muted: rgba(0, 0, 0, 0.9);              /* Muted black background */
-  --muted-foreground: rgba(255, 255, 255, 0.7); /* Muted white text */
-  --popover: rgba(0, 0, 0, 0.95);           /* Popover background */
-  --popover-foreground: #FFFFFF;            /* Pure white text */
-  --card: rgba(0, 0, 0, 0.8);               /* Card background */
-  --card-foreground: #FFFFFF;               /* Pure white text */
-  --border: rgba(255, 255, 255, 0.1);       /* Subtle white borders */
-  --input: rgba(0, 0, 0, 0.9);              /* Dark input backgrounds */
-  --primary: #000000;                       /* Black primary */
-  --primary-foreground: #FFFFFF;            /* White text on primary */
-  --secondary: rgba(0, 0, 0, 0.8);          /* Secondary background */
-  --secondary-foreground: #FFFFFF;          /* Pure white text */
-  --accent: #FFFFFF;                        /* White accent */
-  --accent-foreground: #000000;             /* Black text */
-  --destructive: #FF4444;                   /* Red for errors */
-  --destructive-foreground: #FFFFFF;        /* White text */
-  --ring: rgba(255, 255, 255, 0.3);         /* Subtle white focus ring */
+  /* PREMIUM GOLDIUM THEME TOKENS */
+  --gold-light: #FFD966;
+  --gold: #E6B800;
+  --gold-dark: #8C6A00;
+  --black-elegant: #0A0A0A;
+  --glass: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-glow: rgba(251, 191, 36, 0.1);
+  
+  /* SHADCN THEME VARIABLES */
+  --background: var(--black-elegant);
+  --foreground: #FFFFFF;
+  --muted: rgba(10, 10, 10, 0.9);
+  --muted-foreground: rgba(255, 255, 255, 0.7);
+  --popover: rgba(10, 10, 10, 0.95);
+  --popover-foreground: #FFFFFF;
+  --card: rgba(10, 10, 10, 0.8);
+  --card-foreground: #FFFFFF;
+  --border: var(--glass-border);
+  --input: rgba(10, 10, 10, 0.9);
+  --primary: var(--black-elegant);
+  --primary-foreground: #FFFFFF;
+  --secondary: rgba(10, 10, 10, 0.8);
+  --secondary-foreground: #FFFFFF;
+  --accent: #FFFFFF;
+  --accent-foreground: var(--black-elegant);
+  --destructive: #FF4444;
+  --destructive-foreground: #FFFFFF;
+  --ring: rgba(255, 255, 255, 0.3);
   --radius: 0.75rem;
 
   /* MODERN BLACK COLORS */
@@ -2003,6 +2012,89 @@ button[aria-expanded] {
     width: max-content;
     min-width: 100%;
   }
+}
+
+/* NEUMORPHISM + GLASSMORPHISM */
+.glass-card {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.glass-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-hover:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--glass-glow);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 12px 48px rgba(0, 0, 0, 0.4),
+    0 0 0 1px var(--glass-glow);
+}
+
+.neumorphic {
+  background: linear-gradient(145deg, #0f0f0f, #050505);
+  box-shadow: 
+    8px 8px 16px rgba(0, 0, 0, 0.8),
+    -8px -8px 16px rgba(255, 255, 255, 0.02),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.neumorphic:hover {
+  box-shadow: 
+    12px 12px 24px rgba(0, 0, 0, 0.9),
+    -12px -12px 24px rgba(255, 255, 255, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 20px var(--glass-glow);
+}
+
+/* GOLD GLOWING HOVER */
+.gold-hover {
+  transition: all 0.3s ease;
+}
+
+.gold-hover:hover {
+  box-shadow: 
+    0 0 20px rgba(255, 185, 0, 0.15),
+    0 4px 20px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 185, 0, 0.1);
+  border-color: rgba(255, 185, 0, 0.2);
+}
+
+/* ENTRANCE ANIMATIONS */
+.entrance-fade {
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  animation: entrance-fade-in 0.6s ease-out forwards;
+}
+
+.entrance-stagger-1 { animation-delay: 0.1s; }
+.entrance-stagger-2 { animation-delay: 0.2s; }
+.entrance-stagger-3 { animation-delay: 0.3s; }
+.entrance-stagger-4 { animation-delay: 0.4s; }
+.entrance-stagger-5 { animation-delay: 0.5s; }
+
+@keyframes entrance-fade-in {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ANIMATED NUMBERS */
+.odometer-number {
+  font-variant-numeric: tabular-nums;
+  transition: all 0.3s ease;
+}
+
+.number-glow {
+  text-shadow: 0 0 10px var(--glass-glow);
 }
 
 /* TAB GLOW EFFECT */
