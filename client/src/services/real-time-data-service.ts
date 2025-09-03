@@ -289,17 +289,17 @@ class RealTimeDataService {
     } catch (error) {
       console.error('Failed to fetch real-time data, using fallback:', error);
       
-      // Return REAL GOLDIUM mainnet data
+      // Return GOLDIUM mainnet data (token exists but not actively traded on major DEX)
       return {
-        currentPrice: 0.21, // REAL GOLDIUM price $0.21 (mainnet)
-        priceChange24h: 1.0, // REAL +1.0% 24h change (mainnet)  
-        volume24h: 11735000, // REAL $11,735K volume (mainnet)
-        marketCap: 21000000, // REAL market cap calculated from mainnet
-        totalSupply: 100000000, // REAL total supply from mainnet
-        circulatingSupply: 60000000, // REAL circulating supply from mainnet
-        stakingAPY: 8.5, // REAL staking APY
-        totalStaked: 21000000, // REAL staked amount
-        holders: 1247 // REAL holder count from mainnet
+        currentPrice: 0.000001, // Estimated price (token exists but no major DEX trading)
+        priceChange24h: 0.0, // No trading data available
+        volume24h: 0, // No trading volume (not on major DEX)
+        marketCap: 1000, // Estimated based on supply
+        totalSupply: 999999999, // REAL from mainnet RPC: 999,999,999.995357
+        circulatingSupply: 999999999, // Same as total (no locks detected)
+        stakingAPY: 0, // No staking program detected
+        totalStaked: 0, // No staking
+        holders: 1 // Minimal holders (creator wallet)
       };
     }
   }

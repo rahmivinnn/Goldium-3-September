@@ -24,17 +24,17 @@ import { ClientWalletTester } from '@/components/client-wallet-tester';
 export default function HomeSimple() {
   console.log('🏠 HomeSimple component is rendering - MAINNET PRODUCTION...');
   
-  // REAL GOLDIUM mainnet data - PRODUCTION
+  // REAL GOLDIUM mainnet data - TOKEN EXISTS BUT NOT ACTIVELY TRADED
   const [tokenData, setTokenData] = useState<RealTimeTokenData>({
-    currentPrice: 0.21, // REAL GOLDIUM price $0.21 (mainnet)
-    priceChange24h: 1.0, // REAL +1.0% 24h change (mainnet)
-    volume24h: 11735000, // REAL $11,735K volume (mainnet)
-    marketCap: 21000000, // REAL market cap from mainnet
-    totalSupply: 100000000, // REAL total supply from mainnet
-    circulatingSupply: 60000000, // REAL circulating supply from mainnet
-    stakingAPY: 8.5, // REAL staking APY
-    totalStaked: 21000000, // REAL staked amount
-    holders: 1247 // REAL holder count from mainnet
+    currentPrice: 0.000001, // Real estimated price (token exists, no major DEX trading)
+    priceChange24h: 0.0, // No trading data available
+    volume24h: 0, // No trading volume (not on major DEX)
+    marketCap: 1000, // Estimated market cap
+    totalSupply: 999999999, // REAL from mainnet: 999,999,999.995357 tokens
+    circulatingSupply: 999999999, // Same as total supply
+    stakingAPY: 0, // No staking program
+    totalStaked: 0, // No staking
+    holders: 1 // Minimal holders detected
   });
   
   const [loading, setLoading] = useState(true);
@@ -198,14 +198,28 @@ export default function HomeSimple() {
             The Future of Decentralized Finance on Solana
           </p>
           
+          {/* Token Status Disclaimer */}
+          <div className="bg-blue-500/20 border border-blue-400 rounded-lg p-4 max-w-2xl mx-auto">
+            <div className="flex items-center gap-2 text-blue-400 font-bold mb-2">
+              <ExternalLink className="w-4 h-4" />
+              GOLDIUM Token Status
+            </div>
+            <p className="text-blue-300 text-sm">
+              ✅ Token exists on Solana mainnet<br/>
+              📊 Total Supply: {tokenData.totalSupply.toLocaleString()} tokens<br/>
+              ⚠️ Not actively traded on major DEX yet<br/>
+              💡 Price estimates based on theoretical calculations
+            </p>
+          </div>
+          
           {/* Price Cards */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
             <Card className="bg-black/20 backdrop-blur-xl border border-white/10">
               <CardContent className="p-4 text-center">
                 <div className="text-2xl font-bold text-yellow-400">
-                  <AnimatedNumber value={tokenData.currentPrice} decimals={4} prefix="$" />
+                  <AnimatedNumber value={tokenData.currentPrice} decimals={6} prefix="$" />
                 </div>
-                <div className="text-sm text-gray-400">Current Price</div>
+                <div className="text-sm text-gray-400">Estimated Price</div>
               </CardContent>
             </Card>
             
