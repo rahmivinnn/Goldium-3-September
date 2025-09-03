@@ -245,12 +245,12 @@ export default function HomeSimple() {
                   className="w-6 h-6 filter drop-shadow-lg"
                 />
               </div>
-              <div className="text-2xl font-bold chainzoku-title font-['Space_Grotesk'] tracking-tight text-white">GOLDIUM</div>
+              <div className="font-section-title holographic-gold tracking-tight">GOLDIUM</div>
             </div>
             <div className="hidden lg:flex items-center space-x-8">
-              <a href="#brand" className="text-white/80 hover:text-white transition-all duration-300 font-medium font-['Inter'] text-sm uppercase tracking-wide hover:scale-105">Brand</a>
-              <a href="#defi" className="text-white/80 hover:text-white transition-all duration-300 font-medium font-['Inter'] text-sm uppercase tracking-wide hover:scale-105">DeFi</a>
-              <a href="#tokenomics" className="text-white/80 hover:text-white transition-all duration-300 font-medium font-['Inter'] text-sm uppercase tracking-wide hover:scale-105">Tokenomics</a>
+              <a href="#brand" className="font-small text-white/80 hover:text-white transition-all duration-300 uppercase tracking-wide hover:scale-105">Brand</a>
+              <a href="#defi" className="font-small text-white/80 hover:text-white transition-all duration-300 uppercase tracking-wide hover:scale-105">DeFi</a>
+              <a href="#tokenomics" className="font-small text-white/80 hover:text-white transition-all duration-300 uppercase tracking-wide hover:scale-105">Tokenomics</a>
               {/* EFFICIENT WALLET BALANCE - RATE LIMIT FRIENDLY */}
               <EfficientWalletBalance />
               <ExternalWalletSelector />
@@ -362,7 +362,7 @@ export default function HomeSimple() {
                   )}
                 </Button>
                 {!externalWallet.connected && (
-                  <p className="text-sm text-white/70 text-center font-['Inter'] font-medium mt-4">Connect your wallet to purchase GOLDIUM</p>
+                  <p className="font-small text-white/70 text-center mt-4">Connect your wallet to purchase GOLDIUM</p>
                 )}
               </div>
               <div className="chainzoku-card p-6">
@@ -386,7 +386,7 @@ export default function HomeSimple() {
                 </div>
                 <Button
                   onClick={() => window.open('https://twitter.com/goldiumofficial', '_blank')}
-                  className="sophisticated-button elegant-glow w-full py-3 text-base font-bold holographic-gold"
+                  className="sophisticated-button elegant-glow w-full py-3  font-bold holographic-gold"
                 >
                   <div className="flex items-center justify-center gap-2">
                     <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
@@ -422,13 +422,13 @@ export default function HomeSimple() {
         
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-20 chainzoku-fade-in">
-            <h2 className="text-6xl md:text-7xl lg:text-8xl font-black text-white mb-8 font-['Orbitron'] uppercase tracking-wider">
-              <span className="chainzoku-title chainzoku-glow" data-text="MARKET OVERVIEW">
+            <h2 className="font-main-title text-white mb-8 uppercase tracking-wider">
+              <span className="metaverse-text holographic-gold golden-3d">
                 MARKET OVERVIEW
               </span>
             </h2>
-            <p className="text-2xl sm:text-3xl text-white/85 max-w-5xl mx-auto font-['Exo_2'] font-bold leading-relaxed chainzoku-subtitle">
-              🚀 REAL-TIME PERFORMANCE METRICS & MARKET STATISTICS 📊
+            <p className="font-subtitle text-white/80 max-w-4xl mx-auto leading-relaxed">
+              Real-time performance metrics and market statistics
             </p>
           </div>
           
@@ -440,7 +440,7 @@ export default function HomeSimple() {
                 </svg>
               </div>
               <div className="font-small text-white/80 mb-4 uppercase tracking-wider">💰 GOLDIUM PRICE</div>
-              <div className="font-stats text-white mb-6">${tokenData ? tokenData.currentPrice.toFixed(6) : '0.000000'}</div>
+              <div className="font-stats holographic-gold mb-6">${tokenData ? tokenData.currentPrice.toFixed(6) : '0.000000'}</div>
               <div className="bg-black border border-white/10 text-white font-small px-6 py-3 rounded-2xl shadow-lg shadow-white/20 uppercase chainzoku-glow">{tokenData ? `+${tokenData.priceChange24h.toFixed(1)}%` : '+0.0%'} 🚀</div>
             </div>
             
@@ -451,7 +451,7 @@ export default function HomeSimple() {
                 </svg>
               </div>
               <div className="font-small text-white/80 mb-4 uppercase tracking-wider">📊 MARKET CAP</div>
-              <div className="font-stats text-white mb-6">${tokenData ? (tokenData.marketCap / 1000000).toFixed(1) : '0.0'}M</div>
+              <div className="font-stats holographic-gold mb-6">${tokenData ? (tokenData.marketCap / 1000000).toFixed(1) : '0.0'}M</div>
               <div className="bg-black border border-white/10 text-white font-small px-6 py-3 rounded-2xl shadow-lg shadow-white/20 uppercase chainzoku-glow">+5.7% 📈</div>
             </div>
             
@@ -462,7 +462,7 @@ export default function HomeSimple() {
                 </svg>
               </div>
               <div className="font-small text-white/80 mb-4 uppercase tracking-wider">⚡ 24H VOLUME</div>
-              <div className="font-stats text-white mb-6">${tokenData ? (tokenData.volume24h / 1000).toFixed(0) : '0'}K</div>
+              <div className="font-stats holographic-gold mb-6">${tokenData ? (tokenData.volume24h / 1000).toFixed(0) : '0'}K</div>
               <div className="bg-black border border-white/10 text-white font-small px-6 py-3 rounded-2xl shadow-lg shadow-white/20 uppercase chainzoku-glow">+12.4% 💥</div>
             </div>
             
@@ -473,7 +473,7 @@ export default function HomeSimple() {
                 </svg>
               </div>
               <div className="font-small text-white/80 mb-4 uppercase tracking-wider">👥 HOLDERS</div>
-              <div className="font-stats text-white mb-6">{tokenData ? tokenData.holders.toLocaleString() : '0'}</div>
+              <div className="font-stats holographic-gold mb-6">{tokenData ? tokenData.holders.toLocaleString() : '0'}</div>
               <div className="bg-black border border-white/10 text-white font-small px-6 py-3 rounded-2xl shadow-lg shadow-white/20 uppercase chainzoku-glow">+8.2% 🔥</div>
             </div>
           </div>
@@ -501,19 +501,19 @@ export default function HomeSimple() {
           
           <Tabs defaultValue="swap" className="w-full max-w-7xl mx-auto">
             <TabsList className="grid w-full grid-cols-5 mb-16 bg-black/80 border border-white/20 rounded-2xl p-3 shadow-lg shadow-white/10">
-                <TabsTrigger value="swap" className="text-white data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:border data-[state=active]:border-white/20 font-bold rounded-xl py-4 px-8 font-['Space_Grotesk'] uppercase tracking-wide transition-all duration-300 hover:bg-black/50 text-base">
+                <TabsTrigger value="swap" className="font-body text-white data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:border data-[state=active]:border-white/20 font-bold rounded-xl py-4 px-8 uppercase tracking-wide transition-all duration-300 hover:bg-black/50">
                   Swap
                 </TabsTrigger>
-                <TabsTrigger value="stake" className="text-white data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:border data-[state=active]:border-white/20 font-bold rounded-xl py-4 px-8 font-['Space_Grotesk'] uppercase tracking-wide transition-all duration-300 hover:bg-black/50 text-base">
+                <TabsTrigger value="stake" className="text-white data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:border data-[state=active]:border-white/20 font-bold rounded-xl py-4 px-8 font-body uppercase tracking-wide transition-all duration-300 hover:bg-black/50 ">
                   Stake
                 </TabsTrigger>
-                <TabsTrigger value="dragon" className="text-white data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:border data-[state=active]:border-white/20 font-bold rounded-xl py-4 px-8 font-['Space_Grotesk'] uppercase tracking-wide transition-all duration-300 hover:bg-black/50 text-base">
+                <TabsTrigger value="dragon" className="text-white data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:border data-[state=active]:border-white/20 font-bold rounded-xl py-4 px-8 font-body uppercase tracking-wide transition-all duration-300 hover:bg-black/50 ">
                   Dragon
                 </TabsTrigger>
-                <TabsTrigger value="send" className="text-white data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:border data-[state=active]:border-white/20 font-bold rounded-xl py-4 px-8 font-['Space_Grotesk'] uppercase tracking-wide transition-all duration-300 hover:bg-black/50 text-base">
+                <TabsTrigger value="send" className="text-white data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:border data-[state=active]:border-white/20 font-bold rounded-xl py-4 px-8 font-body uppercase tracking-wide transition-all duration-300 hover:bg-black/50 ">
                   Send
                 </TabsTrigger>
-                <TabsTrigger value="history" className="text-white data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:border data-[state=active]:border-white/20 font-bold rounded-xl py-4 px-8 font-['Space_Grotesk'] uppercase tracking-wide transition-all duration-300 hover:bg-black/50 text-base">
+                <TabsTrigger value="history" className="text-white data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:border data-[state=active]:border-white/20 font-bold rounded-xl py-4 px-8 font-body uppercase tracking-wide transition-all duration-300 hover:bg-black/50 ">
                   History
                 </TabsTrigger>
               </TabsList>
@@ -691,7 +691,7 @@ export default function HomeSimple() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-10 lg:gap-12 mb-8 sm:mb-10 lg:mb-12">
             <div className="space-y-3 sm:space-y-4 sm:col-span-2 md:col-span-1">
               <div className="text-2xl sm:text-3xl font-bold text-white">GOLDIUM</div>
-              <p className="text-white/60 leading-relaxed text-sm sm:text-base">
+              <p className="text-white/60 leading-relaxed text-sm sm:">
                 The future of digital gold on Solana blockchain. Secure, fast, and decentralized.
               </p>
               <div className="flex space-x-3 sm:space-x-4">
@@ -714,29 +714,29 @@ export default function HomeSimple() {
             </div>
 
             <div className="space-y-3 sm:space-y-4">
-              <h3 className="text-base sm:text-lg font-semibold text-white">Product</h3>
+              <h3 className=" sm:text-lg font-semibold text-white">Product</h3>
               <div className="space-y-1 sm:space-y-2">
-                <a href="#defi" className="block text-white/60 hover:text-white transition-colors text-sm sm:text-base">DeFi App</a>
-                <a href="#tokenomics" className="block text-white/60 hover:text-white transition-colors text-sm sm:text-base">Tokenomics</a>
-                <a href="#" className="block text-white/60 hover:text-white transition-colors text-sm sm:text-base">API</a>
+                <a href="#defi" className="block text-white/60 hover:text-white transition-colors text-sm sm:">DeFi App</a>
+                <a href="#tokenomics" className="block text-white/60 hover:text-white transition-colors text-sm sm:">Tokenomics</a>
+                <a href="#" className="block text-white/60 hover:text-white transition-colors text-sm sm:">API</a>
               </div>
             </div>
 
             <div className="space-y-3 sm:space-y-4">
-              <h3 className="text-base sm:text-lg font-semibold text-white">Resources</h3>
+              <h3 className=" sm:text-lg font-semibold text-white">Resources</h3>
               <div className="space-y-1 sm:space-y-2">
-                <a href="#" className="block text-white/60 hover:text-white transition-colors text-sm sm:text-base">Documentation</a>
-                <a href="#" className="block text-white/60 hover:text-white transition-colors text-sm sm:text-base">Whitepaper</a>
-                <a href="#" className="block text-white/60 hover:text-white transition-colors text-sm sm:text-base">Security Audit</a>
+                <a href="#" className="block text-white/60 hover:text-white transition-colors text-sm sm:">Documentation</a>
+                <a href="#" className="block text-white/60 hover:text-white transition-colors text-sm sm:">Whitepaper</a>
+                <a href="#" className="block text-white/60 hover:text-white transition-colors text-sm sm:">Security Audit</a>
               </div>
             </div>
 
             <div className="space-y-3 sm:space-y-4">
-              <h3 className="text-base sm:text-lg font-semibold text-white">Support</h3>
+              <h3 className=" sm:text-lg font-semibold text-white">Support</h3>
               <div className="space-y-1 sm:space-y-2">
-                <a href="#" className="block text-white/60 hover:text-white transition-colors text-sm sm:text-base">Help Center</a>
-                <a href="#" className="block text-white/60 hover:text-white transition-colors text-sm sm:text-base">Contact Us</a>
-                <a href="#" className="block text-white/60 hover:text-white transition-colors text-sm sm:text-base">Status</a>
+                <a href="#" className="block text-white/60 hover:text-white transition-colors text-sm sm:">Help Center</a>
+                <a href="#" className="block text-white/60 hover:text-white transition-colors text-sm sm:">Contact Us</a>
+                <a href="#" className="block text-white/60 hover:text-white transition-colors text-sm sm:">Status</a>
               </div>
             </div>
           </div>
