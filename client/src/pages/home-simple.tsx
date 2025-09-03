@@ -169,37 +169,66 @@ export default function HomeSimple() {
 
   return (
     <div className="min-h-screen bg-black text-white relative overflow-hidden">
-      {/* Metaverse Background Effects */}
-      <div className="fixed inset-0 metaverse-grid opacity-30"></div>
-      
-      {/* Metaverse Floating Particles */}
-      <div className="fixed inset-0 pointer-events-none">
-        {[...Array(12)].map((_, i) => (
+      {/* Golden Sparkles Background */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        {/* Golden Sparkles */}
+        {[...Array(15)].map((_, i) => (
           <div
-            key={i}
-            className="metaverse-particle"
+            key={`sparkle-${i}`}
+            className="golden-sparkle"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              width: `${Math.random() * 3 + 1}px`,
+              height: `${Math.random() * 3 + 1}px`,
+              animationDelay: `${Math.random() * 4}s`,
+              animationDuration: `${Math.random() * 2 + 4}s`
+            }}
+          />
+        ))}
+        
+        {/* Golden Particles */}
+        {[...Array(8)].map((_, i) => (
+          <div
+            key={`particle-${i}`}
+            className="golden-particle"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
               width: `${Math.random() * 4 + 2}px`,
               height: `${Math.random() * 4 + 2}px`,
-              animationDelay: `${Math.random() * 8}s`,
-              animationDuration: `${Math.random() * 4 + 6}s`
+              animationDelay: `${Math.random() * 10}s`,
+              animationDuration: `${Math.random() * 4 + 8}s`
             }}
           />
         ))}
-      </div>
-      
-      {/* Metaverse Data Streams */}
-      <div className="fixed inset-0 pointer-events-none">
-        {[...Array(6)].map((_, i) => (
+        
+        {/* Shooting Stars */}
+        {[...Array(2)].map((_, i) => (
           <div
-            key={i}
-            className="metaverse-stream"
+            key={`star-${i}`}
+            className="shooting-star"
+            style={{
+              top: `${Math.random() * 60 + 20}%`,
+              width: `${Math.random() * 80 + 40}px`,
+              animationDelay: `${Math.random() * 8 + i * 4}s`,
+              animationDuration: `${Math.random() * 3 + 5}s`
+            }}
+          />
+        ))}
+        
+        {/* Golden Glow Orbs */}
+        {[...Array(3)].map((_, i) => (
+          <div
+            key={`orb-${i}`}
+            className="golden-glow-orb"
             style={{
               left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 4}s`,
-              animationDuration: `${Math.random() * 2 + 3}s`
+              top: `${Math.random() * 100}%`,
+              width: `${Math.random() * 100 + 60}px`,
+              height: `${Math.random() * 100 + 60}px`,
+              animationDelay: `${Math.random() * 8}s`,
+              animationDuration: `${Math.random() * 4 + 8}s`
             }}
           />
         ))}

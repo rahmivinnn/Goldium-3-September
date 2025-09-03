@@ -35,7 +35,7 @@ export default function Dashboard() {
       {/* Golden Sparkles Background */}
       <div className="fixed inset-0 pointer-events-none z-0">
         {/* Golden Sparkles */}
-        {[...Array(20)].map((_, i) => (
+        {[...Array(10)].map((_, i) => (
           <div
             key={`sparkle-${i}`}
             className="golden-sparkle"
@@ -51,7 +51,7 @@ export default function Dashboard() {
         ))}
         
         {/* Golden Particles */}
-        {[...Array(10)].map((_, i) => (
+        {[...Array(6)].map((_, i) => (
           <div
             key={`particle-${i}`}
             className="golden-particle"
@@ -81,7 +81,7 @@ export default function Dashboard() {
         ))}
         
         {/* Golden Glow Orbs */}
-        {[...Array(3)].map((_, i) => (
+        {[...Array(2)].map((_, i) => (
           <div
             key={`orb-${i}`}
             className="golden-glow-orb"

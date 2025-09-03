@@ -60,7 +60,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
           {/* Golden Sparkles Background */}
           <div className="absolute inset-0">
             {/* Golden Sparkles */}
-            {[...Array(30)].map((_, i) => (
+            {[...Array(12)].map((_, i) => (
               <motion.div
                 key={`sparkle-${i}`}
                 className="absolute golden-sparkle"
@@ -86,7 +86,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
             ))}
             
             {/* Golden Particles */}
-            {[...Array(15)].map((_, i) => (
+            {[...Array(8)].map((_, i) => (
               <motion.div
                 key={`particle-${i}`}
                 className="absolute golden-particle"
@@ -112,7 +112,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
             ))}
             
             {/* Shooting Stars */}
-            {[...Array(3)].map((_, i) => (
+            {[...Array(2)].map((_, i) => (
               <motion.div
                 key={`star-${i}`}
                 className="absolute shooting-star"

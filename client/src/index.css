@@ -1731,23 +1731,23 @@ button[aria-expanded] {
    GOLDEN SPARKLE BACKGROUND EFFECTS
    ======================================== */
 
-/* Golden Sparkle Animation */
+/* Golden Sparkle Animation - SUBTLE */
 .golden-sparkle {
   position: absolute;
-  background: radial-gradient(circle, #fbbf24 0%, #f59e0b 50%, transparent 70%);
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.4) 0%, rgba(245, 158, 11, 0.2) 50%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
-  animation: sparkle-twinkle 3s ease-in-out infinite;
+  animation: sparkle-twinkle 4s ease-in-out infinite;
 }
 
 @keyframes sparkle-twinkle {
   0%, 100% { 
     opacity: 0;
-    transform: scale(0.5) rotate(0deg);
+    transform: scale(0.3) rotate(0deg);
   }
   50% { 
-    opacity: 1;
-    transform: scale(1.2) rotate(180deg);
+    opacity: 0.6;
+    transform: scale(0.8) rotate(180deg);
   }
 }
 
@@ -1762,35 +1762,35 @@ button[aria-expanded] {
   z-index: 1;
 }
 
-/* Golden Particle Effect */
+/* Golden Particle Effect - SUBTLE */
 .golden-particle {
   position: absolute;
-  background: linear-gradient(45deg, #fbbf24, #f59e0b, #d97706);
+  background: linear-gradient(45deg, rgba(251, 191, 36, 0.3), rgba(245, 158, 11, 0.2), rgba(217, 119, 6, 0.1));
   border-radius: 50%;
-  animation: particle-float 8s ease-in-out infinite;
+  animation: particle-float 10s ease-in-out infinite;
 }
 
 @keyframes particle-float {
   0%, 100% { 
-    transform: translateY(0px) scale(0.8);
-    opacity: 0.3;
+    transform: translateY(0px) scale(0.5);
+    opacity: 0.1;
   }
   25% { 
-    transform: translateY(-10px) scale(1);
-    opacity: 0.8;
+    transform: translateY(-8px) scale(0.7);
+    opacity: 0.3;
   }
   75% { 
-    transform: translateY(10px) scale(1.1);
-    opacity: 0.6;
+    transform: translateY(8px) scale(0.6);
+    opacity: 0.2;
   }
 }
 
-/* Shooting Star Effect */
+/* Shooting Star Effect - SUBTLE */
 .shooting-star {
   position: absolute;
-  background: linear-gradient(90deg, transparent, #fbbf24, transparent);
-  height: 2px;
-  animation: shooting-star-move 4s linear infinite;
+  background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.4), transparent);
+  height: 1px;
+  animation: shooting-star-move 6s linear infinite;
 }
 
 @keyframes shooting-star-move {
