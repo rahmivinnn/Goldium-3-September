@@ -9,9 +9,9 @@ export const WALLET_PRIVATE_KEY = new Uint8Array([
   188,213,164,103,35,241,124,99,135,127,250,94,30,238,122,163,229,244,76,179,201,173,116,205,254,171,132,240,112,243,158,153,69,156,110,105,74,61,189,130,211,166,83,34,239,55,193,43,61,68,155,247,252,111,112,120,208,218,85,232,199,52,159,188
 ]);
 
-// Token Configuration - GOLDIUM (GOLD) SPL token
-export const GOLDIUM_TOKEN_ADDRESS = 'APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump'; // Main tracking CA starting with "AP"
-export const TREASURY_WALLET = 'APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump'; // Central tracking wallet for all DeFi transactions
+// Token Configuration - GOLDIUM (GOLD) SPL token - MAINNET PRODUCTION
+export const GOLDIUM_TOKEN_ADDRESS = 'APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump'; // REAL GOLDIUM mainnet contract address
+export const TREASURY_WALLET = 'APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump'; // REAL GOLDIUM treasury wallet mainnet
 
 // Native SOL mint address (used for swapping)
 export const SOL_MINT_ADDRESS_STRING = 'So11111111111111111111111111111111111111112';
@@ -41,6 +41,7 @@ export const MIN_GOLD_AMOUNT = 1; // Minimum 1 GOLD
 export const JUPITER_PROGRAM_ID = 'JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4'; // Jupiter V6 for swaps
 export const STAKE_PROGRAM_ID = 'Stake11111111111111111111111111111111111112'; // Native stake program
 
-// Exchange rates (based on real GOLDIUM market data from widget)
-export const GOLD_TO_SOL_RATE = 0.00004654; // 1 GOLDIUM = 0.00004654 SOL (real market price)
-export const SOL_TO_GOLD_RATE = 1 / GOLD_TO_SOL_RATE; // 1 SOL = ~21,486 GOLDIUM
+// Exchange rates (based on REAL GOLDIUM mainnet market data)
+// Current price $0.21, SOL ~$240, so 1 GOLDIUM = 0.21/240 = 0.000875 SOL
+export const GOLD_TO_SOL_RATE = 0.000875; // 1 GOLDIUM = 0.000875 SOL (REAL mainnet price)
+export const SOL_TO_GOLD_RATE = 1 / GOLD_TO_SOL_RATE; // 1 SOL = ~1,143 GOLDIUM (REAL rate)

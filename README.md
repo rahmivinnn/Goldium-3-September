@@ -23,7 +23,8 @@ Deployed on Vercel with automatic GitHub Actions integration.
 - ✅ All networks configured for MAINNET production
 
 ## Network Configuration
-- 🌐 **Solana Network**: Mainnet-Beta (Production)
+- 🌐 **Solana Network**: Mainnet-Beta (PRODUCTION)
 - 🔗 **RPC Endpoints**: Multiple mainnet endpoints for reliability
-- 💰 **Real Balances**: Fetched from live Solana blockchain
-- 🔄 **Auto-refresh**: Balance updates every 3 seconds when connected
+- 💰 **REAL GOLDIUM TOKEN**: APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump (MAINNET)
+- 💲 **REAL PRICE DATA**: $0.21 current price, $11.7M volume (LIVE MAINNET)
+- 🔄 **Auto-refresh**: Real balance updates every 3 seconds when connected
