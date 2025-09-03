@@ -165,24 +165,56 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
             }}
           >
             <motion.h1
-              className="text-6xl md:text-8xl font-bold bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-600 bg-clip-text text-transparent filter drop-shadow-2xl"
+              className="text-6xl md:text-8xl font-bold holographic-gold golden-3d"
               whileHover={{ scale: 1.05 }}
             >
               GOLDIUM
             </motion.h1>
             
-            {/* Simplified title glow effect */}
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-600 opacity-10 blur-lg"
-              animate={{
-                opacity: [0.1, 0.2, 0.1]
-              }}
-              transition={{ 
-                duration: 3, 
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            />
+            {/* ULTRA PREMIUM BACKGROUND EFFECTS */}
+            <div className="matrix-rain">
+              {Array.from({ length: 20 }, (_, i) => (
+                <div
+                  key={i}
+                  className="matrix-drop"
+                  style={{
+                    left: `${Math.random() * 100}%`,
+                    animationDelay: `${Math.random() * 10}s`,
+                    animationDuration: `${8 + Math.random() * 4}s`
+                  }}
+                >
+                  {Math.random() > 0.5 ? '₿' : '◊'}
+                </div>
+              ))}
+            </div>
+            
+            {/* QUANTUM PARTICLES */}
+            {Array.from({ length: 15 }, (_, i) => (
+              <div
+                key={i}
+                className="quantum-particle"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  animationDelay: `${Math.random() * 8}s`
+                }}
+              />
+            ))}
+            
+            {/* FLOATING ORBS */}
+            {Array.from({ length: 8 }, (_, i) => (
+              <div
+                key={i}
+                className="floating-orb"
+                style={{
+                  width: `${20 + Math.random() * 40}px`,
+                  height: `${20 + Math.random() * 40}px`,
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  animationDelay: `${Math.random() * 15}s`
+                }}
+              />
+            ))}
           </motion.div>
 
           {/* Happy K1-K5 Characters */}

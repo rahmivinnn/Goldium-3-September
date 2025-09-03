@@ -31,7 +31,7 @@ export default function Dashboard() {
   const wallet = useSolanaWallet();
 
   return (
-    <div className="min-h-screen bg-black text-white relative overflow-hidden">
+    <div className="min-h-screen bg-black cyber-grid text-white relative overflow-hidden">
       {/* Golden Sparkles Background */}
       <div className="fixed inset-0 pointer-events-none z-0">
         {/* Golden Sparkles */}
@@ -107,7 +107,7 @@ export default function Dashboard() {
                   alt="Goldium Logo" 
                   className="w-8 h-8 filter drop-shadow-lg"
                 />
-                <div className="text-2xl font-black text-golden-large">$GOLDIUM</div>
+                <div className="text-2xl font-black holographic-gold golden-3d">$GOLDIUM</div>
               </div>
               <div className="hidden md:flex items-center space-x-6">
                 <a href="/" className="text-golden-small hover:text-golden transition-colors font-medium">
@@ -145,12 +145,42 @@ export default function Dashboard() {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
+      <div className="max-w-7xl mx-auto px-6 py-8 relative">
+        {/* MATRIX RAIN BACKGROUND */}
+        <div className="matrix-rain">
+          {Array.from({ length: 12 }, (_, i) => (
+            <div
+              key={i}
+              className="matrix-drop"
+              style={{
+                left: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 10}s`,
+                animationDuration: `${10 + Math.random() * 5}s`
+              }}
+            >
+              {['₿', '◊', '⬢', '◈'][Math.floor(Math.random() * 4)]}
+            </div>
+          ))}
+        </div>
+        
+        {/* QUANTUM PARTICLES */}
+        {Array.from({ length: 10 }, (_, i) => (
+          <div
+            key={i}
+            className="quantum-particle"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 8}s`
+            }}
+          />
+        ))}
+        
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="font-main-title text-golden-large luxury-glow mb-2">Trading Dashboard</h1>
+              <h1 className="font-main-title text-golden-large holographic-gold golden-3d mb-2">Trading Dashboard</h1>
               <p className="font-subtitle text-golden">
                 Real-time portfolio management and DeFi trading platform
               </p>
@@ -182,7 +212,7 @@ export default function Dashboard() {
           {/* Right Column - Trading Interface */}
           <div className="space-y-6">
             {/* Quick Stats */}
-            <Card className="p-6 bg-black border-white/10 premium-card premium-shimmer">
+            <Card className="p-6 bg-black border-white/10 premium-card premium-shimmer neon-border">
               <CardHeader className="pb-4">
                 <CardTitle className="font-card-title text-golden flex items-center gap-2">
                   <Activity className="w-5 h-5 text-golden-small" />
@@ -193,19 +223,19 @@ export default function Dashboard() {
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="text-center p-3 bg-black border border-white/10 rounded-lg">
-                    <div className="font-stats text-golden mb-1">+12.5%</div>
+                    <div className="font-stats holographic-gold mb-1">+12.5%</div>
                     <div className="font-small text-golden-small">24h P&L</div>
                   </div>
                   <div className="text-center p-3 bg-black border border-white/10 rounded-lg">
-                    <div className="font-stats text-golden mb-1">8</div>
+                    <div className="font-stats holographic-gold mb-1">8</div>
                     <div className="font-small text-golden-small">Active Positions</div>
                   </div>
                   <div className="text-center p-3 bg-black border border-white/10 rounded-lg">
-                    <div className="font-stats text-golden mb-1">$2.1K</div>
+                    <div className="font-stats holographic-gold mb-1">$2.1K</div>
                     <div className="font-small text-golden-small">24h Volume</div>
                   </div>
                   <div className="text-center p-3 bg-black border border-white/10 rounded-lg">
-                    <div className="font-stats text-golden mb-1">95%</div>
+                    <div className="font-stats holographic-gold mb-1">95%</div>
                     <div className="font-small text-golden-small">Win Rate</div>
                   </div>
                 </div>
@@ -213,7 +243,7 @@ export default function Dashboard() {
             </Card>
 
             {/* Trading Interface */}
-            <Card className="p-6 bg-black border-white/10 premium-card premium-shimmer">
+            <Card className="p-6 bg-black border-white/10 premium-card premium-shimmer neon-border">
               <CardHeader className="pb-4">
                 <CardTitle className="font-card-title text-golden flex items-center gap-2">
                   <TrendingUp className="w-5 h-5 text-golden-small" />
@@ -245,7 +275,7 @@ export default function Dashboard() {
             </Card>
 
             {/* Market Insights */}
-            <Card className="p-6 bg-black border-white/10 premium-card premium-shimmer">
+            <Card className="p-6 bg-black border-white/10 premium-card premium-shimmer neon-border">
               <CardHeader className="pb-4">
                 <CardTitle className="font-card-title text-golden flex items-center gap-2">
                   <BarChart3 className="w-5 h-5 text-golden-small" />

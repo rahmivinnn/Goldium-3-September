@@ -205,12 +205,12 @@ export function BalanceCards() {
             </div>
           </div>
           <div className="space-y-3">
-            <p className="font-stats text-white tracking-tight">
+            <p className="font-stats tracking-tight">
               {isCheckingBalance ? (
-                <span className="animate-pulse">Checking...</span>
+                <span className="animate-pulse holographic-gold">Checking...</span>
               ) : (
                 <>
-                  {currentBalance.toFixed(4)}
+                  <span className="holographic-gold golden-3d">{currentBalance.toFixed(4)}</span>
                   <span className="text-lg font-normal text-white/70 ml-2">SOL</span>
                 </>
               )}
@@ -252,7 +252,7 @@ export function BalanceCards() {
       </Card>
 
       {/* GOLD Balance */}
-      <Card className="group bg-black backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-500 transform hover:scale-[1.02] hover:shadow-2xl hover:shadow-white/10">
+      <Card className="group bg-black backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-500 transform hover:scale-[1.02] hover:shadow-2xl hover:shadow-white/10 premium-card neon-border power-glow">
         <CardContent className="p-8">
           <div className="flex items-center justify-between mb-6">
             <div>
@@ -282,8 +282,8 @@ export function BalanceCards() {
             </div>
           </div>
           <div className="space-y-3">
-            <p className="font-stats text-white tracking-tight">
-              {safeBalances.gold.toFixed(2)}
+            <p className="font-stats tracking-tight">
+              <span className="holographic-gold golden-3d">{safeBalances.gold.toFixed(2)}</span>
               <span className="text-lg font-normal text-white/70 ml-2">GOLD</span>
             </p>
             <div className="flex items-center justify-between">
@@ -310,11 +310,11 @@ export function BalanceCards() {
       </Card>
 
       {/* Staked GOLD */}
-      <Card className="group bg-gradient-to-br from-emerald-900/90 to-green-900/90 backdrop-blur-xl border border-emerald-500/20 hover:border-emerald-400/40 transition-all duration-500 transform hover:scale-[1.02] hover:shadow-2xl hover:shadow-emerald-500/10">
+      <Card className="group bg-black backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-500 transform hover:scale-[1.02] hover:shadow-2xl hover:shadow-white/10 premium-card neon-border power-glow">
         <CardContent className="p-8">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h3 className="text-xl font-bold bg-gradient-to-r from-emerald-400 to-green-300 bg-clip-text text-transparent tracking-tight">
+              <h3 className="text-xl font-bold holographic-gold tracking-tight">
                 Staked GOLD
               </h3>
               <p className="text-xs font-medium text-emerald-300/70 mt-1 tracking-wider uppercase">

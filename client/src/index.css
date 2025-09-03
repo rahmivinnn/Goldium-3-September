@@ -1728,8 +1728,269 @@ button[aria-expanded] {
 }
 
 /* ========================================
-   PREMIUM GOLDEN EFFECTS - 500M WORTHY
+   ULTRA PREMIUM EFFECTS - 500M WORTHY
    ======================================== */
+
+/* HOLOGRAPHIC GOLDEN TEXT */
+.holographic-gold {
+  background: linear-gradient(
+    45deg,
+    #fbbf24 0%,
+    #f59e0b 25%,
+    #ffffff 50%,
+    #f59e0b 75%,
+    #fbbf24 100%
+  );
+  background-size: 400% 400%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: holographic-shift 3s ease-in-out infinite;
+  text-shadow: 
+    0 0 10px rgba(251, 191, 36, 0.5),
+    0 0 20px rgba(251, 191, 36, 0.3),
+    0 0 30px rgba(251, 191, 36, 0.1);
+}
+
+@keyframes holographic-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* 3D GOLDEN DEPTH */
+.golden-3d {
+  text-shadow: 
+    1px 1px 0 rgba(251, 191, 36, 0.8),
+    2px 2px 0 rgba(245, 158, 11, 0.6),
+    3px 3px 0 rgba(217, 119, 6, 0.4),
+    4px 4px 0 rgba(180, 83, 9, 0.2),
+    5px 5px 10px rgba(0, 0, 0, 0.5);
+  transform-style: preserve-3d;
+}
+
+/* CINEMATIC BACKGROUND SCAN */
+.cinematic-scan {
+  position: relative;
+  overflow: hidden;
+}
+
+.cinematic-scan::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg, 
+    transparent,
+    rgba(251, 191, 36, 0.1),
+    rgba(255, 255, 255, 0.05),
+    rgba(251, 191, 36, 0.1),
+    transparent
+  );
+  animation: cinematic-scan-move 4s ease-in-out infinite;
+}
+
+@keyframes cinematic-scan-move {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* MATRIX RAIN EFFECT */
+.matrix-rain {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.matrix-drop {
+  position: absolute;
+  color: rgba(251, 191, 36, 0.1);
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  animation: matrix-fall 10s linear infinite;
+}
+
+@keyframes matrix-fall {
+  0% { 
+    transform: translateY(-100vh);
+    opacity: 0;
+  }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { 
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+/* NEON GLOW BORDER */
+.neon-border {
+  position: relative;
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.neon-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(45deg, 
+    rgba(251, 191, 36, 0.4),
+    transparent,
+    rgba(251, 191, 36, 0.4),
+    transparent,
+    rgba(251, 191, 36, 0.4)
+  );
+  background-size: 400% 400%;
+  animation: neon-pulse 3s ease-in-out infinite;
+  z-index: -1;
+}
+
+@keyframes neon-pulse {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* FLOATING ORBS */
+.floating-orb {
+  position: absolute;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(251, 191, 36, 0.2) 0%,
+    rgba(245, 158, 11, 0.1) 50%,
+    transparent 100%
+  );
+  border-radius: 50%;
+  animation: float-orbit 15s linear infinite;
+  filter: blur(1px);
+}
+
+@keyframes float-orbit {
+  0% { 
+    transform: rotate(0deg) translateX(200px) rotate(0deg);
+    opacity: 0.1;
+  }
+  50% { 
+    opacity: 0.3;
+  }
+  100% { 
+    transform: rotate(360deg) translateX(200px) rotate(-360deg);
+    opacity: 0.1;
+  }
+}
+
+/* QUANTUM PARTICLES */
+.quantum-particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: rgba(251, 191, 36, 0.8);
+  border-radius: 50%;
+  animation: quantum-dance 8s ease-in-out infinite;
+  box-shadow: 0 0 4px rgba(251, 191, 36, 0.5);
+}
+
+@keyframes quantum-dance {
+  0%, 100% { 
+    transform: translate(0, 0) scale(0.5);
+    opacity: 0.2;
+  }
+  25% { 
+    transform: translate(50px, -30px) scale(1);
+    opacity: 0.8;
+  }
+  50% { 
+    transform: translate(-30px, 50px) scale(0.8);
+    opacity: 0.6;
+  }
+  75% { 
+    transform: translate(-50px, -20px) scale(1.2);
+    opacity: 0.9;
+  }
+}
+
+/* ULTRA POWERFUL BUTTON */
+.ultra-button {
+  position: relative;
+  background: linear-gradient(135deg, rgba(0,0,0,0.9), rgba(0,0,0,0.7));
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.ultra-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.ultra-button:hover::before {
+  left: 100%;
+}
+
+.ultra-button:hover {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(0,0,0,0.9));
+  border-color: rgba(251, 191, 36, 0.6);
+  box-shadow: 
+    0 0 20px rgba(251, 191, 36, 0.2),
+    inset 0 1px 0 rgba(251, 191, 36, 0.1);
+  transform: translateY(-2px);
+}
+
+/* POWER GLOW */
+.power-glow {
+  position: relative;
+}
+
+.power-glow::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, 
+    rgba(251, 191, 36, 0.2),
+    transparent,
+    rgba(251, 191, 36, 0.2)
+  );
+  border-radius: inherit;
+  z-index: -1;
+  animation: power-pulse 2s ease-in-out infinite;
+}
+
+@keyframes power-pulse {
+  0%, 100% { 
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+/* CYBER GRID */
+.cyber-grid {
+  background-image: 
+    linear-gradient(rgba(251, 191, 36, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(251, 191, 36, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: cyber-grid-move 20s linear infinite;
+}
+
+@keyframes cyber-grid-move {
+  0% { background-position: 0 0; }
+  100% { background-position: 50px 50px; }
+}
 
 /* Premium Golden Shimmer */
 .premium-shimmer {
