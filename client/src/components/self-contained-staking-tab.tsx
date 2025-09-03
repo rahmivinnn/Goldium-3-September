@@ -268,7 +268,7 @@ export function SelfContainedStakingTab() {
     <div className="max-W-2xl mx-auto space-y-6">
       {/* Wallet Balance Display */}
       {externalWallet.connected && (
-        <Card className="bg-black border-white/10 hover:border-white/20 transition-all duration-300">
+        <Card className="bg-black border-white/10 hover:border-white/20 transition-all duration-300 premium-card sophisticated-border">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
@@ -290,13 +290,13 @@ export function SelfContainedStakingTab() {
 
       {/* Staking Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <Card className="bg-black border-white/10 hover:border-white/20 transition-all duration-300 transform hover:scale-105">
+        <Card className="bg-black border-white/10 hover:border-white/20 transition-all duration-300 transform hover:scale-105 premium-card sophisticated-border">
           <CardContent className="p-4 text-center">
             <p className="text-2xl font-bold text-white">{STAKING_APY}%</p>
             <p className="text-sm text-white/70">Annual APY</p>
           </CardContent>
         </Card>
-        <Card className="bg-black border-white/10 hover:border-white/20 transition-all duration-300 transform hover:scale-105">
+        <Card className="bg-black border-white/10 hover:border-white/20 transition-all duration-300 transform hover:scale-105 premium-card sophisticated-border">
           <CardContent className="p-4 text-center">
             <p className="text-2xl font-bold text-white">
               {balances.stakedGold.toFixed(2)}
@@ -304,7 +304,7 @@ export function SelfContainedStakingTab() {
             <p className="text-sm text-white/70">GOLD Staked</p>
           </CardContent>
         </Card>
-        <Card className="bg-black border-white/10 hover:border-white/20 transition-all duration-300 transform hover:scale-105">
+        <Card className="bg-black border-white/10 hover:border-white/20 transition-all duration-300 transform hover:scale-105 premium-card sophisticated-border">
           <CardContent className="p-4 text-center">
             <p className="text-2xl font-bold text-white">
               {balances.claimableRewards.toFixed(4)}
@@ -317,7 +317,7 @@ export function SelfContainedStakingTab() {
       {/* Staking Actions */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Stake */}
-        <Card className="bg-black border-white/10 hover:border-white/20 transition-all duration-300">
+        <Card className="bg-black border-white/10 hover:border-white/20 transition-all duration-300 premium-card sophisticated-border">
           <CardContent className="p-6">
             <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
               <span className="mr-2 text-white">🔒</span>
@@ -355,7 +355,7 @@ export function SelfContainedStakingTab() {
         </Card>
 
         {/* Unstake */}
-        <Card className="bg-black border-white/10 hover:border-white/20 transition-all duration-300">
+        <Card className="bg-black border-white/10 hover:border-white/20 transition-all duration-300 premium-card sophisticated-border">
           <CardContent className="p-6">
             <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
               <span className="mr-2 text-white">🔓</span>

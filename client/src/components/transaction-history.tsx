@@ -120,7 +120,7 @@ export function TransactionHistory() {
 
   if (transactions.length === 0) {
     return (
-      <Card className="bg-galaxy-card border-white/20/20">
+      <Card className="bg-black border-white/10 premium-card sophisticated-border">
         <CardHeader>
           <CardTitle className="text-galaxy-bright">Transaction History</CardTitle>
         </CardHeader>
@@ -134,7 +134,7 @@ export function TransactionHistory() {
   }
 
   return (
-    <Card className="bg-galaxy-card border-white/20/20">
+    <Card className="bg-black border-white/10 premium-card sophisticated-border">
       <CardHeader>
         <CardTitle className="text-galaxy-bright flex items-center justify-between">
           Transaction History

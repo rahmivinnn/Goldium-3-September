@@ -31,7 +31,7 @@ const STAKING_STAGES: StageInfo[] = [
     apy: 10,
     icon: "/assets/golden-egg.svg",
     description: "Your GOLD is incubating...",
-    color: "from-black to-gray-900"
+    color: "from-black to-black"
   },
   {
     name: "Cracked Egg",
@@ -55,7 +55,7 @@ const STAKING_STAGES: StageInfo[] = [
     apy: 20,
     icon: "/assets/full-dragon.svg",
     description: "Legendary Golden Dragon!",
-    color: "from-black to-gray-900"
+    color: "from-black to-black"
   }
 ];
 
@@ -389,7 +389,7 @@ const GoldiumGamifiedStaking: React.FC = () => {
   return (
     <div className="w-full max-w-4xl mx-auto space-y-6">
       {/* Header */}
-      <Card className="bg-gradient-to-r from-black via-yellow-500 to-gray-900 text-white">
+      <Card className="bg-black border-white/10 text-white premium-card sophisticated-border">
         <CardHeader>
           <CardTitle className="text-2xl font-bold flex items-center gap-2">
             <Trophy className="w-8 h-8" />
@@ -410,7 +410,7 @@ const GoldiumGamifiedStaking: React.FC = () => {
           </CardHeader>
           <CardContent className="text-center bg-black">
             <div className="space-y-4">
-              <div className={`w-32 h-32 mx-auto rounded-full bg-gradient-to-br ${stakingData ? currentStage.color : 'from-black to-gray-900'} flex items-center justify-center animate-pulse shadow-lg p-2`}>
+              <div className={`w-32 h-32 mx-auto rounded-full bg-gradient-to-br ${stakingData ? currentStage.color : 'from-black to-black'} flex items-center justify-center animate-pulse shadow-lg p-2`}>
                 {stakingData ? (
                   <img 
                     src={currentStage.icon} 
@@ -422,7 +422,7 @@ const GoldiumGamifiedStaking: React.FC = () => {
                 )}
               </div>
               <div>
-                <Badge className={`bg-gradient-to-r ${stakingData ? currentStage.color : 'from-black to-gray-900'} text-white`}>
+                <Badge className={`bg-gradient-to-r ${stakingData ? currentStage.color : 'from-black to-black'} text-white`}>
                   {stakingData ? currentStage.name : 'Golden Egg'}
                 </Badge>
                 <p className="text-sm text-gray-300 mt-2">
@@ -506,7 +506,7 @@ const GoldiumGamifiedStaking: React.FC = () => {
                 <Button 
                   onClick={handleStake} 
                   disabled={loading || !stakeAmount || parseFloat(stakeAmount) <= 0}
-                  className="w-full bg-gradient-to-r from-black to-gray-900 hover:from-black hover:to-gray-900"
+                  className="w-full bg-gradient-to-r from-black to-black hover:from-black hover:to-gray-900"
                 >
                   {loading ? 'Staking...' : 'Start Staking'}
                 </Button>

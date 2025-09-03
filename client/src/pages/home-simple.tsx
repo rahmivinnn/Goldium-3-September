@@ -245,7 +245,7 @@ export default function HomeSimple() {
                   className="w-6 h-6 filter drop-shadow-lg"
                 />
               </div>
-              <div className="font-section-title holographic-gold tracking-tight">GOLDIUM</div>
+              <div className="font-small text-white font-bold tracking-tight">GOLDIUM</div>
             </div>
             <div className="hidden lg:flex items-center space-x-8">
               <a href="#brand" className="font-small text-white/80 hover:text-white transition-all duration-300 uppercase tracking-wide hover:scale-105">Brand</a>
@@ -518,31 +518,31 @@ export default function HomeSimple() {
                 </TabsTrigger>
               </TabsList>
               
-              <TabsContent value="swap" className="min-h-[600px] p-6">
-                <div className="max-w-4xl mx-auto">
+              <TabsContent value="swap" className="min-h-[600px] p-8">
+                <div className="max-w-5xl mx-auto">
                   <SelfContainedSwapTab />
                 </div>
               </TabsContent>
               
-              <TabsContent value="stake" className="min-h-[600px] p-6">
-                <div className="max-w-4xl mx-auto">
+              <TabsContent value="stake" className="min-h-[600px] p-8">
+                <div className="max-w-5xl mx-auto">
                   <SelfContainedStakingTab />
                 </div>
               </TabsContent>
               
-              <TabsContent value="dragon" className="min-h-[600px] p-6">
+              <TabsContent value="dragon" className="min-h-[600px] p-8">
                 <div className="max-w-5xl mx-auto">
                   <GoldiumGamifiedStaking />
                 </div>
               </TabsContent>
               
-              <TabsContent value="send" className="min-h-[600px] p-6">
-                <div className="max-w-4xl mx-auto">
+              <TabsContent value="send" className="min-h-[600px] p-8">
+                <div className="max-w-5xl mx-auto">
                   <RealSendTab />
                 </div>
               </TabsContent>
               
-              <TabsContent value="history" className="min-h-[600px] p-6">
+              <TabsContent value="history" className="min-h-[600px] p-8">
                 <div className="max-w-5xl mx-auto">
                   <TransactionHistory />
                 </div>

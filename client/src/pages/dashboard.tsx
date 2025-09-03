@@ -107,7 +107,7 @@ export default function Dashboard() {
                   alt="Goldium Logo" 
                   className="w-8 h-8 filter drop-shadow-lg"
                 />
-                <div className="text-2xl font-black holographic-gold golden-3d">$GOLDIUM</div>
+                <div className="font-small text-white font-bold">$GOLDIUM</div>
               </div>
               <div className="hidden md:flex items-center space-x-6">
                 <a href="/" className="text-golden-small hover:text-golden transition-colors font-medium">

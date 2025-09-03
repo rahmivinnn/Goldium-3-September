@@ -246,7 +246,7 @@ export function RealSendTab() {
     <div className="max-w-md mx-auto space-y-6">
       {/* Token Selection */}
       <div className="space-y-3">
-        <label className="text-sm font-medium text-galaxy-bright">Send Token</label>
+        <label className="text-sm font-medium text-white">Send Token</label>
         <div className="grid grid-cols-2 gap-2">
           {(['SOL', 'GOLD'] as const).map((token) => (
             <Button
@@ -262,15 +262,15 @@ export function RealSendTab() {
       </div>
 
       {/* Balance Display */}
-      <Card className="bg-galaxy-card border-galaxy-purple/20">
+      <Card className="bg-black border-white/10">
         <CardContent className="p-4">
           <div className="text-center space-y-2">
-            <p className="text-sm text-galaxy-muted">Available Balance</p>
-            <p className="text-2xl font-bold text-galaxy-bright">
+            <p className="text-sm text-white/70">Available Balance</p>
+            <p className="text-2xl font-bold text-white">
               {selectedBalance.toFixed(selectedToken === 'SOL' ? 6 : 4)} {selectedToken}
             </p>
             {wallet.connected && selectedToken === 'SOL' && (
-              <p className="text-xs text-galaxy-muted">
+              <p className="text-xs text-white/70">
                 {walletInfo}
               </p>
             )}
@@ -280,7 +280,7 @@ export function RealSendTab() {
 
       {/* Recipient Address */}
       <div className="space-y-3">
-        <label className="text-sm font-medium text-galaxy-bright">Recipient Address</label>
+        <label className="text-sm font-medium text-white">Recipient Address</label>
         <Input
           placeholder="Enter Solana wallet address"
           value={recipientAddress}
@@ -291,7 +291,7 @@ export function RealSendTab() {
 
       {/* Amount */}
       <div className="space-y-3">
-        <label className="text-sm font-medium text-galaxy-bright">Amount</label>
+        <label className="text-sm font-medium text-white">Amount</label>
         <div className="relative">
           <Input
             type="number"
@@ -305,7 +305,7 @@ export function RealSendTab() {
             variant="ghost"
             size="sm"
             onClick={handleMaxClick}
-            className="absolute right-2 top-1/2 transform -translate-y-1/2 text-xs text-galaxy-accent hover:text-galaxy-bright"
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 text-xs text-galaxy-accent hover:text-white"
           >
             MAX
           </Button>
@@ -323,7 +323,7 @@ export function RealSendTab() {
 
       {/* Connection Status */}
       {!wallet.connected && (
-        <p className="text-center text-sm text-galaxy-muted">
+        <p className="text-center text-sm text-white/70">
           Connect your wallet to send tokens
         </p>
       )}
@@ -331,9 +331,9 @@ export function RealSendTab() {
       {/* Success Modal */}
       {showSuccessModal && completedTransaction && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-galaxy-card p-6 rounded-lg border border-galaxy-purple/20 max-w-md w-full mx-4">
-            <h3 className="text-lg font-bold text-galaxy-bright mb-4">Transaction Successful!</h3>
-            <p className="text-galaxy-muted mb-4">
+          <div className="bg-black p-6 rounded-lg border border-white/20 max-w-md w-full mx-4">
+            <h3 className="text-lg font-bold text-white mb-4">Transaction Successful!</h3>
+            <p className="text-white/70 mb-4">
               Successfully sent {completedTransaction.amount} {completedTransaction.token}
             </p>
             <div className="flex space-x-2">

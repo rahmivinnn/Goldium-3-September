@@ -391,7 +391,7 @@ export function SelfContainedSwapTab() {
       {/* From Token */}
       <div className="space-y-4">
         <label className="text-lg font-bold text-white tracking-tight">From</label>
-        <Card className="group bg-black backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-500 hover:shadow-xl hover:shadow-white/10">
+        <Card className="group bg-black backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-500 hover:shadow-xl hover:shadow-white/10 premium-card sophisticated-border">
           <CardContent className="p-6">
             <div className="flex justify-between items-center mb-4">
               <Button
@@ -447,7 +447,7 @@ export function SelfContainedSwapTab() {
       {/* To Token */}
       <div className="space-y-4">
         <label className="text-lg font-bold text-white tracking-tight">To</label>
-        <Card className="group bg-black backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-500 hover:shadow-xl hover:shadow-white/10">
+        <Card className="group bg-black backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-500 hover:shadow-xl hover:shadow-white/10 premium-card sophisticated-border">
           <CardContent className="p-6">
             <div className="flex justify-between items-center mb-4">
               <Button
@@ -485,7 +485,7 @@ export function SelfContainedSwapTab() {
       </div>
 
       {/* Swap Details */}
-      <Card className="bg-black backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-300">
+      <Card className="bg-black backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-300 premium-card sophisticated-border">
         <CardContent className="p-6 space-y-4">
           <h3 className="text-lg font-bold text-white tracking-tight mb-4">Swap Details</h3>
           <div className="flex justify-between items-center">
