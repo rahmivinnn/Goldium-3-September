@@ -252,7 +252,7 @@ export function BalanceCards() {
       </Card>
 
       {/* GOLD Balance */}
-      <Card className="group bg-black backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-500 transform hover:scale-[1.02] hover:shadow-2xl hover:shadow-white/10 premium-card neon-border power-glow">
+      <Card className="group bg-black backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-500 transform hover:scale-[1.02] hover:shadow-2xl hover:shadow-white/10 premium-card  elegant-glow">
         <CardContent className="p-8">
           <div className="flex items-center justify-between mb-6">
             <div>
@@ -310,7 +310,7 @@ export function BalanceCards() {
       </Card>
 
       {/* Staked GOLD */}
-      <Card className="group bg-black backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-500 transform hover:scale-[1.02] hover:shadow-2xl hover:shadow-white/10 premium-card neon-border power-glow">
+      <Card className="group bg-black backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-500 transform hover:scale-[1.02] hover:shadow-2xl hover:shadow-white/10 premium-card  elegant-glow">
         <CardContent className="p-8">
           <div className="flex items-center justify-between mb-6">
             <div>

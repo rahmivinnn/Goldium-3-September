@@ -171,9 +171,9 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
               GOLDIUM
             </motion.h1>
             
-            {/* ULTRA PREMIUM BACKGROUND EFFECTS */}
+            {/* ELEGANT BACKGROUND EFFECTS */}
             <div className="matrix-rain">
-              {Array.from({ length: 20 }, (_, i) => (
+              {Array.from({ length: 12 }, (_, i) => (
                 <div
                   key={i}
                   className="matrix-drop"
@@ -183,13 +183,13 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
                     animationDuration: `${8 + Math.random() * 4}s`
                   }}
                 >
-                  {Math.random() > 0.5 ? '₿' : '◊'}
+                  {['•', '·', '○'][Math.floor(Math.random() * 3)]}
                 </div>
               ))}
             </div>
             
-            {/* QUANTUM PARTICLES */}
-            {Array.from({ length: 15 }, (_, i) => (
+            {/* ELEGANT PARTICLES */}
+            {Array.from({ length: 8 }, (_, i) => (
               <div
                 key={i}
                 className="quantum-particle"
@@ -201,8 +201,8 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
               />
             ))}
             
-            {/* FLOATING ORBS */}
-            {Array.from({ length: 8 }, (_, i) => (
+            {/* SOPHISTICATED ORBS */}
+            {Array.from({ length: 5 }, (_, i) => (
               <div
                 key={i}
                 className="floating-orb"

@@ -146,9 +146,9 @@ export default function Dashboard() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 py-8 relative">
-        {/* MATRIX RAIN BACKGROUND */}
+        {/* SUBTLE DIGITAL RAIN */}
         <div className="matrix-rain">
-          {Array.from({ length: 12 }, (_, i) => (
+          {Array.from({ length: 8 }, (_, i) => (
             <div
               key={i}
               className="matrix-drop"
@@ -158,13 +158,13 @@ export default function Dashboard() {
                 animationDuration: `${10 + Math.random() * 5}s`
               }}
             >
-              {['₿', '◊', '⬢', '◈'][Math.floor(Math.random() * 4)]}
+              {['•', '·', '○', '◦'][Math.floor(Math.random() * 4)]}
             </div>
           ))}
         </div>
         
-        {/* QUANTUM PARTICLES */}
-        {Array.from({ length: 10 }, (_, i) => (
+        {/* ELEGANT PARTICLES */}
+        {Array.from({ length: 6 }, (_, i) => (
           <div
             key={i}
             className="quantum-particle"
@@ -212,7 +212,7 @@ export default function Dashboard() {
           {/* Right Column - Trading Interface */}
           <div className="space-y-6">
             {/* Quick Stats */}
-            <Card className="p-6 bg-black border-white/10 premium-card premium-shimmer neon-border">
+            <Card className="p-6 bg-black border-white/10 premium-card refined-shimmer sophisticated-border ">
               <CardHeader className="pb-4">
                 <CardTitle className="font-card-title text-golden flex items-center gap-2">
                   <Activity className="w-5 h-5 text-golden-small" />
@@ -243,7 +243,7 @@ export default function Dashboard() {
             </Card>
 
             {/* Trading Interface */}
-            <Card className="p-6 bg-black border-white/10 premium-card premium-shimmer neon-border">
+            <Card className="p-6 bg-black border-white/10 premium-card refined-shimmer sophisticated-border ">
               <CardHeader className="pb-4">
                 <CardTitle className="font-card-title text-golden flex items-center gap-2">
                   <TrendingUp className="w-5 h-5 text-golden-small" />
@@ -275,7 +275,7 @@ export default function Dashboard() {
             </Card>
 
             {/* Market Insights */}
-            <Card className="p-6 bg-black border-white/10 premium-card premium-shimmer neon-border">
+            <Card className="p-6 bg-black border-white/10 premium-card refined-shimmer sophisticated-border ">
               <CardHeader className="pb-4">
                 <CardTitle className="font-card-title text-golden flex items-center gap-2">
                   <BarChart3 className="w-5 h-5 text-golden-small" />
