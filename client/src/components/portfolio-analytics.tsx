@@ -240,9 +240,9 @@ export function PortfolioAnalytics({
       <Card className="p-6 bg-black border-white/10">
         <CardHeader className="pb-4">
           <div className="flex items-center justify-between">
-            <CardTitle className="text-2xl font-bold text-white flex items-center gap-2 font-['Space_Grotesk']">
+            <CardTitle className="text-4xl md:text-5xl font-bold text-white flex items-center gap-2">
               <PieChart className="w-6 h-6" />
-              <span className="metaverse-text">Portfolio Overview</span>
+              <span className="metaverse-text metaverse-glitch">Portfolio Overview</span>
             </CardTitle>
             <div className="flex items-center gap-2">
               <Badge variant={isConnected ? 'default' : 'destructive'} className="text-xs">
@@ -293,11 +293,11 @@ export function PortfolioAnalytics({
       </Card>
 
       {/* Asset Allocation */}
-      <Card className="p-6 bg-gray-900/95 border-gray-700">
+      <Card className="p-6 bg-black border-white/10">
         <CardHeader className="pb-4">
-          <CardTitle className="text-xl font-bold text-white flex items-center gap-2 font-['Space_Grotesk']">
+          <CardTitle className="text-4xl md:text-5xl font-bold text-white flex items-center gap-2">
             <Target className="w-5 h-5" />
-            Asset Allocation
+            <span className="metaverse-text metaverse-glitch">Asset Allocation</span>
           </CardTitle>
         </CardHeader>
         
@@ -333,11 +333,11 @@ export function PortfolioAnalytics({
       </Card>
 
       {/* Recent Transactions */}
-      <Card className="p-6 bg-gray-900/95 border-gray-700">
+      <Card className="p-6 bg-black border-white/10">
         <CardHeader className="pb-4">
-          <CardTitle className="text-xl font-bold text-white flex items-center gap-2 font-['Space_Grotesk']">
+          <CardTitle className="text-4xl md:text-5xl font-bold text-white flex items-center gap-2">
             <BarChart3 className="w-5 h-5" />
-            Recent Transactions
+            <span className="metaverse-text metaverse-glitch">Recent Transactions</span>
           </CardTitle>
         </CardHeader>
         

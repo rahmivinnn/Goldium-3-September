@@ -140,9 +140,9 @@ export default function Dashboard() {
             {/* Quick Stats */}
             <Card className="p-6 bg-black border-white/10">
               <CardHeader className="pb-4">
-                <CardTitle className="text-lg font-bold text-white flex items-center gap-2 font-['Space_Grotesk']">
+                <CardTitle className="text-4xl md:text-5xl font-bold text-white flex items-center gap-2">
                   <Activity className="w-5 h-5 text-white" />
-                  <span className="metaverse-text">Quick Stats</span>
+                  <span className="metaverse-text metaverse-glitch">Quick Stats</span>
                 </CardTitle>
               </CardHeader>
               
@@ -171,9 +171,9 @@ export default function Dashboard() {
             {/* Trading Interface */}
             <Card className="p-6 bg-black border-white/10">
               <CardHeader className="pb-4">
-                <CardTitle className="text-lg font-bold text-white flex items-center gap-2 font-['Space_Grotesk']">
+                <CardTitle className="text-4xl md:text-5xl font-bold text-white flex items-center gap-2">
                   <TrendingUp className="w-5 h-5 text-white" />
-                  <span className="metaverse-text">Trading Terminal</span>
+                  <span className="metaverse-text metaverse-glitch">Trading Terminal</span>
                 </CardTitle>
               </CardHeader>
               
@@ -203,9 +203,9 @@ export default function Dashboard() {
             {/* Market Insights */}
             <Card className="p-6 bg-black border-white/10">
               <CardHeader className="pb-4">
-                <CardTitle className="text-lg font-bold text-white flex items-center gap-2 font-['Space_Grotesk']">
+                <CardTitle className="text-4xl md:text-5xl font-bold text-white flex items-center gap-2">
                   <BarChart3 className="w-5 h-5 text-white" />
-                  <span className="metaverse-text">Market Insights</span>
+                  <span className="metaverse-text metaverse-glitch">Market Insights</span>
                 </CardTitle>
               </CardHeader>
               
@@ -244,9 +244,9 @@ export default function Dashboard() {
         <div className="mt-8">
           <Card className="p-6 bg-black border-white/10">
             <CardHeader className="pb-4">
-              <CardTitle className="text-xl font-bold text-white flex items-center gap-2 font-['Space_Grotesk']">
+              <CardTitle className="text-4xl md:text-5xl font-bold text-white flex items-center gap-2">
                 <Wallet className="w-6 h-6 text-white" />
-                <span className="metaverse-text">Transaction History</span>
+                <span className="metaverse-text metaverse-glitch">Transaction History</span>
               </CardTitle>
             </CardHeader>
             
