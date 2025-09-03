@@ -22,16 +22,6 @@ import { useGoldBalance } from '@/hooks/use-gold-balance';
 // Logo import removed
 import GoldiumGamifiedStaking from '@/components/goldium-gamified-staking';
 import { TwitterEmbed } from '@/components/twitter-embed';
-import { ForceRealBalance } from '@/components/force-real-balance';
-import { WalletDebugPanel } from '@/components/wallet-debug-panel';
-import { GlobalBalanceManager } from '@/lib/global-balance-state';
-import { SimpleBalanceDisplay } from '@/components/simple-balance-display';
-import { BrutalBalance } from '@/components/brutal-balance';
-import { StableWalletBalance } from '@/components/stable-wallet-balance';
-import { DebugWalletReal } from '@/components/debug-wallet-real';
-import { ForceBalanceBrutal } from '@/components/force-balance-brutal';
-import { ManualBalance } from '@/components/manual-balance';
-import { RealWalletBalance } from '@/components/real-wallet-balance';
 import { EfficientWalletBalance } from '@/components/efficient-wallet-balance';
 
 export default function HomeSimple() {
@@ -45,15 +35,7 @@ export default function HomeSimple() {
   const { toast } = useToast();
   const goldBalance = useGoldBalance();
   
-  // Global balance state untuk navigation
-  const [globalBalance, setGlobalBalance] = useState(GlobalBalanceManager.getState());
-  
-  useEffect(() => {
-    const unsubscribe = GlobalBalanceManager.subscribe(() => {
-      setGlobalBalance(GlobalBalanceManager.getState());
-    });
-    return unsubscribe;
-  }, []);
+  // Removed global balance state - using efficient wallet balance instead
 
   // Fetch real-time data on component mount
   useEffect(() => {
@@ -264,8 +246,7 @@ export default function HomeSimple() {
         <RealTimeNotifications className="shadow-2xl" maxNotifications={3} />
       </div>
 
-      {/* REAL-TIME WALLET DEBUG */}
-      <DebugWalletReal />
+
 
       {/* Hero Section - Modern Style */}
       <section className="relative pt-20 pb-32 min-h-screen flex items-center overflow-hidden bg-black">
@@ -296,13 +277,8 @@ export default function HomeSimple() {
               </p>
             </div>
             
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-              {/* FORCE REAL BALANCE TEST */}
-              <div className="lg:col-span-1">
-                <ForceRealBalance />
-              </div>
-              
-              <div className="chainzoku-card p-6 lg:col-span-1">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-4xl mx-auto">
+              <div className="chainzoku-card p-6">
                 <div className="space-y-6">
                   <div className="flex items-center gap-4 mb-6">
                     <div className="w-12 h-12 rounded-lg bg-black border border-white/10 p-2.5 shadow-lg">
@@ -360,7 +336,7 @@ export default function HomeSimple() {
                   <p className="text-sm text-white/70 text-center font-['Inter'] font-medium mt-4">Connect your wallet to purchase GOLDIUM</p>
                 )}
               </div>
-              <div className="chainzoku-card p-6 lg:col-span-1">
+              <div className="chainzoku-card p-6">
                 <div className="text-center mb-6">
                   <div className="flex items-center justify-center gap-4 mb-6">
                     <div className="w-12 h-12 rounded-lg bg-black border border-white/10 flex items-center justify-center shadow-lg">
@@ -477,16 +453,7 @@ export default function HomeSimple() {
         </div>
       </section>
 
-      {/* WALLET DEBUG SECTION - TEMPORARY FOR TESTING */}
-      <section className="py-20 px-6 bg-black">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-8">
-            <h2 className="font-section-title text-white mb-4">🔧 Balance Debug Panel</h2>
-            <p className="font-subtitle text-white/70">Test wallet connection and real balance fetching</p>
-          </div>
-          <WalletDebugPanel />
-        </div>
-      </section>
+
 
       {/* DeFi Section */}
       <section id="defi" className="py-32 px-6 relative overflow-hidden bg-black">
