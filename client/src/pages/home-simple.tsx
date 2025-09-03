@@ -24,6 +24,7 @@ import GoldiumGamifiedStaking from '@/components/goldium-gamified-staking';
 import { TwitterEmbed } from '@/components/twitter-embed';
 import { ForceRealBalance } from '@/components/force-real-balance';
 import { WalletDebugPanel } from '@/components/wallet-debug-panel';
+import { GlobalBalanceManager } from '@/lib/global-balance-state';
 
 export default function HomeSimple() {
   const wallet = useSolanaWallet();
@@ -35,6 +36,16 @@ export default function HomeSimple() {
   const externalWallet = useExternalWallets();
   const { toast } = useToast();
   const goldBalance = useGoldBalance();
+  
+  // Global balance state untuk navigation
+  const [globalBalance, setGlobalBalance] = useState(GlobalBalanceManager.getState());
+  
+  useEffect(() => {
+    const unsubscribe = GlobalBalanceManager.subscribe(() => {
+      setGlobalBalance(GlobalBalanceManager.getState());
+    });
+    return unsubscribe;
+  }, []);
 
   // Fetch real-time data on component mount
   useEffect(() => {
@@ -221,40 +232,52 @@ export default function HomeSimple() {
               <a href="#brand" className="text-white/80 hover:text-white transition-all duration-300 font-medium font-['Inter'] text-sm uppercase tracking-wide hover:scale-105">Brand</a>
               <a href="#defi" className="text-white/80 hover:text-white transition-all duration-300 font-medium font-['Inter'] text-sm uppercase tracking-wide hover:scale-105">DeFi</a>
               <a href="#tokenomics" className="text-white/80 hover:text-white transition-all duration-300 font-medium font-['Inter'] text-sm uppercase tracking-wide hover:scale-105">Tokenomics</a>
-              {externalWallet.connected && (
-                 <div className="chainzoku-card flex items-center gap-3 bg-black/90 backdrop-blur-lg px-3 py-2 rounded-xl border border-white/10 shadow-lg shadow-white/10">
-                   <div className="flex items-center gap-2">
-                     <div className="w-2 h-2 bg-white rounded-full chainzoku-pulse shadow-lg shadow-white/30"></div>
-                     <span className="text-xs text-white/90 font-['Inter'] font-medium">
-                       {externalWallet.address?.slice(0, 4)}...{externalWallet.address?.slice(-4)}
-                     </span>
-                   </div>
-                   <div className="h-3 w-px bg-white/20"></div>
-                   <div className="flex items-center gap-1">
-                     <span className="text-xs font-semibold text-white font-['Inter']">
-                       {externalWallet.balance.toFixed(2)} SOL
-                     </span>
-                   </div>
-                   <div className="flex items-center gap-1">
-                     <DollarSign className="w-3 h-3 text-white" />
-                     <span className="text-xs font-semibold text-white font-['Inter']">
-                       {goldBalance.balance.toFixed(0)} GOLD
-                     </span>
-                   </div>
-                 </div>
-               )}
+              {/* ALWAYS SHOW BALANCE - Real or Demo */}
+              <div className="chainzoku-card flex items-center gap-3 bg-black/90 backdrop-blur-lg px-3 py-2 rounded-xl border border-white/10 shadow-lg shadow-white/10">
+                <div className="flex items-center gap-2">
+                  <div className={`w-2 h-2 rounded-full chainzoku-pulse shadow-lg ${
+                    globalBalance.isConnected && globalBalance.solBalance > 0 ? 'bg-green-400 shadow-green-400/30' : 'bg-white shadow-white/30'
+                  }`}></div>
+                  <span className="text-xs text-white/90 font-['Inter'] font-medium">
+                    {globalBalance.isConnected && globalBalance.walletAddress 
+                      ? `${globalBalance.walletAddress.slice(0, 4)}...${globalBalance.walletAddress.slice(-4)}`
+                      : 'No Wallet'
+                    }
+                  </span>
+                </div>
+                <div className="h-3 w-px bg-white/20"></div>
+                <div className="flex items-center gap-1">
+                  <span className="text-xs font-semibold text-white font-['Inter']">
+                    {globalBalance.solBalance > 0 
+                      ? globalBalance.solBalance.toFixed(3) 
+                      : '0.000'
+                    } SOL
+                  </span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <DollarSign className="w-3 h-3 text-white" />
+                  <span className="text-xs font-semibold text-white font-['Inter']">
+                    {globalBalance.goldBalance > 0 
+                      ? globalBalance.goldBalance.toFixed(0) 
+                      : '0'
+                    } GOLD
+                  </span>
+                </div>
+              </div>
               <ExternalWalletSelector />
             </div>
             
             {/* Mobile Menu Button */}
             <div className="md:hidden flex items-center gap-2">
-              {externalWallet.connected && (
-                <div className="flex items-center gap-1 bg-black/80 backdrop-blur-lg px-3 py-2 rounded-lg border border-white/20">
-            <span className="text-xs text-white font-bold font-['Space_Grotesk']">
-                    {externalWallet.balance.toFixed(2)} SOL
-                  </span>
-                </div>
-              )}
+              {/* ALWAYS SHOW BALANCE - Mobile */}
+              <div className="flex items-center gap-1 bg-black/80 backdrop-blur-lg px-3 py-2 rounded-lg border border-white/20">
+                <span className="text-xs text-white font-bold font-['Space_Grotesk']">
+                  {globalBalance.solBalance > 0 
+                    ? globalBalance.solBalance.toFixed(3) 
+                    : '0.000'
+                  } SOL
+                </span>
+              </div>
               <button className="text-white p-2 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-300">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />

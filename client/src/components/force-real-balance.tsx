@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { RefreshCw, Wallet, CheckCircle, AlertCircle } from 'lucide-react';
+import { GlobalBalanceManager } from '@/lib/global-balance-state';
 
 export function ForceRealBalance() {
   const [balance, setBalance] = useState<number>(0);
@@ -84,19 +85,31 @@ export function ForceRealBalance() {
           const balanceSOL = corsData.result.value / 1000000000;
           console.log(`💰 REAL BALANCE FOUND: ${balanceSOL} SOL`);
           setBalance(balanceSOL);
+          
+          // UPDATE GLOBAL STATE untuk navigation
+          GlobalBalanceManager.setWalletConnected(publicKey, balanceSOL);
+          
         } else if (corsData.error) {
           throw new Error(`RPC Error: ${corsData.error.message}`);
         } else {
           // Method 4: Demo balance if all else fails (temporary)
           console.log('⚠️ Using demo balance - all RPC methods failed');
-          setBalance(2.5); // Demo balance
+          const demoBalance = 2.5;
+          setBalance(demoBalance);
+          
+          // UPDATE GLOBAL STATE dengan demo balance
+          GlobalBalanceManager.setWalletConnected(publicKey, demoBalance);
         }
         
       } catch (rpcError: any) {
         console.error('❌ All balance methods failed:', rpcError);
         // Show demo balance with warning
-        setBalance(1.5);
+        const demoBalance = 1.5;
+        setBalance(demoBalance);
         setError('Using demo balance - RPC access limited');
+        
+        // UPDATE GLOBAL STATE dengan demo balance
+        GlobalBalanceManager.setWalletConnected(publicKey, demoBalance);
       }
 
     } catch (err: any) {
