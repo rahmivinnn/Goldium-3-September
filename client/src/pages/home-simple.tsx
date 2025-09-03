@@ -233,20 +233,10 @@ export default function HomeSimple() {
         <RealTimeNotifications className="shadow-2xl" maxNotifications={3} />
       </div>
 
-      {/* Hero Section - Chainzoku Style */}
-      <section className="relative pt-20 pb-32 min-h-screen flex items-center overflow-hidden">
-        {/* Chainzoku Background */}
+      {/* Hero Section - Modern Style */}
+      <section className="relative pt-20 pb-32 min-h-screen flex items-center overflow-hidden bg-black">
+        {/* Pure Black Background */}
         <div className="absolute inset-0 bg-black" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(128,128,128,0.08),rgba(156,163,175,0.05),rgba(0,0,0,0.95))]" />
-        <div className="absolute inset-0 bg-[conic-gradient(from_180deg_at_50%_50%,rgba(128,128,128,0.05),rgba(0,0,0,0.98),rgba(156,163,175,0.03),rgba(0,0,0,0.98))]" />
-        
-        {/* Chainzoku Grid Pattern */}
-        <div className="absolute inset-0 opacity-[0.03]">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `linear-gradient(rgba(128,128,128,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(128,128,128,0.5) 1px, transparent 1px)`,
-            backgroundSize: '100px 100px'
-          }}></div>
-        </div>
         
         {/* Modern Subtle Orbs */}
         <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-gradient-to-r from-white/5 to-white/3 rounded-full blur-3xl chainzoku-float"></div>
@@ -450,19 +440,8 @@ export default function HomeSimple() {
 
       {/* DeFi Section */}
       <section id="defi" className="py-32 px-6 relative overflow-hidden bg-black">
-        {/* Chainzoku Immersive DeFi Background */}
+        {/* Pure Black DeFi Background */}
         <div className="absolute inset-0 bg-black"></div>
-        <div className="absolute inset-0 bg-[conic-gradient(from_0deg_at_50%_50%,rgba(128,128,128,0.03),rgba(0,0,0,0.98),rgba(156,163,175,0.02),rgba(0,0,0,0.98))]"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-l from-gray-400/8 to-transparent rounded-full blur-3xl"></div>
-        <div className="absolute top-1/4 left-0 w-80 h-80 bg-gradient-to-r from-gray-500/6 to-transparent rounded-full blur-3xl"></div>
-        
-        {/* Additional Chainzoku Grid */}
-        <div className="absolute inset-0 opacity-[0.02]">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `linear-gradient(rgba(128,128,128,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(128,128,128,0.2) 1px, transparent 1px)`,
-            backgroundSize: '120px 120px'
-          }}></div>
-        </div>
         
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-20 chainzoku-fade-in">
@@ -519,11 +498,11 @@ export default function HomeSimple() {
       </section>
 
       {/* Tokenomics Section */}
-      <section id="tokenomics" className="py-20 px-6 relative overflow-hidden">
-        {/* Modern Tokenomics Background */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-black via-black to-gray-950"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_100%_100%_at_20%_50%,rgba(255,255,255,0.05),transparent)]"></div>
-        <div className="absolute top-20 right-10 w-40 h-40 bg-gradient-to-bl from-white/8 to-white/4 rounded-full blur-2xl"></div>
+      <section id="tokenomics" className="py-20 px-6 relative overflow-hidden bg-black">
+        {/* Pure Black Background */}
+        <div className="absolute inset-0 bg-black"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_100%_100%_at_20%_50%,rgba(255,255,255,0.02),transparent)]"></div>
+        <div className="absolute top-20 right-10 w-40 h-40 bg-gradient-to-bl from-white/3 to-white/1 rounded-full blur-2xl"></div>
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-5xl md:text-6xl font-bold text-white mb-8">
@@ -586,10 +565,9 @@ export default function HomeSimple() {
       </section>
 
       {/* Twitter Feed Section */}
-      <section className="py-20 px-6 relative overflow-hidden">
-        {/* Modern Community Background */}
-        <div className="absolute inset-0 bg-gradient-to-bl from-black via-black to-gray-950"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_80%_20%,rgba(255,255,255,0.03),transparent)]"></div>
+      <section className="py-20 px-6 relative overflow-hidden bg-black">
+        {/* Pure Black Background */}
+        <div className="absolute inset-0 bg-black"></div>
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-16">
             <div className="flex items-center justify-center gap-4 mb-4">
@@ -610,7 +588,7 @@ export default function HomeSimple() {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 sm:py-16 lg:py-20 border-t border-white/10 bg-black/80">
+      <footer className="py-12 sm:py-16 lg:py-20 border-t border-white/10 bg-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-10 lg:gap-12 mb-8 sm:mb-10 lg:mb-12">
             <div className="space-y-3 sm:space-y-4 sm:col-span-2 md:col-span-1">
