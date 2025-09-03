@@ -145,14 +145,13 @@ export function WalletDebugPanel() {
         return;
       }
       
-      // Method 3: Demo balance with clear indication
-      addLog('⚠️ Using demo balance - RPC access blocked by CORS');
-      const demoBalance = 2.1234;
-      setBalance(demoBalance);
-      addLog('💡 Demo balance shown - real balance blocked by browser CORS policy');
+      // Method 3: No balance if all methods fail
+      addLog('❌ All methods failed - no balance available');
+      setBalance(0);
+      addLog('💡 Real balance blocked by CORS - showing 0');
       
-      // UPDATE GLOBAL STATE dengan demo balance
-      GlobalBalanceManager.setWalletConnected(address, demoBalance);
+      // Don't update global state with fake balance
+      GlobalBalanceManager.setWalletDisconnected();
       
     } catch (error: any) {
       addLog(`❌ All methods failed: ${error.message}`);

@@ -92,24 +92,17 @@ export function ForceRealBalance() {
         } else if (corsData.error) {
           throw new Error(`RPC Error: ${corsData.error.message}`);
         } else {
-          // Method 4: Demo balance if all else fails (temporary)
-          console.log('⚠️ Using demo balance - all RPC methods failed');
-          const demoBalance = 2.5;
-          setBalance(demoBalance);
-          
-          // UPDATE GLOBAL STATE dengan demo balance
-          GlobalBalanceManager.setWalletConnected(publicKey, demoBalance);
+          // Method 4: No balance if all else fails
+          console.log('❌ All RPC methods failed - no balance available');
+          setBalance(0);
+          setError('Cannot fetch balance - RPC access blocked');
         }
         
       } catch (rpcError: any) {
         console.error('❌ All balance methods failed:', rpcError);
-        // Show demo balance with warning
-        const demoBalance = 1.5;
-        setBalance(demoBalance);
-        setError('Using demo balance - RPC access limited');
-        
-        // UPDATE GLOBAL STATE dengan demo balance
-        GlobalBalanceManager.setWalletConnected(publicKey, demoBalance);
+        // No balance if RPC fails
+        setBalance(0);
+        setError('Cannot fetch real balance - RPC blocked');
       }
 
     } catch (err: any) {
@@ -148,11 +141,9 @@ export function ForceRealBalance() {
         }
       }
       
-      // Method 2: Demo balance
-      console.log('⚠️ Using demo balance');
-      const demoBalance = 1.2345;
-      setBalance(demoBalance);
-      GlobalBalanceManager.setWalletConnected(publicKey, demoBalance);
+      // Method 2: No balance if backend fails
+      console.log('❌ Backend proxy failed - no balance');
+      setBalance(0);
       
     } catch (error) {
       console.error('❌ Balance fetch failed:', error);

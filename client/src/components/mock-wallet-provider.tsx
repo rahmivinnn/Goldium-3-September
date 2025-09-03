@@ -160,7 +160,7 @@ export function WalletProviderWrapper({ children }: MockWalletProviderProps) {
 
   const connectionContextValue: ConnectionContextState = {
     connection: {
-      getBalance: async () => 2500000000, // 2.5 SOL in lamports
+      getBalance: async () => 0, // No mock balance - only real balance
       getLatestBlockhash: async () => ({ blockhash: 'goldium-mock-blockhash' }),
       sendRawTransaction: async () => 'GLD1x7K9m3N2p8Q4k5L7w9R6t2Y8v4B1h6M3signature',
       confirmTransaction: async () => ({ value: { err: null } }),
