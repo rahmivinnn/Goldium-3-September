@@ -106,8 +106,8 @@ export default function Dashboard() {
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="text-4xl font-bold text-white mb-2"><span className="metaverse-text metaverse-scan">Trading Dashboard</span></h1>
-              <p className="text-white/70 text-lg">
+              <h1 className="font-main-title text-white mb-2"><span className="metaverse-text metaverse-scan">Trading Dashboard</span></h1>
+              <p className="font-subtitle text-white/70">
                 <span className="metaverse-typing">Real-time portfolio management and DeFi trading platform</span>
               </p>
             </div>
@@ -140,7 +140,7 @@ export default function Dashboard() {
             {/* Quick Stats */}
             <Card className="p-6 bg-black border-white/10">
               <CardHeader className="pb-4">
-                <CardTitle className="text-4xl md:text-5xl font-bold text-white flex items-center gap-2">
+                <CardTitle className="font-card-title text-white flex items-center gap-2">
                   <Activity className="w-5 h-5 text-white" />
                   <span className="metaverse-text metaverse-glitch">Quick Stats</span>
                 </CardTitle>
@@ -149,20 +149,20 @@ export default function Dashboard() {
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="text-center p-3 bg-black border border-white/10 rounded-lg">
-                    <div className="text-2xl font-bold text-white mb-1 font-['Orbitron']">+12.5%</div>
-                    <div className="text-xs text-white/60 font-['Inter']">24h P&L</div>
+                    <div className="font-stats text-white mb-1">+12.5%</div>
+                    <div className="font-small text-white/60">24h P&L</div>
                   </div>
                   <div className="text-center p-3 bg-black border border-white/10 rounded-lg">
-                    <div className="text-2xl font-bold text-white mb-1 font-['Orbitron']">8</div>
-                    <div className="text-xs text-white/60 font-['Inter']">Active Positions</div>
+                    <div className="font-stats text-white mb-1">8</div>
+                    <div className="font-small text-white/60">Active Positions</div>
                   </div>
                   <div className="text-center p-3 bg-black border border-white/10 rounded-lg">
-                    <div className="text-2xl font-bold text-white mb-1 font-['Orbitron']">$2.1K</div>
-                    <div className="text-xs text-white/60 font-['Inter']">24h Volume</div>
+                    <div className="font-stats text-white mb-1">$2.1K</div>
+                    <div className="font-small text-white/60">24h Volume</div>
                   </div>
                   <div className="text-center p-3 bg-black border border-white/10 rounded-lg">
-                    <div className="text-2xl font-bold text-white mb-1 font-['Orbitron']">95%</div>
-                    <div className="text-xs text-white/60 font-['Inter']">Win Rate</div>
+                    <div className="font-stats text-white mb-1">95%</div>
+                    <div className="font-small text-white/60">Win Rate</div>
                   </div>
                 </div>
               </CardContent>
@@ -171,7 +171,7 @@ export default function Dashboard() {
             {/* Trading Interface */}
             <Card className="p-6 bg-black border-white/10">
               <CardHeader className="pb-4">
-                <CardTitle className="text-4xl md:text-5xl font-bold text-white flex items-center gap-2">
+                <CardTitle className="font-card-title text-white flex items-center gap-2">
                   <TrendingUp className="w-5 h-5 text-white" />
                   <span className="metaverse-text metaverse-glitch">Trading Terminal</span>
                 </CardTitle>
@@ -203,7 +203,7 @@ export default function Dashboard() {
             {/* Market Insights */}
             <Card className="p-6 bg-black border-white/10">
               <CardHeader className="pb-4">
-                <CardTitle className="text-4xl md:text-5xl font-bold text-white flex items-center gap-2">
+                <CardTitle className="font-card-title text-white flex items-center gap-2">
                   <BarChart3 className="w-5 h-5 text-white" />
                   <span className="metaverse-text metaverse-glitch">Market Insights</span>
                 </CardTitle>
@@ -244,7 +244,7 @@ export default function Dashboard() {
         <div className="mt-8">
           <Card className="p-6 bg-black border-white/10">
             <CardHeader className="pb-4">
-              <CardTitle className="text-4xl md:text-5xl font-bold text-white flex items-center gap-2">
+              <CardTitle className="font-card-title text-white flex items-center gap-2">
                 <Wallet className="w-6 h-6 text-white" />
                 <span className="metaverse-text metaverse-glitch">Transaction History</span>
               </CardTitle>

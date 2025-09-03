@@ -240,7 +240,7 @@ export function PortfolioAnalytics({
       <Card className="p-6 bg-black border-white/10">
         <CardHeader className="pb-4">
           <div className="flex items-center justify-between">
-            <CardTitle className="text-4xl md:text-5xl font-bold text-white flex items-center gap-2">
+            <CardTitle className="font-card-title text-white flex items-center gap-2">
               <PieChart className="w-6 h-6" />
               <span className="metaverse-text metaverse-glitch">Portfolio Overview</span>
             </CardTitle>
@@ -295,7 +295,7 @@ export function PortfolioAnalytics({
       {/* Asset Allocation */}
       <Card className="p-6 bg-black border-white/10">
         <CardHeader className="pb-4">
-          <CardTitle className="text-4xl md:text-5xl font-bold text-white flex items-center gap-2">
+          <CardTitle className="font-card-title text-white flex items-center gap-2">
             <Target className="w-5 h-5" />
             <span className="metaverse-text metaverse-glitch">Asset Allocation</span>
           </CardTitle>
@@ -335,7 +335,7 @@ export function PortfolioAnalytics({
       {/* Recent Transactions */}
       <Card className="p-6 bg-black border-white/10">
         <CardHeader className="pb-4">
-          <CardTitle className="text-4xl md:text-5xl font-bold text-white flex items-center gap-2">
+          <CardTitle className="font-card-title text-white flex items-center gap-2">
             <BarChart3 className="w-5 h-5" />
             <span className="metaverse-text metaverse-glitch">Recent Transactions</span>
           </CardTitle>
