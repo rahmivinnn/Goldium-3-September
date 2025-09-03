@@ -19,6 +19,7 @@ import GoldiumGamifiedStaking from '@/components/goldium-gamified-staking';
 import { TwitterEmbed } from '@/components/twitter-embed';
 import { EfficientWalletBalance } from '@/components/efficient-wallet-balance';
 import { AnimatedNumber } from '@/components/animated-number';
+import { ClientWalletTester } from '@/components/client-wallet-tester';
 
 export default function HomeSimple() {
   console.log('🏠 HomeSimple component is rendering - MAINNET PRODUCTION...');
@@ -261,6 +262,15 @@ export default function HomeSimple() {
       {/* Wallet Balance Display */}
       <div className="container mx-auto px-4 py-8 relative z-10">
         <EfficientWalletBalance />
+      </div>
+
+      {/* Client Wallet Testing */}
+      <div className="container mx-auto px-4 py-8 relative z-10">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold text-white mb-4">🧪 DeFi Testing Lab</h2>
+          <p className="text-gray-300">Test GOLDIUM DeFi features dengan wallet client</p>
+        </div>
+        <ClientWalletTester />
       </div>
 
       {/* DeFi Features */}
