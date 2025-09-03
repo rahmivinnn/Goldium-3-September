@@ -22,6 +22,7 @@ import { EfficientWalletBalance } from '@/components/efficient-wallet-balance';
 import { AnimatedNumber } from '@/components/animated-number';
 import { ClientWalletTester } from '@/components/client-wallet-tester';
 import { AnimatedDashboardBackground } from '@/components/animated-dashboard-background';
+import { PowerfulAnimatedCard } from '@/components/powerful-animated-card';
 
 export default function HomeSimple() {
   console.log('🏠 HomeSimple component is rendering - MAINNET PRODUCTION...');
@@ -200,14 +201,43 @@ export default function HomeSimple() {
         transition={{ duration: 1, delay: 0.2 }}
       >
         <div className="text-center space-y-6 max-w-4xl mx-auto">
-          <motion.h1 
-            className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent"
-            initial={{ scale: 0.5, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.3, type: "spring", stiffness: 100 }}
-          >
-            Goldium DeFi
-          </motion.h1>
+          <motion.div className="relative">
+            <motion.h1 
+              className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-500 bg-clip-text text-transparent relative z-10"
+              initial={{ scale: 0.5, opacity: 0, rotateX: -90 }}
+              animate={{ 
+                scale: 1, 
+                opacity: 1, 
+                rotateX: 0,
+                textShadow: [
+                  "0 0 20px rgba(250, 204, 21, 0.5)",
+                  "0 0 40px rgba(250, 204, 21, 0.8)", 
+                  "0 0 20px rgba(250, 204, 21, 0.5)"
+                ]
+              }}
+              transition={{ 
+                duration: 1.2, 
+                delay: 0.3, 
+                type: "spring", 
+                stiffness: 80,
+                textShadow: { duration: 2, repeat: Infinity }
+              }}
+              whileHover={{ 
+                scale: 1.05,
+                textShadow: "0 0 60px rgba(250, 204, 21, 1)"
+              }}
+            >
+              Goldium DeFi
+            </motion.h1>
+            
+            {/* Glowing Underline */}
+            <motion.div
+              className="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-1 bg-gradient-to-r from-transparent via-yellow-400 to-transparent"
+              initial={{ width: 0, opacity: 0 }}
+              animate={{ width: "80%", opacity: 0.8 }}
+              transition={{ duration: 1, delay: 1.5 }}
+            />
+          </motion.div>
           <motion.p 
             className="text-xl md:text-2xl text-gray-300"
             initial={{ opacity: 0, y: 20 }}
@@ -217,130 +247,196 @@ export default function HomeSimple() {
             The Future of Decentralized Finance on Solana
           </motion.p>
           
-          {/* Token Status Disclaimer */}
-          <div className="bg-gradient-to-r from-blue-600/30 to-purple-600/30 backdrop-blur-xl border-2 border-blue-400/50 rounded-xl p-6 max-w-2xl mx-auto shadow-2xl">
-            <div className="flex items-center justify-center gap-2 text-blue-300 font-bold mb-3">
+          {/* Token Status - Sleek Black Design */}
+          <motion.div 
+            className="bg-black/80 backdrop-blur-xl border border-yellow-400/30 rounded-xl p-6 max-w-2xl mx-auto shadow-2xl"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.7 }}
+            whileHover={{ scale: 1.02, borderColor: 'rgba(250, 204, 21, 0.6)' }}
+          >
+            <div className="flex items-center justify-center gap-2 text-yellow-400 font-bold mb-4">
               <ExternalLink className="w-5 h-5" />
               <span className="text-lg">GOLDIUM Token Status</span>
             </div>
-            <div className="bg-black/40 backdrop-blur-sm rounded-lg p-4 space-y-2">
-              <div className="flex items-center gap-2 text-green-400">
-                <span className="text-green-400">✅</span>
+            <div className="bg-black/60 backdrop-blur-sm rounded-lg p-4 space-y-3 border border-gray-800">
+              <motion.div 
+                className="flex items-center gap-3 text-green-400"
+                initial={{ x: -20, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.9 }}
+              >
+                <span className="text-green-400 text-lg">✅</span>
                 <span className="text-white">Token exists on Solana mainnet</span>
-              </div>
-              <div className="flex items-center gap-2 text-blue-400">
-                <span className="text-blue-400">📊</span>
+              </motion.div>
+              <motion.div 
+                className="flex items-center gap-3"
+                initial={{ x: -20, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 1.0 }}
+              >
+                <span className="text-yellow-400 text-lg">📊</span>
                 <span className="text-white">Total Supply: <span className="font-bold text-yellow-400">{tokenData.totalSupply.toLocaleString()}</span> tokens</span>
-              </div>
-              <div className="flex items-center gap-2 text-orange-400">
-                <span className="text-orange-400">⚠️</span>
+              </motion.div>
+              <motion.div 
+                className="flex items-center gap-3"
+                initial={{ x: -20, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 1.1 }}
+              >
+                <span className="text-orange-400 text-lg">⚠️</span>
                 <span className="text-white">Not actively traded on major DEX yet</span>
-              </div>
-              <div className="flex items-center gap-2 text-purple-400">
-                <span className="text-purple-400">💡</span>
+              </motion.div>
+              <motion.div 
+                className="flex items-center gap-3"
+                initial={{ x: -20, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 1.2 }}
+              >
+                <span className="text-gray-400 text-lg">💡</span>
                 <span className="text-white">Price estimates based on theoretical calculations</span>
-              </div>
+              </motion.div>
             </div>
-          </div>
-          
-          {/* Price Cards */}
-          <motion.div 
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 1.0 }}
-            >
-              <Card className="bg-black/30 backdrop-blur-xl border border-yellow-400/30 hover:border-yellow-400/60 transition-all duration-500 hover:scale-105 hover:bg-yellow-400/10 group cursor-pointer">
-                <CardContent className="p-4 text-center">
-                  <div className="text-2xl font-bold text-yellow-400 group-hover:text-yellow-300 transition-colors duration-300">
-                    <AnimatedNumber value={tokenData.currentPrice} decimals={6} prefix="$" />
-                  </div>
-                  <div className="text-sm text-gray-400 group-hover:text-gray-300 transition-colors duration-300">Estimated Price</div>
-                </CardContent>
-              </Card>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 1.1 }}
-            >
-              <Card className="bg-black/30 backdrop-blur-xl border border-green-400/30 hover:border-green-400/60 transition-all duration-500 hover:scale-105 hover:bg-green-400/10 group cursor-pointer">
-                <CardContent className="p-4 text-center">
-                  <div className="text-2xl font-bold text-green-400 group-hover:text-green-300 transition-colors duration-300">
-                    +<AnimatedNumber value={tokenData.priceChange24h} decimals={1} suffix="%" />
-                  </div>
-                  <div className="text-sm text-gray-400 group-hover:text-gray-300 transition-colors duration-300">24h Change</div>
-                </CardContent>
-              </Card>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 1.2 }}
-            >
-              <Card className="bg-black/30 backdrop-blur-xl border border-blue-400/30 hover:border-blue-400/60 transition-all duration-500 hover:scale-105 hover:bg-blue-400/10 group cursor-pointer">
-                <CardContent className="p-4 text-center">
-                  <div className="text-2xl font-bold text-blue-400 group-hover:text-blue-300 transition-colors duration-300">
-                    $<AnimatedNumber value={tokenData.volume24h / 1000} decimals={0} suffix="K" />
-                  </div>
-                  <div className="text-sm text-gray-400 group-hover:text-gray-300 transition-colors duration-300">24h Volume</div>
-                </CardContent>
-              </Card>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 1.3 }}
-            >
-              <Card className="bg-black/30 backdrop-blur-xl border border-purple-400/30 hover:border-purple-400/60 transition-all duration-500 hover:scale-105 hover:bg-purple-400/10 group cursor-pointer">
-                <CardContent className="p-4 text-center">
-                  <div className="text-2xl font-bold text-purple-400 group-hover:text-purple-300 transition-colors duration-300">
-                    <AnimatedNumber value={tokenData.holders} decimals={0} />
-                  </div>
-                  <div className="text-sm text-gray-400 group-hover:text-gray-300 transition-colors duration-300">Holders</div>
-                </CardContent>
-              </Card>
-            </motion.div>
           </motion.div>
+          
+          {/* Powerful Price Cards */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12">
+            <PowerfulAnimatedCard
+              delay={1.0}
+              borderColor="border-yellow-400/40"
+              hoverColor="border-yellow-400/80"
+              glowColor="rgba(250, 204, 21, 0.4)"
+            >
+              <motion.div 
+                className="text-3xl font-bold text-yellow-400"
+                initial={{ scale: 0.5 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.8, delay: 1.2 }}
+              >
+                <AnimatedNumber value={tokenData.currentPrice} decimals={6} prefix="$" />
+              </motion.div>
+              <div className="text-sm text-gray-300 mt-2 font-medium">Estimated Price</div>
+            </PowerfulAnimatedCard>
 
-          {/* Action Buttons */}
+            <PowerfulAnimatedCard
+              delay={1.1}
+              borderColor="border-green-400/40"
+              hoverColor="border-green-400/80"
+              glowColor="rgba(34, 197, 94, 0.4)"
+            >
+              <motion.div 
+                className="text-3xl font-bold text-green-400"
+                initial={{ scale: 0.5 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.8, delay: 1.3 }}
+              >
+                +<AnimatedNumber value={tokenData.priceChange24h} decimals={1} suffix="%" />
+              </motion.div>
+              <div className="text-sm text-gray-300 mt-2 font-medium">24h Change</div>
+            </PowerfulAnimatedCard>
+
+            <PowerfulAnimatedCard
+              delay={1.2}
+              borderColor="border-blue-400/40"
+              hoverColor="border-blue-400/80"
+              glowColor="rgba(59, 130, 246, 0.4)"
+            >
+              <motion.div 
+                className="text-3xl font-bold text-blue-400"
+                initial={{ scale: 0.5 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.8, delay: 1.4 }}
+              >
+                $<AnimatedNumber value={tokenData.volume24h / 1000} decimals={0} suffix="K" />
+              </motion.div>
+              <div className="text-sm text-gray-300 mt-2 font-medium">24h Volume</div>
+            </PowerfulAnimatedCard>
+
+            <PowerfulAnimatedCard
+              delay={1.3}
+              borderColor="border-purple-400/40"
+              hoverColor="border-purple-400/80"
+              glowColor="rgba(168, 85, 247, 0.4)"
+            >
+              <motion.div 
+                className="text-3xl font-bold text-purple-400"
+                initial={{ scale: 0.5 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.8, delay: 1.5 }}
+              >
+                <AnimatedNumber value={tokenData.holders} decimals={0} />
+              </motion.div>
+              <div className="text-sm text-gray-300 mt-2 font-medium">Holders</div>
+            </PowerfulAnimatedCard>
+          </div>
+
+          {/* Powerful Action Buttons */}
           <motion.div 
-            className="flex flex-col sm:flex-row gap-4 justify-center mt-8"
-            initial={{ opacity: 0, y: 20 }}
+            className="flex flex-col sm:flex-row gap-6 justify-center mt-12"
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.4 }}
+            transition={{ duration: 0.8, delay: 1.6 }}
           >
-            <Button 
-              size="lg" 
-              className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black hover:from-yellow-500 hover:to-yellow-600 font-bold transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-yellow-400/50"
-              onClick={handleBuyGoldium}
-              disabled={buyingToken}
+            <motion.div
+              whileHover={{ scale: 1.1, rotateX: 5 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
-              {buyingToken ? (
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin"></div>
-                  Buying...
+              <Button 
+                size="lg" 
+                className="bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-black hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700 font-bold px-8 py-4 text-lg shadow-2xl hover:shadow-yellow-400/50 border border-yellow-300/50 relative overflow-hidden"
+                onClick={handleBuyGoldium}
+                disabled={buyingToken}
+              >
+                {/* Button Shine Effect */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                  initial={{ x: '-100%' }}
+                  whileHover={{ x: '100%' }}
+                  transition={{ duration: 0.6 }}
+                />
+                
+                <div className="relative z-10">
+                  {buyingToken ? (
+                    <div className="flex items-center gap-3">
+                      <motion.div 
+                        className="w-5 h-5 border-2 border-black/40 border-t-black rounded-full"
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                      />
+                      Buying...
+                    </div>
+                  ) : (
+                    'Buy Goldium'
+                  )}
                 </div>
-              ) : (
-                'Buy Goldium'
-              )}
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="border-white/30 text-white hover:bg-white/20 hover:border-white/50 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-white/20"
+              </Button>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ scale: 1.1, rotateX: 5 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
-              <ExternalLink className="w-4 h-4 mr-2" />
-              Learn More
-            </Button>
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="border-2 border-white/40 text-white hover:bg-white/10 hover:border-white/70 px-8 py-4 text-lg font-bold shadow-2xl hover:shadow-white/30 relative overflow-hidden"
+              >
+                {/* Button Shine Effect */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                  initial={{ x: '-100%' }}
+                  whileHover={{ x: '100%' }}
+                  transition={{ duration: 0.6 }}
+                />
+                
+                <div className="relative z-10 flex items-center gap-2">
+                  <ExternalLink className="w-5 h-5" />
+                  Learn More
+                </div>
+              </Button>
+            </motion.div>
           </motion.div>
         </div>
       </motion.div>
@@ -362,15 +458,32 @@ export default function HomeSimple() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.7 }}
       >
-        <div className="text-center mb-8">
-          <div className="bg-gradient-to-r from-yellow-600/20 to-orange-600/20 backdrop-blur-xl border-2 border-yellow-400/50 rounded-xl p-6 max-w-4xl mx-auto shadow-2xl">
-            <h2 className="text-3xl font-bold text-white mb-4">🧪 DeFi Testing Lab</h2>
+        <motion.div 
+          className="text-center mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+        >
+          <div className="bg-black/80 backdrop-blur-xl border border-yellow-400/30 rounded-xl p-6 max-w-4xl mx-auto shadow-2xl">
+            <motion.h2 
+              className="text-3xl font-bold text-white mb-4"
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.9 }}
+            >
+              🧪 DeFi Testing Lab
+            </motion.h2>
             <p className="text-gray-300 text-lg">Test GOLDIUM DeFi features dengan wallet client</p>
-            <div className="mt-4 text-yellow-400 text-sm">
+            <motion.div 
+              className="mt-4 text-yellow-400 text-sm font-mono"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 1.1 }}
+            >
               Wallet: A9anvNZEkxQvU7H5xa1Lj33MVQGuX5rZMKqWDM9S4jSs
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
         <ClientWalletTester />
       </motion.div>
 
