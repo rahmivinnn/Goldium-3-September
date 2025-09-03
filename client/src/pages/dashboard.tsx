@@ -63,19 +63,19 @@ export default function Dashboard() {
                   alt="Goldium Logo" 
                   className="w-8 h-8 filter drop-shadow-lg"
                 />
-                <div className="text-2xl font-black text-white">$GOLDIUM</div>
+                <div className="text-2xl font-black text-golden-large">$GOLDIUM</div>
               </div>
               <div className="hidden md:flex items-center space-x-6">
-                <a href="/" className="text-white/70 hover:text-white transition-colors font-medium">
+                <a href="/" className="text-golden-small hover:text-golden transition-colors font-medium">
                   Home
                 </a>
-                <a href="#portfolio" className="text-white font-medium">
+                <a href="#portfolio" className="text-golden font-medium">
                   Dashboard
                 </a>
-                <a href="#trading" className="text-white/70 hover:text-white transition-colors font-medium">
+                <a href="#trading" className="text-golden-small hover:text-golden transition-colors font-medium">
                   Trading
                 </a>
-                <a href="#analytics" className="text-white/70 hover:text-white transition-colors font-medium">
+                <a href="#analytics" className="text-golden-small hover:text-golden transition-colors font-medium">
                   Analytics
                 </a>
               </div>
@@ -106,9 +106,9 @@ export default function Dashboard() {
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="font-main-title text-white mb-2"><span className="metaverse-text metaverse-scan">Trading Dashboard</span></h1>
-              <p className="font-subtitle text-white/70">
-                <span className="metaverse-typing">Real-time portfolio management and DeFi trading platform</span>
+              <h1 className="font-main-title text-golden-large mb-2">Trading Dashboard</h1>
+              <p className="font-subtitle text-golden">
+                Real-time portfolio management and DeFi trading platform
               </p>
             </div>
             
@@ -140,29 +140,29 @@ export default function Dashboard() {
             {/* Quick Stats */}
             <Card className="p-6 bg-black border-white/10">
               <CardHeader className="pb-4">
-                <CardTitle className="font-card-title text-white flex items-center gap-2">
-                  <Activity className="w-5 h-5 text-white" />
-                  <span className="metaverse-text metaverse-glitch">Quick Stats</span>
+                <CardTitle className="font-card-title text-golden flex items-center gap-2">
+                  <Activity className="w-5 h-5 text-golden-small" />
+                  Quick Stats
                 </CardTitle>
               </CardHeader>
               
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="text-center p-3 bg-black border border-white/10 rounded-lg">
-                    <div className="font-stats text-white mb-1">+12.5%</div>
-                    <div className="font-small text-white/60">24h P&L</div>
+                    <div className="font-stats text-golden mb-1">+12.5%</div>
+                    <div className="font-small text-golden-small">24h P&L</div>
                   </div>
                   <div className="text-center p-3 bg-black border border-white/10 rounded-lg">
-                    <div className="font-stats text-white mb-1">8</div>
-                    <div className="font-small text-white/60">Active Positions</div>
+                    <div className="font-stats text-golden mb-1">8</div>
+                    <div className="font-small text-golden-small">Active Positions</div>
                   </div>
                   <div className="text-center p-3 bg-black border border-white/10 rounded-lg">
-                    <div className="font-stats text-white mb-1">$2.1K</div>
-                    <div className="font-small text-white/60">24h Volume</div>
+                    <div className="font-stats text-golden mb-1">$2.1K</div>
+                    <div className="font-small text-golden-small">24h Volume</div>
                   </div>
                   <div className="text-center p-3 bg-black border border-white/10 rounded-lg">
-                    <div className="font-stats text-white mb-1">95%</div>
-                    <div className="font-small text-white/60">Win Rate</div>
+                    <div className="font-stats text-golden mb-1">95%</div>
+                    <div className="font-small text-golden-small">Win Rate</div>
                   </div>
                 </div>
               </CardContent>
@@ -171,9 +171,9 @@ export default function Dashboard() {
             {/* Trading Interface */}
             <Card className="p-6 bg-black border-white/10">
               <CardHeader className="pb-4">
-                <CardTitle className="font-card-title text-white flex items-center gap-2">
-                  <TrendingUp className="w-5 h-5 text-white" />
-                  <span className="metaverse-text metaverse-glitch">Trading Terminal</span>
+                <CardTitle className="font-card-title text-golden flex items-center gap-2">
+                  <TrendingUp className="w-5 h-5 text-golden-small" />
+                  Trading Terminal
                 </CardTitle>
               </CardHeader>
               
@@ -203,9 +203,9 @@ export default function Dashboard() {
             {/* Market Insights */}
             <Card className="p-6 bg-black border-white/10">
               <CardHeader className="pb-4">
-                <CardTitle className="font-card-title text-white flex items-center gap-2">
-                  <BarChart3 className="w-5 h-5 text-white" />
-                  <span className="metaverse-text metaverse-glitch">Market Insights</span>
+                <CardTitle className="font-card-title text-golden flex items-center gap-2">
+                  <BarChart3 className="w-5 h-5 text-golden-small" />
+                  Market Insights
                 </CardTitle>
               </CardHeader>
               
@@ -213,26 +213,26 @@ export default function Dashboard() {
                 <div className="space-y-3">
                   <div className="flex items-center justify-between p-3 bg-black border border-white/10 rounded-lg">
                     <div>
-                      <div className="text-sm font-medium text-white font-['Inter']">SOL Bullish Signal</div>
-                      <div className="text-xs text-white/60 font-['Inter']">RSI oversold, potential reversal</div>
+                      <div className="text-sm font-medium text-golden">SOL Bullish Signal</div>
+                      <div className="text-xs text-golden-small">RSI oversold, potential reversal</div>
                     </div>
-                    <Badge className="bg-black border border-white/20 text-white font-['Inter']">Strong</Badge>
+                    <Badge className="bg-black border border-white/20 text-golden-small">Strong</Badge>
                   </div>
                   
                   <div className="flex items-center justify-between p-3 bg-black border border-white/10 rounded-lg">
                     <div>
-                      <div className="text-sm font-medium text-white font-['Inter']">GOLD Consolidation</div>
-                      <div className="text-xs text-white/60 font-['Inter']">Range-bound trading expected</div>
+                      <div className="text-sm font-medium text-golden">GOLD Consolidation</div>
+                      <div className="text-xs text-golden-small">Range-bound trading expected</div>
                     </div>
-                    <Badge className="bg-black border border-white/20 text-white font-['Inter']">Neutral</Badge>
+                    <Badge className="bg-black border border-white/20 text-golden-small">Neutral</Badge>
                   </div>
                   
                   <div className="flex items-center justify-between p-3 bg-black border border-white/10 rounded-lg">
                     <div>
-                      <div className="text-sm font-medium text-white font-['Inter']">DeFi TVL Rising</div>
-                      <div className="text-xs text-white/60 font-['Inter']">Increased liquidity inflow</div>
+                      <div className="text-sm font-medium text-golden">DeFi TVL Rising</div>
+                      <div className="text-xs text-golden-small">Increased liquidity inflow</div>
                     </div>
-                    <Badge className="bg-black border border-white/20 text-white font-['Inter']">Positive</Badge>
+                    <Badge className="bg-black border border-white/20 text-golden-small">Positive</Badge>
                   </div>
                 </div>
               </CardContent>
@@ -244,9 +244,9 @@ export default function Dashboard() {
         <div className="mt-8">
           <Card className="p-6 bg-black border-white/10">
             <CardHeader className="pb-4">
-              <CardTitle className="font-card-title text-white flex items-center gap-2">
-                <Wallet className="w-6 h-6 text-white" />
-                <span className="metaverse-text metaverse-glitch">Transaction History</span>
+              <CardTitle className="font-card-title text-golden flex items-center gap-2">
+                <Wallet className="w-6 h-6 text-golden-small" />
+                Transaction History
               </CardTitle>
             </CardHeader>
             

@@ -240,9 +240,9 @@ export function PortfolioAnalytics({
       <Card className="p-6 bg-black border-white/10">
         <CardHeader className="pb-4">
           <div className="flex items-center justify-between">
-            <CardTitle className="font-card-title text-white flex items-center gap-2">
-              <PieChart className="w-6 h-6" />
-              <span className="metaverse-text metaverse-glitch">Portfolio Overview</span>
+            <CardTitle className="font-card-title text-golden flex items-center gap-2">
+              <PieChart className="w-6 h-6 text-golden-small" />
+              Portfolio Overview
             </CardTitle>
             <div className="flex items-center gap-2">
               <Badge variant={isConnected ? 'default' : 'destructive'} className="text-xs">
@@ -258,12 +258,12 @@ export function PortfolioAnalytics({
         <CardContent className="space-y-6">
           {/* Total Value */}
           <div className="text-center">
-            <div className="text-4xl font-bold text-white mb-2 font-['Orbitron']">
+            <div className="text-4xl font-bold text-golden mb-2 font-['Orbitron']">
               {formatCurrency(portfolioData.totalValue)}
             </div>
             <div className={cn(
-              'text-lg font-semibold flex items-center justify-center gap-2 font-["Inter"]',
-              portfolioData.totalChangePercent24h >= 0 ? 'text-white' : 'text-white'
+              'text-lg font-semibold flex items-center justify-center gap-2 text-golden',
+              portfolioData.totalChangePercent24h >= 0 ? 'text-golden' : 'text-golden'
             )}>
               {portfolioData.totalChangePercent24h >= 0 ? (
                 <TrendingUp className="w-5 h-5" />

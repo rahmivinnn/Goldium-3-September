@@ -1679,3 +1679,50 @@ button[aria-expanded] {
 .font-stats {
   @apply text-3xl md:text-4xl font-bold font-mono;
 }
+
+/* ========================================
+   GOLDEN TEXT SYSTEM (Like GOLDIUM Splash)
+   ======================================== */
+
+/* Golden Text - Like GOLDIUM splash screen */
+.text-golden {
+  background: linear-gradient(to right, #fbbf24, #f59e0b, #d97706);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: golden-shine 3s ease-in-out infinite;
+}
+
+@keyframes golden-shine {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Golden Text Large - For big titles */
+.text-golden-large {
+  background: linear-gradient(to right, #fbbf24, #f59e0b, #d97706);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: golden-glow 2s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.3));
+}
+
+@keyframes golden-glow {
+  0% { 
+    background-position: 0% 50%;
+    filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.3));
+  }
+  100% { 
+    background-position: 100% 50%;
+    filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.5));
+  }
+}
+
+/* Golden Text Small - For labels and small text */
+.text-golden-small {
+  color: #fbbf24;
+  text-shadow: 0 0 8px rgba(251, 191, 36, 0.4);
+}
