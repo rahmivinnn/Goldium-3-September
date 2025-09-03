@@ -108,14 +108,18 @@ export function BalanceCards() {
     return 0;
   };
 
-  // Check for connected wallets on component mount and every 5 seconds
+  // Check for connected wallets HANYA sekali di awal, tidak interval
   useEffect(() => {
-    checkRealBalance();
-    const interval = setInterval(checkRealBalance, 5000);
-    return () => clearInterval(interval);
+    // Cek sekali saja di awal
+    const timer = setTimeout(() => {
+      checkRealBalance();
+    }, 2000); // Delay lebih lama untuk avoid kedip
+    
+    return () => clearTimeout(timer);
   }, []);
 
-  const currentBalance = realBalance > 0 ? realBalance : (walletState.balance || balances?.sol || 0);
+  // HANYA show balance jika wallet benar-benar connected
+  const currentBalance = realBalance > 0 ? realBalance : 0;
   
   console.log('🔍 FORCE REAL Balance Debug:', {
     realBalanceFromDirect: realBalance,

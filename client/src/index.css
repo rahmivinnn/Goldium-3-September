@@ -1691,7 +1691,7 @@ button[aria-expanded] {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: golden-shine 3s ease-in-out infinite;
+  animation: golden-shine 4s ease-in-out infinite;
 }
 
 @keyframes golden-shine {

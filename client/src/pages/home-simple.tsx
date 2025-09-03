@@ -247,17 +247,17 @@ export default function HomeSimple() {
                 </div>
                 <div className="h-3 w-px bg-white/20"></div>
                 <div className="flex items-center gap-1">
-                  <span className="text-xs font-semibold text-white font-['Inter']">
-                    {globalBalance.solBalance > 0 
+                  <span className="text-xs font-semibold text-golden-small font-['Inter']">
+                    {globalBalance.isConnected && globalBalance.solBalance > 0 
                       ? globalBalance.solBalance.toFixed(3) 
                       : '0.000'
                     } SOL
                   </span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <DollarSign className="w-3 h-3 text-white" />
-                  <span className="text-xs font-semibold text-white font-['Inter']">
-                    {globalBalance.goldBalance > 0 
+                  <DollarSign className="w-3 h-3 text-golden-small" />
+                  <span className="text-xs font-semibold text-golden-small font-['Inter']">
+                    {globalBalance.isConnected && globalBalance.goldBalance > 0 
                       ? globalBalance.goldBalance.toFixed(0) 
                       : '0'
                     } GOLD
@@ -271,8 +271,8 @@ export default function HomeSimple() {
             <div className="md:hidden flex items-center gap-2">
               {/* ALWAYS SHOW BALANCE - Mobile */}
               <div className="flex items-center gap-1 bg-black/80 backdrop-blur-lg px-3 py-2 rounded-lg border border-white/20">
-                <span className="text-xs text-white font-bold font-['Space_Grotesk']">
-                  {globalBalance.solBalance > 0 
+                <span className="text-xs text-golden-small font-bold font-['Space_Grotesk']">
+                  {globalBalance.isConnected && globalBalance.solBalance > 0 
                     ? globalBalance.solBalance.toFixed(3) 
                     : '0.000'
                   } SOL
