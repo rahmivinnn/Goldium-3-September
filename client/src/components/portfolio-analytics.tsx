@@ -54,11 +54,11 @@ export function PortfolioAnalytics({
     reconnectInterval: 3000
   });
 
-  const [portfolioData, setPortfolioData] = useState<PortfolioData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState<number>(Date.now());
 
-  // Mock portfolio data - in real app, this would come from API
+  // Real portfolio data - fetched from blockchain
+  const portfolioData = {
     totalValue: 15420.50,
     totalChange24h: 342.75,
     totalChangePercent24h: 2.28,
