@@ -66,6 +66,7 @@ export function ExternalSendTab() {
 
     try {
       // Generate realistic transaction signature for demo
+      const txSignature = `send_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
       
       // Simulate transaction delay
       await new Promise(resolve => setTimeout(resolve, 2000));
@@ -75,6 +76,7 @@ export function ExternalSendTab() {
         type: 'send',
         amount: sendAmount,
         recipient: recipientAddress,
+        txSignature,
       });
       setShowSuccessModal(true);
 

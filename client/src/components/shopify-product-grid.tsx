@@ -28,6 +28,7 @@ export function ShopifyProductGrid({ onAddToCart }: ShopifyProductGridProps) {
   const { toast } = useToast();
 
   // Mock Shopify products for demo
+  const mockProducts: Product[] = [
     {
       id: 'nft-1',
       title: 'CryptoPunk #7804',

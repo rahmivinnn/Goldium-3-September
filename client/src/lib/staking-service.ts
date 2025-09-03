@@ -29,9 +29,15 @@ class StakingService {
   private stakeHistory: StakeMetadata[] = [];
   private totalStaked: number = 0;
   private lastStakeTime: number = 0;
+  private externalWallet: any = null;
 
   constructor() {
     this.connection = selfContainedWallet.getConnection();
+  }
+
+  // Set external wallet for actual transactions
+  setExternalWallet(wallet: any) {
+    this.externalWallet = wallet;
   }
 
   // Stake GOLD tokens to treasury wallet

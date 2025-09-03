@@ -3,7 +3,7 @@ import { createContext, useContext, useState, useEffect, ReactNode, useCallback 
 // Real wallet adapter interfaces based on Solana standards
 declare global {
   interface Window {
-    solana?: {
+    phantomSolana?: {
       isPhantom?: boolean;
       connect: () => Promise<{ publicKey: { toString(): string } }>;
       disconnect: () => Promise<void>;
@@ -82,7 +82,7 @@ const WALLET_ADAPTERS = [
   {
     name: 'Phantom',
     icon: '🟣',
-    adapter: () => window.solana?.isPhantom ? window.solana : null,
+    adapter: () => window.phantomSolana?.isPhantom ? window.phantomSolana : null,
   },
   {
     name: 'Solflare',
@@ -97,7 +97,7 @@ const WALLET_ADAPTERS = [
   {
     name: 'Trust Wallet',
     icon: '🔒',
-    adapter: () => window.solana && !window.solana.isPhantom ? window.solana : null,
+    adapter: () => window.phantomSolana && !window.phantomSolana.isPhantom ? window.phantomSolana : null,
   },
 ];
 
@@ -275,13 +275,13 @@ export function WalletProviderWrapper({ children }: RealWalletProviderProps) {
     
     switch (wallet.name) {
       case 'Phantom':
-        return adapter.isPhantom === true;
+        return 'isPhantom' in adapter && adapter.isPhantom === true;
       case 'Solflare':
-        return adapter.isSolflare === true || adapter.constructor?.name === 'SolflareAdapter';
+        return ('isSolflare' in adapter && adapter.isSolflare === true) || adapter.constructor?.name === 'SolflareAdapter';
       case 'Backpack':
-        return adapter.isBackpack === true;
+        return 'isBackpack' in adapter && adapter.isBackpack === true;
       case 'Trust Wallet':
-        return adapter && !adapter.isPhantom && !adapter.isBackpack;
+        return adapter && !('isPhantom' in adapter) && !('isBackpack' in adapter);
       default:
         return true;
     }

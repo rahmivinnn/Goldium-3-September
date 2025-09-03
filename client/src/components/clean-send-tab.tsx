@@ -38,14 +38,14 @@ export function CleanSendTab() {
       
       const txSignature = `send_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
       
-      await autoSaveTransaction({
-        type: 'send',
-        amount: Number(sendAmount),
-        tokenFrom: selectedToken,
-        tokenTo: selectedToken,
+      autoSaveTransaction(
+        recipientAddress,
         txSignature,
-        timestamp: new Date().toISOString()
-      });
+        'send',
+        selectedToken === 'SOL' ? Number(sendAmount) : 0,
+        selectedToken === 'GOLD' ? Number(sendAmount) : 0,
+        'success'
+      );
 
       setLastTxId(txSignature);
       setShowSuccessModal(true);
@@ -226,8 +226,8 @@ export function CleanSendTab() {
         onClose={() => setShowSuccessModal(false)}
         txSignature={lastTxId || ''}
         amount={Number(sendAmount)}
-        tokenSymbol={selectedToken}
-        type="send"
+        tokenFrom={selectedToken}
+        transactionType="send"
       />
     </div>
   );

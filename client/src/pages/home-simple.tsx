@@ -20,6 +20,7 @@ import { useGoldBalance } from '@/hooks/use-gold-balance';
 import GoldiumGamifiedStaking from '@/components/goldium-gamified-staking';
 import { TwitterEmbed } from '@/components/twitter-embed';
 import { EfficientWalletBalance } from '@/components/efficient-wallet-balance';
+import { AnimatedNumber } from '@/components/animated-number';
 
 
 export default function HomeSimple() {
@@ -101,7 +102,7 @@ export default function HomeSimple() {
       const swapService = new SwapService();
       
       // Set external wallet for real transaction
-      if (externalWallet.walletInstance) {
+      if (externalWallet.connected) {
         swapService.setExternalWallet(externalWallet);
         console.log('✅ External wallet connected for REAL transaction');
       }
@@ -132,7 +133,7 @@ export default function HomeSimple() {
         await autoSaveTransaction(
           externalWallet.address,
           signature,
-          'buy',
+          'swap',
           solAmount,
           goldAmount,
           'success'

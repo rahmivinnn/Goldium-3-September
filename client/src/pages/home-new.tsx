@@ -51,7 +51,7 @@ export default function Home() {
                 <BalanceStatusIndicator 
                   connected={wallet.connected}
                   balance={wallet.balance}
-                  walletType={wallet.selectedWallet || undefined}
+                  walletType={wallet.wallet || undefined}
                 />
               </div>
               <ExternalWalletSelector />

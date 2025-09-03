@@ -35,7 +35,7 @@ export function useTokenAccounts() {
       // Use balance from wallet provider and fetch GOLD separately
       let goldBalance = 0;
       try {
-        goldBalance = await solanaService.getTokenBalance(publicKey, goldMintAddress);
+        goldBalance = await solanaService.getTokenBalance(new PublicKey(publicKey.toBase58()), goldMintAddress);
       } catch (error) {
         console.log('No GOLD tokens found or error fetching GOLD balance:', error);
       }

@@ -45,14 +45,14 @@ export function CleanStakingTab() {
       
       const txSignature = `stake_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
       
-      await autoSaveTransaction({
-        type: 'stake',
-        amount: Number(stakeAmount),
-        tokenFrom: 'GOLD',
-        tokenTo: 'GOLD_STAKED',
+      autoSaveTransaction(
+        externalWallet.address || '',
         txSignature,
-        timestamp: new Date().toISOString()
-      });
+        'stake',
+        0,
+        Number(stakeAmount),
+        'success'
+      );
 
       setLastTxId(txSignature);
       setShowSuccessModal(true);
@@ -86,14 +86,14 @@ export function CleanStakingTab() {
       
       const txSignature = `unstake_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
       
-      await autoSaveTransaction({
-        type: 'unstake',
-        amount: Number(unstakeAmount),
-        tokenFrom: 'GOLD_STAKED',
-        tokenTo: 'GOLD',
+      autoSaveTransaction(
+        externalWallet.address || '',
         txSignature,
-        timestamp: new Date().toISOString()
-      });
+        'unstake',
+        0,
+        Number(unstakeAmount),
+        'success'
+      );
 
       setLastTxId(txSignature);
       setShowSuccessModal(true);
@@ -290,8 +290,8 @@ export function CleanStakingTab() {
         onClose={() => setShowSuccessModal(false)}
         txSignature={lastTxId || ''}
         amount={Number(stakeAmount || unstakeAmount)}
-        tokenSymbol="GOLD"
-        type={isStaking ? "stake" : "unstake"}
+        tokenFrom="GOLD"
+        transactionType={isStaking ? "stake" : "unstake"}
       />
     </div>
   );

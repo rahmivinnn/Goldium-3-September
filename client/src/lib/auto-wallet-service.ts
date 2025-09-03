@@ -293,7 +293,7 @@ class AutoWalletService {
   // Check if wallet is healthy
   isWalletHealthy(): boolean {
     return this.state.connected && 
-           this.state.address && 
+           !!this.state.address && 
            !this.state.error && 
            (Date.now() - this.state.lastUpdated) < 30000; // 30 seconds
   }

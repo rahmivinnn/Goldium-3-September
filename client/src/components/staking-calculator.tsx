@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Calculator, TrendingUp, Clock, DollarSign } from 'lucide-react';
+import { Calculator, TrendingUp, Clock, DollarSign, Trophy } from 'lucide-react';
 import { AnimatedNumber } from './animated-number';
 
 export function StakingCalculator() {

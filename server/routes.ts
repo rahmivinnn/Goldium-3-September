@@ -296,12 +296,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .limit(10);
       
       // Calculate total portfolio value
-      const totalValue = portfolio.reduce((sum, item) => {
+      const totalValue = portfolio.reduce((sum: number, item: any) => {
         return sum + (parseFloat(item.usdValue || '0'));
       }, 0);
       
       // Count transactions by type
-      const transactionStats = recentTransactions.reduce((stats, tx) => {
+      const transactionStats = recentTransactions.reduce((stats: Record<string, number>, tx: any) => {
         stats[tx.type] = (stats[tx.type] || 0) + 1;
         return stats;
       }, {} as Record<string, number>);

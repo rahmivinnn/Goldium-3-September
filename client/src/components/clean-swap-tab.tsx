@@ -73,14 +73,14 @@ export function CleanSwapTab() {
       const txSignature = `swap_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
       
       // Auto-save transaction
-      await autoSaveTransaction({
-        type: 'swap',
-        amount: Number(fromAmount),
-        tokenFrom: fromToken,
-        tokenTo: fromToken === 'SOL' ? 'GOLD' : 'SOL',
+      autoSaveTransaction(
+        externalWallet.address || '',
         txSignature,
-        timestamp: new Date().toISOString()
-      });
+        'swap',
+        fromToken === 'SOL' ? Number(fromAmount) : Number(toAmount),
+        fromToken === 'GOLD' ? Number(fromAmount) : Number(toAmount),
+        'success'
+      );
 
       setLastTxId(txSignature);
       
@@ -294,8 +294,9 @@ export function CleanSwapTab() {
         onClose={() => setShowSuccessModal(false)}
         txSignature={lastTxId || ''}
         amount={Number(fromAmount)}
-        tokenSymbol={fromToken}
-        type="swap"
+        tokenFrom={fromToken}
+        tokenTo={fromToken === 'SOL' ? 'GOLD' : 'SOL'}
+        transactionType="swap"
       />
     </div>
   );

@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Star, Crown, Shield, Gem, Award, Trophy } from 'lucide-react';
 import { useExternalWallets } from '@/hooks/use-external-wallets';
+import { AnimatedNumber } from '@/components/animated-number';
 
 interface NFTBadge {
   id: string;

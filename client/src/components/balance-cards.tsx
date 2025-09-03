@@ -136,8 +136,8 @@ export function BalanceCards() {
       await checkRealBalance(); // Use our direct balance check
       
       // Also refresh gold balance
-      if (goldBalance.refreshBalance) {
-        await goldBalance.refreshBalance();
+      if (goldBalance.refreshBalances) {
+        await goldBalance.refreshBalances();
       }
     } catch (error) {
       console.error('Manual refresh failed:', error);

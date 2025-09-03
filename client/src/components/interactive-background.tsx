@@ -1,14 +1,5 @@
-import React, { useCallback, useMemo, Suspense } from 'react';
+import React, { useMemo } from 'react';
 import { usePerformanceMode } from '@/lib/settings-store';
-
-// Lazy load particles untuk performance
-const LazyParticles = React.lazy(() => 
-  import('@tsparticles/react').then(module => ({ default: module.default }))
-);
-
-const LazyLoadBasic = React.lazy(() => 
-  import('@tsparticles/basic').then(module => ({ default: module.loadBasic }))
-);
 
 interface InteractiveBackgroundProps {
   intensity?: 'low' | 'medium' | 'high';
@@ -20,10 +11,6 @@ export function InteractiveBackground({
   className = '' 
 }: InteractiveBackgroundProps) {
   const { enableParticles } = usePerformanceMode();
-
-  const particlesInit = useCallback(async (engine: Engine) => {
-    await loadBasic(engine);
-  }, []);
 
   const particleConfig = useMemo(() => {
     const counts = {
@@ -118,12 +105,7 @@ export function InteractiveBackground({
 
   return (
     <div className={`absolute inset-0 ${className}`}>
-      <Particles
-        id="goldium-particles"
-        init={particlesInit}
-        options={particleConfig}
-        className="w-full h-full"
-      />
+      <div className="w-full h-full bg-gradient-to-br from-black/20 via-transparent to-black/20 animate-pulse" />
     </div>
   );
 }

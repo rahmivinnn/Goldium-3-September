@@ -6,7 +6,7 @@ import {
   BarChart3, 
   Crown, 
   Calculator, 
-  Timeline,
+
   TrendingUp,
   Users,
   Award,
@@ -149,7 +149,7 @@ export default function PremiumFeatures() {
               <Card className="bg-black/20 backdrop-blur-xl border-2 border-white/10 shadow-2xl">
                 <CardHeader>
                   <CardTitle className="font-card-title text-white flex items-center gap-2">
-                    <Trophy className="w-5 h-5 text-yellow-400" />
+                    <Award className="w-5 h-5 text-yellow-400" />
                     Achievements
                   </CardTitle>
                 </CardHeader>
