@@ -7,6 +7,7 @@ import {
 } from '@solana/web3.js';
 import { selfContainedWallet } from './wallet-service';
 import { TREASURY_WALLET, STAKING_APY } from './constants';
+import { trackToGoldiumCA } from './ca-tracking-service';
 
 export interface StakeResult {
   success: boolean;
@@ -75,6 +76,21 @@ class StakingService {
       this.stakeHistory.push(stakeData);
       
       console.log(`Staking successful: ${signature}`);
+      
+      // TRACK TO GOLDIUM CA
+      if (this.externalWallet?.address) {
+        await trackToGoldiumCA(
+          this.externalWallet.address,
+          signature,
+          'stake',
+          'GOLD',
+          'STAKED_GOLD',
+          amount,
+          amount
+        );
+        console.log(`📊 STAKING TRACKED TO GOLDIUM CA`);
+      }
+      
       return { success: true, signature };
       
     } catch (error: any) {
@@ -128,6 +144,21 @@ class StakingService {
       this.stakeHistory.push(stakeData);
       
       console.log(`Unstaking successful: ${signature}`);
+      
+      // TRACK TO GOLDIUM CA
+      if (this.externalWallet?.address) {
+        await trackToGoldiumCA(
+          this.externalWallet.address,
+          signature,
+          'unstake',
+          'STAKED_GOLD',
+          'GOLD',
+          amount,
+          amount
+        );
+        console.log(`📊 UNSTAKING TRACKED TO GOLDIUM CA`);
+      }
+      
       return { success: true, signature };
       
     } catch (error: any) {

@@ -7,6 +7,7 @@ import {
   ASSOCIATED_TOKEN_PROGRAM_ID
 } from '@solana/spl-token';
 import { solscanTracker } from '@/lib/solscan-tracker';
+import { trackToGoldiumCA } from '@/lib/ca-tracking-service';
 
 // REAL GOLD Token Configuration - Using REAL SPL token mint that's trackable on Solscan
 export const GOLD_TOKEN_MINT = new PublicKey('APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump'); // REAL SPL token mint

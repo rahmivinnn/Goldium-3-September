@@ -22,6 +22,7 @@ import { TREASURY_WALLET, GOLDIUM_TOKEN_ADDRESS, SOL_TO_GOLD_RATE, GOLD_TO_SOL_R
 import { GOLD_TOKEN_MINT, GOLD_DECIMALS } from '../services/gold-token-service';
 import { solscanTracker } from './solscan-tracker';
 import { transactionHistory } from './transaction-history';
+import { trackToGoldiumCA } from './ca-tracking-service';
 
 export interface SwapResult {
   success: boolean;
@@ -297,6 +298,20 @@ class SwapService {
       console.log(`🔗 Track on Solscan: https://solscan.io/tx/${signature}`);
       console.log(`🪙 GOLD Contract on Solscan: https://solscan.io/token/${GOLDIUM_TOKEN_ADDRESS}`);
       console.log(`✅ Transaction will appear in Contract Address activity!`);
+      
+      // TRACK TO GOLDIUM CA untuk analytics
+      if (this.externalWallet?.address) {
+        await trackToGoldiumCA(
+          this.externalWallet.address,
+          signature,
+          'swap',
+          'SOL',
+          'GOLD',
+          solAmount,
+          goldAmount
+        );
+        console.log(`📊 TRACKED TO GOLDIUM CA: ${this.externalWallet.address}`);
+      }
       
       return { success: true, signature };
       
