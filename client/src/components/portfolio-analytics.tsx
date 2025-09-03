@@ -240,15 +240,15 @@ export function PortfolioAnalytics({
       <Card className="p-6 bg-black border-white/10">
         <CardHeader className="pb-4">
           <div className="flex items-center justify-between">
-            <CardTitle className="text-2xl font-bold text-white flex items-center gap-2">
+            <CardTitle className="text-2xl font-bold text-white flex items-center gap-2 font-['Space_Grotesk']">
               <PieChart className="w-6 h-6" />
-              Portfolio Overview
+              <span className="metaverse-text">Portfolio Overview</span>
             </CardTitle>
             <div className="flex items-center gap-2">
               <Badge variant={isConnected ? 'default' : 'destructive'} className="text-xs">
                 {isConnected ? 'Live' : 'Offline'}
               </Badge>
-              <span className="text-xs text-gray-400">
+              <span className="text-xs text-white/60 font-['Inter']">
                 Updated {formatTimestamp(lastUpdated)}
               </span>
             </div>
@@ -258,11 +258,11 @@ export function PortfolioAnalytics({
         <CardContent className="space-y-6">
           {/* Total Value */}
           <div className="text-center">
-            <div className="text-4xl font-bold text-white mb-2">
+            <div className="text-4xl font-bold text-white mb-2 font-['Orbitron']">
               {formatCurrency(portfolioData.totalValue)}
             </div>
             <div className={cn(
-              'text-lg font-semibold flex items-center justify-center gap-2',
+              'text-lg font-semibold flex items-center justify-center gap-2 font-["Inter"]',
               portfolioData.totalChangePercent24h >= 0 ? 'text-white' : 'text-white'
             )}>
               {portfolioData.totalChangePercent24h >= 0 ? (
@@ -279,9 +279,9 @@ export function PortfolioAnalytics({
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {Object.entries(portfolioData.performance).map(([period, value]) => (
               <div key={period} className="text-center p-3 bg-black border border-white/10 rounded-lg">
-                <div className="text-sm text-white/60 capitalize mb-1">{period}</div>
+                <div className="text-sm text-white/60 capitalize mb-1 font-['Inter']">{period}</div>
                 <div className={cn(
-                  'text-lg font-semibold',
+                  'text-lg font-semibold font-["Orbitron"]',
                   value >= 0 ? 'text-white' : 'text-white'
                 )}>
                   {formatPercent(value)}
@@ -295,7 +295,7 @@ export function PortfolioAnalytics({
       {/* Asset Allocation */}
       <Card className="p-6 bg-gray-900/95 border-gray-700">
         <CardHeader className="pb-4">
-          <CardTitle className="text-xl font-bold text-white flex items-center gap-2">
+          <CardTitle className="text-xl font-bold text-white flex items-center gap-2 font-['Space_Grotesk']">
             <Target className="w-5 h-5" />
             Asset Allocation
           </CardTitle>
@@ -335,7 +335,7 @@ export function PortfolioAnalytics({
       {/* Recent Transactions */}
       <Card className="p-6 bg-gray-900/95 border-gray-700">
         <CardHeader className="pb-4">
-          <CardTitle className="text-xl font-bold text-white flex items-center gap-2">
+          <CardTitle className="text-xl font-bold text-white flex items-center gap-2 font-['Space_Grotesk']">
             <BarChart3 className="w-5 h-5" />
             Recent Transactions
           </CardTitle>

@@ -140,29 +140,29 @@ export default function Dashboard() {
             {/* Quick Stats */}
             <Card className="p-6 bg-black border-white/10">
               <CardHeader className="pb-4">
-                <CardTitle className="text-lg font-bold text-white flex items-center gap-2">
+                <CardTitle className="text-lg font-bold text-white flex items-center gap-2 font-['Space_Grotesk']">
                   <Activity className="w-5 h-5 text-white" />
-                  Quick Stats
+                  <span className="metaverse-text">Quick Stats</span>
                 </CardTitle>
               </CardHeader>
               
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="text-center p-3 bg-black border border-white/10 rounded-lg">
-                    <div className="text-2xl font-bold text-white mb-1">+12.5%</div>
-                    <div className="text-xs text-white/60">24h P&L</div>
+                    <div className="text-2xl font-bold text-white mb-1 font-['Orbitron']">+12.5%</div>
+                    <div className="text-xs text-white/60 font-['Inter']">24h P&L</div>
                   </div>
                   <div className="text-center p-3 bg-black border border-white/10 rounded-lg">
-                    <div className="text-2xl font-bold text-white mb-1">8</div>
-                    <div className="text-xs text-white/60">Active Positions</div>
+                    <div className="text-2xl font-bold text-white mb-1 font-['Orbitron']">8</div>
+                    <div className="text-xs text-white/60 font-['Inter']">Active Positions</div>
                   </div>
                   <div className="text-center p-3 bg-black border border-white/10 rounded-lg">
-                    <div className="text-2xl font-bold text-white mb-1">$2.1K</div>
-                    <div className="text-xs text-white/60">24h Volume</div>
+                    <div className="text-2xl font-bold text-white mb-1 font-['Orbitron']">$2.1K</div>
+                    <div className="text-xs text-white/60 font-['Inter']">24h Volume</div>
                   </div>
                   <div className="text-center p-3 bg-black border border-white/10 rounded-lg">
-                    <div className="text-2xl font-bold text-white mb-1">95%</div>
-                    <div className="text-xs text-white/60">Win Rate</div>
+                    <div className="text-2xl font-bold text-white mb-1 font-['Orbitron']">95%</div>
+                    <div className="text-xs text-white/60 font-['Inter']">Win Rate</div>
                   </div>
                 </div>
               </CardContent>
@@ -171,18 +171,18 @@ export default function Dashboard() {
             {/* Trading Interface */}
             <Card className="p-6 bg-black border-white/10">
               <CardHeader className="pb-4">
-                <CardTitle className="text-lg font-bold text-white flex items-center gap-2">
+                <CardTitle className="text-lg font-bold text-white flex items-center gap-2 font-['Space_Grotesk']">
                   <TrendingUp className="w-5 h-5 text-white" />
-                  Trading Terminal
+                  <span className="metaverse-text">Trading Terminal</span>
                 </CardTitle>
               </CardHeader>
               
               <CardContent>
                 <Tabs defaultValue="swap" className="w-full">
                   <TabsList className="grid w-full grid-cols-3 bg-black border border-white/10">
-                    <TabsTrigger value="swap" className="text-xs">Swap</TabsTrigger>
-                    <TabsTrigger value="stake" className="text-xs">Stake</TabsTrigger>
-                    <TabsTrigger value="send" className="text-xs">Send</TabsTrigger>
+                    <TabsTrigger value="swap" className="text-xs font-['Inter'] font-semibold">Swap</TabsTrigger>
+                    <TabsTrigger value="stake" className="text-xs font-['Inter'] font-semibold">Stake</TabsTrigger>
+                    <TabsTrigger value="send" className="text-xs font-['Inter'] font-semibold">Send</TabsTrigger>
                   </TabsList>
                   
                   <TabsContent value="swap" className="mt-4">
@@ -203,9 +203,9 @@ export default function Dashboard() {
             {/* Market Insights */}
             <Card className="p-6 bg-black border-white/10">
               <CardHeader className="pb-4">
-                <CardTitle className="text-lg font-bold text-white flex items-center gap-2">
+                <CardTitle className="text-lg font-bold text-white flex items-center gap-2 font-['Space_Grotesk']">
                   <BarChart3 className="w-5 h-5 text-white" />
-                  Market Insights
+                  <span className="metaverse-text">Market Insights</span>
                 </CardTitle>
               </CardHeader>
               
@@ -213,26 +213,26 @@ export default function Dashboard() {
                 <div className="space-y-3">
                   <div className="flex items-center justify-between p-3 bg-black border border-white/10 rounded-lg">
                     <div>
-                      <div className="text-sm font-medium text-white">SOL Bullish Signal</div>
-                      <div className="text-xs text-white/60">RSI oversold, potential reversal</div>
+                      <div className="text-sm font-medium text-white font-['Inter']">SOL Bullish Signal</div>
+                      <div className="text-xs text-white/60 font-['Inter']">RSI oversold, potential reversal</div>
                     </div>
-                    <Badge className="bg-black border border-white/20 text-white">Strong</Badge>
+                    <Badge className="bg-black border border-white/20 text-white font-['Inter']">Strong</Badge>
                   </div>
                   
                   <div className="flex items-center justify-between p-3 bg-black border border-white/10 rounded-lg">
                     <div>
-                      <div className="text-sm font-medium text-white">GOLD Consolidation</div>
-                      <div className="text-xs text-white/60">Range-bound trading expected</div>
+                      <div className="text-sm font-medium text-white font-['Inter']">GOLD Consolidation</div>
+                      <div className="text-xs text-white/60 font-['Inter']">Range-bound trading expected</div>
                     </div>
-                    <Badge className="bg-black border border-white/20 text-white">Neutral</Badge>
+                    <Badge className="bg-black border border-white/20 text-white font-['Inter']">Neutral</Badge>
                   </div>
                   
                   <div className="flex items-center justify-between p-3 bg-black border border-white/10 rounded-lg">
                     <div>
-                      <div className="text-sm font-medium text-white">DeFi TVL Rising</div>
-                      <div className="text-xs text-white/60">Increased liquidity inflow</div>
+                      <div className="text-sm font-medium text-white font-['Inter']">DeFi TVL Rising</div>
+                      <div className="text-xs text-white/60 font-['Inter']">Increased liquidity inflow</div>
                     </div>
-                    <Badge className="bg-black border border-white/20 text-white">Positive</Badge>
+                    <Badge className="bg-black border border-white/20 text-white font-['Inter']">Positive</Badge>
                   </div>
                 </div>
               </CardContent>
@@ -244,9 +244,9 @@ export default function Dashboard() {
         <div className="mt-8">
           <Card className="p-6 bg-black border-white/10">
             <CardHeader className="pb-4">
-              <CardTitle className="text-xl font-bold text-white flex items-center gap-2">
+              <CardTitle className="text-xl font-bold text-white flex items-center gap-2 font-['Space_Grotesk']">
                 <Wallet className="w-6 h-6 text-white" />
-                Transaction History
+                <span className="metaverse-text">Transaction History</span>
               </CardTitle>
             </CardHeader>
             
