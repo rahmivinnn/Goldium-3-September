@@ -470,9 +470,8 @@ export default function HomeSimple() {
             </p>
           </div>
           
-          <div className="chainzoku-card bg-black/95 backdrop-blur-xl border border-white/20 rounded-3xl p-12 shadow-2xl shadow-white/10 chainzoku-fade-in max-w-7xl mx-auto">
-            <Tabs defaultValue="swap" className="w-full">
-              <TabsList className="grid w-full grid-cols-5 mb-16 bg-black/80 border border-white/20 rounded-2xl p-3 shadow-lg shadow-white/10">
+          <Tabs defaultValue="swap" className="w-full max-w-7xl mx-auto">
+            <TabsList className="grid w-full grid-cols-5 mb-16 bg-black/80 border border-white/20 rounded-2xl p-3 shadow-lg shadow-white/10">
                 <TabsTrigger value="swap" className="text-white data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:border data-[state=active]:border-white/20 font-bold rounded-xl py-4 px-8 font-['Space_Grotesk'] uppercase tracking-wide transition-all duration-300 hover:bg-black/50 text-base">
                   Swap
                 </TabsTrigger>
@@ -519,8 +518,7 @@ export default function HomeSimple() {
                   <TransactionHistory />
                 </div>
               </TabsContent>
-            </Tabs>
-          </div>
+          </Tabs>
         </div>
       </section>
 
