@@ -27,6 +27,7 @@ import { WalletDebugPanel } from '@/components/wallet-debug-panel';
 import { GlobalBalanceManager } from '@/lib/global-balance-state';
 import { SimpleBalanceDisplay } from '@/components/simple-balance-display';
 import { BrutalBalance } from '@/components/brutal-balance';
+import { StableWalletBalance } from '@/components/stable-wallet-balance';
 
 export default function HomeSimple() {
   const wallet = useSolanaWallet();
@@ -234,15 +235,15 @@ export default function HomeSimple() {
               <a href="#brand" className="text-white/80 hover:text-white transition-all duration-300 font-medium font-['Inter'] text-sm uppercase tracking-wide hover:scale-105">Brand</a>
               <a href="#defi" className="text-white/80 hover:text-white transition-all duration-300 font-medium font-['Inter'] text-sm uppercase tracking-wide hover:scale-105">DeFi</a>
               <a href="#tokenomics" className="text-white/80 hover:text-white transition-all duration-300 font-medium font-['Inter'] text-sm uppercase tracking-wide hover:scale-105">Tokenomics</a>
-              {/* BRUTAL BALANCE - NEVER RESETS */}
-              <BrutalBalance />
+              {/* STABLE WALLET BALANCE - LOCK MECHANISM */}
+              <StableWalletBalance />
               <ExternalWalletSelector />
             </div>
             
             {/* Mobile Menu Button */}
             <div className="md:hidden flex items-center gap-2">
-              {/* BRUTAL MOBILE BALANCE */}
-              <BrutalBalance />
+              {/* STABLE MOBILE BALANCE */}
+              <StableWalletBalance />
               <button className="text-white p-2 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-300">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
