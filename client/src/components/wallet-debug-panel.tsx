@@ -1,0 +1,260 @@
+import React, { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { RefreshCw, Wallet, CheckCircle, AlertCircle, Copy } from 'lucide-react';
+
+export function WalletDebugPanel() {
+  const [wallets, setWallets] = useState<any[]>([]);
+  const [selectedWallet, setSelectedWallet] = useState<any>(null);
+  const [balance, setBalance] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [logs, setLogs] = useState<string[]>([]);
+
+  const addLog = (message: string) => {
+    const timestamp = new Date().toLocaleTimeString();
+    setLogs(prev => [...prev.slice(-10), `[${timestamp}] ${message}`]);
+    console.log(message);
+  };
+
+  // Detect all available wallets
+  const detectWallets = () => {
+    const detected: any[] = [];
+    
+    if (typeof window !== 'undefined') {
+      // Phantom
+      if ((window as any).solana?.isPhantom) {
+        detected.push({
+          name: 'Phantom',
+          key: 'phantom',
+          adapter: (window as any).solana,
+          connected: (window as any).solana.isConnected,
+          publicKey: (window as any).solana.publicKey?.toString()
+        });
+      }
+      
+      // Solflare
+      if ((window as any).solflare) {
+        detected.push({
+          name: 'Solflare',
+          key: 'solflare',
+          adapter: (window as any).solflare,
+          connected: (window as any).solflare.isConnected,
+          publicKey: (window as any).solflare.publicKey?.toString()
+        });
+      }
+      
+      // Backpack
+      if ((window as any).backpack) {
+        detected.push({
+          name: 'Backpack',
+          key: 'backpack',
+          adapter: (window as any).backpack,
+          connected: (window as any).backpack.isConnected,
+          publicKey: (window as any).backpack.publicKey?.toString()
+        });
+      }
+    }
+    
+    setWallets(detected);
+    addLog(`Detected ${detected.length} wallets: ${detected.map(w => w.name).join(', ')}`);
+    
+    // Auto-select first connected wallet
+    const connectedWallet = detected.find(w => w.connected);
+    if (connectedWallet && !selectedWallet) {
+      setSelectedWallet(connectedWallet);
+      addLog(`Auto-selected connected wallet: ${connectedWallet.name}`);
+      fetchBalance(connectedWallet.publicKey);
+    }
+  };
+
+  // Connect to specific wallet
+  const connectWallet = async (wallet: any) => {
+    setIsLoading(true);
+    addLog(`Connecting to ${wallet.name}...`);
+    
+    try {
+      const response = await wallet.adapter.connect();
+      const publicKey = response.publicKey?.toString() || wallet.adapter.publicKey?.toString();
+      
+      if (publicKey) {
+        setSelectedWallet({...wallet, connected: true, publicKey});
+        addLog(`✅ ${wallet.name} connected: ${publicKey}`);
+        await fetchBalance(publicKey);
+      } else {
+        throw new Error('No public key received');
+      }
+    } catch (error: any) {
+      addLog(`❌ ${wallet.name} connection failed: ${error.message}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Fetch balance from multiple RPC endpoints
+  const fetchBalance = async (address: string) => {
+    if (!address) return;
+    
+    setIsLoading(true);
+    addLog(`Fetching balance for ${address}...`);
+    
+    const rpcEndpoints = [
+      { name: 'Solana Labs', url: 'https://api.mainnet-beta.solana.com' },
+      { name: 'Public Node', url: 'https://solana.publicnode.com' },
+      { name: 'Ankr', url: 'https://rpc.ankr.com/solana' }
+    ];
+    
+    for (const rpc of rpcEndpoints) {
+      try {
+        addLog(`Trying ${rpc.name}...`);
+        
+        const response = await fetch(rpc.url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            jsonrpc: '2.0',
+            id: 1,
+            method: 'getBalance',
+            params: [address]
+          })
+        });
+        
+        const data = await response.json();
+        addLog(`${rpc.name} response: ${JSON.stringify(data)}`);
+        
+        if (data.result?.value !== undefined) {
+          const balanceSOL = data.result.value / 1000000000;
+          setBalance(balanceSOL);
+          addLog(`✅ SUCCESS! Balance: ${balanceSOL} SOL from ${rpc.name}`);
+          setIsLoading(false);
+          return;
+        }
+      } catch (error: any) {
+        addLog(`❌ ${rpc.name} failed: ${error.message}`);
+      }
+    }
+    
+    addLog('❌ All RPC endpoints failed');
+    setBalance(0);
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    detectWallets();
+    const interval = setInterval(detectWallets, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <Card className="bg-black border border-white/10">
+      <CardHeader>
+        <CardTitle className="text-lg font-bold text-white flex items-center gap-2">
+          <Wallet className="w-5 h-5" />
+          Wallet Debug Panel
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        {/* Detected Wallets */}
+        <div>
+          <h4 className="text-sm font-medium text-white mb-2">Detected Wallets:</h4>
+          <div className="space-y-2">
+            {wallets.map(wallet => (
+              <div key={wallet.key} className="flex items-center justify-between p-2 bg-black border border-white/10 rounded">
+                <div className="flex items-center gap-2">
+                  <div className={`w-2 h-2 rounded-full ${wallet.connected ? 'bg-green-400' : 'bg-gray-400'}`} />
+                  <span className="text-sm text-white">{wallet.name}</span>
+                  {wallet.connected && <Badge className="text-xs">Connected</Badge>}
+                </div>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => connectWallet(wallet)}
+                  disabled={isLoading}
+                  className="text-xs"
+                >
+                  {wallet.connected ? 'Get Balance' : 'Connect'}
+                </Button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Current Balance */}
+        <div className="text-center p-4 bg-black border border-white/10 rounded">
+          <div className="text-2xl font-bold text-white mb-1">
+            {balance.toFixed(6)} SOL
+          </div>
+          <div className="text-sm text-white/60">
+            ≈ ${(balance * 195.5).toFixed(2)} USD
+          </div>
+        </div>
+
+        {/* Selected Wallet Info */}
+        {selectedWallet && (
+          <div className="space-y-2">
+            <h4 className="text-sm font-medium text-white">Selected Wallet:</h4>
+            <div className="p-2 bg-black border border-white/10 rounded text-xs">
+              <div className="flex items-center justify-between">
+                <span className="text-white/70">Name:</span>
+                <span className="text-white">{selectedWallet.name}</span>
+              </div>
+              {selectedWallet.publicKey && (
+                <div className="flex items-center justify-between mt-1">
+                  <span className="text-white/70">Address:</span>
+                  <div className="flex items-center gap-1">
+                    <span className="text-white font-mono text-xs">
+                      {selectedWallet.publicKey.slice(0, 8)}...{selectedWallet.publicKey.slice(-8)}
+                    </span>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => navigator.clipboard.writeText(selectedWallet.publicKey)}
+                      className="h-4 w-4 p-0"
+                    >
+                      <Copy className="w-3 h-3" />
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Debug Logs */}
+        <div>
+          <h4 className="text-sm font-medium text-white mb-2">Debug Logs:</h4>
+          <div className="bg-black border border-white/10 rounded p-2 text-xs text-white/70 max-h-32 overflow-y-auto">
+            {logs.map((log, i) => (
+              <div key={i} className="font-mono">{log}</div>
+            ))}
+          </div>
+        </div>
+
+        {/* Manual Actions */}
+        <div className="flex gap-2">
+          <Button
+            onClick={detectWallets}
+            size="sm"
+            variant="outline"
+            className="flex-1"
+          >
+            <RefreshCw className="w-3 h-3 mr-1" />
+            Detect Wallets
+          </Button>
+          {selectedWallet?.publicKey && (
+            <Button
+              onClick={() => fetchBalance(selectedWallet.publicKey)}
+              size="sm"
+              variant="outline"
+              disabled={isLoading}
+              className="flex-1"
+            >
+              <RefreshCw className={`w-3 h-3 mr-1 ${isLoading ? 'animate-spin' : ''}`} />
+              Fetch Balance
+            </Button>
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
