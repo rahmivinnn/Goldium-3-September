@@ -108,15 +108,13 @@ export function BalanceCards() {
     return 0;
   };
 
-  // Check for connected wallets HANYA sekali di awal, tidak interval
-  useEffect(() => {
-    // Cek sekali saja di awal
-    const timer = setTimeout(() => {
-      checkRealBalance();
-    }, 2000); // Delay lebih lama untuk avoid kedip
-    
-    return () => clearTimeout(timer);
-  }, []);
+  // DISABLE auto-check to prevent balance resets
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     checkRealBalance();
+  //   }, 2000);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   // HANYA show balance jika wallet benar-benar connected
   const currentBalance = realBalance > 0 ? realBalance : 0;

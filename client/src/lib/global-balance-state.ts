@@ -15,6 +15,9 @@ let globalBalanceState: GlobalBalanceState = {
   lastUpdated: 0
 };
 
+// Prevent balance resets - keep last known good balance
+let lastKnownBalance = 0;
+
 const listeners = new Set<() => void>();
 
 export const GlobalBalanceManager = {
@@ -32,10 +35,14 @@ export const GlobalBalanceManager = {
   },
   
   updateSolBalance: (balance: number) => {
-    globalBalanceState.solBalance = balance;
-    globalBalanceState.lastUpdated = Date.now();
-    console.log(`💰 SOL Balance updated: ${balance}`);
-    listeners.forEach(listener => listener());
+    // Only update if balance is different and not 0 (unless explicitly disconnecting)
+    if (balance > 0) {
+      lastKnownBalance = balance;
+      globalBalanceState.solBalance = balance;
+      globalBalanceState.lastUpdated = Date.now();
+      console.log(`💰 SOL Balance updated: ${balance}`);
+      listeners.forEach(listener => listener());
+    }
   },
   
   updateGoldBalance: (balance: number) => {
@@ -48,9 +55,19 @@ export const GlobalBalanceManager = {
   setWalletConnected: (address: string, solBalance: number = 0) => {
     globalBalanceState.isConnected = true;
     globalBalanceState.walletAddress = address;
-    globalBalanceState.solBalance = solBalance;
+    
+    // Only update balance if we have a positive balance
+    if (solBalance > 0) {
+      lastKnownBalance = solBalance;
+      globalBalanceState.solBalance = solBalance;
+    } else if (lastKnownBalance > 0) {
+      // Keep last known balance if new balance is 0 (might be RPC error)
+      globalBalanceState.solBalance = lastKnownBalance;
+      console.log(`🔄 Keeping last known balance: ${lastKnownBalance} SOL`);
+    }
+    
     globalBalanceState.lastUpdated = Date.now();
-    console.log(`✅ Wallet connected: ${address} with ${solBalance} SOL`);
+    console.log(`✅ Wallet connected: ${address} with ${globalBalanceState.solBalance} SOL`);
     listeners.forEach(listener => listener());
   },
   
@@ -60,7 +77,8 @@ export const GlobalBalanceManager = {
     globalBalanceState.solBalance = 0;
     globalBalanceState.goldBalance = 0;
     globalBalanceState.lastUpdated = Date.now();
-    console.log('❌ Wallet disconnected');
+    lastKnownBalance = 0; // Reset last known balance
+    console.log('❌ Wallet disconnected - balance reset');
     listeners.forEach(listener => listener());
   }
 };

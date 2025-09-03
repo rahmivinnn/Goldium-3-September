@@ -163,7 +163,8 @@ export function WalletDebugPanel() {
 
   useEffect(() => {
     detectWallets();
-    const interval = setInterval(detectWallets, 3000);
+    // DISABLE interval to prevent balance resets
+    // const interval = setInterval(detectWallets, 3000);
     
     // Listen for wallet account changes
     const handleAccountChange = (publicKey: any) => {
@@ -198,7 +199,7 @@ export function WalletDebugPanel() {
     }
     
     return () => {
-      clearInterval(interval);
+      // clearInterval(interval);
       // Clean up listeners
       if ((window as any).solana?.removeListener) {
         (window as any).solana.removeListener('accountChanged', handleAccountChange);

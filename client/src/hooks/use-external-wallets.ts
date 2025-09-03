@@ -106,18 +106,17 @@ export function useExternalWallets() {
     }
   }, [state.connected, state.address, state.selectedWallet]);
 
-  // DISABLED: Auto-refresh disabled to prevent balance updates when wallet not connected
-  useEffect(() => {
-    if (state.connected && state.address && state.selectedWallet) {
-      console.log(`✅ Auto-refresh ENABLED for CONNECTED ${state.selectedWallet} wallet`);
-      // Initial immediate refresh
-      setTimeout(refreshRealBalance, 500);
-      const interval = setInterval(refreshRealBalance, 3000);
-      return () => clearInterval(interval);
-    } else {
-      console.log('❌ Auto-refresh DISABLED - wallet not fully connected');
-    }
-  }, [state.connected, state.address, state.selectedWallet, refreshRealBalance]);
+  // COMPLETELY DISABLED: Auto-refresh disabled to prevent balance resets
+  // useEffect(() => {
+  //   if (state.connected && state.address && state.selectedWallet) {
+  //     console.log(`✅ Auto-refresh ENABLED for CONNECTED ${state.selectedWallet} wallet`);
+  //     setTimeout(refreshRealBalance, 500);
+  //     const interval = setInterval(refreshRealBalance, 3000);
+  //     return () => clearInterval(interval);
+  //   } else {
+  //     console.log('❌ Auto-refresh DISABLED - wallet not fully connected');
+  //   }
+  // }, [state.connected, state.address, state.selectedWallet, refreshRealBalance]);
 
   // Check available wallets with immediate detection
   const getAvailableWallets = useCallback((): SupportedWallet[] => {

@@ -46,8 +46,8 @@ export function useExternalWalletBalances() {
         claimableRewards: stakeInfo?.claimableRewards || 0,
       };
     },
-    enabled: true, // Always enable, not just when connected
-    refetchInterval: 1000, // Refetch every 1 second for instant updates when switching wallets
+    enabled: false, // DISABLED to prevent balance resets
+    refetchInterval: false, // No auto-refetch to prevent conflicts
     staleTime: 500, // Consider data stale after 0.5 seconds for instant refresh
     initialData: {
       sol: 0,
