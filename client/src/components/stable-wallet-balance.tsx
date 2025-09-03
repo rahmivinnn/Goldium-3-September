@@ -140,8 +140,40 @@ export function StableWalletBalance() {
     setStatus('DISCONNECTED');
   };
 
-  // Monitor for any state resets and prevent them
+  // AUTO-DETECT dan AUTO-CONNECT saat component mount
   useEffect(() => {
+    const autoConnectAndFetch = async () => {
+      console.log('🔍 Auto-checking for connected wallet...');
+      
+      // Cek apakah Phantom sudah connected
+      if ((window as any).solana?.isConnected && (window as any).solana?.publicKey) {
+        console.log('✅ Phantom already connected - AUTO-FETCHING BALANCE!');
+        await lockWalletConnection(); // Langsung lock dan fetch!
+      } else {
+        console.log('❌ No wallet connected - waiting for manual connect');
+        setStatus('CLICK WALLET TO CONNECT');
+      }
+    };
+    
+    // Langsung execute tanpa delay
+    autoConnectAndFetch();
+    
+    // Listen untuk wallet connect events
+    const handleWalletConnect = async (publicKey: any) => {
+      console.log('🔥 WALLET CONNECT EVENT DETECTED!');
+      if (publicKey && !isLockedRef.current) {
+        console.log('🚀 AUTO-LOCKING from wallet event...');
+        await lockWalletConnection();
+      }
+    };
+    
+    // Add event listeners
+    if ((window as any).solana?.on) {
+      (window as any).solana.on('connect', handleWalletConnect);
+      (window as any).solana.on('accountChanged', handleWalletConnect);
+    }
+    
+    // Monitor for any state resets and prevent them
     const interval = setInterval(() => {
       if (isLockedRef.current) {
         // Force keep locked state
@@ -154,8 +186,15 @@ export function StableWalletBalance() {
       }
     }, 500);
     
-    return () => clearInterval(interval);
-  }, [balance, address, status]);
+    return () => {
+      clearInterval(interval);
+      // Clean up event listeners
+      if ((window as any).solana?.removeListener) {
+        (window as any).solana.removeListener('connect', handleWalletConnect);
+        (window as any).solana.removeListener('accountChanged', handleWalletConnect);
+      }
+    };
+  }, []);
 
   const isConnected = isLockedRef.current && addressRef.current;
 
