@@ -28,6 +28,7 @@ import { GlobalBalanceManager } from '@/lib/global-balance-state';
 import { SimpleBalanceDisplay } from '@/components/simple-balance-display';
 import { BrutalBalance } from '@/components/brutal-balance';
 import { StableWalletBalance } from '@/components/stable-wallet-balance';
+import { DebugWalletReal } from '@/components/debug-wallet-real';
 
 export default function HomeSimple() {
   const wallet = useSolanaWallet();
@@ -258,6 +259,9 @@ export default function HomeSimple() {
       <div className="fixed top-16 sm:top-20 right-2 sm:right-6 z-40">
         <RealTimeNotifications className="shadow-2xl" maxNotifications={3} />
       </div>
+
+      {/* REAL-TIME WALLET DEBUG */}
+      <DebugWalletReal />
 
       {/* Hero Section - Modern Style */}
       <section className="relative pt-20 pb-32 min-h-screen flex items-center overflow-hidden bg-black">

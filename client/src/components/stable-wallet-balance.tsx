@@ -203,12 +203,12 @@ export function StableWalletBalance() {
       {/* Connection Status */}
       <div className="flex items-center gap-2">
         <div className={`w-2 h-2 rounded-full ${
-          status.includes('LOCKED') ? 'bg-green-400 animate-pulse' : 
+          balance !== '0.0000' ? 'bg-green-400 animate-pulse' : 
           status.includes('FAILED') ? 'bg-red-400' : 
           'bg-gray-400'
         }`}></div>
         <span className="text-xs text-golden-small font-medium">
-          {isConnected ? `${address.slice(0, 4)}...${address.slice(-4)}` : 'No Wallet'}
+          {address && address !== '' ? `${address.slice(0, 4)}...${address.slice(-4)}` : 'No Wallet'}
         </span>
       </div>
       
