@@ -57,26 +57,81 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
           transition={{ duration: 0.5 }}
           className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black overflow-hidden"
         >
-          {/* Simplified background particles */}
+          {/* Golden Sparkles Background */}
           <div className="absolute inset-0">
-            {[...Array(20)].map((_, i) => (
+            {/* Golden Sparkles */}
+            {[...Array(30)].map((_, i) => (
               <motion.div
-                key={i}
-                className="absolute w-1 h-1 bg-white rounded-full opacity-40"
-                initial={{
-                  x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1200),
-                  y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 800),
-                  scale: 0
+                key={`sparkle-${i}`}
+                className="absolute golden-sparkle"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  width: `${Math.random() * 4 + 2}px`,
+                  height: `${Math.random() * 4 + 2}px`,
                 }}
+                initial={{ scale: 0, opacity: 0 }}
                 animate={{
-                  scale: [0, 1, 0],
-                  opacity: [0, 0.6, 0]
+                  scale: [0, 1.5, 0],
+                  opacity: [0, 1, 0],
+                  rotate: [0, 180, 360]
                 }}
                 transition={{
-                  duration: 4,
+                  duration: Math.random() * 2 + 2,
                   repeat: Infinity,
-                  delay: Math.random() * 3,
+                  delay: Math.random() * 4,
                   ease: "easeInOut"
+                }}
+              />
+            ))}
+            
+            {/* Golden Particles */}
+            {[...Array(15)].map((_, i) => (
+              <motion.div
+                key={`particle-${i}`}
+                className="absolute golden-particle"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  width: `${Math.random() * 6 + 3}px`,
+                  height: `${Math.random() * 6 + 3}px`,
+                }}
+                initial={{ scale: 0.5, opacity: 0.2 }}
+                animate={{
+                  scale: [0.5, 1.2, 0.8],
+                  opacity: [0.2, 0.8, 0.3],
+                  y: [0, -20, 10]
+                }}
+                transition={{
+                  duration: Math.random() * 4 + 6,
+                  repeat: Infinity,
+                  delay: Math.random() * 8,
+                  ease: "easeInOut"
+                }}
+              />
+            ))}
+            
+            {/* Shooting Stars */}
+            {[...Array(3)].map((_, i) => (
+              <motion.div
+                key={`star-${i}`}
+                className="absolute shooting-star"
+                style={{
+                  top: `${Math.random() * 50 + 10}%`,
+                  width: `${Math.random() * 100 + 50}px`,
+                  height: '2px',
+                  background: 'linear-gradient(90deg, transparent, #fbbf24, transparent)'
+                }}
+                initial={{ x: -100, opacity: 0 }}
+                animate={{
+                  x: typeof window !== 'undefined' ? window.innerWidth + 100 : 1300,
+                  opacity: [0, 1, 1, 0]
+                }}
+                transition={{
+                  duration: Math.random() * 2 + 3,
+                  repeat: Infinity,
+                  delay: Math.random() * 4 + i * 2,
+                  ease: "linear"
                 }}
               />
             ))}

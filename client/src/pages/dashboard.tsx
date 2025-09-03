@@ -32,22 +32,66 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-black text-white relative overflow-hidden">
-      {/* Metaverse Background Effects */}
-      <div className="fixed inset-0 metaverse-grid opacity-20"></div>
-      
-      {/* Metaverse Floating Particles */}
-      <div className="fixed inset-0 pointer-events-none">
-        {[...Array(8)].map((_, i) => (
+      {/* Golden Sparkles Background */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        {/* Golden Sparkles */}
+        {[...Array(20)].map((_, i) => (
           <div
-            key={i}
-            className="metaverse-particle"
+            key={`sparkle-${i}`}
+            className="golden-sparkle"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
               width: `${Math.random() * 3 + 1}px`,
               height: `${Math.random() * 3 + 1}px`,
+              animationDelay: `${Math.random() * 3}s`,
+              animationDuration: `${Math.random() * 2 + 3}s`
+            }}
+          />
+        ))}
+        
+        {/* Golden Particles */}
+        {[...Array(10)].map((_, i) => (
+          <div
+            key={`particle-${i}`}
+            className="golden-particle"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              width: `${Math.random() * 4 + 2}px`,
+              height: `${Math.random() * 4 + 2}px`,
               animationDelay: `${Math.random() * 8}s`,
               animationDuration: `${Math.random() * 4 + 8}s`
+            }}
+          />
+        ))}
+        
+        {/* Shooting Stars */}
+        {[...Array(2)].map((_, i) => (
+          <div
+            key={`star-${i}`}
+            className="shooting-star"
+            style={{
+              top: `${Math.random() * 50 + 20}%`,
+              width: `${Math.random() * 80 + 40}px`,
+              animationDelay: `${Math.random() * 6 + i * 3}s`,
+              animationDuration: `${Math.random() * 2 + 4}s`
+            }}
+          />
+        ))}
+        
+        {/* Golden Glow Orbs */}
+        {[...Array(3)].map((_, i) => (
+          <div
+            key={`orb-${i}`}
+            className="golden-glow-orb"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              width: `${Math.random() * 120 + 80}px`,
+              height: `${Math.random() * 120 + 80}px`,
+              animationDelay: `${Math.random() * 6}s`,
+              animationDuration: `${Math.random() * 3 + 6}s`
             }}
           />
         ))}
