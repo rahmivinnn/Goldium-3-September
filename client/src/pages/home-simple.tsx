@@ -170,9 +170,11 @@ export default function HomeFixed() {
       <nav className="container mx-auto px-4 py-6 relative z-10">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center">
-              <span className="text-black font-bold text-sm">G</span>
-            </div>
+            <img 
+              src="/goldium-logo.png" 
+              alt="Goldium Logo" 
+              className="w-8 h-8 rounded-full object-cover"
+            />
             <span className="text-xl font-bold">Goldium</span>
           </div>
           

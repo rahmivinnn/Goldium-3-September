@@ -9,11 +9,12 @@ import {
 import { solscanTracker } from '@/lib/solscan-tracker';
 import { trackToGoldiumCA } from '@/lib/ca-tracking-service';
 
-// REAL GOLD Token Configuration - Using REAL SPL token mint that's trackable on Solscan
-export const GOLD_TOKEN_MINT = new PublicKey('APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump'); // REAL SPL token mint
-export const GOLD_CONTRACT_ADDRESS = 'APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump'; // REAL Contract Address that starts with "AP"
+// GOLDIUM Token Configuration - Demo/Testnet Version
+// Note: APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump is a pump.fun token for demo purposes
+export const GOLD_TOKEN_MINT = new PublicKey('APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump'); // Demo SPL token mint
+export const GOLD_CONTRACT_ADDRESS = 'APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump'; // Demo Contract Address 
 export const GOLD_DECIMALS = 6;
-export const GOLD_PRICE_USD = 20; // $20 per GOLD token
+export const GOLD_PRICE_USD = 0.21; // Updated to match real displayed price $0.21
 
 export interface GoldBalance {
   balance: number;
