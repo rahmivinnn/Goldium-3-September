@@ -22,16 +22,17 @@ export function BalanceCards() {
     };
   }, []);
 
-  // Show external wallet balance if connected, otherwise use self-contained balance
-  const currentBalance = (walletState.connected && walletState.address && walletState.balance > 0) ? walletState.balance : (balances?.sol || 0);
+  // ALWAYS use external wallet balance when connected for REAL data
+  const currentBalance = walletState.connected && walletState.address ? walletState.balance : (balances?.sol || 0);
   
-  console.log('Balance Cards Global State Debug:', {
+  console.log('🔍 REAL Balance Cards Debug:', {
     connected: walletState.connected,
     selectedWallet: walletState.selectedWallet,
     walletBalance: walletState.balance,
     currentBalance: currentBalance,
-    address: walletState.address,
-    selfContainedBalance: balances?.sol
+    address: walletState.address?.slice(0, 8) + '...',
+    selfContainedBalance: balances?.sol,
+    isUsingRealBalance: walletState.connected && walletState.address
   });
 
   // Use same balance structure as Swap tab for consistency
@@ -93,26 +94,35 @@ export function BalanceCards() {
             </div>
           </div>
           <div className="space-y-3">
-            <p className="text-4xl font-black text-white tracking-tight font-mono">
+            <p className="font-stats text-white tracking-tight">
               {currentBalance.toFixed(4)}
               <span className="text-lg font-normal text-white/70 ml-2">SOL</span>
             </p>
             <div className="flex items-center justify-between">
-              <p className="text-sm font-semibold text-slate-300">
+              <p className="font-small text-white/70">
                 ≈ ${(currentBalance * 195.5).toFixed(2)} USD
               </p>
-              <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+              <div className="flex items-center gap-1">
+                {walletState.connected ? (
+                  <>
+                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    <span className="font-small text-green-400">REAL</span>
+                  </>
+                ) : (
+                  <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                )}
+              </div>
             </div>
           </div>
         </CardContent>
       </Card>
 
       {/* GOLD Balance */}
-      <Card className="group bg-gradient-to-br from-black/90 to-gray-900/90 backdrop-blur-xl border border-white/20/20 hover:border-white/20/40 transition-all duration-500 transform hover:scale-[1.02] hover:shadow-2xl hover:shadow-white/10">
+      <Card className="group bg-black backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-500 transform hover:scale-[1.02] hover:shadow-2xl hover:shadow-white/10">
         <CardContent className="p-8">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h3 className="text-xl font-bold bg-gradient-to-r from-black to-gray-900 bg-clip-text text-transparent tracking-tight">
+              <h3 className="font-card-title text-white tracking-tight">
                 GOLD Balance
               </h3>
               <p className="text-xs font-medium text-white/60 mt-1 tracking-wider uppercase">
@@ -138,23 +148,28 @@ export function BalanceCards() {
             </div>
           </div>
           <div className="space-y-3">
-            <p className="text-4xl font-black text-white tracking-tight font-mono">
+            <p className="font-stats text-white tracking-tight">
               {safeBalances.gold.toFixed(2)}
               <span className="text-lg font-normal text-white/70 ml-2">GOLD</span>
             </p>
             <div className="flex items-center justify-between">
-              <p className="text-sm font-semibold text-slate-300">
+              <p className="font-small text-white/70">
                 ≈ ${(safeBalances.gold * 20).toFixed(2)} USD
               </p>
-              {goldBalance.isLoading ? (
-                <div className="flex items-center space-x-1">
-                  <div className="w-1 h-1 bg-white rounded-full animate-bounce"></div>
-                  <div className="w-1 h-1 bg-white rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                  <div className="w-1 h-1 bg-white rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
-                </div>
-              ) : (
-                <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-              )}
+              <div className="flex items-center gap-1">
+                {goldBalance.isLoading ? (
+                  <div className="flex items-center space-x-1">
+                    <div className="w-1 h-1 bg-white rounded-full animate-bounce"></div>
+                    <div className="w-1 h-1 bg-white rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                    <div className="w-1 h-1 bg-white rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                  </div>
+                ) : (
+                  <>
+                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    <span className="font-small text-green-400">REAL</span>
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </CardContent>
