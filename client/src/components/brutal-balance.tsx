@@ -6,8 +6,9 @@ import { RefreshCw } from 'lucide-react';
 export function BrutalBalance() {
   const [balance, setBalance] = useState<string>('0.0000');
   const [address, setAddress] = useState<string>('');
-  const [status, setStatus] = useState<string>('OFFLINE');
+  const [status, setStatus] = useState<string>('NOT CONNECTED');
   const [isLoading, setIsLoading] = useState(false);
+  const [isReallyConnected, setIsReallyConnected] = useState(false);
 
   // PAKSA connect dan get balance
   const forceConnect = async () => {
@@ -27,7 +28,8 @@ export function BrutalBalance() {
       const publicKey = response.publicKey.toString();
       
       setAddress(publicKey);
-      setStatus('CONNECTED');
+      setIsReallyConnected(true);
+      setStatus('FETCHING BALANCE...');
       
       // Step 2: PAKSA fetch balance - try semua cara
       let foundBalance = false;
@@ -88,20 +90,33 @@ export function BrutalBalance() {
       }
       
     } catch (error: any) {
-      setStatus('ERROR');
+      setStatus('CONNECTION ERROR');
+      setIsReallyConnected(false);
+      setAddress('');
+      setBalance('0.0000');
       console.error('Connection failed:', error);
     }
     
     setIsLoading(false);
   };
 
-  // Auto-try connect on mount
+  // TIDAK auto-connect! Hanya manual saja
   useEffect(() => {
+    // Cek status wallet tapi JANGAN auto-connect
     const timer = setTimeout(() => {
-      if ((window as any).solana?.isConnected) {
-        forceConnect();
+      if ((window as any).solana?.isConnected && (window as any).solana?.publicKey) {
+        const publicKey = (window as any).solana.publicKey.toString();
+        setAddress(publicKey);
+        setIsReallyConnected(true);
+        setStatus('CONNECTED - Click refresh to get balance');
+        console.log('✅ Wallet already connected but balance not fetched yet');
+      } else {
+        setStatus('NOT CONNECTED');
+        setIsReallyConnected(false);
+        setAddress('');
+        setBalance('0.0000');
       }
-    }, 1000);
+    }, 500);
     
     return () => clearTimeout(timer);
   }, []);
@@ -116,7 +131,7 @@ export function BrutalBalance() {
           status.includes('ERROR') ? 'bg-red-400' : 'bg-gray-400'
         }`}></div>
         <span className="text-xs text-golden-small font-medium">
-          {address ? `${address.slice(0, 4)}...${address.slice(-4)}` : 'No Wallet'}
+          {isReallyConnected && address ? `${address.slice(0, 4)}...${address.slice(-4)}` : 'No Wallet'}
         </span>
       </div>
       
@@ -140,6 +155,7 @@ export function BrutalBalance() {
         onClick={forceConnect}
         disabled={isLoading}
         className="h-6 w-6 p-0 hover:bg-white/10"
+        title={isReallyConnected ? "Refresh balance" : "Connect wallet & get balance"}
       >
         <RefreshCw className={`w-3 h-3 text-golden-small ${isLoading ? 'animate-spin' : ''}`} />
       </Button>
