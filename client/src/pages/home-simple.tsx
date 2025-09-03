@@ -3,10 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { CleanSwapTab } from '@/components/clean-swap-tab';
-import { CleanStakingTab } from '@/components/clean-staking-tab';
-import { CleanSendTab } from '@/components/clean-send-tab';
-import { CleanTransactionHistory } from '@/components/clean-transaction-history';
+import { ModernDeFiTabs } from '@/components/modern-defi-tabs';
 import { useSolanaWallet } from '@/components/solana-wallet-provider';
 import { ExternalWalletSelector } from '@/components/external-wallet-selector';
 
@@ -499,55 +496,7 @@ export default function HomeSimple() {
             </p>
           </div>
           
-          <Tabs defaultValue="swap" className="w-full max-w-7xl mx-auto">
-            <TabsList className="grid w-full grid-cols-5 mb-16 bg-black/80 border border-white/20 rounded-2xl p-3 shadow-lg shadow-white/10">
-                <TabsTrigger value="swap" className="font-body text-white data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:border data-[state=active]:border-white/20 font-bold rounded-xl py-4 px-8 uppercase tracking-wide transition-all duration-300 hover:bg-black/50">
-                  Swap
-                </TabsTrigger>
-                <TabsTrigger value="stake" className="text-white data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:border data-[state=active]:border-white/20 font-bold rounded-xl py-4 px-8 font-body uppercase tracking-wide transition-all duration-300 hover:bg-black/50 ">
-                  Stake
-                </TabsTrigger>
-                <TabsTrigger value="dragon" className="text-white data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:border data-[state=active]:border-white/20 font-bold rounded-xl py-4 px-8 font-body uppercase tracking-wide transition-all duration-300 hover:bg-black/50 ">
-                  Dragon
-                </TabsTrigger>
-                <TabsTrigger value="send" className="text-white data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:border data-[state=active]:border-white/20 font-bold rounded-xl py-4 px-8 font-body uppercase tracking-wide transition-all duration-300 hover:bg-black/50 ">
-                  Send
-                </TabsTrigger>
-                <TabsTrigger value="history" className="text-white data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:border data-[state=active]:border-white/20 font-bold rounded-xl py-4 px-8 font-body uppercase tracking-wide transition-all duration-300 hover:bg-black/50 ">
-                  History
-                </TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="swap" className="min-h-[600px] p-8">
-                <div className="max-w-5xl mx-auto">
-                  <CleanSwapTab />
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="stake" className="min-h-[600px] p-8">
-                <div className="max-w-5xl mx-auto">
-                  <CleanStakingTab />
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="dragon" className="min-h-[600px] p-8">
-                <div className="max-w-5xl mx-auto">
-                  <GoldiumGamifiedStaking />
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="send" className="min-h-[600px] p-8">
-                <div className="max-w-5xl mx-auto">
-                  <CleanSendTab />
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="history" className="min-h-[600px] p-8">
-                <div className="max-w-5xl mx-auto">
-                  <CleanTransactionHistory />
-                </div>
-              </TabsContent>
-          </Tabs>
+          <ModernDeFiTabs />
         </div>
       </section>
 
