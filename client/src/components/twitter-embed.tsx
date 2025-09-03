@@ -189,58 +189,58 @@ export function TwitterEmbed() {
       {/* Community Highlights */}
       <div className="space-y-8">
         <div className="text-center">
-          <h4 className="text-3xl font-bold text-yellow-300 mb-3">Community Highlights</h4>
-          <p className="text-yellow-200 text-lg">Key achievements and milestones from our growing community</p>
+          <h4 className="text-3xl font-bold text-white mb-3">Community Highlights</h4>
+          <p className="text-white/70 text-lg">Key achievements and milestones from our growing community</p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <Card className="bg-gradient-to-br from-yellow-900/40 to-yellow-800/20 border-2 border-yellow-400/40 rounded-2xl overflow-hidden backdrop-blur-sm hover:border-yellow-400 hover:shadow-2xl hover:shadow-yellow-400/20 transition-all">
+          <Card className="bg-black border border-white/10 rounded-2xl overflow-hidden backdrop-blur-sm hover:border-white/20 hover:shadow-2xl hover:shadow-white/10 transition-all">
             <div className="p-6">
-              <div className="w-12 h-12 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-xl flex items-center justify-center mb-4">
-                <TrendingUp className="w-6 h-6 text-black" />
+              <div className="w-12 h-12 bg-black border border-white/10 rounded-xl flex items-center justify-center mb-4">
+                <TrendingUp className="w-6 h-6 text-white" />
               </div>
-              <h5 className="text-xl font-bold text-yellow-300 mb-3">Record Trading Volume</h5>
-              <p className="text-yellow-200/80 text-sm leading-relaxed mb-4">Goldium achieved its highest daily trading volume of $500K, demonstrating strong market confidence and liquidity.</p>
-              <Badge className="bg-yellow-400/20 text-yellow-300 border-yellow-400/40">Achievement</Badge>
+              <h5 className="text-xl font-bold text-white mb-3">Record Trading Volume</h5>
+              <p className="text-white/70 text-sm leading-relaxed mb-4">Goldium achieved its highest daily trading volume of $500K, demonstrating strong market confidence and liquidity.</p>
+              <Badge className="bg-black border border-white/20 text-white">Achievement</Badge>
             </div>
           </Card>
           
-          <Card className="bg-gradient-to-br from-yellow-900/40 to-yellow-800/20 border-2 border-yellow-400/40 rounded-2xl overflow-hidden backdrop-blur-sm hover:border-yellow-400 hover:shadow-2xl hover:shadow-yellow-400/20 transition-all">
+          <Card className="bg-black border border-white/10 rounded-2xl overflow-hidden backdrop-blur-sm hover:border-white/20 hover:shadow-2xl hover:shadow-white/10 transition-all">
             <div className="p-6">
-              <div className="w-12 h-12 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-xl flex items-center justify-center mb-4">
-                <Users className="w-6 h-6 text-black" />
+              <div className="w-12 h-12 bg-black border border-white/10 rounded-xl flex items-center justify-center mb-4">
+                <Users className="w-6 h-6 text-white" />
               </div>
-              <h5 className="text-xl font-bold text-yellow-300 mb-3">Community Milestone</h5>
-              <p className="text-yellow-200/80 text-sm leading-relaxed mb-4">Reached 25,000 active community members across all platforms, building a strong foundation for future growth.</p>
-              <Badge className="bg-yellow-400/20 text-yellow-300 border-yellow-400/40">Milestone</Badge>
+              <h5 className="text-xl font-bold text-white mb-3">Community Milestone</h5>
+              <p className="text-white/70 text-sm leading-relaxed mb-4">Reached 25,000 active community members across all platforms, building a strong foundation for future growth.</p>
+              <Badge className="bg-black border border-white/20 text-white">Milestone</Badge>
             </div>
           </Card>
           
-          <Card className="bg-gradient-to-br from-yellow-900/40 to-yellow-800/20 border-2 border-yellow-400/40 rounded-2xl overflow-hidden backdrop-blur-sm hover:border-yellow-400 hover:shadow-2xl hover:shadow-yellow-400/20 transition-all">
+          <Card className="bg-black border border-white/10 rounded-2xl overflow-hidden backdrop-blur-sm hover:border-white/20 hover:shadow-2xl hover:shadow-white/10 transition-all">
             <div className="p-6">
-              <div className="w-12 h-12 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-xl flex items-center justify-center mb-4">
-                <Shield className="w-6 h-6 text-black" />
+              <div className="w-12 h-12 bg-black border border-white/10 rounded-xl flex items-center justify-center mb-4">
+                <Shield className="w-6 h-6 text-white" />
               </div>
-              <h5 className="text-xl font-bold text-yellow-300 mb-3">Security Audit Complete</h5>
-              <p className="text-yellow-200/80 text-sm leading-relaxed mb-4">Successfully completed comprehensive security audit by leading blockchain security firm with zero critical issues.</p>
-              <Badge className="bg-yellow-400/20 text-yellow-300 border-yellow-400/40">Security</Badge>
+              <h5 className="text-xl font-bold text-white mb-3">Security Audit Complete</h5>
+              <p className="text-white/70 text-sm leading-relaxed mb-4">Successfully completed comprehensive security audit by leading blockchain security firm with zero critical issues.</p>
+              <Badge className="bg-black border border-white/20 text-white">Security</Badge>
             </div>
           </Card>
         </div>
       </div>
       
       {/* Join Community Section */}
-      <Card className="bg-gradient-to-r from-yellow-900/30 via-yellow-800/30 to-yellow-900/30 border-2 border-yellow-400/40 rounded-2xl backdrop-blur-sm">
+      <Card className="bg-black border border-white/10 rounded-2xl backdrop-blur-sm">
         <div className="p-10 text-center">
-          <div className="w-16 h-16 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
-            <MessageCircle className="w-8 h-8 text-black" />
+          <div className="w-16 h-16 bg-black border border-white/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+            <MessageCircle className="w-8 h-8 text-white" />
           </div>
-          <h4 className="text-3xl font-bold text-yellow-300 mb-4">Connect With Our Community</h4>
-          <p className="text-yellow-200 text-lg mb-8 max-w-2xl mx-auto">Join thousands of DeFi enthusiasts, traders, and developers building the future of decentralized finance on Solana</p>
+          <h4 className="text-3xl font-bold text-white mb-4">Connect With Our Community</h4>
+          <p className="text-white/70 text-lg mb-8 max-w-2xl mx-auto">Join thousands of DeFi enthusiasts, traders, and developers building the future of decentralized finance on Solana</p>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
             <Button 
-              className="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-black font-bold px-6 py-4 rounded-xl text-base transition-all transform hover:scale-105 hover:-translate-y-1 shadow-xl"
+              className="bg-black hover:bg-gray-900 text-white font-bold px-6 py-4 rounded-xl text-base transition-all transform hover:scale-105 hover:-translate-y-1 shadow-xl border border-white/20 hover:border-white/40"
               onClick={() => window.open('https://twitter.com/goldiumofficial', '_blank')}
             >
               <div className="flex items-center gap-2">
@@ -252,7 +252,7 @@ export function TwitterEmbed() {
             </Button>
             
             <Button 
-              className="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-black font-bold px-6 py-4 rounded-xl text-base transition-all transform hover:scale-105 hover:-translate-y-1 shadow-xl"
+              className="bg-black hover:bg-gray-900 text-white font-bold px-6 py-4 rounded-xl text-base transition-all transform hover:scale-105 hover:-translate-y-1 shadow-xl border border-white/20 hover:border-white/40"
               onClick={() => window.open('https://t.me/goldiumofficial', '_blank')}
             >
               <div className="flex items-center gap-2">
@@ -262,7 +262,7 @@ export function TwitterEmbed() {
             </Button>
             
             <Button 
-              className="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-black font-bold px-6 py-4 rounded-xl text-base transition-all transform hover:scale-105 hover:-translate-y-1 shadow-xl"
+              className="bg-black hover:bg-gray-900 text-white font-bold px-6 py-4 rounded-xl text-base transition-all transform hover:scale-105 hover:-translate-y-1 shadow-xl border border-white/20 hover:border-white/40"
               onClick={() => window.open('https://discord.gg/goldium', '_blank')}
             >
               <div className="flex items-center gap-2">
@@ -272,7 +272,7 @@ export function TwitterEmbed() {
             </Button>
             
             <Button 
-              className="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-black font-bold px-6 py-4 rounded-xl text-base transition-all transform hover:scale-105 hover:-translate-y-1 shadow-xl"
+              className="bg-black hover:bg-gray-900 text-white font-bold px-6 py-4 rounded-xl text-base transition-all transform hover:scale-105 hover:-translate-y-1 shadow-xl border border-white/20 hover:border-white/40"
               onClick={() => window.open('https://goldium.io', '_blank')}
             >
               <div className="flex items-center gap-2">
