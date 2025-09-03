@@ -387,47 +387,145 @@ export function SelfContainedSwapTab() {
   const isValidAmount = fromAmount && Number(fromAmount) > 0 && Number(fromAmount) <= fromBalance;
 
   return (
-    <div className="max-w-md mx-auto space-y-6">
-      {/* From Token */}
-      <div className="space-y-4">
-        <label className="text-lg font-bold text-white tracking-tight">From</label>
-        <Card className="group bg-black backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-500 hover:shadow-xl hover:shadow-white/10 premium-card sophisticated-border">
-          <CardContent className="p-6">
-            <div className="flex justify-between items-center mb-4">
+    <div className="max-w-2xl mx-auto space-y-8">
+      {/* SWAP HEADER */}
+      <div className="text-center mb-8">
+        <h2 className="font-card-title text-white mb-2">Token Swap</h2>
+        <p className="font-small text-white/70">Exchange SOL ⇄ GOLDIUM instantly</p>
+      </div>
+
+      {/* MAIN SWAP CARD */}
+      <Card className="bg-black border-white/10 premium-card sophisticated-border">
+        <CardContent className="p-8">
+          
+          {/* FROM TOKEN SECTION */}
+          <div className="space-y-4 mb-6">
+            <div className="flex items-center justify-between">
+              <label className="font-body font-semibold text-white">From</label>
               <Button
                 variant="outline"
-                className="bg-black border-white/20 hover:border-white/40 text-white font-semibold px-4 py-2 rounded-xl transition-all duration-300 hover:scale-105"
+                size="sm"
+                className="bg-black border-white/20 hover:border-white/40 text-white font-semibold px-3 py-1 rounded-lg"
                 onClick={handleSwapDirection}
               >
                 {fromToken === 'SOL' ? (
-                  <span className="text-white text-lg">◎</span>
+                  <span className="text-white">◎</span>
                 ) : (
-                  <img 
-                    src={logoImage} 
-                    alt="GOLD" 
-                    className="w-6 h-6 drop-shadow-lg"
-                  />
+                  <img src={logoImage} alt="GOLD" className="w-4 h-4" />
                 )}
-                <span className="ml-2 font-bold">{fromToken}</span>
-                <ArrowUpDown className="ml-2 h-4 w-4" />
+                <span className="ml-1 text-sm">{fromToken}</span>
+                <ArrowUpDown className="ml-1 h-3 w-3" />
               </Button>
-              <div className="text-right">
-                <p className="text-xs font-medium text-white/70 uppercase tracking-wider">Available Balance</p>
-                <p className="text-sm font-bold text-white font-mono">
+            </div>
+            
+            <div className="bg-black/50 border border-white/10 rounded-xl p-4">
+              <div className="flex items-center justify-between mb-2">
+                <span className="font-small text-white/70">Available</span>
+                <span className="font-small text-white font-mono">
                   {externalWallet.connected ? 
                     (fromToken === 'SOL' ? externalWallet.balance.toFixed(4) : balances.gold.toFixed(2)) : 
                     fromBalance.toFixed(fromToken === 'SOL' ? 4 : 2)
                   } {fromToken}
-                </p>
+                </span>
+              </div>
+              <Input
+                type="number"
+                placeholder="0.0"
+                value={fromAmount}
+                onChange={(e) => handleFromAmountChange(e.target.value)}
+                className="bg-black border-white/20 text-white text-2xl font-bold p-4 h-auto placeholder:text-white/50 rounded-lg font-mono tracking-tight"
+              />
+            </div>
+          </div>
+
+          {/* SWAP ARROW */}
+          <div className="flex justify-center my-4">
+            <Button
+              variant="outline"
+              size="sm"
+              className="rounded-full bg-black border-white/20 hover:border-white/40 p-3"
+              onClick={handleSwapDirection}
+            >
+              <ArrowUpDown className="h-4 w-4 text-white" />
+            </Button>
+          </div>
+
+          {/* TO TOKEN */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <label className="font-body text-white font-medium">To</label>
+              <div className="flex items-center gap-2">
+                <span className="font-small text-white/70">Balance:</span>
+                <span className="font-small text-white font-mono">
+                  {fromToken === 'GOLD' ? balances.sol.toFixed(4) : balances.gold.toFixed(2)} {fromToken === 'GOLD' ? 'SOL' : 'GOLD'}
+                </span>
               </div>
             </div>
-            <Input
-              type="number"
-              placeholder="0.0"
-              value={fromAmount}
-              onChange={(e) => handleFromAmountChange(e.target.value)}
-              className="bg-gradient-to-r from-white to-gray-50 text-black text-3xl font-black border-none p-4 h-auto placeholder:text-gray-400 rounded-xl font-mono tracking-tight"
-            />
+            
+            <div className="bg-black/50 border border-white/10 rounded-xl p-4 space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-white/70">
+                  {fromToken === 'GOLD' ? (
+                    <span className="text-white">◎</span>
+                  ) : (
+                    <img src={logoImage} alt="GOLD" className="w-4 h-4" />
+                  )}
+                  <span className="font-body">{fromToken === 'GOLD' ? 'SOL' : 'GOLD'}</span>
+                </div>
+              </div>
+              <Input
+                type="number"
+                placeholder="0.0"
+                value={toAmount}
+                readOnly
+                className="bg-black/70 border-white/20 text-white text-2xl font-bold p-4 h-auto placeholder:text-white/50 rounded-lg font-mono tracking-tight"
+              />
+            </div>
+          </div>
+
+          {/* SWAP BUTTON */}
+          <Button
+            onClick={handleSwap}
+            disabled={!isValidAmount || isSwapping || !externalWallet.connected}
+            className="sophisticated-button w-full py-4 mt-6"
+          >
+            {isSwapping ? (
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                <span className="font-body">Swapping...</span>
+              </div>
+            ) : (
+              <span className="font-body font-semibold">
+                Swap {fromToken} → {fromToken === 'SOL' ? 'GOLD' : 'SOL'}
+              </span>
+            )}
+          </Button>
+          
+        </CardContent>
+      </Card>
+
+      {/* SWAP DETAILS CARD */}
+      <Card className="bg-black border-white/10 premium-card sophisticated-border mt-6">
+        <CardContent className="p-6 space-y-4">
+          <h3 className="font-card-title text-white mb-4">Swap Details</h3>
+          <div className="space-y-3">
+            <div className="flex justify-between items-center">
+              <span className="font-small text-white/70">Exchange Rate</span>
+              <span className="font-small text-white font-mono">
+                1 {fromToken} = {fromToken === 'SOL' ? SOL_TO_GOLD_RATE.toLocaleString() : GOLD_TO_SOL_RATE.toFixed(6)} {fromToken === 'SOL' ? 'GOLD' : 'SOL'}
+              </span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="font-small text-white/70">Network Fee</span>
+              <span className="font-small text-white">~0.000005 SOL</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="font-small text-white/70">Slippage</span>
+              <span className="font-small text-white">0.1%</span>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
           </CardContent>
         </Card>
       </div>

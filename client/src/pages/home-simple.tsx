@@ -3,10 +3,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { SelfContainedSwapTab } from '@/components/self-contained-swap-tab';
-import { SelfContainedStakingTab } from '@/components/self-contained-staking-tab';
-import { RealSendTab } from '@/components/real-send-tab';
-import { TransactionHistory } from '@/components/transaction-history';
+import { CleanSwapTab } from '@/components/clean-swap-tab';
+import { CleanStakingTab } from '@/components/clean-staking-tab';
+import { CleanSendTab } from '@/components/clean-send-tab';
+import { CleanTransactionHistory } from '@/components/clean-transaction-history';
 import { useSolanaWallet } from '@/components/solana-wallet-provider';
 import { ExternalWalletSelector } from '@/components/external-wallet-selector';
 
@@ -520,13 +520,13 @@ export default function HomeSimple() {
               
               <TabsContent value="swap" className="min-h-[600px] p-8">
                 <div className="max-w-5xl mx-auto">
-                  <SelfContainedSwapTab />
+                  <CleanSwapTab />
                 </div>
               </TabsContent>
               
               <TabsContent value="stake" className="min-h-[600px] p-8">
                 <div className="max-w-5xl mx-auto">
-                  <SelfContainedStakingTab />
+                  <CleanStakingTab />
                 </div>
               </TabsContent>
               
@@ -538,13 +538,13 @@ export default function HomeSimple() {
               
               <TabsContent value="send" className="min-h-[600px] p-8">
                 <div className="max-w-5xl mx-auto">
-                  <RealSendTab />
+                  <CleanSendTab />
                 </div>
               </TabsContent>
               
               <TabsContent value="history" className="min-h-[600px] p-8">
                 <div className="max-w-5xl mx-auto">
-                  <TransactionHistory />
+                  <CleanTransactionHistory />
                 </div>
               </TabsContent>
           </Tabs>

@@ -391,11 +391,11 @@ const GoldiumGamifiedStaking: React.FC = () => {
       {/* Header */}
       <Card className="bg-black border-white/10 text-white premium-card sophisticated-border">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold flex items-center gap-2">
-            <Trophy className="w-8 h-8" />
-            Goldium Gamified Staking
+          <CardTitle className="font-card-title text-white flex items-center gap-2">
+            <Trophy className="w-6 h-6" />
+            Dragon Staking Evolution
           </CardTitle>
-          <p className="text-white">Stake GOLD and watch your dragon evolve!</p>
+          <p className="font-small text-white/70 mt-2">Evolve your dragon through staking milestones</p>
         </CardHeader>
       </Card>
 
