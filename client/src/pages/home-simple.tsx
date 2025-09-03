@@ -23,6 +23,8 @@ import { EfficientWalletBalance } from '@/components/efficient-wallet-balance';
 import { AnimatedNumber } from '@/components/animated-number';
 import { SimpleParticles } from '@/components/simple-particles';
 import { SettingsPanel } from '@/components/settings-panel';
+import { LivePriceChart } from '@/components/live-price-chart';
+import { StakingCalculator } from '@/components/staking-calculator';
 
 export default function HomeSimple() {
   const wallet = useSolanaWallet();
@@ -257,6 +259,7 @@ export default function HomeSimple() {
               <a href="#brand" className="font-small text-white/80 hover:text-white transition-all duration-300 uppercase tracking-wide hover:scale-105">Brand</a>
               <a href="#defi" className="font-small text-white/80 hover:text-white transition-all duration-300 uppercase tracking-wide hover:scale-105">DeFi</a>
               <a href="#tokenomics" className="font-small text-white/80 hover:text-white transition-all duration-300 uppercase tracking-wide hover:scale-105">Tokenomics</a>
+              <a href="/premium-features" className="bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-bold px-3 py-1 rounded-lg text-xs uppercase tracking-wide hover:scale-105 transition-all duration-300">Premium</a>
               {/* EFFICIENT WALLET BALANCE - RATE LIMIT FRIENDLY */}
               <EfficientWalletBalance />
               <ExternalWalletSelector />
@@ -523,6 +526,36 @@ export default function HomeSimple() {
           </div>
           
           <ModernDeFiTabs />
+        </div>
+      </section>
+
+      {/* PREMIUM FEATURES PREVIEW */}
+      <section className="py-20 px-6 relative overflow-hidden bg-gradient-to-r from-yellow-400/10 to-amber-500/10 border-t border-yellow-400/20">
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="font-main-title text-white mb-8 uppercase tracking-wider">
+              <span className="bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-600 bg-clip-text text-transparent">
+                PREMIUM FEATURES
+              </span>
+            </h2>
+            <p className="font-subtitle text-white/80 max-w-4xl mx-auto leading-relaxed">
+              Advanced tools and analytics for serious GOLDIUM traders
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 mb-12">
+            <LivePriceChart />
+            <StakingCalculator />
+          </div>
+          
+          <div className="text-center">
+            <Button 
+              onClick={() => window.location.href = '/premium-features'}
+              className="bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-black font-bold px-8 py-4 rounded-xl shadow-2xl shadow-yellow-400/50 text-lg"
+            >
+              View All 40+ Premium Features
+            </Button>
+          </div>
         </div>
       </section>
 
