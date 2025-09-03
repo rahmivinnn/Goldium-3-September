@@ -9,14 +9,26 @@ export function BrutalBalance() {
   const [status, setStatus] = useState<string>('NOT CONNECTED');
   const [isLoading, setIsLoading] = useState(false);
   const [isReallyConnected, setIsReallyConnected] = useState(false);
+  const [lastClickTime, setLastClickTime] = useState(0);
 
-  // PAKSA connect dan get balance
+  // PAKSA connect dan get balance - SINGLE UPDATE ONLY
   const forceConnect = async () => {
+    // Prevent rapid clicking
+    const now = Date.now();
+    if (isLoading || (now - lastClickTime < 3000)) {
+      console.log('⏳ Please wait - preventing rapid clicks');
+      return;
+    }
+    setLastClickTime(now);
+    
     setIsLoading(true);
-    setStatus('CONNECTING...');
     
     try {
-      // Step 1: Force connect Phantom
+      console.log('🚀 Starting wallet connection...');
+      
+      // Step 1: Check/Connect Phantom
+      let publicKey = '';
+      
       if (!(window as any).solana?.isPhantom) {
         alert('Install Phantom wallet first!');
         setStatus('NO PHANTOM');
@@ -24,77 +36,60 @@ export function BrutalBalance() {
         return;
       }
 
-      const response = await (window as any).solana.connect();
-      const publicKey = response.publicKey.toString();
+      // Check if already connected
+      if ((window as any).solana?.isConnected && (window as any).solana?.publicKey) {
+        publicKey = (window as any).solana.publicKey.toString();
+        console.log('✅ Already connected to:', publicKey);
+      } else {
+        // Need to connect
+        setStatus('CONNECTING...');
+        const response = await (window as any).solana.connect();
+        publicKey = response.publicKey.toString();
+        console.log('✅ Newly connected to:', publicKey);
+      }
       
+      // Step 2: Fetch balance ONCE
+      console.log('🔄 Fetching balance...');
+      
+      const backendResponse = await fetch('/api/get-balance', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ address: publicKey })
+      });
+      
+      // Step 3: Set ALL states ONCE to avoid kedip
+      let finalBalance = '1.5678'; // Default test balance
+      let finalStatus = 'TEST';
+      
+      if (backendResponse.ok) {
+        const data = await backendResponse.json();
+        if (data.success && data.balance > 0) {
+          finalBalance = data.balance.toFixed(4);
+          finalStatus = 'LIVE';
+          console.log(`💰 REAL BALANCE: ${data.balance} SOL`);
+        } else {
+          console.log('💰 Using test balance');
+        }
+      } else {
+        console.log('💰 Backend failed, using test balance');
+      }
+      
+      // UPDATE ALL STATES AT ONCE - NO KEDIP!
       setAddress(publicKey);
       setIsReallyConnected(true);
-      setStatus('FETCHING BALANCE...');
+      setBalance(finalBalance);
+      setStatus(finalStatus);
       
-      // Step 2: PAKSA fetch balance - try semua cara
-      let foundBalance = false;
+      console.log(`🔒 LOCKED: ${finalBalance} SOL with status ${finalStatus}`);
       
-      // Try 1: Backend
-      try {
-        const backendResponse = await fetch('/api/get-balance', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ address: publicKey })
-        });
-        
-        if (backendResponse.ok) {
-          const data = await backendResponse.json();
-          if (data.success && data.balance > 0) {
-            setBalance(data.balance.toFixed(4));
-            setStatus('LIVE BACKEND');
-            foundBalance = true;
-            console.log(`💰 BACKEND BALANCE: ${data.balance} SOL`);
-          }
-        }
-      } catch (e) {
-        console.log('Backend failed');
-      }
-      
-      // Try 2: Direct RPC jika backend gagal
-      if (!foundBalance) {
-        try {
-          const rpcResponse = await fetch('https://solana-mainnet.g.alchemy.com/v2/alch-demo', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              jsonrpc: '2.0',
-              id: 1,
-              method: 'getBalance',
-              params: [publicKey]
-            })
-          });
-          
-          const rpcData = await rpcResponse.json();
-          if (rpcData.result?.value) {
-            const balanceSOL = rpcData.result.value / 1000000000;
-            setBalance(balanceSOL.toFixed(4));
-            setStatus('LIVE RPC');
-            foundBalance = true;
-            console.log(`💰 RPC BALANCE: ${balanceSOL} SOL`);
-          }
-        } catch (e) {
-          console.log('RPC failed');
-        }
-      }
-      
-      // Try 3: Set test balance jika semua gagal
-      if (!foundBalance) {
-        setBalance('1.2500');
-        setStatus('TEST MODE');
-        console.log('💰 TEST BALANCE: 1.25 SOL');
-      }
+      // STOP HERE - NO MORE STATE UPDATES!
       
     } catch (error: any) {
-      setStatus('CONNECTION ERROR');
+      console.error('❌ Connection failed:', error);
+      setStatus('ERROR');
       setIsReallyConnected(false);
       setAddress('');
       setBalance('0.0000');
-      console.error('Connection failed:', error);
     }
     
     setIsLoading(false);
