@@ -456,12 +456,12 @@ export default function HomeSimple() {
 
 
       {/* DeFi Section */}
-      <section id="defi" className="py-32 px-6 relative overflow-hidden bg-black">
+      <section id="defi" className="py-20 px-4 relative overflow-hidden bg-black">
         {/* Pure Black DeFi Background */}
         <div className="absolute inset-0 bg-black"></div>
         
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center mb-20 chainzoku-fade-in">
+        <div className="max-w-full mx-auto relative z-10 px-4">
+          <div className="text-center mb-16 chainzoku-fade-in">
             <h2 className="font-main-title text-white mb-8 uppercase tracking-wider">
               <span className="metaverse-text metaverse-pulse">DeFi Platform</span>
             </h2>
@@ -470,44 +470,54 @@ export default function HomeSimple() {
             </p>
           </div>
           
-          <div className="chainzoku-card bg-black/95 backdrop-blur-xl border border-white/20 rounded-3xl p-10 shadow-2xl shadow-white/10 chainzoku-fade-in">
+          <div className="chainzoku-card bg-black/95 backdrop-blur-xl border border-white/20 rounded-3xl p-12 shadow-2xl shadow-white/10 chainzoku-fade-in max-w-7xl mx-auto">
             <Tabs defaultValue="swap" className="w-full">
-              <TabsList className="grid w-full grid-cols-5 mb-12 bg-black/80 border border-white/20 rounded-2xl p-2 shadow-lg shadow-white/10">
-                <TabsTrigger value="swap" className="text-white data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:border data-[state=active]:border-white/20 font-bold rounded-xl py-3 px-6 font-['Space_Grotesk'] uppercase tracking-wide transition-all duration-300 hover:bg-black/50">
+              <TabsList className="grid w-full grid-cols-5 mb-16 bg-black/80 border border-white/20 rounded-2xl p-3 shadow-lg shadow-white/10">
+                <TabsTrigger value="swap" className="text-white data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:border data-[state=active]:border-white/20 font-bold rounded-xl py-4 px-8 font-['Space_Grotesk'] uppercase tracking-wide transition-all duration-300 hover:bg-black/50 text-base">
                   Swap
                 </TabsTrigger>
-                <TabsTrigger value="stake" className="text-white data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:border data-[state=active]:border-white/20 font-bold rounded-xl py-3 px-6 font-['Space_Grotesk'] uppercase tracking-wide transition-all duration-300 hover:bg-black/50">
+                <TabsTrigger value="stake" className="text-white data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:border data-[state=active]:border-white/20 font-bold rounded-xl py-4 px-8 font-['Space_Grotesk'] uppercase tracking-wide transition-all duration-300 hover:bg-black/50 text-base">
                   Stake
                 </TabsTrigger>
-                <TabsTrigger value="dragon" className="text-white data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:border data-[state=active]:border-white/20 font-bold rounded-xl py-3 px-6 font-['Space_Grotesk'] uppercase tracking-wide transition-all duration-300 hover:bg-black/50">
+                <TabsTrigger value="dragon" className="text-white data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:border data-[state=active]:border-white/20 font-bold rounded-xl py-4 px-8 font-['Space_Grotesk'] uppercase tracking-wide transition-all duration-300 hover:bg-black/50 text-base">
                   Dragon
                 </TabsTrigger>
-                <TabsTrigger value="send" className="text-white data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:border data-[state=active]:border-white/20 font-bold rounded-xl py-3 px-6 font-['Space_Grotesk'] uppercase tracking-wide transition-all duration-300 hover:bg-black/50">
+                <TabsTrigger value="send" className="text-white data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:border data-[state=active]:border-white/20 font-bold rounded-xl py-4 px-8 font-['Space_Grotesk'] uppercase tracking-wide transition-all duration-300 hover:bg-black/50 text-base">
                   Send
                 </TabsTrigger>
-                <TabsTrigger value="history" className="text-white data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:border data-[state=active]:border-white/20 font-bold rounded-xl py-3 px-6 font-['Space_Grotesk'] uppercase tracking-wide transition-all duration-300 hover:bg-black/50">
+                <TabsTrigger value="history" className="text-white data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:border data-[state=active]:border-white/20 font-bold rounded-xl py-4 px-8 font-['Space_Grotesk'] uppercase tracking-wide transition-all duration-300 hover:bg-black/50 text-base">
                   History
                 </TabsTrigger>
               </TabsList>
               
-              <TabsContent value="swap">
-                <SelfContainedSwapTab />
+              <TabsContent value="swap" className="min-h-[600px] p-6">
+                <div className="max-w-4xl mx-auto">
+                  <SelfContainedSwapTab />
+                </div>
               </TabsContent>
               
-              <TabsContent value="stake">
-                <SelfContainedStakingTab />
+              <TabsContent value="stake" className="min-h-[600px] p-6">
+                <div className="max-w-4xl mx-auto">
+                  <SelfContainedStakingTab />
+                </div>
               </TabsContent>
               
-              <TabsContent value="dragon">
-                <GoldiumGamifiedStaking />
+              <TabsContent value="dragon" className="min-h-[600px] p-6">
+                <div className="max-w-5xl mx-auto">
+                  <GoldiumGamifiedStaking />
+                </div>
               </TabsContent>
               
-              <TabsContent value="send">
-                <RealSendTab />
+              <TabsContent value="send" className="min-h-[600px] p-6">
+                <div className="max-w-4xl mx-auto">
+                  <RealSendTab />
+                </div>
               </TabsContent>
               
-              <TabsContent value="history">
-                <TransactionHistory />
+              <TabsContent value="history" className="min-h-[600px] p-6">
+                <div className="max-w-5xl mx-auto">
+                  <TransactionHistory />
+                </div>
               </TabsContent>
             </Tabs>
           </div>
