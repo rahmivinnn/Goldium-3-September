@@ -67,8 +67,8 @@ export function RealTransactionFeed() {
     switch (type) {
       case 'SWAP': return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
       case 'SEND':
-      case 'TRANSFER': return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
-      case 'STAKE': return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+      case 'TRANSFER': return 'bg-black/20 text-white border-white/20/30';
+      case 'STAKE': return 'bg-black/20 text-white border-white/20/30';
       default: return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
     }
   };
@@ -87,7 +87,7 @@ export function RealTransactionFeed() {
   };
 
   return (
-    <Card className="bg-galaxy-card border-yellow-500/30">
+    <Card className="bg-galaxy-card border-white/20/30">
       <CardHeader className="pb-4">
         <div className="flex items-center justify-between">
           <CardTitle className="text-lg font-semibold text-galaxy-bright flex items-center gap-2">
@@ -97,7 +97,7 @@ export function RealTransactionFeed() {
           <div className="flex items-center gap-2">
             <Badge 
               variant="outline" 
-              className={isLive ? 'border-yellow-500/30 text-yellow-400' : 'border-yellow-500/30 text-yellow-400'}
+              className={isLive ? 'border-white/20/30 text-white' : 'border-white/20/30 text-white'}
             >
               {isLive ? '🟢 LIVE' : '🔴 OFFLINE'}
             </Badge>
@@ -130,10 +130,10 @@ export function RealTransactionFeed() {
             {[...Array(5)].map((_, i) => (
               <div key={i} className="animate-pulse">
                 <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-yellow-500/30 rounded-full"></div>
+                  <div className="w-8 h-8 bg-black/30 rounded-full"></div>
                   <div className="flex-1 space-y-2">
-                    <div className="h-4 bg-yellow-500/30 rounded w-3/4"></div>
-                    <div className="h-3 bg-yellow-500/20 rounded w-1/2"></div>
+                    <div className="h-4 bg-black/30 rounded w-3/4"></div>
+                    <div className="h-3 bg-black/20 rounded w-1/2"></div>
                   </div>
                 </div>
               </div>
@@ -157,10 +157,10 @@ export function RealTransactionFeed() {
             {transactions.map((tx) => (
               <div
                 key={tx.signature}
-                className="flex items-center justify-between p-3 rounded-lg bg-yellow-500/10 border border-yellow-500/20 hover:border-yellow-500/30 transition-colors"
+                className="flex items-center justify-between p-3 rounded-lg bg-black/10 border border-white/20/20 hover:border-white/20/30 transition-colors"
               >
                 <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 rounded-full bg-yellow-500/30 flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-full bg-black/30 flex items-center justify-center">
                     {getTransactionIcon(tx.type)}
                   </div>
                   <div>
@@ -175,7 +175,7 @@ export function RealTransactionFeed() {
                         {tx.amount.toFixed(4)} {tx.tokenSymbol}
                       </span>
                       {!tx.success && (
-                        <Badge variant="outline" className="text-xs border-yellow-500/30 text-yellow-400">
+                        <Badge variant="outline" className="text-xs border-white/20/30 text-white">
                           FAILED
                         </Badge>
                       )}

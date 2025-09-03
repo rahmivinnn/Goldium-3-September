@@ -62,9 +62,9 @@ export const InteractiveHero: React.FC = () => {
             transform: `translateY(${scrollParallax.slow}px)`,
           }}
         >
-          <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-yellow-400/10 rounded-full blur-3xl" />
-          <div className="absolute top-3/4 right-1/4 w-40 h-40 bg-yellow-300/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-1/4 left-1/2 w-24 h-24 bg-yellow-500/10 rounded-full blur-3xl" />
+          <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-black/10 rounded-full blur-3xl" />
+          <div className="absolute top-3/4 right-1/4 w-40 h-40 bg-black/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/4 left-1/2 w-24 h-24 bg-black/10 rounded-full blur-3xl" />
         </div>
 
         {/* Mid background layer - medium speed */}
@@ -74,9 +74,9 @@ export const InteractiveHero: React.FC = () => {
             transform: `translateY(${scrollParallax.medium}px)`,
           }}
         >
-          <div className="absolute top-20 left-20 w-16 h-16 bg-yellow-400/20 rounded-lg rotate-45 blur-xl" />
-          <div className="absolute top-1/3 right-20 w-20 h-20 bg-yellow-300/20 rounded-lg rotate-12 blur-xl" />
-          <div className="absolute bottom-1/3 left-1/3 w-12 h-12 bg-yellow-500/20 rounded-full blur-xl" />
+          <div className="absolute top-20 left-20 w-16 h-16 bg-black/20 rounded-lg rotate-45 blur-xl" />
+          <div className="absolute top-1/3 right-20 w-20 h-20 bg-black/20 rounded-lg rotate-12 blur-xl" />
+          <div className="absolute bottom-1/3 left-1/3 w-12 h-12 bg-black/20 rounded-full blur-xl" />
         </div>
 
         {/* Floating geometric shapes - enhanced with scroll parallax */}
@@ -87,28 +87,28 @@ export const InteractiveHero: React.FC = () => {
           }}
         >
           <div 
-            className="absolute top-20 left-20 w-4 h-4 bg-yellow-400 rotate-45 float-element"
+            className="absolute top-20 left-20 w-4 h-4 bg-black rotate-45 float-element"
             style={{
               transform: `translate(${mouseParallax.x * 2}px, ${mouseParallax.y * 2}px) rotate(${45 + scrollY * 0.1}deg)`,
               animationDelay: '0s'
             }}
           />
           <div 
-            className="absolute top-40 right-32 w-6 h-6 border-2 border-yellow-400 rotate-12 float-element"
+            className="absolute top-40 right-32 w-6 h-6 border-2 border-white/20 rotate-12 float-element"
             style={{
               transform: `translate(${mouseParallax.x * -1.5}px, ${mouseParallax.y * -1.5}px) rotate(${12 + scrollY * 0.05}deg)`,
               animationDelay: '1s'
             }}
           />
           <div 
-            className="absolute bottom-32 left-1/4 w-3 h-3 bg-yellow-300 rounded-full float-element"
+            className="absolute bottom-32 left-1/4 w-3 h-3 bg-black rounded-full float-element"
             style={{
               transform: `translate(${mouseParallax.x * 3}px, ${mouseParallax.y * 3}px) scale(${1 + Math.sin(scrollY * 0.01) * 0.2})`,
               animationDelay: '2s'
             }}
           />
           <div 
-            className="absolute bottom-40 right-1/4 w-5 h-5 border border-yellow-500 transform rotate-45 float-element"
+            className="absolute bottom-40 right-1/4 w-5 h-5 border border-white/20 transform rotate-45 float-element"
             style={{
               transform: `translate(${mouseParallax.x * -2}px, ${mouseParallax.y * -2}px) rotate(${45 + scrollY * 0.08}deg)`,
               animationDelay: '0.5s'
@@ -124,19 +124,19 @@ export const InteractiveHero: React.FC = () => {
           }}
         >
           <div 
-            className="absolute top-1/3 left-10 w-2 h-2 bg-yellow-500 rounded-full opacity-80"
+            className="absolute top-1/3 left-10 w-2 h-2 bg-black rounded-full opacity-80"
             style={{
               transform: `translate(${mouseParallax.x * 4}px, ${mouseParallax.y * 4}px)`,
             }}
           />
           <div 
-            className="absolute top-2/3 right-10 w-3 h-3 border border-yellow-400 rotate-45 opacity-60"
+            className="absolute top-2/3 right-10 w-3 h-3 border border-white/20 rotate-45 opacity-60"
             style={{
               transform: `translate(${mouseParallax.x * -3}px, ${mouseParallax.y * -3}px) rotate(${45 + scrollY * 0.15}deg)`,
             }}
           />
           <div 
-            className="absolute bottom-1/4 left-3/4 w-1 h-1 bg-yellow-300 rounded-full opacity-70"
+            className="absolute bottom-1/4 left-3/4 w-1 h-1 bg-black rounded-full opacity-70"
             style={{
               transform: `translate(${mouseParallax.x * 5}px, ${mouseParallax.y * 5}px)`,
             }}
@@ -158,7 +158,7 @@ export const InteractiveHero: React.FC = () => {
           onMouseLeave={() => setIsHovered(false)}
         >
           <h1 className={`text-8xl md:text-9xl lg:text-[12rem] font-black leading-none tracking-tighter transition-all duration-500 ${
-            isHovered ? 'text-yellow-300' : 'text-yellow-400'
+            isHovered ? 'text-white' : 'text-white'
           }`}>
             <span className="inline-block hover:scale-110 transition-transform duration-300 cursor-pointer">G</span>
             <span className="inline-block hover:scale-110 transition-transform duration-300 cursor-pointer" style={{animationDelay: '0.1s'}}>O</span>
@@ -175,7 +175,7 @@ export const InteractiveHero: React.FC = () => {
 
         {/* Subtitle with glow effect */}
         <div className="space-y-4">
-          <p className="text-2xl md:text-3xl text-yellow-300 font-light tracking-wide">
+          <p className="text-2xl md:text-3xl text-white font-light tracking-wide">
             The Future of <span className="font-bold">DeFi</span> is Here
           </p>
           <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
@@ -197,8 +197,8 @@ export const InteractiveHero: React.FC = () => {
               transform: `translateY(${scrollParallax.fast * 0.1}px) translateX(${mouseParallax.x * 0.5}px)`,
             }}
           >
-            <TrendingUp className="w-8 h-8 text-yellow-400 mx-auto mb-4" />
-            <h3 className="text-yellow-300 font-semibold mb-2">High Yield</h3>
+            <TrendingUp className="w-8 h-8 text-white mx-auto mb-4" />
+            <h3 className="text-white font-semibold mb-2">High Yield</h3>
             <p className="text-gray-400 text-sm">Up to 12% APY staking rewards</p>
           </div>
           
@@ -208,8 +208,8 @@ export const InteractiveHero: React.FC = () => {
               transform: `translateY(${scrollParallax.fast * 0.05}px)`,
             }}
           >
-            <Shield className="w-8 h-8 text-yellow-400 mx-auto mb-4" />
-            <h3 className="text-yellow-300 font-semibold mb-2">Secure</h3>
+            <Shield className="w-8 h-8 text-white mx-auto mb-4" />
+            <h3 className="text-white font-semibold mb-2">Secure</h3>
             <p className="text-gray-400 text-sm">Audited smart contracts</p>
           </div>
           
@@ -219,8 +219,8 @@ export const InteractiveHero: React.FC = () => {
               transform: `translateY(${scrollParallax.fast * 0.1}px) translateX(${mouseParallax.x * -0.5}px)`,
             }}
           >
-            <Zap className="w-8 h-8 text-yellow-400 mx-auto mb-4" />
-            <h3 className="text-yellow-300 font-semibold mb-2">Fast</h3>
+            <Zap className="w-8 h-8 text-white mx-auto mb-4" />
+            <h3 className="text-white font-semibold mb-2">Fast</h3>
             <p className="text-gray-400 text-sm">Lightning-fast transactions</p>
           </div>
         </div>
@@ -233,7 +233,7 @@ export const InteractiveHero: React.FC = () => {
           }}
         >
           <button 
-            className="px-8 py-4 bg-yellow-400 text-black font-bold rounded-lg hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1"
+            className="px-8 py-4 bg-black text-black font-bold rounded-lg hover:bg-black transition-all duration-300 transform hover:scale-105 hover:-translate-y-1"
             style={{
               transform: `translateX(${mouseParallax.x * 0.3}px) translateY(${mouseParallax.y * 0.3}px)`,
             }}
@@ -241,7 +241,7 @@ export const InteractiveHero: React.FC = () => {
             Start Trading
           </button>
           <button 
-            className="px-8 py-4 border-2 border-yellow-400 text-yellow-400 font-bold rounded-lg hover:bg-yellow-400 hover:text-black transition-all duration-300 transform hover:scale-105 hover:-translate-y-1"
+            className="px-8 py-4 border-2 border-white/20 text-white font-bold rounded-lg hover:bg-black hover:text-black transition-all duration-300 transform hover:scale-105 hover:-translate-y-1"
             style={{
               transform: `translateX(${mouseParallax.x * -0.3}px) translateY(${mouseParallax.y * -0.3}px)`,
             }}
@@ -283,13 +283,13 @@ export const InteractiveHero: React.FC = () => {
         
         {/* Additional depth elements */}
         <div 
-          className="absolute top-1/2 left-1/2 w-96 h-96 bg-yellow-400/5 rounded-full blur-3xl"
+          className="absolute top-1/2 left-1/2 w-96 h-96 bg-black/5 rounded-full blur-3xl"
           style={{
             transform: `translate(-50%, -50%) translateY(${scrollParallax.slow * 0.8}px) scale(${1 + Math.sin(scrollY * 0.005) * 0.1})`,
           }}
         />
         <div 
-          className="absolute top-1/4 right-1/4 w-64 h-64 bg-yellow-300/5 rounded-full blur-2xl"
+          className="absolute top-1/4 right-1/4 w-64 h-64 bg-black/5 rounded-full blur-2xl"
           style={{
             transform: `translateY(${scrollParallax.medium * 0.6}px) translateX(${scrollParallax.medium * 0.2}px)`,
           }}

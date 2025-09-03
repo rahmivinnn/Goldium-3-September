@@ -106,7 +106,7 @@ export function TransactionSuccessModal({
       <DialogContent className="max-w-md bg-slate-900 border-slate-700">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-xl">
-            <CheckCircle className="w-6 h-6 text-yellow-400" />
+            <CheckCircle className="w-6 h-6 text-white" />
             Transaction Successful
           </DialogTitle>
         </DialogHeader>

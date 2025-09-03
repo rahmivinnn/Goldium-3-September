@@ -364,9 +364,9 @@ export default function HomeSimple() {
         {/* Ultra Futuristic Market Background */}
         <div className="absolute inset-0 bg-radial-gradient(ellipse at center, #0a0a0f 0%, #000000 70%)"></div>
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_100%_60%_at_50%_100%,rgba(255,255,0,0.08),transparent)]"></div>
-        <div className="absolute top-0 left-1/3 w-96 h-96 bg-gradient-to-r from-yellow-400/8 to-yellow-500/8 rounded-full blur-3xl chainzoku-float"></div>
-          <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-gradient-to-l from-yellow-400/10 to-yellow-500/10 rounded-full blur-3xl chainzoku-float delay-2000"></div>
-          <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-gradient-to-br from-yellow-300/6 to-yellow-400/6 rounded-full blur-2xl chainzoku-float delay-1000"></div>
+        <div className="absolute top-0 left-1/3 w-96 h-96 bg-gradient-to-r from-black/8 to-gray-900/8 rounded-full blur-3xl chainzoku-float"></div>
+          <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-gradient-to-l from-black/10 to-gray-900/10 rounded-full blur-3xl chainzoku-float delay-2000"></div>
+          <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-gradient-to-br from-black/6 to-gray-900/6 rounded-full blur-2xl chainzoku-float delay-1000"></div>
         
         {/* Ultra Modern Grid Overlay */}
         <div className="absolute inset-0 opacity-[0.04]">

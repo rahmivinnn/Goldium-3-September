@@ -225,8 +225,8 @@ export function SolFlipMemoryGame() {
                   <div className="font-semibold">16 Cards</div>
                   <div className="text-sm text-gray-400">8 Pairs to Match</div>
                 </div>
-                <div className="bg-yellow-900/20 p-4 rounded-lg">
-                  <Coins className="w-8 h-8 text-yellow-400 mx-auto mb-2" />
+                <div className="bg-black/20 p-4 rounded-lg">
+                  <Coins className="w-8 h-8 text-white mx-auto mb-2" />
                   <div className="font-semibold">GOLD Reward</div>
                   <div className="text-sm text-gray-400">Win Tokens</div>
                 </div>
@@ -245,10 +245,10 @@ export function SolFlipMemoryGame() {
           <div className="space-y-6">
             {/* Game Stats */}
             <div className="grid grid-cols-4 gap-4">
-              <Card className="bg-yellow-900/20 border-yellow-500/30">
+              <Card className="bg-black/20 border-white/20/30">
                 <CardContent className="p-4 text-center">
-                  <Timer className="w-6 h-6 text-yellow-400 mx-auto mb-2" />
-                  <div className="text-2xl font-bold text-yellow-400">{timeLeft}s</div>
+                  <Timer className="w-6 h-6 text-white mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-white">{timeLeft}s</div>
                 </CardContent>
               </Card>
               <Card className="bg-gray-900/20 border-gray-500/30">
@@ -258,17 +258,17 @@ export function SolFlipMemoryGame() {
                   <div className="text-xs text-gray-400">Moves</div>
                 </CardContent>
               </Card>
-              <Card className="bg-yellow-900/20 border-yellow-500/30">
+              <Card className="bg-black/20 border-white/20/30">
                 <CardContent className="p-4 text-center">
-                  <Trophy className="w-6 h-6 text-yellow-400 mx-auto mb-2" />
-                  <div className="text-2xl font-bold text-yellow-400">{matchedPairs}/8</div>
+                  <Trophy className="w-6 h-6 text-white mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-white">{matchedPairs}/8</div>
                   <div className="text-xs text-gray-400">Pairs</div>
                 </CardContent>
               </Card>
-              <Card className="bg-yellow-900/20 border-yellow-500/30">
+              <Card className="bg-black/20 border-white/20/30">
                 <CardContent className="p-4 text-center">
-                  <Coins className="w-6 h-6 text-yellow-400 mx-auto mb-2" />
-                  <div className="text-2xl font-bold text-yellow-400">{score}</div>
+                  <Coins className="w-6 h-6 text-white mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-white">{score}</div>
                   <div className="text-xs text-gray-400">Score</div>
                 </CardContent>
               </Card>
@@ -325,16 +325,16 @@ export function SolFlipMemoryGame() {
               
               {gameState === 'won' && (
                 <div className="grid grid-cols-3 gap-4 mb-6 max-w-md mx-auto">
-                  <div className="bg-yellow-900/20 p-3 rounded-lg">
-                <div className="text-lg font-bold text-yellow-400">{score}</div>
+                  <div className="bg-black/20 p-3 rounded-lg">
+                <div className="text-lg font-bold text-white">{score}</div>
                     <div className="text-xs text-gray-400">Final Score</div>
                   </div>
                   <div className="bg-gray-900/20 p-3 rounded-lg">
                     <div className="text-lg font-bold text-gray-400">{moves}</div>
                     <div className="text-xs text-gray-400">Total Moves</div>
                   </div>
-                  <div className="bg-yellow-900/20 p-3 rounded-lg">
-                    <div className="text-lg font-bold text-yellow-400">{timeLeft}s</div>
+                  <div className="bg-black/20 p-3 rounded-lg">
+                    <div className="text-lg font-bold text-white">{timeLeft}s</div>
                     <div className="text-xs text-gray-400">Time Bonus</div>
                   </div>
                 </div>
@@ -350,7 +350,7 @@ export function SolFlipMemoryGame() {
                 {gameState === 'won' && (
                   <Button 
                     variant="outline"
-                    className="border-yellow-500 text-yellow-400 hover:bg-yellow-500/10"
+                    className="border-white/20 text-white hover:bg-black/10"
                   >
                     Claim GOLD Reward
                   </Button>

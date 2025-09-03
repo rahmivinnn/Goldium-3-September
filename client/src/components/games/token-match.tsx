@@ -132,7 +132,7 @@ export function TokenMatchGame() {
         ) : gameWon ? (
           <div className="text-center space-y-4">
             <div className="text-4xl">🎉</div>
-            <h3 className="text-xl font-bold text-yellow-400">You Win!</h3>
+            <h3 className="text-xl font-bold text-white">You Win!</h3>
             <p className="text-lg">Score: {score}</p>
             <p className="text-sm text-gray-300">Completed in {moves} moves</p>
             <Button 
@@ -145,7 +145,7 @@ export function TokenMatchGame() {
         ) : timeLeft === 0 ? (
           <div className="text-center space-y-4">
             <div className="text-4xl">⏰</div>
-            <h3 className="text-xl font-bold text-yellow-400">Time's Up!</h3>
+            <h3 className="text-xl font-bold text-white">Time's Up!</h3>
             <p className="text-lg">Score: {score}</p>
             <Button 
               onClick={initializeGame}
@@ -162,7 +162,7 @@ export function TokenMatchGame() {
                 onClick={() => flipCard(card.id)}
                 className={`h-16 text-2xl ${
                   card.isMatched 
-                    ? 'bg-yellow-600 cursor-default' 
+                    ? 'bg-black cursor-default' 
                     : card.isFlipped 
                     ? 'bg-gray-600' 
                     : 'bg-gray-700 hover:bg-gray-600'

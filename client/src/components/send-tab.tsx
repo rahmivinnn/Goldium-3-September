@@ -92,7 +92,7 @@ export function SendTab() {
             variant={selectedToken === 'SOL' ? 'default' : 'outline'}
             className={`p-4 h-auto flex-col ${
               selectedToken === 'SOL'
-                ? 'bg-yellow-gradient hover:from-yellow-600 hover:to-yellow-700'
+                ? 'bg-yellow-gradient hover:from-black hover:to-gray-900'
         : 'bg-defi-accent hover:bg-yellow-gradient border-defi-accent'
             }`}
             onClick={() => setSelectedToken('SOL')}
@@ -105,7 +105,7 @@ export function SendTab() {
             variant={selectedToken === 'GOLD' ? 'default' : 'outline'}
             className={`p-4 h-auto flex-col ${
               selectedToken === 'GOLD'
-                ? 'bg-gold-gradient hover:from-gold-secondary hover:to-yellow-600 text-defi-dark'
+                ? 'bg-gold-gradient hover:from-gold-secondary hover:to-gray-900 text-defi-dark'
                 : 'bg-defi-accent hover:bg-gold-gradient border-defi-accent'
             }`}
             onClick={() => setSelectedToken('GOLD')}
@@ -125,11 +125,11 @@ export function SendTab() {
           value={recipientAddress}
           onChange={(e) => setRecipientAddress(e.target.value)}
           className={`bg-defi-accent/50 border-defi-accent focus:border-yellow-primary ${
-        recipientAddress && !isValidAddress ? 'border-yellow-500' : ''
+        recipientAddress && !isValidAddress ? 'border-white/20' : ''
       }`}
         />
         {recipientAddress && !isValidAddress && (
-          <p className="text-yellow-500 text-xs">Invalid Solana address</p>
+          <p className="text-white text-xs">Invalid Solana address</p>
         )}
       </div>
 
@@ -164,7 +164,7 @@ export function SendTab() {
 
       {/* Send Button */}
       <Button
-        className="w-full bg-yellow-gradient hover:from-yellow-600 hover:to-yellow-700 py-4 font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg"
+        className="w-full bg-yellow-gradient hover:from-black hover:to-gray-900 py-4 font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg"
         onClick={handleSend}
         disabled={!connected || !isValidAmount || !isValidAddress || isLoading}
       >

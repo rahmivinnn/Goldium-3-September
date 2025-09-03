@@ -66,7 +66,7 @@ export function NumberMemoryGame() {
   }, [phase, timeLeft]);
 
   return (
-    <Card className="bg-gradient-to-br from-yellow-900/20 to-yellow-900/20 border-yellow-500/30">
+    <Card className="bg-gradient-to-br from-black/20 to-gray-900/20 border-white/20/30">
       <CardHeader>
         <CardTitle className="text-xl text-center">Number Memory</CardTitle>
         <div className="flex justify-between text-sm">
@@ -80,12 +80,12 @@ export function NumberMemoryGame() {
             {phase === 'show' && (
               <div className="text-center space-y-4">
                 <p className="text-sm text-gray-300">Memorize this number:</p>
-                <div className="text-4xl font-mono font-bold text-yellow-400 bg-slate-800 p-4 rounded-lg">
+                <div className="text-4xl font-mono font-bold text-white bg-slate-800 p-4 rounded-lg">
                   {displayNumber}
                 </div>
                 <div className="w-full bg-gray-700 rounded-full h-2">
                   <div 
-                    className="bg-yellow-500 h-2 rounded-full transition-all duration-100"
+                    className="bg-black h-2 rounded-full transition-all duration-100"
                     style={{ width: `${(timeLeft / Math.max(2, 5 - level * 0.3)) * 100}%` }}
                   ></div>
                 </div>
@@ -118,7 +118,7 @@ export function NumberMemoryGame() {
             {phase === 'result' && (
               <div className="text-center space-y-2">
                 <div className="text-2xl">🎉</div>
-                <p className="text-yellow-400 font-semibold">Correct!</p>
+                <p className="text-white font-semibold">Correct!</p>
                 <p className="text-sm text-gray-300">+{level * 10} points</p>
                 <p className="text-sm text-gray-300">Level {level + 1} starting...</p>
               </div>
@@ -126,9 +126,9 @@ export function NumberMemoryGame() {
           </>
         ) : (
           <div className="text-center space-y-4">
-            <h3 className="text-xl font-bold text-yellow-400">Game Over!</h3>
+            <h3 className="text-xl font-bold text-white">Game Over!</h3>
             <p className="text-lg">You reached Level {level}</p>
-            <p className="text-lg">Final Score: <span className="text-yellow-400">{score}</span></p>
+            <p className="text-lg">Final Score: <span className="text-white">{score}</span></p>
             <Button 
               onClick={resetGame}
               className="w-full bg-gray-700 hover:bg-gray-600"

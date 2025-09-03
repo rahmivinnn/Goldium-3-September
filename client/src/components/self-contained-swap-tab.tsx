@@ -398,7 +398,7 @@ export function SelfContainedSwapTab() {
                 onClick={handleSwapDirection}
               >
                 {fromToken === 'SOL' ? (
-                  <span className="text-yellow-400 text-lg">◎</span>
+                  <span className="text-white text-lg">◎</span>
                 ) : (
                   <img 
                     src={logoImage} 
@@ -410,7 +410,7 @@ export function SelfContainedSwapTab() {
                 <ArrowUpDown className="ml-2 h-4 w-4" />
               </Button>
               <div className="text-right">
-                <p className="text-xs font-medium text-yellow-300/70 uppercase tracking-wider">Available Balance</p>
+                <p className="text-xs font-medium text-white/70 uppercase tracking-wider">Available Balance</p>
                 <p className="text-sm font-bold text-white font-mono">
                   {externalWallet.connected ? 
                     (fromToken === 'SOL' ? externalWallet.balance.toFixed(4) : balances.gold.toFixed(2)) : 
@@ -438,7 +438,7 @@ export function SelfContainedSwapTab() {
           className="rounded-full bg-black border-white/20 hover:border-white/40"
           onClick={handleSwapDirection}
         >
-          <ArrowUpDown className="h-4 w-4 text-yellow-400" />
+          <ArrowUpDown className="h-4 w-4 text-white" />
         </Button>
       </div>
 
@@ -501,11 +501,11 @@ export function SelfContainedSwapTab() {
           </div>
           <div className="flex justify-between items-center">
             <span className="text-sm font-medium text-slate-300 uppercase tracking-wider">Network Fee</span>
-            <span className="text-sm font-bold text-yellow-400 font-mono">~0.000005 SOL</span>
+            <span className="text-sm font-bold text-white font-mono">~0.000005 SOL</span>
           </div>
           <div className="flex justify-between items-center">
             <span className="text-sm font-medium text-slate-300 uppercase tracking-wider">Treasury</span>
-            <span className="text-sm font-bold text-yellow-400 font-mono">APkB...pump</span>
+            <span className="text-sm font-bold text-white font-mono">APkB...pump</span>
           </div>
         </CardContent>
       </Card>

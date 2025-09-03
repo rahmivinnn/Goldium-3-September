@@ -126,7 +126,7 @@ export function MultiWalletSelector() {
       <Button 
         variant="outline" 
         disabled={multiWallet.connecting}
-        className="bg-galaxy-button border-yellow-500/30 text-white"
+        className="bg-galaxy-button border-white/20/30 text-white"
       >
         {multiWallet.connecting ? 'Connecting...' : 'Wallet Loading...'}
       </Button>
@@ -138,7 +138,7 @@ export function MultiWalletSelector() {
       <DropdownMenuTrigger asChild>
         <Button 
           variant="outline"
-          className="bg-galaxy-card border-yellow-500/30 hover:border-yellow-500/50 text-galaxy-bright"
+          className="bg-galaxy-card border-white/20/30 hover:border-white/20/50 text-galaxy-bright"
         >
           <span className="mr-2">{currentWallet?.icon}</span>
           <span className="hidden sm:inline">
@@ -151,15 +151,15 @@ export function MultiWalletSelector() {
       
       <DropdownMenuContent 
         align="end" 
-        className="w-80 bg-galaxy-card border-yellow-500/30"
+        className="w-80 bg-galaxy-card border-white/20/30"
       >
         {/* Current Wallet Info */}
         <div className="p-4 space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium text-galaxy-bright">Connected Wallet</span>
             <div className="flex items-center space-x-1">
-              <div className="w-2 h-2 bg-yellow-500 rounded-full" />
-                <span className="text-xs text-yellow-400">Active</span>
+              <div className="w-2 h-2 bg-black rounded-full" />
+                <span className="text-xs text-white">Active</span>
             </div>
           </div>
           
@@ -182,7 +182,7 @@ export function MultiWalletSelector() {
                   variant="ghost"
                   size="sm"
                   onClick={copyAddress}
-                  className="h-6 w-6 p-0 hover:bg-yellow-500/20"
+                  className="h-6 w-6 p-0 hover:bg-black/20"
                   disabled={!multiWallet.address}
                 >
                   <Copy className="w-3 h-3" />
@@ -199,7 +199,7 @@ export function MultiWalletSelector() {
           </div>
         </div>
 
-        <DropdownMenuSeparator className="bg-yellow-500/30" />
+        <DropdownMenuSeparator className="bg-black/30" />
 
         {/* Wallet Selection */}
         <DropdownMenuLabel className="text-galaxy-bright px-4">Select Wallet</DropdownMenuLabel>
@@ -210,8 +210,8 @@ export function MultiWalletSelector() {
               key={wallet.type}
               onClick={() => handleWalletSelect(wallet.type)}
               className={`
-                text-galaxy-bright hover:bg-yellow-500/20 cursor-pointer p-3 rounded-md
-        ${selectedWallet === wallet.type ? 'bg-yellow-500/30' : ''}
+                text-galaxy-bright hover:bg-black/20 cursor-pointer p-3 rounded-md
+        ${selectedWallet === wallet.type ? 'bg-black/30' : ''}
                 ${!availableWallets.includes(wallet.type) ? 'opacity-50' : ''}
               `}
               disabled={!availableWallets.includes(wallet.type)}
@@ -223,7 +223,7 @@ export function MultiWalletSelector() {
                     <div className="flex items-center space-x-2">
                       <span className="font-medium">{wallet.name}</span>
                       {selectedWallet === wallet.type && (
-                        <Check className="w-4 h-4 text-yellow-400" />
+                        <Check className="w-4 h-4 text-white" />
                       )}
                     </div>
                     <span className="text-xs text-galaxy-accent">{wallet.description}</span>
@@ -237,13 +237,13 @@ export function MultiWalletSelector() {
           ))}
         </div>
 
-        <DropdownMenuSeparator className="bg-yellow-500/30" />
+        <DropdownMenuSeparator className="bg-black/30" />
 
         {/* Wallet Actions */}
         <div className="p-2">
           <DropdownMenuItem 
             onClick={copyAddress}
-            className="text-galaxy-bright hover:bg-yellow-500/20 cursor-pointer"
+            className="text-galaxy-bright hover:bg-black/20 cursor-pointer"
           >
             <Copy className="w-4 h-4 mr-2" />
             Copy Address
@@ -251,7 +251,7 @@ export function MultiWalletSelector() {
           
           <DropdownMenuItem 
             onClick={viewOnSolscan}
-            className="text-galaxy-bright hover:bg-yellow-500/20 cursor-pointer"
+            className="text-galaxy-bright hover:bg-black/20 cursor-pointer"
           >
             <ExternalLink className="w-4 h-4 mr-2" />
             View on Solscan
@@ -259,12 +259,12 @@ export function MultiWalletSelector() {
         </div>
 
         {/* Network Info */}
-        <DropdownMenuSeparator className="bg-yellow-500/30" />
+        <DropdownMenuSeparator className="bg-black/30" />
         <div className="p-4">
           <div className="text-center">
-            <div className="inline-flex items-center px-3 py-1 bg-yellow-500/20 rounded-full border border-yellow-500/30">
-              <div className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse mr-2" />
-              <span className="text-xs font-medium text-yellow-400">Solana Mainnet</span>
+            <div className="inline-flex items-center px-3 py-1 bg-black/20 rounded-full border border-white/20/30">
+              <div className="w-2 h-2 bg-black rounded-full animate-pulse mr-2" />
+              <span className="text-xs font-medium text-white">Solana Mainnet</span>
             </div>
           </div>
         </div>

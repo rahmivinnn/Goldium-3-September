@@ -36,7 +36,7 @@ export function About() {
           <Card className="bg-galaxy-card border-galaxy-purple/30 overflow-hidden">
             <div className="relative">
               {/* Cover Image */}
-              <div className="h-48 bg-gradient-to-r from-gold-primary via-orange-500 to-yellow-400"></div>
+              <div className="h-48 bg-gradient-to-r from-gold-primary via-orange-500 to-gray-900"></div>
               
               {/* Profile Content */}
               <CardContent className="relative p-8">
@@ -61,7 +61,7 @@ export function About() {
                 <div className="mt-8 space-y-4">
                   <div className="flex items-center space-x-2">
                     <h2 className="text-3xl font-bold text-galaxy-bright">GOLDIUM</h2>
-                    <div className="w-6 h-6 bg-yellow-500 rounded-full flex items-center justify-center">
+                    <div className="w-6 h-6 bg-black rounded-full flex items-center justify-center">
                       <span className="text-black text-xs">✓</span>
                     </div>
                   </div>
@@ -74,7 +74,7 @@ export function About() {
                       href="https://t.me/goldiumofficial" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="text-yellow-400 hover:text-yellow-300 ml-1"
+                      className="text-white hover:text-white ml-1"
                     >
                       t.me/goldiumofficial
                     </a>
@@ -92,7 +92,7 @@ export function About() {
                         href="https://goldium.io" 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="text-yellow-400 hover:text-yellow-300"
+                        className="text-white hover:text-white"
                       >
                         goldium.io
                       </a>
@@ -122,14 +122,14 @@ export function About() {
           {/* Action Buttons */}
           <div className="flex justify-center space-x-6">
             <Button 
-              className="bg-gradient-to-r from-gold-primary to-yellow-500 hover:from-yellow-500 hover:to-gold-primary text-black font-semibold px-8 py-3"
+              className="bg-gradient-to-r from-gold-primary to-gray-900 hover:from-black hover:to-gold-primary text-black font-semibold px-8 py-3"
               onClick={() => window.open('https://goldium.io', '_blank')}
             >
               Visit Our DApp
             </Button>
             <Button 
               variant="outline" 
-              className="border-yellow-500 text-yellow-400 hover:bg-yellow-500 hover:text-white px-8 py-3"
+              className="border-white/20 text-white hover:bg-black hover:text-white px-8 py-3"
               onClick={() => window.open('https://t.me/goldiumofficial', '_blank')}
             >
               Join Telegram
@@ -150,7 +150,7 @@ export function About() {
               </CardContent>
             </Card>
 
-            <Card className="bg-galaxy-card border-galaxy-purple/30 hover:border-yellow-500/50 transition-all duration-300">
+            <Card className="bg-galaxy-card border-galaxy-purple/30 hover:border-white/20/50 transition-all duration-300">
               <CardContent className="p-6">
                 <h3 className="text-xl font-bold text-galaxy-bright mb-3">Web3 Gaming</h3>
                 <ul className="space-y-2 text-galaxy-accent">
@@ -170,7 +170,7 @@ export function About() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <Button 
                   variant="outline" 
-                  className="border-yellow-500 text-yellow-400 hover:bg-yellow-500 hover:text-white"
+                  className="border-white/20 text-white hover:bg-black hover:text-white"
                   onClick={() => window.open('https://t.me/goldiumofficial', '_blank')}
                 >
                   <ExternalLink className="w-4 h-4 mr-2" />

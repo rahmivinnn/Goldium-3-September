@@ -102,9 +102,9 @@ export function GoldiumTxFeed() {
   const getTypeIcon = (type: string) => {
     switch (type) {
       case 'SWAP':
-        return <ArrowRightLeft className="w-4 h-4 text-yellow-400" />;
+        return <ArrowRightLeft className="w-4 h-4 text-white" />;
       case 'SEND':
-        return <Send className="w-4 h-4 text-yellow-400" />;
+        return <Send className="w-4 h-4 text-white" />;
       case 'STAKE':
         return <Lock className="w-4 h-4 text-purple-400" />;
       default:
@@ -117,7 +117,7 @@ export function GoldiumTxFeed() {
       case 'SWAP':
         return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
       case 'SEND':
-        return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+        return 'bg-black/20 text-white border-white/20/30';
       case 'STAKE':
         return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
       default:
@@ -140,7 +140,7 @@ export function GoldiumTxFeed() {
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-galaxy-bright">Treasury Transactions</h3>
           <div className="flex items-center space-x-2">
-            <div className={`w-2 h-2 rounded-full ${isLive ? 'bg-yellow-500 animate-pulse' : 'bg-gray-500'}`}></div>
+            <div className={`w-2 h-2 rounded-full ${isLive ? 'bg-black animate-pulse' : 'bg-gray-500'}`}></div>
             <Button
               variant="ghost"
               size="sm"

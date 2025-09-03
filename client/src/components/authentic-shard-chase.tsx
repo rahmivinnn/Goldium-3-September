@@ -354,9 +354,9 @@ export function AuthenticShardChase() {
           <div className="w-full lg:w-80 space-y-4">
             {gameState === 'playing' && (
               <div className="grid grid-cols-2 gap-4">
-                <Card className="bg-yellow-900/30 border-yellow-600/30">
+                <Card className="bg-black/30 border-white/20/30">
                   <CardContent className="p-4 text-center">
-                    <div className="text-2xl font-mono text-yellow-400">{timeLeft}s</div>
+                    <div className="text-2xl font-mono text-white">{timeLeft}s</div>
                     <div className="text-xs text-slate-400">Mission Time</div>
                   </CardContent>
                 </Card>

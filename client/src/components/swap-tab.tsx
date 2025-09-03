@@ -242,7 +242,7 @@ export function SwapTab() {
 
       {/* Swap Button */}
       <Button
-        className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 py-4 font-semibold text-black transition-all duration-200 transform hover:scale-105 shadow-lg"
+        className="w-full bg-gradient-to-r from-black to-gray-900 hover:from-black hover:to-gray-900 py-4 font-semibold text-black transition-all duration-200 transform hover:scale-105 shadow-lg"
         onClick={handleSwap}
         disabled={!connected || !isValidAmount || isSwapping}
       >
@@ -250,13 +250,13 @@ export function SwapTab() {
       </Button>
       
       {lastTxId && (
-        <div className="mt-4 p-3 bg-yellow-900/20 border border-yellow-500/30 rounded-lg">
-          <p className="text-sm text-yellow-400 mb-2">Last transaction:</p>
+        <div className="mt-4 p-3 bg-black/20 border border-white/20/30 rounded-lg">
+          <p className="text-sm text-white mb-2">Last transaction:</p>
           <Button
             variant="outline"
             size="sm"
             onClick={() => window.open(`${SOLSCAN_BASE_URL}/tx/${lastTxId}`, '_blank')}
-            className="border-yellow-500/30 text-yellow-400 hover:bg-yellow-500/10"
+            className="border-white/20/30 text-white hover:bg-black/10"
           >
             View on Solscan <ExternalLink className="w-3 h-3 ml-1" />
           </Button>

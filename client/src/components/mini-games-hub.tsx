@@ -118,8 +118,8 @@ export function MiniGamesHub() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'live': return 'bg-yellow-500';
-      case 'beta': return 'bg-yellow-500';
+      case 'live': return 'bg-black';
+      case 'beta': return 'bg-black';
       case 'coming-soon': return 'bg-gray-500';
       default: return 'bg-gray-500';
     }
@@ -127,9 +127,9 @@ export function MiniGamesHub() {
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case 'Easy': return 'text-yellow-400 border-yellow-400';
-      case 'Medium': return 'text-yellow-400 border-yellow-400';
-      case 'Hard': return 'text-yellow-400 border-yellow-400';
+      case 'Easy': return 'text-white border-white/20';
+      case 'Medium': return 'text-white border-white/20';
+      case 'Hard': return 'text-white border-white/20';
       default: return 'text-gray-400 border-gray-400';
     }
   };
@@ -258,8 +258,8 @@ export function MiniGamesHub() {
                     <div className="flex items-center justify-between text-sm">
                       <span className="text-gray-400">Players Online:</span>
                       <div className="flex items-center gap-1">
-                        <Users className="w-4 h-4 text-yellow-400" />
-                <span className="text-yellow-400">{game.players.toLocaleString()}</span>
+                        <Users className="w-4 h-4 text-white" />
+                <span className="text-white">{game.players.toLocaleString()}</span>
                       </div>
                     </div>
                     
@@ -273,8 +273,8 @@ export function MiniGamesHub() {
                     <div className="flex items-center justify-between text-sm">
                       <span className="text-gray-400">Rewards:</span>
                       <div className="flex items-center gap-1">
-                        <Coins className="w-4 h-4 text-yellow-400" />
-                        <span className="text-yellow-400 text-xs">{game.rewards}</span>
+                        <Coins className="w-4 h-4 text-white" />
+                        <span className="text-white text-xs">{game.rewards}</span>
                       </div>
                     </div>
                   </div>
@@ -300,10 +300,10 @@ export function MiniGamesHub() {
         <TabsContent value="live" className="space-y-4">
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {games.filter(game => game.status === 'live').map((game) => (
-              <Card key={game.id} className="bg-yellow-900/20 border-yellow-500/20">
+              <Card key={game.id} className="bg-black/20 border-white/20/20">
                 <CardHeader>
                   <div className="flex items-center gap-3">
-                    <div className="p-2 bg-yellow-500/20 rounded-lg">
+                    <div className="p-2 bg-black/20 rounded-lg">
                       {game.icon}
                     </div>
                     <div>
@@ -315,7 +315,7 @@ export function MiniGamesHub() {
                 <CardContent className="space-y-4">
                   <p className="text-sm text-gray-300">{game.description}</p>
                   <Button 
-                    className="w-full bg-yellow-600 hover:bg-yellow-700"
+                    className="w-full bg-black hover:bg-black"
                     onClick={() => setSelectedGame(game.id)}
                   >
                     Play Now
@@ -329,10 +329,10 @@ export function MiniGamesHub() {
         <TabsContent value="beta" className="space-y-4">
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {games.filter(game => game.status === 'beta').map((game) => (
-              <Card key={game.id} className="bg-gradient-to-br from-yellow-900/20 to-orange-900/20 border-yellow-500/20">
+              <Card key={game.id} className="bg-gradient-to-br from-black/20 to-orange-900/20 border-white/20/20">
                 <CardHeader>
                   <div className="flex items-center gap-3">
-                    <div className="p-2 bg-yellow-500/20 rounded-lg">
+                    <div className="p-2 bg-black/20 rounded-lg">
                       {game.icon}
                     </div>
                     <div>
@@ -344,7 +344,7 @@ export function MiniGamesHub() {
                 <CardContent className="space-y-4">
                   <p className="text-sm text-gray-300">{game.description}</p>
                   <Button 
-                    className="w-full bg-gradient-to-r from-yellow-500 to-orange-500"
+                    className="w-full bg-gradient-to-r from-black to-orange-500"
                     disabled
                   >
                     Join Beta Waitlist
@@ -389,18 +389,18 @@ export function MiniGamesHub() {
       <Card className="bg-gray-900/20 border-gray-500/20">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Star className="w-5 h-5 text-yellow-400" />
+            <Star className="w-5 h-5 text-white" />
             Gaming Stats
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center">
-              <div className="text-2xl font-bold text-yellow-400">1,492</div>
+              <div className="text-2xl font-bold text-white">1,492</div>
               <div className="text-sm text-gray-400">Active Players</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-yellow-400">847K</div>
+              <div className="text-2xl font-bold text-white">847K</div>
               <div className="text-sm text-gray-400">GOLD Earned</div>
             </div>
             <div className="text-center">

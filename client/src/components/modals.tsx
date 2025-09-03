@@ -29,8 +29,8 @@ export function SuccessModal({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="bg-defi-secondary border-defi-accent">
         <DialogHeader className="text-center">
-          <div className="w-16 h-16 bg-yellow-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-          <CheckCircle className="h-8 w-8 text-yellow-500" />
+          <div className="w-16 h-16 bg-black/20 rounded-full flex items-center justify-center mx-auto mb-4">
+          <CheckCircle className="h-8 w-8 text-white" />
           </div>
           <DialogTitle className="text-xl font-semibold text-white">
             {title}
@@ -42,7 +42,7 @@ export function SuccessModal({
         <div className="space-y-3 mt-6">
           {solscanUrl && (
             <Button
-              className="w-full bg-yellow-600 hover:bg-yellow-700 py-3 font-medium"
+              className="w-full bg-black hover:bg-black py-3 font-medium"
               onClick={() => window.open(solscanUrl, '_blank')}
             >
               View on Solscan
@@ -108,8 +108,8 @@ export function ErrorModal({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="bg-defi-secondary border-defi-accent">
         <DialogHeader className="text-center">
-          <div className="w-16 h-16 bg-yellow-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-          <AlertCircle className="h-8 w-8 text-yellow-500" />
+          <div className="w-16 h-16 bg-black/20 rounded-full flex items-center justify-center mx-auto mb-4">
+          <AlertCircle className="h-8 w-8 text-white" />
           </div>
           <DialogTitle className="text-xl font-semibold text-white">
             {title}

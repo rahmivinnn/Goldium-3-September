@@ -174,7 +174,7 @@ export function SolanaShardChase() {
     <Card className="w-full max-w-2xl mx-auto bg-gray-900/20 border-gray-500/20">
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-2xl">
-          <Zap className="w-6 h-6 text-yellow-400" />
+          <Zap className="w-6 h-6 text-white" />
           Solana Shard Chase
         </CardTitle>
         <p className="text-sm text-gray-400">Real-time multiplayer item hunt. Collect shards to earn GOLD tokens!</p>
@@ -204,7 +204,7 @@ export function SolanaShardChase() {
               {gameState === 'ended' && (
                 <div className="absolute inset-0 bg-black/80 flex items-center justify-center rounded-lg">
                   <div className="text-center">
-                    <Trophy className="w-12 h-12 text-yellow-400 mx-auto mb-4" />
+                    <Trophy className="w-12 h-12 text-white mx-auto mb-4" />
                     <h3 className="text-xl font-bold mb-2">Game Over!</h3>
                     <p className="text-gray-300 mb-4">You collected {score} shards</p>
                     <Button onClick={startGame} className="bg-gray-700 hover:bg-gray-600">
@@ -220,9 +220,9 @@ export function SolanaShardChase() {
           <div className="w-full lg:w-80 space-y-4">
             {gameState === 'playing' && (
               <div className="grid grid-cols-2 gap-4">
-                <Card className="bg-yellow-900/20 border-yellow-500/30">
+                <Card className="bg-black/20 border-white/20/30">
                   <CardContent className="p-4 text-center">
-                    <div className="text-2xl font-bold text-yellow-400">{timeLeft}s</div>
+                    <div className="text-2xl font-bold text-white">{timeLeft}s</div>
                     <div className="text-xs text-gray-400">Time Left</div>
                   </CardContent>
                 </Card>
@@ -235,18 +235,18 @@ export function SolanaShardChase() {
               </div>
             )}
 
-            <Card className="bg-yellow-900/20 border-yellow-500/30">
+            <Card className="bg-black/20 border-white/20/30">
               <CardContent className="p-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <Coins className="w-5 h-5 text-yellow-400" />
+                  <Coins className="w-5 h-5 text-white" />
                   <span className="font-semibold">Your Score</span>
                 </div>
-                <div className="text-3xl font-bold text-yellow-400">{score}</div>
+                <div className="text-3xl font-bold text-white">{score}</div>
                 <div className="text-sm text-gray-400">Shards Collected</div>
               </CardContent>
             </Card>
 
-            <Card className="bg-yellow-900/20 border-yellow-500/30">
+            <Card className="bg-black/20 border-white/20/30">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-sm">
                   <Users className="w-4 h-4" />
@@ -261,11 +261,11 @@ export function SolanaShardChase() {
                         <Badge variant={index === 0 ? "default" : "secondary"} className="w-6 h-6 p-0 flex items-center justify-center">
                           {index + 1}
                         </Badge>
-                        <span className={`text-sm ${player.id === '1' ? 'text-yellow-400 font-semibold' : 'text-gray-300'}`}>
+                        <span className={`text-sm ${player.id === '1' ? 'text-white font-semibold' : 'text-gray-300'}`}>
                           {player.name}
                         </span>
                       </div>
-                      <span className="text-yellow-400 font-mono">{player.score}</span>
+                      <span className="text-white font-mono">{player.score}</span>
                     </div>
                   ))}
                 </div>

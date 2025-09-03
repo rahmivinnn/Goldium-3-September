@@ -262,7 +262,7 @@ export function BlockchainEducation() {
                   </div>
                 </div>
                 {completedModules.has(module.id) && (
-                  <Badge className="bg-yellow-500/20 text-yellow-400 border-yellow-500/30">
+                  <Badge className="bg-black/20 text-white border-white/20/30">
                     ✓
                   </Badge>
                 )}
@@ -276,7 +276,7 @@ export function BlockchainEducation() {
               <div className="flex gap-2 flex-wrap">
                 <Badge 
                   variant={module.level === 'Essential' ? 'default' : 'secondary'}
-                  className={module.level === 'Essential' ? 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30' : ''}
+                  className={module.level === 'Essential' ? 'bg-black/20 text-white border-white/20/30' : ''}
                 >
                   {module.level}
                 </Badge>

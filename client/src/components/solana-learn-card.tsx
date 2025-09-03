@@ -89,11 +89,11 @@ export function SolanaLearnCard() {
   };
 
   return (
-    <Card className="bg-galaxy-card border-galaxy-purple/30 hover:border-yellow-500/50 transition-all duration-300">
+    <Card className="bg-galaxy-card border-galaxy-purple/30 hover:border-white/20/50 transition-all duration-300">
       <CardContent className="p-6">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-2">
-            <BookOpen className="w-5 h-5 text-yellow-400" />
+            <BookOpen className="w-5 h-5 text-white" />
             <h3 className="text-lg font-semibold text-galaxy-bright">Learn Blockchain</h3>
           </div>
           <Button
@@ -134,19 +134,19 @@ export function SolanaLearnCard() {
                   disabled={showResult}
                   className={`w-full justify-start text-left border-galaxy-purple/50 hover:bg-galaxy-purple/20 ${
                     showResult && index === topic.quiz!.correct
-                      ? 'border-yellow-500 bg-yellow-500/20'
+                      ? 'border-white/20 bg-black/20'
                       : showResult && index === selectedAnswer && index !== topic.quiz!.correct
-                      ? 'border-yellow-500 bg-yellow-500/20'
+                      ? 'border-white/20 bg-black/20'
                       : ''
                   }`}
                 >
                   <span className="mr-2">{String.fromCharCode(65 + index)})</span>
                   {option}
                   {showResult && index === topic.quiz!.correct && (
-                    <CheckCircle className="w-4 h-4 ml-auto text-yellow-500" />
+                    <CheckCircle className="w-4 h-4 ml-auto text-white" />
                   )}
                   {showResult && index === selectedAnswer && index !== topic.quiz!.correct && (
-                    <XCircle className="w-4 h-4 ml-auto text-yellow-500" />
+                    <XCircle className="w-4 h-4 ml-auto text-white" />
                   )}
                 </Button>
               ))}
@@ -160,7 +160,7 @@ export function SolanaLearnCard() {
             <div
               key={index}
               className={`h-1 flex-1 rounded ${
-                index === currentTopic ? 'bg-yellow-500' : 'bg-galaxy-purple/30'
+                index === currentTopic ? 'bg-black' : 'bg-galaxy-purple/30'
               }`}
             />
           ))}

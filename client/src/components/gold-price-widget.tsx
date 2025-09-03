@@ -62,11 +62,11 @@ export function GoldPriceWidget() {
           </div>
           <div className={`flex items-center space-x-1 ${isLoading ? 'animate-pulse' : ''}`}>
             {isPositive ? (
-              <TrendingUp className="w-4 h-4 text-yellow-500" />
+              <TrendingUp className="w-4 h-4 text-white" />
             ) : (
-              <TrendingDown className="w-4 h-4 text-yellow-500" />
+              <TrendingDown className="w-4 h-4 text-white" />
             )}
-            <span className={`text-sm font-medium ${isPositive ? 'text-yellow-500' : 'text-yellow-500'}`}>
+            <span className={`text-sm font-medium ${isPositive ? 'text-white' : 'text-white'}`}>
               {isPositive ? '+' : ''}{priceData.change24h.toFixed(2)}%
             </span>
           </div>
@@ -103,7 +103,7 @@ export function GoldPriceWidget() {
           {/* Live indicator */}
           <div className="flex items-center justify-center pt-2">
             <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
+              <div className="w-2 h-2 bg-black rounded-full animate-pulse"></div>
               <span className="text-xs text-galaxy-accent">Live Price</span>
             </div>
           </div>

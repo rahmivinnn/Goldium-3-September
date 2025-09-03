@@ -35,13 +35,13 @@ export function TransactionHistory() {
     switch (status) {
       case 'confirmed':
       case 'success':
-        return <CheckCircle className="h-4 w-4 text-yellow-500" />;
+        return <CheckCircle className="h-4 w-4 text-white" />;
       case 'failed':
-        return <XCircle className="h-4 w-4 text-yellow-500" />;
+        return <XCircle className="h-4 w-4 text-white" />;
       case 'pending':
-        return <Clock className="h-4 w-4 text-yellow-500" />;
+        return <Clock className="h-4 w-4 text-white" />;
       default:
-        return <CheckCircle className="h-4 w-4 text-yellow-500" />;
+        return <CheckCircle className="h-4 w-4 text-white" />;
     }
   };
 
@@ -120,7 +120,7 @@ export function TransactionHistory() {
 
   if (transactions.length === 0) {
     return (
-      <Card className="bg-galaxy-card border-yellow-500/20">
+      <Card className="bg-galaxy-card border-white/20/20">
         <CardHeader>
           <CardTitle className="text-galaxy-bright">Transaction History</CardTitle>
         </CardHeader>
@@ -134,7 +134,7 @@ export function TransactionHistory() {
   }
 
   return (
-    <Card className="bg-galaxy-card border-yellow-500/20">
+    <Card className="bg-galaxy-card border-white/20/20">
       <CardHeader>
         <CardTitle className="text-galaxy-bright flex items-center justify-between">
           Transaction History
@@ -147,7 +147,7 @@ export function TransactionHistory() {
         {displayTransactions.map((tx: any) => (
           <div
             key={getTransactionId(tx)}
-            className="flex items-center justify-between p-4 rounded-lg bg-galaxy-secondary/20 border border-yellow-500/10"
+            className="flex items-center justify-between p-4 rounded-lg bg-galaxy-secondary/20 border border-white/20/10"
           >
             <div className="flex items-center space-x-3">
               {getStatusIcon(tx)}

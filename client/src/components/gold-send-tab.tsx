@@ -126,7 +126,7 @@ export function GoldSendTab() {
             placeholder="Enter Solana wallet address"
             value={toAddress}
             onChange={(e) => setToAddress(e.target.value)}
-            className="bg-gradient-to-r from-gray-900/80 to-gray-800/80 border border-yellow-400/30 text-white placeholder:text-gray-400 backdrop-blur-sm"
+            className="bg-gradient-to-r from-gray-900/80 to-gray-800/80 border border-white/20/30 text-white placeholder:text-gray-400 backdrop-blur-sm"
           />
         </div>
 
@@ -142,7 +142,7 @@ export function GoldSendTab() {
               placeholder="0.0000"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              className="bg-gradient-to-r from-gray-900/80 to-gray-800/80 border border-yellow-400/30 text-white placeholder:text-gray-400 pr-16 backdrop-blur-sm"
+              className="bg-gradient-to-r from-gray-900/80 to-gray-800/80 border border-white/20/30 text-white placeholder:text-gray-400 pr-16 backdrop-blur-sm"
               step="0.0001"
               min="0"
               max={goldBalance.balance}
@@ -165,9 +165,9 @@ export function GoldSendTab() {
         </div>
 
         {/* Warning */}
-        <Alert className="border-yellow-500/30 bg-yellow-500/10">
-          <AlertCircle className="h-4 w-4 text-yellow-500" />
-          <AlertDescription className="text-yellow-200">
+        <Alert className="border-white/20/30 bg-black/10">
+          <AlertCircle className="h-4 w-4 text-white" />
+          <AlertDescription className="text-white">
             GOLD transfers are irreversible. Please verify the recipient address carefully.
           </AlertDescription>
         </Alert>
@@ -176,7 +176,7 @@ export function GoldSendTab() {
         <Button
           onClick={handleSend}
           disabled={isLoading || !toAddress.trim() || !amount || goldBalance.balance === 0}
-          className="w-full bg-gradient-to-r from-yellow-600 to-yellow-500 hover:from-yellow-700 hover:to-yellow-600 text-white font-semibold"
+          className="w-full bg-gradient-to-r from-black to-gray-900 hover:from-black hover:to-gray-900 text-white font-semibold"
         >
           {isLoading ? (
             <div className="flex items-center gap-2">

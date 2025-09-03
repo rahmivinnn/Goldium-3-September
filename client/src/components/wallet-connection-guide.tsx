@@ -20,7 +20,7 @@ export function WalletConnectionGuide({ walletType, showFundingInstructions = fa
     <Card className="bg-galaxy-card border-galaxy-purple/30">
       <CardContent className="p-6">
         <div className="flex items-start space-x-3">
-          <AlertCircle className="w-5 h-5 text-yellow-500 mt-1 flex-shrink-0" />
+          <AlertCircle className="w-5 h-5 text-white mt-1 flex-shrink-0" />
           <div className="space-y-3">
             {!walletType ? (
               <>

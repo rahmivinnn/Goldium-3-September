@@ -74,7 +74,7 @@ export function BalanceCards() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
       {/* SOL Balance */}
-      <Card className="group bg-gradient-to-br from-slate-900/90 to-slate-800/90 backdrop-blur-xl border border-yellow-500/20 hover:border-yellow-400/40 transition-all duration-500 transform hover:scale-[1.02] hover:shadow-2xl hover:shadow-yellow-500/10">
+      <Card className="group bg-gradient-to-br from-slate-900/90 to-slate-800/90 backdrop-blur-xl border border-white/20/20 hover:border-white/20/40 transition-all duration-500 transform hover:scale-[1.02] hover:shadow-2xl hover:shadow-white/10">
         <CardContent className="p-8">
           <div className="flex items-center justify-between mb-6">
             <div>
@@ -108,11 +108,11 @@ export function BalanceCards() {
       </Card>
 
       {/* GOLD Balance */}
-      <Card className="group bg-gradient-to-br from-amber-900/90 to-yellow-900/90 backdrop-blur-xl border border-yellow-500/20 hover:border-yellow-400/40 transition-all duration-500 transform hover:scale-[1.02] hover:shadow-2xl hover:shadow-yellow-500/10">
+      <Card className="group bg-gradient-to-br from-black/90 to-gray-900/90 backdrop-blur-xl border border-white/20/20 hover:border-white/20/40 transition-all duration-500 transform hover:scale-[1.02] hover:shadow-2xl hover:shadow-white/10">
         <CardContent className="p-8">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h3 className="text-xl font-bold bg-gradient-to-r from-yellow-400 to-amber-300 bg-clip-text text-transparent tracking-tight">
+              <h3 className="text-xl font-bold bg-gradient-to-r from-black to-gray-900 bg-clip-text text-transparent tracking-tight">
                 GOLD Balance
               </h3>
               <p className="text-xs font-medium text-white/60 mt-1 tracking-wider uppercase">

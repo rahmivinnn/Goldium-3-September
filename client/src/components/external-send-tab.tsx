@@ -114,7 +114,7 @@ export function ExternalSendTab() {
             variant={selectedToken === 'SOL' ? 'default' : 'outline'}
             className={`p-4 h-auto flex-col ${
               selectedToken === 'SOL'
-                ? 'bg-yellow-gradient hover:from-yellow-600 hover:to-yellow-700'
+                ? 'bg-yellow-gradient hover:from-black hover:to-gray-900'
         : 'bg-galaxy-button hover:bg-yellow-gradient border-galaxy-purple/30'
             }`}
             onClick={() => setSelectedToken('SOL')}
@@ -130,12 +130,12 @@ export function ExternalSendTab() {
             variant={selectedToken === 'GOLD' ? 'default' : 'outline'}
             className={`p-4 h-auto flex-col ${
               selectedToken === 'GOLD'
-                ? 'bg-yellow-gradient hover:from-yellow-600 hover:to-yellow-700'
+                ? 'bg-yellow-gradient hover:from-black hover:to-gray-900'
         : 'bg-galaxy-button hover:bg-yellow-gradient border-galaxy-purple/30'
             }`}
             onClick={() => setSelectedToken('GOLD')}
           >
-            <div className="w-8 h-8 mb-2 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg flex items-center justify-center mx-auto">
+            <div className="w-8 h-8 mb-2 bg-gradient-to-br from-black to-gray-900 rounded-lg flex items-center justify-center mx-auto">
               <img 
                 src="/attached_assets/k1xiYLna_400x400-removebg-preview_1754185452121.png" 
                 alt="GOLD" 

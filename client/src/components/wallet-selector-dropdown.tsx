@@ -41,7 +41,7 @@ export function WalletSelectorDropdown() {
       <Button 
         variant="outline" 
         disabled={connecting}
-        className="bg-galaxy-button border-yellow-500/30 text-white"
+        className="bg-galaxy-button border-white/20/30 text-white"
       >
         {connecting ? 'Connecting...' : 'Wallet Loading...'}
       </Button>
@@ -53,7 +53,7 @@ export function WalletSelectorDropdown() {
       <DropdownMenuTrigger asChild>
         <Button 
           variant="outline"
-          className="bg-galaxy-card border-yellow-500/30 hover:border-yellow-500/50 text-galaxy-bright"
+          className="bg-galaxy-card border-white/20/30 hover:border-white/20/50 text-galaxy-bright"
         >
           <Wallet className="w-4 h-4 mr-2" />
           <span className="hidden sm:inline">
@@ -66,15 +66,15 @@ export function WalletSelectorDropdown() {
       
       <DropdownMenuContent 
         align="end" 
-        className="w-80 bg-galaxy-card border-yellow-500/30"
+        className="w-80 bg-galaxy-card border-white/20/30"
       >
         {/* Wallet Info */}
         <div className="p-4 space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium text-galaxy-bright">Connected Wallet</span>
             <div className="flex items-center space-x-1">
-              <div className="w-2 h-2 bg-yellow-500 rounded-full" />
-              <span className="text-xs text-yellow-400">Active</span>
+              <div className="w-2 h-2 bg-black rounded-full" />
+              <span className="text-xs text-white">Active</span>
             </div>
           </div>
           
@@ -89,7 +89,7 @@ export function WalletSelectorDropdown() {
                   variant="ghost"
                   size="sm"
                   onClick={copyAddress}
-                  className="h-6 w-6 p-0 hover:bg-yellow-500/20"
+                  className="h-6 w-6 p-0 hover:bg-black/20"
                 >
                   <Copy className="w-3 h-3" />
                 </Button>
@@ -105,13 +105,13 @@ export function WalletSelectorDropdown() {
           </div>
         </div>
 
-        <DropdownMenuSeparator className="bg-yellow-500/30" />
+        <DropdownMenuSeparator className="bg-black/30" />
 
         {/* Wallet Actions */}
         <div className="p-2">
           <DropdownMenuItem 
             onClick={copyAddress}
-            className="text-galaxy-bright hover:bg-yellow-500/20 cursor-pointer"
+            className="text-galaxy-bright hover:bg-black/20 cursor-pointer"
           >
             <Copy className="w-4 h-4 mr-2" />
             Copy Address
@@ -119,14 +119,14 @@ export function WalletSelectorDropdown() {
           
           <DropdownMenuItem 
             onClick={viewOnSolscan}
-            className="text-galaxy-bright hover:bg-yellow-500/20 cursor-pointer"
+            className="text-galaxy-bright hover:bg-black/20 cursor-pointer"
           >
             <ExternalLink className="w-4 h-4 mr-2" />
             View on Solscan
           </DropdownMenuItem>
         </div>
 
-        <DropdownMenuSeparator className="bg-yellow-500/30" />
+        <DropdownMenuSeparator className="bg-black/30" />
 
         {/* Wallet Type Info */}
         <div className="p-4">

@@ -99,7 +99,7 @@ export function WalletSelector({ onConnect, connecting, connected, currentWallet
         <span className="text-sm text-gray-300">Connected: {currentWallet}</span>
         <Button 
           onClick={() => onConnect('disconnect')}
-          className="bg-yellow-600 hover:bg-yellow-700 text-white"
+          className="bg-black hover:bg-black text-white"
           size="sm"
         >
           Disconnect
@@ -112,7 +112,7 @@ export function WalletSelector({ onConnect, connecting, connected, currentWallet
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button 
-          className="bg-gradient-to-r from-yellow-600 to-amber-600 hover:from-yellow-700 hover:to-amber-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+          className="bg-gradient-to-r from-black to-gray-900 hover:from-black hover:to-gray-900 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
           disabled={connecting}
         >
           {connecting ? 'Connecting...' : 'Connect Wallet'}
@@ -145,11 +145,11 @@ export function WalletSelector({ onConnect, connecting, connected, currentWallet
                   </div>
                   <div className="flex flex-col items-end space-y-2">
                     {wallet.installed ? (
-                      <span className="text-xs text-yellow-400 bg-yellow-400/20 px-2 py-1 rounded">
+                      <span className="text-xs text-white bg-black/20 px-2 py-1 rounded">
                         Installed
                       </span>
                     ) : (
-                      <span className="text-xs text-yellow-400 bg-yellow-400/20 px-2 py-1 rounded">
+                      <span className="text-xs text-white bg-black/20 px-2 py-1 rounded">
                         Not Installed
                       </span>
                     )}

@@ -240,9 +240,9 @@ export function StakingTab() {
     <div className="max-w-2xl mx-auto space-y-6">
       {/* Staking Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <Card className="bg-galaxy-card border-galaxy-purple/30 hover:border-yellow-400/50 transition-all duration-300 transform hover:scale-105">
+        <Card className="bg-galaxy-card border-galaxy-purple/30 hover:border-white/20/50 transition-all duration-300 transform hover:scale-105">
           <CardContent className="p-4 text-center">
-            <p className="text-2xl font-bold text-yellow-400">{STAKING_APY}%</p>
+            <p className="text-2xl font-bold text-white">{STAKING_APY}%</p>
             <p className="text-sm text-galaxy-accent">Annual APY</p>
           </CardContent>
         </Card>
@@ -267,10 +267,10 @@ export function StakingTab() {
       {/* Staking Actions */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Stake */}
-        <Card className="bg-galaxy-card border-galaxy-purple/30 hover:border-yellow-400/50 transition-all duration-300">
+        <Card className="bg-galaxy-card border-galaxy-purple/30 hover:border-white/20/50 transition-all duration-300">
           <CardContent className="p-6">
             <h3 className="text-lg font-semibold text-galaxy-bright mb-4 flex items-center">
-              <span className="mr-2 text-yellow-400">🔒</span>
+              <span className="mr-2 text-white">🔒</span>
               Stake GOLD
             </h3>
             <div className="space-y-4">
@@ -281,7 +281,7 @@ export function StakingTab() {
                   placeholder="0.0"
                   value={stakeAmount}
                   onChange={(e) => setStakeAmount(e.target.value)}
-                  className="bg-background border-galaxy-purple/30 focus:border-yellow-400 text-galaxy-bright"
+                  className="bg-background border-galaxy-purple/30 focus:border-white/20 text-galaxy-bright"
                 />
                 <p className="text-xs text-galaxy-accent mt-1">
                   Available: {balances.gold.toFixed(4)} GOLD
@@ -302,13 +302,13 @@ export function StakingTab() {
               </Button>
               
               {lastTxId && (
-                <div className="mt-4 p-3 bg-yellow-900/20 border border-yellow-500/30 rounded-lg">
-            <p className="text-sm text-yellow-400 mb-2">Last staking transaction:</p>
+                <div className="mt-4 p-3 bg-black/20 border border-white/20/30 rounded-lg">
+            <p className="text-sm text-white mb-2">Last staking transaction:</p>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => window.open(`${SOLSCAN_BASE_URL}/tx/${lastTxId}`, '_blank')}
-                    className="border-yellow-500/30 text-yellow-400 hover:bg-yellow-500/10"
+                    className="border-white/20/30 text-white hover:bg-black/10"
                   >
                     View on Solscan <ExternalLink className="w-3 h-3 ml-1" />
                   </Button>
@@ -319,10 +319,10 @@ export function StakingTab() {
         </Card>
 
         {/* Unstake */}
-        <Card className="bg-galaxy-card border-galaxy-purple/30 hover:border-yellow-400/50 transition-all duration-300">
+        <Card className="bg-galaxy-card border-galaxy-purple/30 hover:border-white/20/50 transition-all duration-300">
           <CardContent className="p-6">
             <h3 className="text-lg font-semibold text-galaxy-bright mb-4 flex items-center">
-              <span className="mr-2 text-yellow-400">🔓</span>
+              <span className="mr-2 text-white">🔓</span>
               Unstake GOLD
             </h3>
             <div className="space-y-4">
@@ -333,7 +333,7 @@ export function StakingTab() {
                   placeholder="0.0"
                   value={unstakeAmount}
                   onChange={(e) => setUnstakeAmount(e.target.value)}
-                  className="bg-background border-galaxy-purple/30 focus:border-yellow-400 text-galaxy-bright"
+                  className="bg-background border-galaxy-purple/30 focus:border-white/20 text-galaxy-bright"
                 />
                 <p className="text-xs text-galaxy-accent mt-1">
                   Staked: {balances.stakedGold.toFixed(4)} GOLD
@@ -371,7 +371,7 @@ export function StakingTab() {
               </p>
             </div>
             <Button
-              className="bg-gold-gradient hover:from-gold-secondary hover:to-yellow-600 px-6 py-3 font-semibold text-black transition-all duration-200"
+              className="bg-gold-gradient hover:from-gold-secondary hover:to-gray-900 px-6 py-3 font-semibold text-black transition-all duration-200"
               onClick={handleClaimRewards}
               disabled={!connected || balances.claimableRewards <= 0 || isStaking}
             >

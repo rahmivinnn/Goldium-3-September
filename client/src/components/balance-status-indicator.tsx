@@ -9,9 +9,9 @@ interface BalanceStatusIndicatorProps {
 export function BalanceStatusIndicator({ connected, balance, walletType }: BalanceStatusIndicatorProps) {
   if (!connected) {
     return (
-      <div className="flex items-center space-x-3 px-4 py-2 bg-gradient-to-r from-yellow-500/10 to-yellow-600/20 backdrop-blur-sm border border-yellow-500/30 rounded-xl transition-all duration-300 hover:border-yellow-400/50">
-        <XCircle className="w-4 h-4 text-yellow-400" />
-        <span className="text-sm font-medium text-yellow-300 tracking-wide">Not Connected</span>
+      <div className="flex items-center space-x-3 px-4 py-2 bg-gradient-to-r from-black/10 to-gray-900/20 backdrop-blur-sm border border-white/20/30 rounded-xl transition-all duration-300 hover:border-white/20/50">
+        <XCircle className="w-4 h-4 text-white" />
+        <span className="text-sm font-medium text-white tracking-wide">Not Connected</span>
       </div>
     );
   }
@@ -24,10 +24,10 @@ export function BalanceStatusIndicator({ connected, balance, walletType }: Balan
     <div className={`flex items-center space-x-3 px-4 py-2 backdrop-blur-sm border rounded-xl transition-all duration-300 hover:scale-105 ${
       hasBalance 
         ? 'bg-gradient-to-r from-emerald-500/10 to-green-600/20 border-emerald-500/30 hover:border-emerald-400/50' 
-        : 'bg-gradient-to-r from-amber-500/10 to-yellow-600/20 border-amber-500/30 hover:border-amber-400/50'
+        : 'bg-gradient-to-r from-black/10 to-gray-900/20 border-amber-500/30 hover:border-amber-400/50'
     }`}>
       <div className="flex items-center space-x-2">
-        <Wallet className="w-4 h-4 text-yellow-400" />
+        <Wallet className="w-4 h-4 text-white" />
         {hasBalance ? (
           <CheckCircle className="w-3 h-3 text-emerald-400" />
         ) : (

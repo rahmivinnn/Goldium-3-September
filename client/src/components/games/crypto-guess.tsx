@@ -78,7 +78,7 @@ export function CryptoGuessGame() {
         {isPlaying ? (
           <>
             <div className="text-center">
-              <h3 className="text-2xl font-bold text-yellow-400">{currentCrypto.symbol}</h3>
+              <h3 className="text-2xl font-bold text-white">{currentCrypto.symbol}</h3>
               <p className="text-gray-300">{currentCrypto.name}</p>
             </div>
             
@@ -104,7 +104,7 @@ export function CryptoGuessGame() {
             {gameResult && (
               <div className="text-center space-y-2">
                 <p className="text-lg font-semibold">
-                  Actual Price: <span className="text-yellow-400">${actualPrice}</span>
+                  Actual Price: <span className="text-white">${actualPrice}</span>
                 </p>
                 <Badge variant={gameResult === 'correct' ? 'default' : gameResult === 'close' ? 'secondary' : 'destructive'}>
                   {gameResult === 'correct' && '🎉 Perfect! +10 points'}
@@ -117,7 +117,7 @@ export function CryptoGuessGame() {
         ) : (
           <div className="text-center space-y-4">
             <h3 className="text-xl font-bold">Game Over!</h3>
-            <p className="text-lg">Final Score: <span className="text-yellow-400">{score}/50</span></p>
+            <p className="text-lg">Final Score: <span className="text-white">{score}/50</span></p>
             <Button 
               onClick={() => {
                 setScore(0);

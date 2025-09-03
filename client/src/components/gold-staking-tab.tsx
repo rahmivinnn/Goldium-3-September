@@ -165,10 +165,10 @@ export function GoldStakingTab() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-galaxy-purple/20 rounded-lg p-4">
             <div className="flex items-center gap-2 mb-2">
-              <TrendingUp className="w-4 h-4 text-yellow-400" />
+              <TrendingUp className="w-4 h-4 text-white" />
               <span className="text-galaxy-text text-sm">APY</span>
             </div>
-            <div className="text-2xl font-bold text-yellow-400">
+            <div className="text-2xl font-bold text-white">
               {goldBalance.stakingInfo.apy}%
             </div>
           </div>
@@ -238,7 +238,7 @@ export function GoldStakingTab() {
                   placeholder="0.0000"
                   value={stakeAmount}
                   onChange={(e) => setStakeAmount(e.target.value)}
-                  className="bg-gradient-to-r from-gray-900/80 to-gray-800/80 border border-yellow-400/30 text-white placeholder:text-gray-400 pr-16 backdrop-blur-sm"
+                  className="bg-gradient-to-r from-gray-900/80 to-gray-800/80 border border-white/20/30 text-white placeholder:text-gray-400 pr-16 backdrop-blur-sm"
                   step="0.0001"
                   min={goldBalance.stakingInfo.minStake}
                   max={goldBalance.balance}
@@ -303,7 +303,7 @@ export function GoldStakingTab() {
                   placeholder="0.0000"
                   value={unstakeAmount}
                   onChange={(e) => setUnstakeAmount(e.target.value)}
-                  className="bg-gradient-to-r from-gray-900/80 to-gray-800/80 border border-yellow-400/30 text-white placeholder:text-gray-400 pr-16 backdrop-blur-sm"
+                  className="bg-gradient-to-r from-gray-900/80 to-gray-800/80 border border-white/20/30 text-white placeholder:text-gray-400 pr-16 backdrop-blur-sm"
                   step="0.0001"
                   min="0"
                   max={goldBalance.stakedBalance}

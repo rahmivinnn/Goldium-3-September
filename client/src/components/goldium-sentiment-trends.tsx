@@ -90,9 +90,9 @@ export function GoldiumSentimentTrends() {
   const getSentimentColor = (sentiment: string) => {
     switch (sentiment) {
       case 'positive':
-        return 'text-yellow-400';
+        return 'text-white';
       case 'negative':
-        return 'text-yellow-400';
+        return 'text-white';
       default:
         return 'text-galaxy-accent';
     }
@@ -105,9 +105,9 @@ export function GoldiumSentimentTrends() {
           <h3 className="text-lg font-semibold text-galaxy-bright">Social Sentiment</h3>
           <div className="flex items-center space-x-1">
             {sentiment.trending === 'up' ? (
-              <TrendingUp className="w-4 h-4 text-yellow-500" />
+              <TrendingUp className="w-4 h-4 text-white" />
             ) : (
-              <TrendingDown className="w-4 h-4 text-yellow-500" />
+              <TrendingDown className="w-4 h-4 text-white" />
             )}
             <span className="text-sm text-galaxy-accent">{sentiment.totalTweets} tweets (24h)</span>
           </div>
@@ -117,12 +117,12 @@ export function GoldiumSentimentTrends() {
         <div className="space-y-3 mb-6">
           <div>
             <div className="flex justify-between text-sm mb-1">
-              <span className="text-yellow-400">Positive</span>
-            <span className="text-yellow-400">{sentiment.positive}%</span>
+              <span className="text-white">Positive</span>
+            <span className="text-white">{sentiment.positive}%</span>
             </div>
             <div className="h-2 bg-galaxy-darker rounded-full overflow-hidden">
               <div 
-                className="h-full bg-yellow-500 transition-all duration-500"
+                className="h-full bg-black transition-all duration-500"
                 style={{ width: `${sentiment.positive}%` }}
               />
             </div>
@@ -143,12 +143,12 @@ export function GoldiumSentimentTrends() {
           
           <div>
             <div className="flex justify-between text-sm mb-1">
-              <span className="text-yellow-400">Negative</span>
-            <span className="text-yellow-400">{sentiment.negative}%</span>
+              <span className="text-white">Negative</span>
+            <span className="text-white">{sentiment.negative}%</span>
             </div>
             <div className="h-2 bg-galaxy-darker rounded-full overflow-hidden">
               <div 
-                className="h-full bg-yellow-500 transition-all duration-500"
+                className="h-full bg-black transition-all duration-500"
                 style={{ width: `${sentiment.negative}%` }}
               />
             </div>
@@ -158,17 +158,17 @@ export function GoldiumSentimentTrends() {
         {/* Engagement Stats */}
         <div className="grid grid-cols-3 gap-4 mb-6 p-3 bg-galaxy-darker/30 rounded-lg">
           <div className="text-center">
-            <Heart className="w-4 h-4 text-yellow-400 mx-auto mb-1" />
+            <Heart className="w-4 h-4 text-white mx-auto mb-1" />
             <div className="text-sm font-medium text-galaxy-bright">{sentiment.engagement.likes}</div>
             <div className="text-xs text-galaxy-accent">Likes</div>
           </div>
           <div className="text-center">
-            <Repeat2 className="w-4 h-4 text-yellow-400 mx-auto mb-1" />
+            <Repeat2 className="w-4 h-4 text-white mx-auto mb-1" />
             <div className="text-sm font-medium text-galaxy-bright">{sentiment.engagement.retweets}</div>
             <div className="text-xs text-galaxy-accent">Retweets</div>
           </div>
           <div className="text-center">
-            <MessageCircle className="w-4 h-4 text-yellow-400 mx-auto mb-1" />
+            <MessageCircle className="w-4 h-4 text-white mx-auto mb-1" />
             <div className="text-sm font-medium text-galaxy-bright">{sentiment.engagement.replies}</div>
             <div className="text-xs text-galaxy-accent">Replies</div>
           </div>

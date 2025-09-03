@@ -272,14 +272,14 @@ export function SelfContainedStakingTab() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-lg font-semibold text-yellow-100">Wallet Balance</h3>
-                <p className="text-sm text-yellow-200/70">Connected: {externalWallet.selectedWallet}</p>
+                <h3 className="text-lg font-semibold text-white">Wallet Balance</h3>
+                <p className="text-sm text-white/70">Connected: {externalWallet.selectedWallet}</p>
               </div>
               <div className="text-right">
-                <p className="text-2xl font-bold text-yellow-400">
+                <p className="text-2xl font-bold text-white">
                   {externalWallet.balance.toFixed(4)} SOL
                 </p>
-                <p className="text-sm text-yellow-200/70">
+                <p className="text-sm text-white/70">
                   ≈ ${(externalWallet.balance * 195.5).toFixed(2)} USD
                 </p>
               </div>
@@ -292,24 +292,24 @@ export function SelfContainedStakingTab() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <Card className="bg-black border-white/10 hover:border-white/20 transition-all duration-300 transform hover:scale-105">
           <CardContent className="p-4 text-center">
-            <p className="text-2xl font-bold text-yellow-400">{STAKING_APY}%</p>
-            <p className="text-sm text-yellow-200/70">Annual APY</p>
+            <p className="text-2xl font-bold text-white">{STAKING_APY}%</p>
+            <p className="text-sm text-white/70">Annual APY</p>
           </CardContent>
         </Card>
         <Card className="bg-black border-white/10 hover:border-white/20 transition-all duration-300 transform hover:scale-105">
           <CardContent className="p-4 text-center">
-            <p className="text-2xl font-bold text-yellow-400">
+            <p className="text-2xl font-bold text-white">
               {balances.stakedGold.toFixed(2)}
             </p>
-            <p className="text-sm text-yellow-200/70">GOLD Staked</p>
+            <p className="text-sm text-white/70">GOLD Staked</p>
           </CardContent>
         </Card>
         <Card className="bg-black border-white/10 hover:border-white/20 transition-all duration-300 transform hover:scale-105">
           <CardContent className="p-4 text-center">
-            <p className="text-2xl font-bold text-yellow-400">
+            <p className="text-2xl font-bold text-white">
               {balances.claimableRewards.toFixed(4)}
             </p>
-            <p className="text-sm text-yellow-200/70">Claimable Rewards</p>
+            <p className="text-sm text-white/70">Claimable Rewards</p>
           </CardContent>
         </Card>
       </div>
@@ -319,13 +319,13 @@ export function SelfContainedStakingTab() {
         {/* Stake */}
         <Card className="bg-black border-white/10 hover:border-white/20 transition-all duration-300">
           <CardContent className="p-6">
-            <h3 className="text-lg font-semibold text-yellow-100 mb-4 flex items-center">
-              <span className="mr-2 text-yellow-400">🔒</span>
+            <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
+              <span className="mr-2 text-white">🔒</span>
               Stake GOLD
             </h3>
             <div className="space-y-4">
               <div>
-                <label className="text-sm text-yellow-100 mb-2 block">Amount to Stake</label>
+                <label className="text-sm text-white mb-2 block">Amount to Stake</label>
                 <Input
                   type="number"
                   placeholder="0.0"
@@ -333,7 +333,7 @@ export function SelfContainedStakingTab() {
                   onChange={(e) => setStakeAmount(e.target.value)}
                   className="bg-black border-white/20 focus:border-white/40 text-white"
                 />
-                <p className="text-xs text-yellow-200/70 mt-1">
+                <p className="text-xs text-white/70 mt-1">
                   Available: {balances.gold.toFixed(4)} GOLD
                 </p>
               </div>
@@ -357,13 +357,13 @@ export function SelfContainedStakingTab() {
         {/* Unstake */}
         <Card className="bg-black border-white/10 hover:border-white/20 transition-all duration-300">
           <CardContent className="p-6">
-            <h3 className="text-lg font-semibold text-yellow-100 mb-4 flex items-center">
-              <span className="mr-2 text-yellow-400">🔓</span>
+            <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
+              <span className="mr-2 text-white">🔓</span>
               Unstake GOLD
             </h3>
             <div className="space-y-4">
               <div>
-                <label className="text-sm text-yellow-100 mb-2 block">Amount to Unstake</label>
+                <label className="text-sm text-white mb-2 block">Amount to Unstake</label>
                 <Input
                   type="number"
                   placeholder="0.0"
@@ -371,7 +371,7 @@ export function SelfContainedStakingTab() {
                   onChange={(e) => setUnstakeAmount(e.target.value)}
                   className="bg-black border-white/20 focus:border-white/40 text-white"
                 />
-                <p className="text-xs text-yellow-200/70 mt-1">
+                <p className="text-xs text-white/70 mt-1">
                   Staked: {balances.stakedGold.toFixed(4)} GOLD
                 </p>
               </div>
@@ -394,15 +394,15 @@ export function SelfContainedStakingTab() {
       </div>
 
       {/* Claim Rewards */}
-      <Card className="bg-black/70 border-yellow-400/40 hover:border-yellow-400/70 transition-all duration-300">
+      <Card className="bg-black/70 border-white/20/40 hover:border-white/20/70 transition-all duration-300">
         <CardContent className="p-6">
           <div className="flex justify-between items-center">
             <div>
-              <h3 className="text-lg font-semibold text-yellow-100">Claimable Rewards</h3>
-              <p className="text-2xl font-bold text-yellow-400 mt-1">
+              <h3 className="text-lg font-semibold text-white">Claimable Rewards</h3>
+              <p className="text-2xl font-bold text-white mt-1">
                 {balances.claimableRewards.toFixed(4)} GOLD
               </p>
-              <p className="text-sm text-yellow-200/70">
+              <p className="text-sm text-white/70">
                 ≈ ${(balances.claimableRewards * 20).toFixed(2)} USD
               </p>
             </div>
