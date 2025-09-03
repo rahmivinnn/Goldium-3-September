@@ -27,30 +27,112 @@ export function BalanceCards() {
     };
   }, []);
 
-  // ALWAYS use external wallet balance when connected for REAL data
-  const currentBalance = walletState.connected && walletState.address ? walletState.balance : (balances?.sol || 0);
+  // FORCE REAL BALANCE - Check if any wallet is actually connected
+  const [realBalance, setRealBalance] = useState(0);
+  const [isCheckingBalance, setIsCheckingBalance] = useState(false);
+
+  // Direct balance check function
+  const checkRealBalance = async () => {
+    setIsCheckingBalance(true);
+    
+    // Check if any wallet extension is connected
+    if (typeof window !== 'undefined') {
+      try {
+        // Check Phantom
+        if ((window as any).solana?.isPhantom && (window as any).solana?.isConnected) {
+          const publicKey = (window as any).solana.publicKey?.toString();
+          if (publicKey) {
+            console.log('🔍 Found connected Phantom wallet:', publicKey);
+            const balance = await fetchDirectBalance(publicKey);
+            setRealBalance(balance);
+            setIsCheckingBalance(false);
+            return;
+          }
+        }
+        
+        // Check Solflare
+        if ((window as any).solflare?.isConnected) {
+          const publicKey = (window as any).solflare.publicKey?.toString();
+          if (publicKey) {
+            console.log('🔍 Found connected Solflare wallet:', publicKey);
+            const balance = await fetchDirectBalance(publicKey);
+            setRealBalance(balance);
+            setIsCheckingBalance(false);
+            return;
+          }
+        }
+        
+        console.log('❌ No connected wallet found');
+        setRealBalance(0);
+      } catch (error) {
+        console.error('Balance check failed:', error);
+        setRealBalance(0);
+      }
+    }
+    setIsCheckingBalance(false);
+  };
+
+  // Direct balance fetching function
+  const fetchDirectBalance = async (address: string): Promise<number> => {
+    const rpcEndpoints = [
+      'https://api.mainnet-beta.solana.com',
+      'https://solana.publicnode.com',
+      'https://rpc.ankr.com/solana'
+    ];
+    
+    for (const rpc of rpcEndpoints) {
+      try {
+        console.log(`🔄 Fetching balance from ${rpc} for ${address}`);
+        const response = await fetch(rpc, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            jsonrpc: '2.0',
+            id: 1,
+            method: 'getBalance',
+            params: [address]
+          })
+        });
+        
+        const data = await response.json();
+        if (data.result?.value) {
+          const balance = data.result.value / 1000000000; // Convert lamports to SOL
+          console.log(`✅ REAL BALANCE FOUND: ${balance} SOL`);
+          return balance;
+        }
+      } catch (error) {
+        console.log(`❌ ${rpc} failed:`, error);
+        continue;
+      }
+    }
+    return 0;
+  };
+
+  // Check for connected wallets on component mount and every 5 seconds
+  useEffect(() => {
+    checkRealBalance();
+    const interval = setInterval(checkRealBalance, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const currentBalance = realBalance > 0 ? realBalance : (walletState.balance || balances?.sol || 0);
   
-  console.log('🔍 REAL Balance Cards Debug:', {
-    connected: walletState.connected,
-    selectedWallet: walletState.selectedWallet,
-    walletBalance: walletState.balance,
+  console.log('🔍 FORCE REAL Balance Debug:', {
+    realBalanceFromDirect: realBalance,
+    walletStateBalance: walletState.balance,
     currentBalance: currentBalance,
-    address: walletState.address?.slice(0, 8) + '...',
-    selfContainedBalance: balances?.sol,
-    isUsingRealBalance: walletState.connected && walletState.address
+    connected: walletState.connected,
+    address: walletState.address,
+    isCheckingBalance: isCheckingBalance
   });
 
-  // Manual refresh function
+  // Manual refresh function - FORCE REAL BALANCE CHECK
   const handleRefreshBalance = async () => {
-    if (!walletState.connected) return;
-    
     setIsRefreshing(true);
     try {
-      console.log('🔄 Manual balance refresh triggered');
-      // Force refresh through external wallet hook
-      if (externalWallet.refreshBalance) {
-        await externalWallet.refreshBalance();
-      }
+      console.log('🔄 FORCE Manual balance refresh triggered');
+      await checkRealBalance(); // Use our direct balance check
+      
       // Also refresh gold balance
       if (goldBalance.refreshBalance) {
         await goldBalance.refreshBalance();
@@ -122,31 +204,45 @@ export function BalanceCards() {
           </div>
           <div className="space-y-3">
             <p className="font-stats text-white tracking-tight">
-              {currentBalance.toFixed(4)}
-              <span className="text-lg font-normal text-white/70 ml-2">SOL</span>
+              {isCheckingBalance ? (
+                <span className="animate-pulse">Checking...</span>
+              ) : (
+                <>
+                  {currentBalance.toFixed(4)}
+                  <span className="text-lg font-normal text-white/70 ml-2">SOL</span>
+                </>
+              )}
             </p>
             <div className="flex items-center justify-between">
               <p className="font-small text-white/70">
                 ≈ ${(currentBalance * 195.5).toFixed(2)} USD
               </p>
               <div className="flex items-center gap-2">
-                {walletState.connected ? (
+                {realBalance > 0 ? (
                   <>
                     <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                    <span className="font-small text-green-400">REAL</span>
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      onClick={handleRefreshBalance}
-                      disabled={isRefreshing}
-                      className="h-6 w-6 p-0 hover:bg-white/10"
-                    >
-                      <RefreshCw className={`w-3 h-3 text-white/60 ${isRefreshing ? 'animate-spin' : ''}`} />
-                    </Button>
+                    <span className="font-small text-green-400">LIVE</span>
+                  </>
+                ) : isCheckingBalance ? (
+                  <>
+                    <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
+                    <span className="font-small text-yellow-400">CHECKING</span>
                   </>
                 ) : (
-                  <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                  <>
+                    <div className="w-2 h-2 bg-red-400 rounded-full"></div>
+                    <span className="font-small text-red-400">NO WALLET</span>
+                  </>
                 )}
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={handleRefreshBalance}
+                  disabled={isRefreshing}
+                  className="h-6 w-6 p-0 hover:bg-white/10"
+                >
+                  <RefreshCw className={`w-3 h-3 text-white/60 ${isRefreshing || isCheckingBalance ? 'animate-spin' : ''}`} />
+                </Button>
               </div>
             </div>
           </div>
