@@ -19,7 +19,17 @@ export function useGoldBalance() {
     error: null
   });
 
-  const walletState = WalletStateManager.getState();
+  const [walletState, setWalletState] = useState(() => WalletStateManager.getState());
+
+  // Subscribe to wallet state changes
+  useEffect(() => {
+    const unsubscribe = WalletStateManager.subscribe(() => {
+      setWalletState(WalletStateManager.getState());
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   // Update GOLD balances
   const updateGoldBalances = useCallback(async () => {
@@ -44,25 +54,40 @@ export function useGoldBalance() {
       let stakedBalance = 0;
       
       // Import transaction history dynamically to avoid circular dependency
-      const { transactionHistory } = await import('../lib/transaction-history');
-      
-      // Set current wallet in transaction history
-      transactionHistory.setCurrentWallet(walletState.address);
-      
-      const historyBalance = transactionHistory.getGoldBalance();
-      const historyStaked = transactionHistory.getStakedGoldBalance();
-      
-      if (historyBalance > 0 || historyStaked > 0) {
-        balance = historyBalance;
-        stakedBalance = historyStaked;
-        console.log(`✅ Using GOLD balances from transaction history: ${balance} GOLD, ${stakedBalance} staked`);
-      } else {
+      try {
+        const { transactionHistory } = await import('../lib/transaction-history');
+        
+        // Set current wallet in transaction history
+        transactionHistory.setCurrentWallet(walletState.address);
+        
+        const historyBalance = transactionHistory.getGoldBalance();
+        const historyStaked = transactionHistory.getStakedGoldBalance();
+        
+        if (historyBalance > 0 || historyStaked > 0) {
+          balance = historyBalance;
+          stakedBalance = historyStaked;
+          console.log(`✅ Using GOLD balances from transaction history: ${balance} GOLD, ${stakedBalance} staked`);
+        } else {
+          // Fetch from blockchain as fallback
+          [balance, stakedBalance] = await Promise.all([
+            goldTokenService.getGoldBalance(walletState.address),
+            goldTokenService.getStakedGoldBalance(walletState.address)
+          ]);
+          console.log(`✅ GOLD balances from blockchain: ${balance} GOLD, ${stakedBalance} staked`);
+        }
+      } catch (historyError) {
+        console.warn('Transaction history import failed:', historyError);
         // Fetch from blockchain as fallback
-        [balance, stakedBalance] = await Promise.all([
-          goldTokenService.getGoldBalance(walletState.address),
-          goldTokenService.getStakedGoldBalance(walletState.address)
-        ]);
-        console.log(`✅ GOLD balances from blockchain: ${balance} GOLD, ${stakedBalance} staked`);
+        try {
+          [balance, stakedBalance] = await Promise.all([
+            goldTokenService.getGoldBalance(walletState.address),
+            goldTokenService.getStakedGoldBalance(walletState.address)
+          ]);
+          console.log(`✅ GOLD balances from blockchain fallback: ${balance} GOLD, ${stakedBalance} staked`);
+        } catch (blockchainError) {
+          console.error('Blockchain balance fetch failed:', blockchainError);
+          // Use default values
+        }
       }
 
       const totalValue = (balance + stakedBalance) * 20; // $20 per GOLD
