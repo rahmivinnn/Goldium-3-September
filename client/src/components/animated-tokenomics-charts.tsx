@@ -220,9 +220,9 @@ export const AnimatedTokenomicsCharts: React.FC = () => {
           {[1, 2, 3, 4].map((i) => (
             <Card key={i} className="bg-black border-white/10 animate-pulse">
               <CardContent className="p-4">
-                <div className="h-4 bg-gray-700 rounded mb-2"></div>
-                <div className="h-6 bg-gray-700 rounded mb-1"></div>
-                <div className="h-3 bg-gray-700 rounded w-1/2"></div>
+                <div className="h-4 bg-black border border-white/10 rounded mb-2"></div>
+                <div className="h-6 bg-black border border-white/10 rounded mb-1"></div>
+                <div className="h-3 bg-black border border-white/10 rounded w-1/2"></div>
               </CardContent>
             </Card>
           ))}
@@ -230,7 +230,7 @@ export const AnimatedTokenomicsCharts: React.FC = () => {
         
         <Card className="bg-black border-white/10 animate-pulse">
           <CardContent className="p-6">
-            <div className="h-64 bg-gray-700 rounded"></div>
+            <div className="h-64 bg-black border border-white/10 rounded"></div>
           </CardContent>
         </Card>
       </div>
@@ -393,7 +393,7 @@ export const AnimatedTokenomicsCharts: React.FC = () => {
               </div>
               <div className="w-full bg-black/50 rounded-full h-2">
                 <div 
-                  className="bg-gray-400 h-2 rounded-full transition-all duration-1000"
+                  className="bg-white h-2 rounded-full transition-all duration-1000"
                   style={{ width: `${Math.min(((balances?.gold || 0) / 1000000) * 100, 100)}%` }}
                 />
               </div>

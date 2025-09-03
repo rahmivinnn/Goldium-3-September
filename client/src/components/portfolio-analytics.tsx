@@ -209,15 +209,15 @@ export function PortfolioAnalytics({
 
   if (isLoading) {
     return (
-      <Card className={cn('p-6 bg-gray-900/95 border-gray-700', className)}>
+      <Card className={cn('p-6 bg-black border-white/10', className)}>
         <div className="animate-pulse space-y-4">
-          <div className="h-8 bg-gray-700 rounded w-1/3"></div>
+          <div className="h-8 bg-black border border-white/10 rounded w-1/3"></div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[1, 2, 3].map(i => (
-              <div key={i} className="h-24 bg-gray-700 rounded"></div>
+              <div key={i} className="h-24 bg-black border border-white/10 rounded"></div>
             ))}
           </div>
-          <div className="h-64 bg-gray-700 rounded"></div>
+          <div className="h-64 bg-black border border-white/10 rounded"></div>
         </div>
       </Card>
     );
@@ -225,8 +225,8 @@ export function PortfolioAnalytics({
 
   if (!portfolioData) {
     return (
-      <Card className={cn('p-6 bg-gray-900/95 border-gray-700', className)}>
-        <div className="text-center text-gray-400">
+      <Card className={cn('p-6 bg-black border-white/10', className)}>
+        <div className="text-center text-white/60">
           <Wallet className="w-12 h-12 mx-auto mb-4" />
           <p>No portfolio data available</p>
         </div>
@@ -344,7 +344,7 @@ export function PortfolioAnalytics({
         <CardContent>
           <div className="space-y-3">
             {portfolioData.transactions.map((transaction) => (
-              <div key={transaction.id} className="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg">
+              <div key={transaction.id} className="flex items-center justify-between p-3 bg-black border border-white/10 rounded-lg">
                 <div className="flex items-center gap-3">
                   {getTransactionIcon(transaction.type)}
                   <div>

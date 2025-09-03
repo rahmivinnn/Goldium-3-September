@@ -483,11 +483,11 @@ export function SelfContainedSwapTab() {
       </div>
 
       {/* Swap Details */}
-      <Card className="bg-gradient-to-br from-slate-900/80 to-slate-800/80 backdrop-blur-xl border border-gray-500/20 hover:border-gray-400/30 transition-all duration-300">
+      <Card className="bg-black backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-300">
         <CardContent className="p-6 space-y-4">
-          <h3 className="text-lg font-bold bg-gradient-to-r from-gray-400 to-gray-300 bg-clip-text text-transparent tracking-tight mb-4">Swap Details</h3>
+          <h3 className="text-lg font-bold text-white tracking-tight mb-4">Swap Details</h3>
           <div className="flex justify-between items-center">
-            <span className="text-sm font-medium text-slate-300 uppercase tracking-wider">Exchange Rate</span>
+            <span className="text-sm font-medium text-white/70 uppercase tracking-wider">Exchange Rate</span>
             <span className="text-sm font-bold text-white font-mono">
               {fromToken === 'SOL' 
                 ? `1 SOL = ${exchangeRate.toLocaleString()} GOLD`
