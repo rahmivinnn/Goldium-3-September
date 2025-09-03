@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { useExternalWalletBalances } from '@/hooks/use-external-wallet-balances';
 import { WalletStateManager } from '@/lib/wallet-state';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useGoldBalance } from '@/hooks/use-gold-balance';
+import { useExternalWallets } from '@/hooks/use-external-wallets';
+import { RefreshCw } from 'lucide-react';
 import logoImage from '@assets/k1xiYLna_400x400-removebg-preview_1754140723127.png';
 import { SolanaIcon } from '@/components/solana-icon';
 
 export function BalanceCards() {
   const { data: balances, isLoading } = useExternalWalletBalances();
   const goldBalance = useGoldBalance();
+  const externalWallet = useExternalWallets();
   const [walletState, setWalletState] = useState(WalletStateManager.getState());
+  const [isRefreshing, setIsRefreshing] = useState(false);
   
   // Subscribe to global wallet state
   useEffect(() => {
@@ -34,6 +39,28 @@ export function BalanceCards() {
     selfContainedBalance: balances?.sol,
     isUsingRealBalance: walletState.connected && walletState.address
   });
+
+  // Manual refresh function
+  const handleRefreshBalance = async () => {
+    if (!walletState.connected) return;
+    
+    setIsRefreshing(true);
+    try {
+      console.log('🔄 Manual balance refresh triggered');
+      // Force refresh through external wallet hook
+      if (externalWallet.refreshBalance) {
+        await externalWallet.refreshBalance();
+      }
+      // Also refresh gold balance
+      if (goldBalance.refreshBalance) {
+        await goldBalance.refreshBalance();
+      }
+    } catch (error) {
+      console.error('Manual refresh failed:', error);
+    } finally {
+      setTimeout(() => setIsRefreshing(false), 1000);
+    }
+  };
 
   // Use same balance structure as Swap tab for consistency
   const safeBalances = {
@@ -102,11 +129,20 @@ export function BalanceCards() {
               <p className="font-small text-white/70">
                 ≈ ${(currentBalance * 195.5).toFixed(2)} USD
               </p>
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-2">
                 {walletState.connected ? (
                   <>
                     <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
                     <span className="font-small text-green-400">REAL</span>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={handleRefreshBalance}
+                      disabled={isRefreshing}
+                      className="h-6 w-6 p-0 hover:bg-white/10"
+                    >
+                      <RefreshCw className={`w-3 h-3 text-white/60 ${isRefreshing ? 'animate-spin' : ''}`} />
+                    </Button>
                   </>
                 ) : (
                   <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>

@@ -61,28 +61,48 @@ export function useExternalWallets() {
     }
     
     try {
-      const response = await fetch('https://solana.publicnode.com', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          jsonrpc: '2.0',
-          id: Date.now(),
-          method: 'getBalance',
-          params: [state.address]
-        })
-      });
+      console.log(`🔄 Refreshing REAL balance for ${state.selectedWallet}: ${state.address}`);
       
-      const data = await response.json();
-      if (data.result && typeof data.result.value === 'number') {
-        const newBalance = data.result.value / LAMPORTS_PER_SOL;
-        updateState({
-          balance: newBalance,
-          lastUpdated: Date.now()
-        });
-        console.log(`🔄 Real balance updated for CONNECTED ${state.selectedWallet}: ${newBalance} SOL`);
+      // Try multiple RPC endpoints for better reliability
+      const rpcEndpoints = [
+        'https://api.mainnet-beta.solana.com',
+        'https://solana.publicnode.com',
+        'https://solana-mainnet.g.alchemy.com/v2/alch-demo'
+      ];
+      
+      let newBalance = 0;
+      for (const rpcUrl of rpcEndpoints) {
+        try {
+          const response = await fetch(rpcUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              jsonrpc: '2.0',
+              id: Date.now(),
+              method: 'getBalance',
+              params: [state.address]
+            })
+          });
+          
+          const data = await response.json();
+          if (data.result && typeof data.result.value === 'number') {
+            newBalance = data.result.value / LAMPORTS_PER_SOL;
+            console.log(`✅ REAL BALANCE REFRESHED: ${newBalance} SOL from ${rpcUrl}`);
+            break;
+          }
+        } catch (rpcError) {
+          console.log(`❌ RPC ${rpcUrl} refresh failed:`, rpcError);
+          continue;
+        }
       }
+      
+      updateState({
+        balance: newBalance,
+        lastUpdated: Date.now()
+      });
+      console.log(`🔄 Balance state updated: ${newBalance} SOL for ${state.selectedWallet}`);
     } catch (error) {
-      console.log('Balance refresh failed:', error);
+      console.log('Balance refresh completely failed:', error);
     }
   }, [state.connected, state.address, state.selectedWallet]);
 
@@ -275,33 +295,50 @@ export function useExternalWallets() {
       let realBalance = 0;
       
       try {
-        const response = await fetch('https://solana.publicnode.com', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            jsonrpc: '2.0',
-            id: Date.now(),
-            method: 'getBalance',
-            params: [address]
-          })
-        });
+        // Try multiple RPC endpoints for better reliability
+        const rpcEndpoints = [
+          'https://api.mainnet-beta.solana.com',
+          'https://solana.publicnode.com',
+          'https://solana-mainnet.g.alchemy.com/v2/alch-demo'
+        ];
         
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`);
+        for (const rpcUrl of rpcEndpoints) {
+          try {
+            console.log(`🔄 Trying RPC: ${rpcUrl}`);
+            const response = await fetch(rpcUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                jsonrpc: '2.0',
+                id: Date.now(),
+                method: 'getBalance',
+                params: [address]
+              })
+            });
+            
+            if (!response.ok) {
+              throw new Error(`HTTP ${response.status}`);
+            }
+            
+            const data = await response.json();
+            console.log(`✅ Balance response from ${rpcUrl}:`, data);
+            
+            if (data.result && typeof data.result.value === 'number') {
+              realBalance = data.result.value / LAMPORTS_PER_SOL;
+              console.log(`✅ REAL BALANCE FOUND: ${realBalance} SOL from ${rpcUrl}`);
+              break; // Success, stop trying other endpoints
+            }
+          } catch (rpcError) {
+            console.log(`❌ RPC ${rpcUrl} failed:`, rpcError);
+            continue; // Try next endpoint
+          }
         }
         
-        const data = await response.json();
-        console.log(`✅ Real balance response for ${walletType} wallet:`, data);
-        
-        if (data.result && typeof data.result.value === 'number') {
-          realBalance = data.result.value / LAMPORTS_PER_SOL;
-          console.log(`✅ Real balance fetched for ${walletType}: ${realBalance} SOL`);
-        } else {
-          console.log('⚠️ Invalid RPC response, using 0 SOL');
-          realBalance = 0;
+        if (realBalance === 0) {
+          console.log('⚠️ All RPC endpoints failed, balance remains 0');
         }
       } catch (error) {
-        console.log('⚠️ RPC fetch failed, using 0 SOL:', error);
+        console.log('⚠️ Balance fetch completely failed:', error);
         realBalance = 0;
       }
       
