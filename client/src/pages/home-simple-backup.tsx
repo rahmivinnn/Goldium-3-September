@@ -54,7 +54,7 @@ export default function HomeSimple() {
           priceChange24h: 12.8,
           volume24h: 485000,
           marketCap: 890000,
-          totalSupply: 100000000,
+          totalSupply: 1000000,
           circulatingSupply: 60000000,
           stakingAPY: 8.5,
           totalStaked: 21000000,

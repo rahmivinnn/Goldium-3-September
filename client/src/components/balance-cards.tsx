@@ -6,9 +6,10 @@ import { WalletStateManager } from '@/lib/wallet-state';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useGoldBalance } from '@/hooks/use-gold-balance';
 import { useExternalWallets } from '@/hooks/use-external-wallets';
-import { RefreshCw } from 'lucide-react';
+import { RefreshCw, ExternalLink } from 'lucide-react';
 import logoImage from '@assets/k1xiYLna_400x400-removebg-preview_1754140723127.png';
 import { SolanaIcon } from '@/components/solana-icon';
+import { GOLDIUM_TOKEN_ADDRESS, SOLSCAN_BASE_URL } from '@/lib/constants';
 
 export function BalanceCards() {
   const { data: balances, isLoading } = useExternalWalletBalances();
@@ -304,6 +305,17 @@ export function BalanceCards() {
                   </>
                 )}
               </div>
+            </div>
+            <div className="mt-3 pt-3 border-t border-white/10">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => window.open(`${SOLSCAN_BASE_URL}/token/${GOLDIUM_TOKEN_ADDRESS}`, '_blank')}
+                className="w-full text-xs text-white/70 hover:text-white hover:bg-white/10 transition-colors"
+              >
+                <ExternalLink className="w-3 h-3 mr-1" />
+                View Contract on Solscan
+              </Button>
             </div>
           </div>
         </CardContent>

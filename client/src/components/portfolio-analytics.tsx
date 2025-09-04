@@ -4,8 +4,9 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import { Progress } from './ui/progress';
-import { TrendingUp, TrendingDown, DollarSign, PieChart, BarChart3, RefreshCw, Wallet, Target } from 'lucide-react';
+import { TrendingUp, TrendingDown, DollarSign, PieChart, BarChart3, RefreshCw, Wallet, Target, ExternalLink } from 'lucide-react';
 import { cn } from '../lib/utils';
+import { GOLDIUM_TOKEN_ADDRESS, SOLSCAN_BASE_URL } from '../lib/constants';
 
 interface PortfolioData {
   totalValue: number;
@@ -308,6 +309,16 @@ export function PortfolioAnalytics({
                   <Badge variant="outline" className="text-xs">
                     {asset.allocation.toFixed(1)}%
                   </Badge>
+                  {asset.symbol === 'GOLD' && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => window.open(`${SOLSCAN_BASE_URL}/token/${GOLDIUM_TOKEN_ADDRESS}`, '_blank')}
+                      className="h-6 px-2 text-xs text-white/70 hover:text-white hover:bg-white/10 transition-colors"
+                    >
+                      <ExternalLink className="w-3 h-3" />
+                    </Button>
+                  )}
                 </div>
                 <div className="text-right">
                   <div className="text-white font-semibold">

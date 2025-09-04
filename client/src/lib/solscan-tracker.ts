@@ -126,14 +126,8 @@ export class SolscanTracker {
     return this.transactions.filter(tx => tx.type === type);
   }
 
-  generateMockSignature(): string {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
-    for (let i = 0; i < 88; i++) {
-      result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return result;
-  }
+  // TODO: Implement real transaction signature tracking
+  // generateMockSignature removed - use real blockchain signatures
 
   // Show REAL contract address info - All DeFi operations use the same tracking CA
   showContractInfo(token: 'SOL' | 'GOLD'): void {

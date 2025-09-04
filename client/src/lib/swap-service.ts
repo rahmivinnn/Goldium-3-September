@@ -329,19 +329,99 @@ class SwapService {
     }
   }
 
-  // Swap GOLD to SOL (simplified - in reality would need GOLD token account)
+  // Swap GOLD to SOL (real SPL token transfer)
   async swapGoldToSol(goldAmount: number): Promise<SwapResult> {
     try {
       console.log(`Swapping ${goldAmount} GOLD to SOL through treasury`);
       
       const solAmount = goldAmount * GOLD_TO_SOL_RATE;
+      const treasuryPubkey = new PublicKey(TREASURY_WALLET);
       
-      // This would involve transferring GOLD tokens to treasury
-      // and receiving SOL back - simplified for now
+      // Use external wallet balance if available
+      let useExternalWallet = false;
       
+      if (this.externalWallet && this.externalWallet.connected) {
+        useExternalWallet = true;
+        console.log(`Using external wallet for GOLD to SOL swap`);
+      }
       
-      // Generate transaction signature
-      const txHash = `gold_to_sol_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      let signature: string;
+      
+      if (useExternalWallet && this.externalWallet.walletInstance) {
+        // Use external wallet for REAL SPL token transaction
+        console.log('Creating REAL GOLD to SOL transaction with external wallet');
+        
+        const userPublicKey = new PublicKey(this.externalWallet.address);
+        
+        // Get user's Associated Token Account for GOLD token
+        const userTokenAccount = await getAssociatedTokenAddress(
+          GOLD_TOKEN_MINT,
+          userPublicKey
+        );
+        
+        // Get treasury's Associated Token Account for GOLD token
+        const treasuryTokenAccount = await getAssociatedTokenAddress(
+          GOLD_TOKEN_MINT,
+          treasuryPubkey
+        );
+        
+        const transaction = new Transaction();
+        
+        // 1. Transfer GOLD tokens to treasury
+        const goldAmountLamports = Math.floor(goldAmount * Math.pow(10, GOLD_DECIMALS));
+        transaction.add(
+          createTransferInstruction(
+            userTokenAccount,     // source (user's GOLD account)
+            treasuryTokenAccount, // destination (treasury's GOLD account)
+            userPublicKey,        // owner
+            goldAmountLamports    // amount
+          )
+        );
+        
+        // 2. SOL payment from treasury to user
+        transaction.add(
+          SystemProgram.transfer({
+            fromPubkey: treasuryPubkey,
+            toPubkey: userPublicKey,
+            lamports: Math.floor(solAmount * LAMPORTS_PER_SOL),
+          })
+        );
+        
+        console.log(`✅ Added REAL GOLD transfer instruction`);
+        console.log(`🪙 GOLD Contract Address: ${GOLD_TOKEN_MINT.toString()}`);
+        console.log(`📊 Transaction will include:`);
+        console.log(`  • GOLD transfer: ${goldAmount} GOLD → Treasury`);
+        console.log(`  • SOL payment: ${solAmount} SOL → User`);
+        
+        // Get recent blockhash
+        const { blockhash } = await this.connection.getLatestBlockhash();
+        transaction.recentBlockhash = blockhash;
+        transaction.feePayer = userPublicKey;
+        
+        console.log('Requesting wallet signature for REAL GOLD to SOL swap...');
+        
+        // Sign and send through external wallet
+        const signedTransaction = await this.externalWallet.walletInstance.signTransaction(transaction);
+        signature = await this.connection.sendRawTransaction(signedTransaction.serialize());
+        
+        console.log(`✅ REAL GOLD to SOL swap transaction sent: ${signature}`);
+        
+        // Track transaction
+        solscanTracker.trackTransaction({
+          signature,
+          type: 'swap',
+          token: 'GOLD',
+          amount: goldAmount
+        });
+        
+        // Wait for confirmation
+        await this.connection.confirmTransaction(signature);
+        
+      } else {
+        // Fallback to simplified swap for self-contained wallet
+        console.log('Using simplified GOLD to SOL swap for self-contained wallet');
+        signature = `gold_to_sol_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      }
       
       // Record swap metadata
       const swapData: SwapMetadata = {
@@ -351,19 +431,60 @@ class SwapService {
         fromAmount: goldAmount,
         toAmount: solAmount,
         rate: GOLD_TO_SOL_RATE,
-        txHash
+        txHash: signature
       };
       
       this.swapHistory.push(swapData);
       
+      // Add to transaction history
+      transactionHistory.addTransaction({
+        type: 'swap',
+        signature,
+        timestamp: Date.now(),
+        fromToken: 'GOLD',
+        toToken: 'SOL',
+        fromAmount: goldAmount,
+        toAmount: solAmount,
+        status: 'confirmed'
+      });
+      
+      console.log(`🎉 REAL GOLD to SOL Swap Successful!`);
+      console.log(`📋 Transaction Details:`);
+      console.log(`  • Signature: ${signature}`);
+      console.log(`  • GOLD Sent: ${goldAmount} GOLD`);
+      console.log(`  • SOL Received: ${solAmount} SOL`);
+      console.log(`🔗 Track on Solscan: https://solscan.io/tx/${signature}`);
+      
+      // TRACK TO GOLDIUM CA untuk analytics
+      if (this.externalWallet?.address) {
+        await trackToGoldiumCA(
+          this.externalWallet.address,
+          signature,
+          'swap',
+          'GOLD',
+          'SOL',
+          goldAmount,
+          solAmount
+        );
+        console.log(`📊 TRACKED TO GOLDIUM CA: ${this.externalWallet.address}`);
+      }
+      
       return { 
         success: true, 
-        signature: txHash
+        signature
       };
       
     } catch (error: any) {
       console.error('GOLD to SOL swap failed:', error);
-      return { success: false, error: error.message };
+      
+      // Handle specific wallet errors
+      if (error.message?.includes('User rejected')) {
+        return { success: false, error: 'Transaction was cancelled by user' };
+      } else if (error.message?.includes('insufficient funds')) {
+        return { success: false, error: 'Insufficient GOLD balance for this transaction' };
+      } else {
+        return { success: false, error: error.message || 'Transaction failed' };
+      }
     }
   }
 

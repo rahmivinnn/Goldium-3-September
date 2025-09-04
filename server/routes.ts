@@ -93,13 +93,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const validatedData = insertTransactionSchema.parse(req.body);
       
       if (!db) {
-        // Fallback: return mock transaction for development
-        const mockTransaction = {
-          id: Date.now().toString(),
-          ...validatedData,
-          createdAt: new Date().toISOString()
-        };
-        return res.status(201).json(mockTransaction);
+        return res.status(503).json({ error: 'Database not available' });
       }
       
       const [transaction] = await db.insert(transactions).values(validatedData).returning();
@@ -115,30 +109,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { userId } = req.params;
       
       if (!db) {
-        // Fallback: return mock transactions for development
-        const mockTransactions = [
-          {
-            id: '1',
-            userId: userId,
-            type: 'buy',
-            tokenAddress: 'SOL',
-            amount: '5.0',
-            price: '190.50',
-            status: 'completed',
-            timestamp: new Date(Date.now() - 3600000).toISOString()
-          },
-          {
-            id: '2',
-            userId: userId,
-            type: 'swap',
-            tokenAddress: 'GOLD',
-            amount: '200.0',
-            price: '2.56',
-            status: 'completed',
-            timestamp: new Date(Date.now() - 7200000).toISOString()
-          }
-        ];
-        return res.json(mockTransactions);
+        // Return empty array when no database connection
+        return res.json([]);
       }
       
       const userTransactions = await db.select()

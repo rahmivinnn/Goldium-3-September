@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { TrendingUp, TrendingDown, BarChart3, PieChart, Activity, DollarSign, Users, Zap } from 'lucide-react';
+import { TrendingUp, TrendingDown, BarChart3, PieChart, Activity, DollarSign, Users, Zap, ExternalLink } from 'lucide-react';
 import { useTokenAccounts } from '@/hooks/use-token-accounts';
 import { realTimeDataService, RealTimeTokenData, RealTimePriceData } from '@/services/real-time-data-service';
+import { GOLDIUM_TOKEN_ADDRESS, SOLSCAN_BASE_URL } from '@/lib/constants';
 
 // Using interfaces from real-time data service
 type ChartDataPoint = RealTimePriceData;
@@ -434,6 +435,16 @@ export const AnimatedTokenomicsCharts: React.FC = () => {
                 <span className="text-white">{formatCurrency(tokenomicsData.currentPrice * 2.5)}</span>
               </div>
             </div>
+            
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => window.open(`${SOLSCAN_BASE_URL}/token/${GOLDIUM_TOKEN_ADDRESS}`, '_blank')}
+              className="w-full text-xs text-white/70 hover:text-white hover:bg-white/10 transition-colors mt-4"
+            >
+              <ExternalLink className="w-3 h-3 mr-1" />
+              View GOLDIUM Contract on Solscan
+            </Button>
           </CardContent>
         </Card>
       </div>

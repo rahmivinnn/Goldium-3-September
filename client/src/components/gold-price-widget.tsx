@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
-import { TrendingUp, TrendingDown, DollarSign } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { TrendingUp, TrendingDown, DollarSign, ExternalLink } from 'lucide-react';
+import { GOLDIUM_TOKEN_ADDRESS, SOLSCAN_BASE_URL } from '@/lib/constants';
 
 interface PriceData {
   goldPriceSOL: number;
@@ -106,6 +108,19 @@ export function GoldPriceWidget() {
               <div className="w-2 h-2 bg-black rounded-full animate-pulse"></div>
               <span className="text-xs text-galaxy-accent">Live Price</span>
             </div>
+          </div>
+
+          {/* Contract Link */}
+          <div className="pt-3 border-t border-galaxy-purple/20">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => window.open(`${SOLSCAN_BASE_URL}/token/${GOLDIUM_TOKEN_ADDRESS}`, '_blank')}
+              className="w-full text-xs text-galaxy-accent hover:text-galaxy-bright hover:bg-galaxy-purple/20 transition-colors"
+            >
+              <ExternalLink className="w-3 h-3 mr-1" />
+              View GOLD Contract
+            </Button>
           </div>
         </div>
       </CardContent>

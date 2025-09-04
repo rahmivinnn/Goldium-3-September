@@ -160,7 +160,7 @@ export default function HomeSimple() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white flex items-center justify-center">
         <div className="text-center space-y-4">
-          <h1 className="text-3xl font-bold text-yellow-400">Goldium DeFi</h1>
+          <h1 className="text-3xl font-bold holographic-gold golden-3d">Goldium DeFi</h1>
           <div className="text-xl">Loading...</div>
           <div className="animate-spin w-8 h-8 border-2 border-yellow-400 border-t-transparent rounded-full mx-auto"></div>
         </div>
@@ -204,7 +204,7 @@ export default function HomeSimple() {
           <motion.div className="relative perspective-1000">
             {/* Premium Title with Cinematic Entry */}
             <motion.h1 
-              className="text-6xl md:text-8xl font-black tracking-wider bg-gradient-to-r from-yellow-400 via-yellow-200 to-yellow-400 bg-clip-text text-transparent relative z-20"
+              className="text-6xl md:text-8xl font-black tracking-wider holographic-gold golden-3d relative z-20"
               initial={{ 
                 scale: 0.3, 
                 opacity: 0, 

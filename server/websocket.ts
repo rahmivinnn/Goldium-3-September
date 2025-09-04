@@ -144,26 +144,9 @@ export class WebSocketService {
 
   private async fetchAndBroadcastPrices() {
     try {
-      // Simulate fetching prices from external API
-      const mockPrices = [
-        { symbol: 'SOL', price: 98.45 + (Math.random() - 0.5) * 2, change24h: 2.34 },
-        { symbol: 'GOLD', price: 1950.25 + (Math.random() - 0.5) * 10, change24h: -0.85 }
-      ];
-
-      for (const priceData of mockPrices) {
-        const fullPriceData: PriceData = {
-          ...priceData,
-          timestamp: Date.now()
-        };
-        
-        this.priceCache.set(priceData.symbol, fullPriceData);
-        
-        // Broadcast to subscribed clients
-        this.broadcastPriceUpdate(fullPriceData);
-        
-        // Check price alerts
-        await this.checkPriceAlerts(fullPriceData);
-      }
+      // TODO: Implement real price fetching from external API
+      // For now, disable mock price updates
+      console.log('Price updates disabled - implement real API integration');
     } catch (error) {
       console.error('Error fetching prices:', error);
     }

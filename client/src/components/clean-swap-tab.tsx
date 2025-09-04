@@ -11,9 +11,10 @@ import { useInstantBalance } from '@/hooks/use-instant-balance';
 import { useToast } from '@/hooks/use-toast';
 import { TransactionSuccessModal } from './transaction-success-modal';
 import { TransactionAnimation } from './transaction-animations';
-import { SOL_TO_GOLD_RATE, GOLD_TO_SOL_RATE, SOLSCAN_BASE_URL } from '@/lib/constants';
+import { SOL_TO_GOLD_RATE, GOLD_TO_SOL_RATE, SOLSCAN_BASE_URL, GOLDIUM_TOKEN_ADDRESS } from '@/lib/constants';
 import { autoSaveTransaction } from '@/lib/historyUtils';
 import { useSoundSystem } from '@/lib/sound-system';
+import { swapService } from '@/lib/swap-service';
 import logoImage from '@assets/k1xiYLna_400x400-removebg-preview_1754275575442.png';
 
 export function CleanSwapTab() {
@@ -69,8 +70,23 @@ export function CleanSwapTab() {
     try {
       console.log('🔄 EXECUTING REAL SWAP with GOLDIUM CA');
       
-      // Simulate swap for now
-      const txSignature = `swap_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      // Set external wallet for swap service
+      swapService.setExternalWallet(externalWallet);
+      
+      let result;
+      if (fromToken === 'SOL') {
+        // SOL to GOLD swap
+        result = await swapService.swapSolToGold(Number(fromAmount));
+      } else {
+        // GOLD to SOL swap
+        result = await swapService.swapGoldToSol(Number(fromAmount));
+      }
+      
+      if (!result.success) {
+        throw new Error(result.error || 'Swap failed');
+      }
+      
+      const txSignature = result.signature!;
       
       // Auto-save transaction
       autoSaveTransaction(
@@ -99,17 +115,30 @@ export function CleanSwapTab() {
         refreshTransactionHistory?.();
         
         toast({
-          title: "Swap Successful",
-          description: `Swapped ${fromAmount} ${fromToken} successfully!`,
+          title: "Swap Successful! 🎉",
+          description: (
+            <div className="space-y-2">
+              <p>Swapped {fromAmount} {fromToken} successfully!</p>
+              <div className="flex items-center space-x-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => window.open(`${SOLSCAN_BASE_URL}/tx/${txSignature}`, '_blank')}
+                >
+                  View on Solscan <ExternalLink className="w-3 h-3 ml-1" />
+                </Button>
+              </div>
+            </div>
+          ),
         });
       }, 3500);
       
-    } catch (error) {
+    } catch (error: any) {
       console.error('Swap failed:', error);
       setShowAnimation(false);
       toast({
         title: "Swap Failed",
-        description: "Transaction failed. Please try again.",
+        description: error.message || "Transaction failed. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -272,7 +301,14 @@ export function CleanSwapTab() {
             </div>
             <div className="flex justify-between items-center">
               <span className="font-small text-white/70">Contract Address</span>
-              <span className="font-small text-white font-mono">APkB...pump</span>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => window.open(`${SOLSCAN_BASE_URL}/token/${GOLDIUM_TOKEN_ADDRESS}`, '_blank')}
+                className="font-small text-white font-mono hover:text-galaxy-accent p-1 h-auto"
+              >
+                APkB...pump <ExternalLink className="w-3 h-3 ml-1" />
+              </Button>
             </div>
           </div>
         </CardContent>
