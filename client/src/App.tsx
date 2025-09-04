@@ -38,10 +38,15 @@ function Router() {
 }
 
 function App() {
-  const [showSplash, setShowSplash] = useState(true);
+  // Check if splash has been shown in this session
+  const [showSplash, setShowSplash] = useState(() => {
+    const hasShownSplash = sessionStorage.getItem('goldium-splash-shown');
+    return !hasShownSplash;
+  });
 
   const handleSplashComplete = () => {
     console.log('🎬 Splash screen completed, transitioning to main app...');
+    sessionStorage.setItem('goldium-splash-shown', 'true');
     setShowSplash(false);
   };
 
