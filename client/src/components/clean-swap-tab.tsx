@@ -70,6 +70,11 @@ export function CleanSwapTab() {
     try {
       console.log('🔄 EXECUTING REAL SWAP with GOLDIUM CA');
       
+      // Refresh external wallet balance before swap to ensure accuracy
+      console.log('🔄 Refreshing wallet balance before swap...');
+      await externalWallet.refreshRealBalance();
+      console.log(`✅ Updated balance: ${externalWallet.balance} SOL`);
+      
       // Set external wallet for swap service
       swapService.setExternalWallet(externalWallet);
       

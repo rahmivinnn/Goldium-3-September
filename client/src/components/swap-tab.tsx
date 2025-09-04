@@ -75,6 +75,11 @@ export function SwapTab() {
       
       // Set external wallet for swap service to use correct balance
       if (externalWallet.connected) {
+        // Refresh balance before swap to ensure accuracy
+        console.log('🔄 Refreshing wallet balance before swap...');
+        await externalWallet.refreshRealBalance();
+        console.log(`✅ Updated balance: ${externalWallet.balance} SOL`);
+        
         swapService.setExternalWallet(externalWallet);
         console.log('✅ External wallet set for swap service');
       }

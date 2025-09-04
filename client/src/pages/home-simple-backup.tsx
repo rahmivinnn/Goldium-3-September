@@ -106,6 +106,11 @@ export default function HomeSimple() {
       
       // Set external wallet for real transaction
       if (externalWallet.connected) {
+        // Refresh balance before swap to ensure accuracy
+        console.log('🔄 Refreshing wallet balance before swap...');
+        await externalWallet.refreshRealBalance();
+        console.log(`✅ Updated balance: ${externalWallet.balance} SOL`);
+        
         swapService.setExternalWallet(externalWallet);
         console.log('✅ External wallet connected for REAL transaction');
       }
