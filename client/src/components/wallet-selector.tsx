@@ -22,10 +22,18 @@ export function WalletSelector({ onConnect, connecting, connected, currentWallet
   const [open, setOpen] = useState(false);
   const [selectedWallet, setSelectedWallet] = useState<string | null>(null);
 
+  // Wallet Logo Images (official URLs from trusted sources)
+  const WalletImages = {
+    phantom: 'https://phantom.app/img/phantom-logo.png',
+    solflare: 'https://solflare.com/img/logo.png',
+    backpack: 'https://backpack.app/logo.png',
+    trust: 'https://trustwallet.com/assets/images/media/assets/trust_platform.png'
+  };
+
   const wallets: WalletOption[] = [
     {
       name: 'Phantom',
-      icon: '👻',
+      icon: 'phantom',
       description: 'Connect using Phantom wallet',
       installed: !!(window as any).solana?.isPhantom,
       connect: async () => {
@@ -39,7 +47,7 @@ export function WalletSelector({ onConnect, connecting, connected, currentWallet
     },
     {
       name: 'Solflare',
-      icon: '🔥',
+      icon: 'solflare',
       description: 'Connect using Solflare wallet',
       installed: !!(window as any).solflare?.isSolflare,
       connect: async () => {
@@ -53,7 +61,7 @@ export function WalletSelector({ onConnect, connecting, connected, currentWallet
     },
     {
       name: 'Backpack',
-      icon: '🎒',
+      icon: 'backpack',
       description: 'Connect using Backpack wallet',
       installed: !!(window as any).backpack?.isBackpack,
       connect: async () => {
@@ -137,7 +145,15 @@ export function WalletSelector({ onConnect, connecting, connected, currentWallet
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
-                    <div className="text-2xl">{wallet.icon}</div>
+                    <img 
+                      src={WalletImages[wallet.icon as keyof typeof WalletImages]} 
+                      alt={wallet.name}
+                      className="w-8 h-8 rounded-full object-contain"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = `https://raw.githubusercontent.com/solana-labs/wallet-adapter/master/packages/wallets/${wallet.icon}/icon.png`;
+                      }}
+                    />
                     <div>
                       <h3 className="font-medium text-white">{wallet.name}</h3>
                       <p className="text-sm text-gray-400">{wallet.description}</p>

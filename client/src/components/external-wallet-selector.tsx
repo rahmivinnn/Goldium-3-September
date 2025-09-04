@@ -28,12 +28,12 @@ const WalletLogos = {
   trust: '🔷'
 };
 
-// Wallet Logo Images (base64 encoded for reliability)
+// Wallet Logo Images (official URLs from trusted sources)
 const WalletImages = {
-  phantom: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTIiIGZpbGw9IiNBQjlGRjIiLz4KPHN2ZyB4PSI0IiB5PSI0IiB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSI+CjxwYXRoIGQ9Ik0zIDVDMyAyLjc5MDg2IDQuNzkwODYgMSA3IDFIOUM5LjIwOTE0IDEgMTEgMi43OTA4NiAxMSA1VjEzTDguNSAxMUw2IDEzTDMuNSAxMUwzIDEzVjVaIiBmaWxsPSJ3aGl0ZSIvPgo8Y2lyY2xlIGN4PSI2IiBjeT0iNiIgcj0iMSIgZmlsbD0iI0FCOUZGMiIvPgo8Y2lyY2xlIGN4PSIxMCIgY3k9IjYiIHI9IjEiIGZpbGw9IiNBQjlGRjIiLz4KPC9zdmc+Cjwvc3ZnPgo=',
-  solflare: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTIiIGZpbGw9IiNGQzhENEQiLz4KPHN2ZyB4PSI0IiB5PSI0IiB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSI+CjxwYXRoIGQ9Ik04IDBMMTIgNEg0TDggMFoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik04IDE2TDQgMTJIMTJMOCAxNloiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik0wIDhMNCA0VjEyTDAgOFoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik0xNiA4TDEyIDEyVjRMMTYgOFoiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo8L3N2Zz4K',
-  backpack: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTIiIGZpbGw9IiNFMzNFM0YiLz4KPHN2ZyB4PSI0IiB5PSI0IiB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSI+CjxwYXRoIGQ9Ik00IDNDNCAyLjQ0NzcyIDQuNDQ3NzIgMiA1IDJIOUMxMC4xMDQ2IDIgMTEgMi44OTU0MyAxMSAzVjRIMTJDMTIuNTUyMyA0IDEzIDQuNDQ3NzIgMTMgNVYxNEMxMyAxNC41NTIzIDEyLjU1MjMgMTUgMTIgMTVIM0MyLjQ0NzcyIDE1IDIgMTQuNTUyMyAyIDE0VjVDMiA0LjQ0NzcyIDIuNDQ3NzIgNCAzIDRINFYzWiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTYgM1Y0SDlWM0M5IDIuNDQ3NzIgOC41NTIyOCAyIDggMkg3QzYuNDQ3NzIgMiA2IDIuNDQ3NzIgNiAzWiIgZmlsbD0iI0UzM0UzRiIvPgo8cmVjdCB4PSI1IiB5PSI3IiB3aWR0aD0iNiIgaGVpZ2h0PSIxIiBmaWxsPSIjRTMzRTNGIi8+Cjwvc3ZnPgo8L3N2Zz4K',
-  trust: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTIiIGZpbGw9IiMzMzc1QkIiLz4KPHN2ZyB4PSI0IiB5PSI0IiB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSI+CjxwYXRoIGQ9Ik04IDBMMTQgM1Y5QzE0IDEzLjUgMTEgMTcuMjYgOCAxOEM1IDE3LjI2IDIgMTMuNSAyIDlWM0w4IDBaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNNiA5TDcuNSAxMC41TDEwLjUgNy41IiBzdHJva2U9IiMzMzc1QkIiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPgo8L3N2Zz4K'
+  phantom: 'https://phantom.app/img/phantom-logo.png',
+  solflare: 'https://solflare.com/img/logo.png',
+  backpack: 'https://backpack.app/logo.png',
+  trust: 'https://trustwallet.com/assets/images/media/assets/trust_platform.png'
 };
 
 const walletOptions: WalletOption[] = [
@@ -169,7 +169,11 @@ export function ExternalWalletSelector() {
                         <img 
                           src={WalletImages[walletOption.icon as keyof typeof WalletImages]} 
                           alt={walletOption.name} 
-                          className="w-6 h-6 rounded-full"
+                          className="w-6 h-6 rounded-full object-contain"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = `https://raw.githubusercontent.com/solana-labs/wallet-adapter/master/packages/wallets/${walletOption.icon}/icon.png`;
+                          }}
                         />
                       </div>
                       <div>
@@ -224,7 +228,11 @@ export function ExternalWalletSelector() {
                 <img 
                   src={WalletImages[currentWallet.icon as keyof typeof WalletImages]} 
                   alt={currentWallet.name} 
-                  className="w-5 h-5 rounded-full"
+                  className="w-5 h-5 rounded-full object-contain"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = `https://raw.githubusercontent.com/solana-labs/wallet-adapter/master/packages/wallets/${currentWallet.icon}/icon.png`;
+                  }}
                 />
               ) : (
                 <Wallet className="w-4 h-4" />
@@ -261,7 +269,11 @@ export function ExternalWalletSelector() {
                   <img 
                     src={WalletImages[currentWallet.icon as keyof typeof WalletImages]} 
                     alt={currentWallet.name} 
-                    className="w-5 h-5 rounded-full"
+                    className="w-5 h-5 rounded-full object-contain"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = `https://raw.githubusercontent.com/solana-labs/wallet-adapter/master/packages/wallets/${currentWallet.icon}/icon.png`;
+                    }}
                   />
                 ) : (
                   <Wallet className="w-3 h-3" />
@@ -325,7 +337,11 @@ export function ExternalWalletSelector() {
                       <img 
                         src={WalletImages[walletOption.icon as keyof typeof WalletImages]} 
                         alt={walletOption.name} 
-                        className="w-6 h-6 rounded-full"
+                        className="w-6 h-6 rounded-full object-contain"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = `https://raw.githubusercontent.com/solana-labs/wallet-adapter/master/packages/wallets/${walletOption.icon}/icon.png`;
+                        }}
                       />
                     </div>
                     <div>

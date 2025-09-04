@@ -23,6 +23,14 @@ interface WalletOption {
   description: string;
 }
 
+// Wallet Logo Images (official URLs from trusted sources)
+const WalletImages = {
+  phantom: 'https://phantom.app/img/phantom-logo.png',
+  solflare: 'https://solflare.com/img/logo.png',
+  backpack: 'https://backpack.app/logo.png',
+  trust: 'https://trustwallet.com/assets/images/media/assets/trust_platform.png'
+};
+
 const walletOptions: WalletOption[] = [
   {
     type: 'self-contained',
@@ -33,25 +41,25 @@ const walletOptions: WalletOption[] = [
   {
     type: 'phantom',
     name: 'Phantom',
-    icon: '👻',
+    icon: 'phantom',
     description: 'Connect to Phantom wallet extension',
   },
   {
     type: 'solflare',
     name: 'Solflare',
-    icon: '🔥',
+    icon: 'solflare',
     description: 'Connect to Solflare wallet',
   },
   {
     type: 'backpack',
     name: 'Backpack',
-    icon: '🎒',
+    icon: 'backpack',
     description: 'Connect to Backpack wallet',
   },
   {
     type: 'trust',
     name: 'Trust Wallet',
-    icon: '🛡️',
+    icon: 'trust',
     description: 'Connect to Trust Wallet',
   },
 ];
@@ -140,7 +148,19 @@ export function MultiWalletSelector() {
           variant="outline"
           className="bg-galaxy-card border-white/20/30 hover:border-white/20/50 text-galaxy-bright"
         >
-          <span className="mr-2">{currentWallet?.icon}</span>
+          {currentWallet?.type === 'self-contained' ? (
+            <span className="mr-2">{currentWallet?.icon}</span>
+          ) : (
+            <img 
+              src={WalletImages[currentWallet?.icon as keyof typeof WalletImages]} 
+              alt={currentWallet?.name}
+              className="w-5 h-5 mr-2 rounded-full object-contain"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = `https://raw.githubusercontent.com/solana-labs/wallet-adapter/master/packages/wallets/${currentWallet?.icon}/icon.png`;
+              }}
+            />
+          )}
           <span className="hidden sm:inline">
             {multiWallet.address ? `${multiWallet.address.slice(0, 4)}...${multiWallet.address.slice(-4)}` : 'Wallet'}
           </span>
@@ -167,7 +187,19 @@ export function MultiWalletSelector() {
             <div className="flex items-center justify-between">
               <span className="text-xs text-galaxy-accent">Current:</span>
               <div className="flex items-center space-x-2">
-                <span className="text-xs">{currentWallet?.icon}</span>
+                {currentWallet?.type === 'self-contained' ? (
+                  <span className="text-xs">{currentWallet?.icon}</span>
+                ) : (
+                  <img 
+                    src={WalletImages[currentWallet?.icon as keyof typeof WalletImages]} 
+                    alt={currentWallet?.name}
+                    className="w-4 h-4 rounded-full object-contain"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = `https://raw.githubusercontent.com/solana-labs/wallet-adapter/master/packages/wallets/${currentWallet?.icon}/icon.png`;
+                    }}
+                  />
+                )}
                 <span className="text-xs text-galaxy-bright">{currentWallet?.name}</span>
               </div>
             </div>
@@ -218,7 +250,19 @@ export function MultiWalletSelector() {
             >
               <div className="flex items-center justify-between w-full">
                 <div className="flex items-center space-x-3">
-                  <span className="text-lg">{wallet.icon}</span>
+                  {wallet.type === 'self-contained' ? (
+                    <span className="text-lg">{wallet.icon}</span>
+                  ) : (
+                    <img 
+                      src={WalletImages[wallet.icon as keyof typeof WalletImages]} 
+                      alt={wallet.name}
+                      className="w-6 h-6 rounded-full object-contain"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = `https://raw.githubusercontent.com/solana-labs/wallet-adapter/master/packages/wallets/${wallet.icon}/icon.png`;
+                      }}
+                    />
+                  )}
                   <div>
                     <div className="flex items-center space-x-2">
                       <span className="font-medium">{wallet.name}</span>
