@@ -10,6 +10,8 @@ import { CleanSwapTab } from '@/components/clean-swap-tab';
 import { SelfContainedStakingTab } from '@/components/self-contained-staking-tab';
 import { RealSendTab } from '@/components/real-send-tab';
 import { TransactionHistory } from '@/components/transaction-history';
+import { CharacterEvolutionShop } from '@/components/character-evolution-shop';
+import GoldPurchaseQR from '@/components/gold-purchase-qr';
 import { useSolanaWallet, WalletMultiButton } from '@/components/solana-wallet-provider';
 import { ExternalWalletSelector } from '@/components/external-wallet-selector';
 import { 
@@ -23,7 +25,9 @@ import {
   Activity,
   DollarSign,
   Target,
-  Zap
+  Zap,
+  Crown,
+  ShoppingCart
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -253,10 +257,18 @@ export default function Dashboard() {
               
               <CardContent>
                 <Tabs defaultValue="swap" className="w-full">
-                  <TabsList className="grid w-full grid-cols-3 bg-black/20 backdrop-blur-xl border-2 border-white/10 shadow-2xl border border-white/10">
+                  <TabsList className="grid w-full grid-cols-5 bg-black/20 backdrop-blur-xl border-2 border-white/10 shadow-2xl border border-white/10">
                     <TabsTrigger value="swap" className="text-xs font-['Inter'] font-semibold">Swap</TabsTrigger>
                     <TabsTrigger value="stake" className="text-xs font-['Inter'] font-semibold">Stake</TabsTrigger>
                     <TabsTrigger value="send" className="text-xs font-['Inter'] font-semibold">Send</TabsTrigger>
+                    <TabsTrigger value="evolution" className="text-xs font-['Inter'] font-semibold flex items-center gap-1">
+                      <Crown className="w-3 h-3" />
+                      Evolution
+                    </TabsTrigger>
+                    <TabsTrigger value="buy-gold" className="text-xs font-['Inter'] font-semibold flex items-center gap-1">
+                      <ShoppingCart className="w-3 h-3" />
+                      Buy GOLD
+                    </TabsTrigger>
                   </TabsList>
                   
                   <TabsContent value="swap" className="mt-4">
@@ -269,6 +281,14 @@ export default function Dashboard() {
                   
                   <TabsContent value="send" className="mt-4">
                     <RealSendTab />
+                  </TabsContent>
+                  
+                  <TabsContent value="evolution" className="mt-4">
+                    <CharacterEvolutionShop />
+                  </TabsContent>
+                  
+                  <TabsContent value="buy-gold" className="mt-4">
+                    <GoldPurchaseQR />
                   </TabsContent>
                 </Tabs>
               </CardContent>
