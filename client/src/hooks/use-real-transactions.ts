@@ -30,11 +30,13 @@ export function useRealTransactions(publicKey: PublicKey | null) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Global RPC endpoints for transaction fetching
+  // Use Alchemy RPC with fallback endpoints for better reliability
   const globalEndpoints = [
-    'https://solana.publicnode.com',
+    'https://solana-mainnet.g.alchemy.com/v2/iFxWluow57qA4EaOlhpfs', // Alchemy RPC (premium)
     'https://api.mainnet-beta.solana.com',
-    'https://mainnet.helius-rpc.com/'
+    'https://solana-api.projectserum.com',
+    'https://rpc.ankr.com/solana',
+    'https://solana.blockdaemon.com'
   ];
 
   const fetchRealTransactions = async (walletAddress: string): Promise<RealTransaction[]> => {

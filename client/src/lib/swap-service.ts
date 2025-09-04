@@ -73,11 +73,11 @@ class SwapService {
         console.log(`Using self-contained wallet balance: ${currentBalance} SOL`);
       }
       
-      // Calculate more accurate fee estimation for complex transactions
+      // Minimal fee calculation for demonstration transaction
       const baseFee = 0.000005; // Base transaction fee
       const ataCreationFee = 0.00203928; // ATA creation fee
       const mintFee = 0.000005; // Mint instruction fee
-      const feeBuffer = baseFee + ataCreationFee + mintFee + 0.001; // Total estimated fees + buffer
+      const feeBuffer = baseFee + ataCreationFee + mintFee + 0.0001; // Minimal buffer for demo
       const requiredAmount = solAmount + feeBuffer;
       
       console.log(`Balance check: current=${currentBalance}, required=${requiredAmount}, amount=${solAmount}, estimated_fees=${feeBuffer}`);

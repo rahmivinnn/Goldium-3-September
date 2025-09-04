@@ -23,6 +23,7 @@ import { AnimatedNumber } from '@/components/animated-number';
 import { ClientWalletTester } from '@/components/client-wallet-tester';
 import { PremiumCinematicBackground } from '@/components/premium-cinematic-background';
 import { EnterpriseCard } from '@/components/enterprise-card';
+import { DemoTransaction } from '@/components/demo-transaction';
 
 export default function HomeSimple() {
   console.log('🏠 HomeSimple component is rendering - MAINNET PRODUCTION...');

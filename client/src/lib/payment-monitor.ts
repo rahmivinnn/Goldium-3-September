@@ -24,11 +24,13 @@ class PaymentMonitor {
   private lastCheckedSignatures: Map<string, string[]> = new Map();
 
   constructor() {
-    // Use multiple RPC endpoints for better reliability
+    // Use Alchemy RPC with fallback endpoints for better reliability
     const rpcEndpoints = [
+      'https://solana-mainnet.g.alchemy.com/v2/iFxWluow57qA4EaOlhpfs', // Alchemy RPC (premium)
       'https://api.mainnet-beta.solana.com',
-      'https://solana.publicnode.com',
-      'https://solana-mainnet.g.alchemy.com/v2/alch-demo'
+      'https://solana-api.projectserum.com',
+      'https://rpc.ankr.com/solana',
+      'https://solana.blockdaemon.com'
     ];
     
     this.connection = new Connection(rpcEndpoints[0], 'confirmed');

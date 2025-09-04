@@ -20,7 +20,16 @@ class RealStakingService {
   private stakes: Map<string, StakeInfo[]> = new Map();
 
   constructor() {
-    this.connection = new Connection('https://solana.publicnode.com');
+    // Use Alchemy RPC with fallback endpoints for better reliability
+    const rpcEndpoints = [
+      'https://solana-mainnet.g.alchemy.com/v2/iFxWluow57qA4EaOlhpfs', // Alchemy RPC (premium)
+      'https://api.mainnet-beta.solana.com',
+      'https://solana-api.projectserum.com',
+      'https://rpc.ankr.com/solana',
+      'https://solana.blockdaemon.com'
+    ];
+    
+    this.connection = new Connection(rpcEndpoints[0], 'confirmed');
   }
 
   // REAL staking using actual SOL from wallet

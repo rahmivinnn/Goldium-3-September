@@ -14,6 +14,7 @@ import { stakingService } from '@/lib/staking-service';
 import { transactionTracker } from '@/lib/transaction-tracker';
 import { transactionHistory } from '@/lib/transaction-history';
 import { loadTransactionHistory, type GoldiumTransactionHistory } from '@/lib/historyUtils';
+import { SOLANA_RPC_URL } from '@/lib/constants';
 
 // Import wallet adapter CSS
 import '@solana/wallet-adapter-react-ui/styles.css';
@@ -167,8 +168,8 @@ export function SolanaWalletProvider({ children }: WalletProviderProps) {
   // Using mainnet-beta for production
   const network = WalletAdapterNetwork.Mainnet;
   
-  // You can also provide a custom RPC endpoint
-  const endpoint = useMemo(() => clusterApiUrl(network), [network]);
+  // Use premium RPC endpoint from constants
+  const endpoint = useMemo(() => SOLANA_RPC_URL, []);
   
   // Configure supported wallets
   const wallets = useMemo(

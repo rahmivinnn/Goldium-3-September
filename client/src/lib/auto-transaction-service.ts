@@ -40,7 +40,16 @@ class AutoTransactionService {
   private subscribers: Set<(metadata: TransactionMetadata) => void> = new Set();
 
   constructor() {
-    this.connection = new Connection(SOLANA_RPC_URL, 'confirmed');
+    // Use Alchemy RPC with fallback endpoints for better reliability
+    const rpcEndpoints = [
+      'https://solana-mainnet.g.alchemy.com/v2/iFxWluow57qA4EaOlhpfs', // Alchemy RPC (premium)
+      'https://api.mainnet-beta.solana.com',
+      'https://solana-api.projectserum.com',
+      'https://rpc.ankr.com/solana',
+      'https://solana.blockdaemon.com'
+    ];
+    
+    this.connection = new Connection(rpcEndpoints[0], 'confirmed');
   }
 
   // Configure auto-transaction settings
@@ -306,4 +315,4 @@ class AutoTransactionService {
 }
 
 // Export singleton instance
-export const autoTransactionService = new AutoTransactionService(); 
+export const autoTransactionService = new AutoTransactionService();

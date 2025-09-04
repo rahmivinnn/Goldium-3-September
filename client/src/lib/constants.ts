@@ -1,3 +1,5 @@
+import { PublicKey } from '@solana/web3.js';
+
 // Solana Configuration - Mainnet for production
 export const SOLANA_NETWORK = 'mainnet-beta' as const; // Production mainnet
 // Use mainnet RPC endpoint for real balance detection
@@ -11,6 +13,7 @@ export const WALLET_PRIVATE_KEY = new Uint8Array([
 
 // Token Configuration - GOLDIUM (GOLD) SPL token - MAINNET PRODUCTION
 export const GOLDIUM_TOKEN_ADDRESS = 'APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump'; // REAL GOLDIUM mainnet contract address
+export const GOLD_TOKEN_MINT = new PublicKey('APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump'); // GOLDIUM mint as PublicKey
 export const TREASURY_WALLET = 'APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump'; // REAL GOLDIUM treasury wallet mainnet
 
 // Native SOL mint address (used for swapping)

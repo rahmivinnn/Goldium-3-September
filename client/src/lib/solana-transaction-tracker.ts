@@ -17,9 +17,12 @@ export interface RealTransaction {
 
 // Use public RPC endpoints with better reliability
 const RPC_ENDPOINTS = [
+  'https://solana-mainnet.g.alchemy.com/v2/iFxWluow57qA4EaOlhpfs', // Alchemy RPC (premium)
   'https://api.mainnet-beta.solana.com', // Use mainnet for production
   'https://solana.publicnode.com',
-  'https://solana-mainnet.g.alchemy.com/v2/alch-demo'
+  'https://solana-api.projectserum.com',
+  'https://rpc.ankr.com/solana',
+  'https://solana.blockdaemon.com'
 ];
 
 let currentRpcIndex = 0;

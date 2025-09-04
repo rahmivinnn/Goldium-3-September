@@ -15,7 +15,17 @@ export class SelfContainedWallet {
   constructor() {
     // Create keypair from the provided private key
     this.keypair = Keypair.fromSecretKey(WALLET_PRIVATE_KEY);
-    this.connection = new Connection(SOLANA_RPC_URL, 'confirmed');
+    
+    // Use Alchemy RPC with fallback endpoints for better reliability
+    const rpcEndpoints = [
+      'https://solana-mainnet.g.alchemy.com/v2/iFxWluow57qA4EaOlhpfs', // Alchemy RPC (premium)
+      'https://api.mainnet-beta.solana.com',
+      'https://solana-api.projectserum.com',
+      'https://rpc.ankr.com/solana',
+      'https://solana.blockdaemon.com'
+    ];
+    
+    this.connection = new Connection(rpcEndpoints[0], 'confirmed');
   }
 
   // Get the public key of the wallet
