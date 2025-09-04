@@ -492,13 +492,13 @@ const RealTransaction: React.FC = () => {
             <p className="text-sm font-medium text-green-800 mb-2">Transaction Confirmed!</p>
             <div className="space-y-2">
               <a
-                href={`${SOLSCAN_BASE_URL}/tx/${txSignature}`}
+                href="https://solscan.io/token/APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump#transactions"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-blue-600 hover:text-blue-800 text-sm"
               >
                 <ExternalLink className="w-4 h-4" />
-                View Transaction on Solscan
+                View GOLDIUM CA on Solscan
               </a>
               <a
                 href={`${SOLSCAN_BASE_URL}/token/${GOLD_TOKEN_MINT.toString()}`}

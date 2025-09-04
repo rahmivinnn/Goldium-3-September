@@ -49,7 +49,7 @@ export function useGoldBalance() {
     try {
       console.log('🪙 Fetching GOLD balances for wallet:', walletState.address);
       
-      // First check transaction history for local balance tracking
+      // Use transaction history as primary source for GOLD balance tracking
       let balance = 0;
       let stakedBalance = 0;
       
@@ -60,20 +60,35 @@ export function useGoldBalance() {
         // Set current wallet in transaction history
         transactionHistory.setCurrentWallet(walletState.address);
         
-        const historyBalance = transactionHistory.getGoldBalance();
-        const historyStaked = transactionHistory.getStakedGoldBalance();
+        // Always use transaction history as primary source
+        balance = transactionHistory.getGoldBalance();
+        stakedBalance = transactionHistory.getStakedGoldBalance();
         
-        if (historyBalance > 0 || historyStaked > 0) {
-          balance = historyBalance;
-          stakedBalance = historyStaked;
-          console.log(`✅ Using GOLD balances from transaction history: ${balance} GOLD, ${stakedBalance} staked`);
-        } else {
-          // Fetch from blockchain as fallback
-          [balance, stakedBalance] = await Promise.all([
+        console.log(`✅ GOLD balances from transaction history: ${balance} GOLD, ${stakedBalance} staked`);
+        
+        // Always check blockchain as fallback to ensure accurate balance
+        console.log('📡 Checking blockchain for accurate balance...');
+        try {
+          const [blockchainBalance, blockchainStakedBalance] = await Promise.all([
             goldTokenService.getGoldBalance(walletState.address),
             goldTokenService.getStakedGoldBalance(walletState.address)
           ]);
-          console.log(`✅ GOLD balances from blockchain: ${balance} GOLD, ${stakedBalance} staked`);
+          
+          // Use blockchain balance if it's higher than transaction history
+          // This ensures we don't miss any external transactions
+          if (blockchainBalance > balance) {
+            balance = blockchainBalance;
+            console.log(`🔄 Using blockchain balance: ${blockchainBalance} GOLD (higher than history)`);
+          }
+          if (blockchainStakedBalance > stakedBalance) {
+            stakedBalance = blockchainStakedBalance;
+            console.log(`🔄 Using blockchain staked balance: ${blockchainStakedBalance} GOLD (higher than history)`);
+          }
+          
+          console.log(`✅ Final GOLD balances: ${balance} GOLD, ${stakedBalance} staked`);
+        } catch (blockchainError) {
+          console.error('Blockchain balance fetch failed:', blockchainError);
+          // Continue with transaction history values
         }
       } catch (historyError) {
         console.warn('Transaction history import failed:', historyError);

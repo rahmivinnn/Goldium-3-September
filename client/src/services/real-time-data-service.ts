@@ -1,5 +1,6 @@
 import { Connection, PublicKey } from '@solana/web3.js';
 import { GOLD_TOKEN_MINT, GOLD_CONTRACT_ADDRESS } from './gold-token-service';
+import { SOLANA_RPC_URL } from '@/lib/constants';
 
 export interface RealTimeTokenData {
   currentPrice: number;
@@ -29,7 +30,7 @@ class RealTimeDataService {
   private cacheTimeout: number = 60000; // 1 minute cache
   
   constructor() {
-    this.connection = new Connection('https://solana.publicnode.com', 'confirmed');
+    this.connection = new Connection(SOLANA_RPC_URL, 'confirmed');
   }
 
 

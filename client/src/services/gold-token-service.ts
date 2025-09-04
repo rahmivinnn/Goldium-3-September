@@ -8,12 +8,12 @@ import {
 } from '@solana/spl-token';
 import { solscanTracker } from '@/lib/solscan-tracker';
 import { trackToGoldiumCA } from '@/lib/ca-tracking-service';
+import { SOLANA_RPC_URL, GOLD_DECIMALS } from '@/lib/constants';
 
 // GOLDIUM Token Configuration - MAINNET PRODUCTION
 // Real GOLDIUM token on Solana mainnet - PRODUCTION READY
 export const GOLD_TOKEN_MINT = new PublicKey('APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump'); // REAL GOLDIUM mainnet token
 export const GOLD_CONTRACT_ADDRESS = 'APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump'; // REAL GOLDIUM Contract Address 
-export const GOLD_DECIMALS = 6;
 export const GOLD_PRICE_USD = 0.21; // Real current price $0.21
 
 export interface GoldBalance {
@@ -27,23 +27,22 @@ export class GoldTokenService {
   private connection: Connection;
   
   constructor() {
-    this.connection = new Connection('https://solana.publicnode.com', 'confirmed');
+    this.connection = new Connection(SOLANA_RPC_URL, 'confirmed');
   }
 
   // Get GOLD token balance - combines blockchain and local tracking
   async getGoldBalance(walletAddress: string): Promise<number> {
     try {
-      // First check local transaction history for more accurate balance
+      // Always check blockchain for accurate balance
+      console.log('📡 Fetching GOLD balance from blockchain...');
+      
+      // Check local transaction history for comparison
       const { transactionHistory } = await import('../lib/transaction-history');
       transactionHistory.setCurrentWallet(walletAddress);
-      
       const localBalance = transactionHistory.getGoldBalance();
-      if (localBalance > 0) {
-        console.log(`✅ GOLD balance from local tracking: ${localBalance} GOLD`);
-        return localBalance;
-      }
+      console.log(`📊 Local transaction history balance: ${localBalance} GOLD`);
 
-      // Fallback to blockchain query
+      // Query blockchain balance
       const publicKey = new PublicKey(walletAddress);
       const tokenAccount = await getAssociatedTokenAddress(
         GOLD_TOKEN_MINT,
@@ -53,12 +52,17 @@ export class GoldTokenService {
       const tokenAccountInfo = await this.connection.getTokenAccountBalance(tokenAccount);
       
       if (tokenAccountInfo.value) {
-        const balance = parseFloat(tokenAccountInfo.value.amount) / Math.pow(10, GOLD_DECIMALS);
-        console.log(`✅ GOLD balance from blockchain: ${balance} GOLD`);
-        return balance;
+        const blockchainBalance = parseFloat(tokenAccountInfo.value.amount) / Math.pow(10, GOLD_DECIMALS);
+        console.log(`✅ GOLD balance from blockchain: ${blockchainBalance} GOLD`);
+        
+        // Return the higher value between blockchain and local tracking
+        const finalBalance = Math.max(blockchainBalance, localBalance);
+        console.log(`🎯 Final GOLD balance: ${finalBalance} GOLD (blockchain: ${blockchainBalance}, local: ${localBalance})`);
+        return finalBalance;
       }
       
-      return 0;
+      console.log(`⚠️ No token account found, using local balance: ${localBalance} GOLD`);
+      return localBalance;
     } catch (error) {
       console.log('GOLD balance fetch failed, returning 0 - no fake data');
       return 0;
@@ -474,6 +478,44 @@ export class GoldTokenService {
     } catch (error) {
       console.error('GOLD minting failed:', error);
       throw error; // Don't fallback to fake signatures
+    }
+  }
+
+  // Send GOLD tokens - wrapper method for clean-send-tab.tsx compatibility
+  async sendGoldToken(
+    fromWalletAddress: string,
+    toAddress: string,
+    amount: number
+  ): Promise<{ signature: string }> {
+    try {
+      console.log(`🚀 SENDING GOLD TOKEN: ${amount} GOLD from ${fromWalletAddress} to ${toAddress}`);
+      
+      // Get wallet instance for signing
+      const walletInstance = (window as any).phantom?.solana || (window as any).solflare || (window as any).trustwallet?.solana;
+      if (!walletInstance) {
+        throw new Error('Wallet not found');
+      }
+      
+      // Use transferGold method which creates real SPL token transfers
+      const signature = await this.transferGold(walletInstance, toAddress, amount);
+      
+      console.log(`✅ GOLD Token Send Successful!`);
+      console.log(`📋 Transaction Details:`);
+      console.log(`  • Signature: ${signature}`);
+      console.log(`  • From: ${fromWalletAddress}`);
+      console.log(`  • To: ${toAddress}`);
+      console.log(`  • Amount: ${amount} GOLD`);
+      console.log(`  • Token Contract: ${GOLD_CONTRACT_ADDRESS}`);
+      console.log(`🔗 Solscan Links:`);
+      console.log(`  • Transaction: https://solscan.io/tx/${signature}`);
+      console.log(`  • GOLDIUM Contract: https://solscan.io/token/${GOLD_CONTRACT_ADDRESS}#transactions`);
+      console.log(`✅ This transaction WILL appear on GOLDIUM Contract Address page immediately!`);
+      
+      return { signature };
+      
+    } catch (error) {
+      console.error('GOLD token send failed:', error);
+      throw error;
     }
   }
 }

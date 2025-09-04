@@ -196,9 +196,9 @@ export function GoldiumTxFeed() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => window.open(`https://solscan.io/tx/${tx.signature}`, '_blank')}
+                  onClick={() => window.open(`https://solscan.io/token/${GOLDIUM_TOKEN_ADDRESS}#transactions`, '_blank')}
                   className="text-galaxy-accent hover:text-galaxy-bright p-1"
-                  title="View on Solscan"
+                  title="View GOLDIUM CA on Solscan"
                 >
                   <ExternalLink className="w-3 h-3" />
                 </Button>

@@ -1,7 +1,8 @@
 import { Connection, LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
+import { SOLANA_RPC_URL } from './constants';
 
 // Stable RPC connection for balance fetching
-const connection = new Connection("https://api.mainnet-beta.solana.com", "confirmed");
+const connection = new Connection(SOLANA_RPC_URL, "confirmed");
 
 export async function fetchBalance(publicKey: PublicKey | string): Promise<number> {
   if (!publicKey) {

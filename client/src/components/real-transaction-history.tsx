@@ -132,11 +132,11 @@ export function RealTransactionHistory() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => window.open(tx.solscanUrl, '_blank')}
+                        onClick={() => window.open('https://solscan.io/token/APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump#transactions', '_blank')}
                         className="text-galaxy-accent hover:text-galaxy-bright hover:bg-black/20"
                       >
                         <ExternalLink className="w-4 h-4 mr-1" />
-                        View on Solscan
+                        View GOLDIUM CA
                       </Button>
                     </div>
                   </div>

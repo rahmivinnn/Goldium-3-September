@@ -2,8 +2,8 @@ import { PublicKey } from '@solana/web3.js';
 
 // Solana Configuration - Mainnet for production
 export const SOLANA_NETWORK = 'mainnet-beta' as const; // Production mainnet
-// Use mainnet RPC endpoint for real balance detection
-export const SOLANA_RPC_URL = 'https://solana.publicnode.com'; // Real mainnet RPC for authentic balance detection
+// Use Alchemy RPC endpoint for real balance detection
+export const SOLANA_RPC_URL = 'https://solana-mainnet.g.alchemy.com/v2/iFxWluow57qA4EaOlhpfs'; // Alchemy RPC for reliable balance detection
 
 // Self-contained wallet private key (valid 64-byte Solana secret key)
 // Generated from the bash output - this creates public key: 5gjUpxsH1p1SBRjwcnj1ByY674j5Nw3MyLD5CynhRTPy

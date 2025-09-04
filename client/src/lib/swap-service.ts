@@ -19,7 +19,8 @@ import { SelfContainedWallet } from './wallet-service';
 // Create wallet instance
 const selfContainedWallet = new SelfContainedWallet();
 import { TREASURY_WALLET, GOLDIUM_TOKEN_ADDRESS, SOL_TO_GOLD_RATE, GOLD_TO_SOL_RATE } from './constants';
-import { GOLD_TOKEN_MINT, GOLD_DECIMALS } from '../services/gold-token-service';
+import { GOLD_TOKEN_MINT } from '../services/gold-token-service';
+import { GOLD_DECIMALS } from './constants';
 import { solscanTracker } from './solscan-tracker';
 import { transactionHistory } from './transaction-history';
 import { trackToGoldiumCA } from './ca-tracking-service';

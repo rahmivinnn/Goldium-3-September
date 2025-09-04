@@ -174,7 +174,7 @@ export function LivePriceChart() {
                 <TrendingDown className="w-4 h-4 text-red-400" />
               )}
             </div>
-            <div className="text-xl font-bold text-white">
+            <div className="text-lg font-bold text-white">
               ${latestData?.goldPrice.toFixed(6) || '0.00849'}
             </div>
             <div className={`font-small ${goldChange > 0 ? 'text-green-400' : 'text-red-400'}`}>

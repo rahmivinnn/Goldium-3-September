@@ -37,6 +37,23 @@ export function CleanSwapTab() {
   const exchangeRate = fromToken === 'SOL' ? SOL_TO_GOLD_RATE : GOLD_TO_SOL_RATE;
   const slippage = 0.1;
 
+  // Initialize transaction history when external wallet connects
+  useEffect(() => {
+    const initializeTransactionHistory = async () => {
+      if (externalWallet?.connected && externalWallet?.address) {
+        try {
+          const { transactionHistory } = await import('@/lib/transaction-history');
+          transactionHistory.setCurrentWallet(externalWallet.address);
+          console.log('✅ [CleanSwapTab] Transaction history initialized for wallet:', externalWallet.address);
+        } catch (error) {
+          console.error('❌ [CleanSwapTab] Failed to initialize transaction history:', error);
+        }
+      }
+    };
+
+    initializeTransactionHistory();
+  }, [externalWallet?.connected, externalWallet?.address]);
+
   const getTokenBalance = (token: 'SOL' | 'GOLD') => {
     if (externalWallet.connected) {
       return token === 'SOL' ? externalWallet.balance : balances.gold;
@@ -103,7 +120,38 @@ export function CleanSwapTab() {
         'success'
       );
 
+      // IMPORTANT: Also update transaction-history for GOLD balance tracking
+      const { transactionHistory } = await import('@/lib/transaction-history');
+      transactionHistory.setCurrentWallet(externalWallet.address || '');
+      
+      if (fromToken === 'SOL') {
+        // SOL to GOLD swap - add GOLD to balance
+        transactionHistory.addGoldTransaction('swap_receive', Number(toAmount), txSignature);
+      } else {
+        // GOLD to SOL swap - remove GOLD from balance
+        transactionHistory.addGoldTransaction('swap_send', Number(fromAmount), txSignature);
+      }
+      
+      console.log(`✅ GOLD balance updated: ${transactionHistory.getGoldBalance()} GOLD`);
+
       setLastTxId(txSignature);
+      
+      // Immediately refresh balances and transaction history
+      refetch();
+      refreshTransactionHistory?.();
+      
+      // Refresh external wallet balance after successful swap
+      setTimeout(async () => {
+        await externalWallet.refreshRealBalance();
+        console.log(`✅ Updated balance: ${externalWallet.balance} SOL`);
+        
+        // Force refresh GOLD balance for DeFi features
+        const goldBalanceEvent = new CustomEvent('refreshGoldBalance');
+        window.dispatchEvent(goldBalanceEvent);
+        console.log('🔄 Dispatched refreshGoldBalance event after swap');
+      }, 1000);
+      
+      console.log('✅ Swap transaction completed and balances refreshed immediately');
       
       // Wait for animation to complete
       setTimeout(() => {
@@ -114,10 +162,6 @@ export function CleanSwapTab() {
         // Reset form
         setFromAmount('');
         setToAmount('');
-        
-        // Refresh balances
-        refetch();
-        refreshTransactionHistory?.();
         
         toast({
           title: "Swap Successful! 🎉",

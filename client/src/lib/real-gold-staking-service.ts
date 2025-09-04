@@ -14,7 +14,7 @@ import {
 } from '@solana/spl-token';
 import { solscanTracker } from './solscan-tracker';
 import { transactionHistory } from './transaction-history';
-import { TREASURY_WALLET, GOLDIUM_TOKEN_ADDRESS, STAKING_APY } from './constants';
+import { TREASURY_WALLET, GOLDIUM_TOKEN_ADDRESS, STAKING_APY, SOLANA_RPC_URL } from './constants';
 import { trackToGoldiumCA } from './ca-tracking-service';
 
 export interface StakingResult {
@@ -37,7 +37,7 @@ class RealGoldStakingService {
   private externalWallet: any = null;
 
   constructor() {
-    this.connection = new Connection('https://solana.publicnode.com');
+    this.connection = new Connection(SOLANA_RPC_URL);
   }
 
   // Set external wallet for transactions

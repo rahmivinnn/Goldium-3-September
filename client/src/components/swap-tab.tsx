@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
@@ -31,6 +31,23 @@ export function SwapTab() {
 
   const exchangeRate = fromToken === 'SOL' ? 12.43 : 0.08;
   const fromBalance = fromToken === 'SOL' ? balances.sol : balances.gold;
+
+  // Initialize transaction history when external wallet connects
+  useEffect(() => {
+    const initializeTransactionHistory = async () => {
+      if (externalWallet?.connected && externalWallet?.address) {
+        try {
+          const { transactionHistory } = await import('@/lib/transaction-history');
+          transactionHistory.setCurrentWallet(externalWallet.address);
+          console.log('✅ [SwapTab] Transaction history initialized for wallet:', externalWallet.address);
+        } catch (error) {
+          console.error('❌ [SwapTab] Failed to initialize transaction history:', error);
+        }
+      }
+    };
+
+    initializeTransactionHistory();
+  }, [externalWallet?.connected, externalWallet?.address]);
 
   const handleFromAmountChange = (value: string) => {
     setFromAmount(value);
@@ -118,6 +135,20 @@ export function SwapTab() {
             amountGOLD,
             'success'
           );
+
+          // IMPORTANT: Also update transaction-history for GOLD balance tracking
+          const { transactionHistory } = await import('@/lib/transaction-history');
+          transactionHistory.setCurrentWallet(walletAddress);
+          
+          if (fromToken === 'SOL') {
+            // SOL to GOLD swap - add GOLD to balance
+            transactionHistory.addGoldTransaction('swap_receive', amountGOLD, txId);
+          } else {
+            // GOLD to SOL swap - remove GOLD from balance
+            transactionHistory.addGoldTransaction('swap_send', amountGOLD, txId);
+          }
+          
+          console.log(`✅ GOLD balance updated: ${transactionHistory.getGoldBalance()} GOLD`);
         }
       } catch (error) {
         console.error('Failed to auto-save transaction:', error);
@@ -144,13 +175,6 @@ export function SwapTab() {
         ),
       });
 
-      // Update transaction history with wallet address for proper balance tracking
-      if (externalWallet.connected && externalWallet.address) {
-        const { transactionHistory } = await import('@/lib/transaction-history');
-        transactionHistory.setCurrentWallet(externalWallet.address);
-        console.log(`✅ Transaction history updated for wallet: ${externalWallet.address}`);
-      }
-      
       // Refresh balances after successful swap
       setTimeout(() => {
         refetch();
@@ -161,7 +185,10 @@ export function SwapTab() {
         // Force refresh GOLD balance for DeFi features
         const goldBalanceEvent = new CustomEvent('refreshGoldBalance');
         window.dispatchEvent(goldBalanceEvent);
+        console.log('🔄 Dispatched refreshGoldBalance event after swap');
       }, 2000);
+      
+      console.log('✅ Swap transaction completed and balances will refresh in 2 seconds');
       
     } catch (error: any) {
       console.error('Swap failed:', error);

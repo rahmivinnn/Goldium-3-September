@@ -11,6 +11,7 @@ import {
 import { ChevronDown, Wallet, Copy, ExternalLink, Check } from 'lucide-react';
 import { useExternalWallets, SupportedWallet } from '@/hooks/use-external-wallets';
 import { useToast } from '@/hooks/use-toast';
+import { useGoldBalance } from '@/hooks/use-gold-balance';
 import { SOLSCAN_BASE_URL } from '@/lib/constants';
 
 interface WalletOption {
@@ -74,7 +75,8 @@ const walletOptions: WalletOption[] = [
 export function ExternalWalletSelector() {
   const wallet = useExternalWallets();
   const { toast } = useToast();
-  const [isOpen, setIsOpen] = useState(false);
+   const [isOpen, setIsOpen] = useState(false);
+   const goldBalance = useGoldBalance();
 
   const availableWallets = wallet.getAvailableWallets();
   const currentWallet = walletOptions.find(w => w.type === wallet.selectedWallet);
@@ -318,11 +320,18 @@ export function ExternalWalletSelector() {
             </div>
             
             <div className="flex items-center justify-between">
-              <span className="text-xs text-white/60">Balance:</span>
+              <span className="text-xs text-white/60">SOL Balance:</span>
               <span className="text-xs font-medium text-white">
                 {wallet.balance.toFixed(4)} SOL
               </span>
             </div>
+            
+            <div className="flex items-center justify-between">
+               <span className="text-xs text-white/60">GOLD Balance:</span>
+               <span className="text-xs font-medium text-white">
+                 {goldBalance.isLoading ? 'Loading...' : `${goldBalance.balance.toFixed(2)} GOLD`}
+               </span>
+             </div>
           </div>
         </div>
 

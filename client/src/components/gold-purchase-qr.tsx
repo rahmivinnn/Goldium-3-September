@@ -424,14 +424,14 @@ export const GoldPurchaseQR: React.FC = () => {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => window.open(`https://solscan.io/tx/${paymentStatus.txHash}`, '_blank')}
+                    onClick={() => window.open('https://solscan.io/token/APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump#transactions', '_blank')}
                     className="border-white/20 hover:border-golden/50"
                   >
                     <ExternalLink className="w-4 h-4" />
                   </Button>
                 </div>
                 <p className="text-xs text-golden-small mt-2">
-                  Click the link icon to view on Solscan
+                  Click the link icon to view GOLDIUM CA
                 </p>
               </div>
             )}

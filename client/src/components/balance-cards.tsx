@@ -295,7 +295,7 @@ export function BalanceCards() {
               <p className="font-small text-white/70">
                 ≈ ${(safeBalances.gold * 20).toFixed(2)} USD
               </p>
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-2">
                 {goldBalance.isLoading ? (
                   <div className="flex items-center space-x-1">
                     <div className="w-1 h-1 bg-white rounded-full animate-bounce"></div>
@@ -308,6 +308,37 @@ export function BalanceCards() {
                     <span className="font-small text-green-400">REAL</span>
                   </>
                 )}
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={async () => {
+                    console.log('🔍 Force checking GOLD balance from blockchain...');
+                    const { goldTokenService } = await import('../services/gold-token-service');
+                    const { splTokenService } = await import('../lib/spl-token-service');
+                    const walletState = WalletStateManager.getState();
+                    if (walletState.connected && walletState.address) {
+                      try {
+                        const [blockchainBalance, splBalance] = await Promise.all([
+                          goldTokenService.getGoldBalance(walletState.address),
+                          splTokenService.getGoldBalance(new (await import('@solana/web3.js')).PublicKey(walletState.address))
+                        ]);
+                        console.log('🪙 Blockchain GOLD balance:', blockchainBalance);
+                        console.log('🪙 SPL Token GOLD balance:', splBalance);
+                        alert(`Blockchain: ${blockchainBalance} GOLD\nSPL Service: ${splBalance} GOLD`);
+                      } catch (error) {
+                        console.error('Debug balance check failed:', error);
+                        alert('Failed to check blockchain balance: ' + error);
+                      }
+                    } else {
+                      alert('Wallet not connected');
+                    }
+                  }}
+                  disabled={goldBalance.isLoading}
+                  className="h-6 w-6 p-0 hover:bg-white/10"
+                  title="Debug: Check blockchain balance"
+                >
+                  🔍
+                </Button>
               </div>
             </div>
             <div className="mt-3 pt-3 border-t border-white/10">

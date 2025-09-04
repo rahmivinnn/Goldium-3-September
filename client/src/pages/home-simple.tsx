@@ -82,6 +82,23 @@ export default function HomeSimple() {
     goldBalance = { balance: 0, stakedBalance: 0, totalValue: 0, isLoading: false, error: null }; // Fallback
   }
 
+  // Initialize transaction history when external wallet connects
+  useEffect(() => {
+    const initializeTransactionHistory = async () => {
+      if (externalWallet?.connected && externalWallet?.address) {
+        try {
+          const { transactionHistory } = await import('@/lib/transaction-history');
+          transactionHistory.setCurrentWallet(externalWallet.address);
+          console.log('✅ Transaction history initialized for wallet:', externalWallet.address);
+        } catch (error) {
+          console.error('❌ Failed to initialize transaction history:', error);
+        }
+      }
+    };
+
+    initializeTransactionHistory();
+  }, [externalWallet?.connected, externalWallet?.address]);
+
   // Safe data fetching with timeout
   useEffect(() => {
     console.log('🔄 HomeFixed useEffect starting...');

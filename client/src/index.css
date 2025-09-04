@@ -1686,7 +1686,7 @@ button[aria-expanded] {
 
 /* Numbers/Stats */
 .font-stats {
-  @apply text-2xl sm:text-3xl md:text-4xl font-bold font-mono;
+  @apply text-lg sm:text-xl md:text-2xl font-bold font-mono;
   white-space: nowrap;
   overflow: visible;
   text-overflow: clip;

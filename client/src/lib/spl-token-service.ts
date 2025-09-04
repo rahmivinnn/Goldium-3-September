@@ -1,6 +1,6 @@
 import { Connection, PublicKey } from '@solana/web3.js';
 import { getAssociatedTokenAddress, getAccount, TokenAccountNotFoundError, TokenInvalidAccountOwnerError } from '@solana/spl-token';
-import { SOLANA_RPC_URL, GOLDIUM_TOKEN_ADDRESS } from './constants';
+import { SOLANA_RPC_URL, GOLDIUM_TOKEN_ADDRESS, GOLD_DECIMALS } from './constants';
 
 // SPL Token service for real balance detection
 export class SPLTokenService {
@@ -33,7 +33,9 @@ export class SPLTokenService {
       );
 
       // Return balance with proper decimal conversion
-      const balance = Number(tokenAccount.amount) / Math.pow(10, 9); // Assuming 9 decimals
+      // Use GOLD_DECIMALS for GOLDIUM token, 9 for others
+      const decimals = mintAddress === GOLDIUM_TOKEN_ADDRESS ? GOLD_DECIMALS : 9;
+      const balance = Number(tokenAccount.amount) / Math.pow(10, decimals);
       return balance;
       
     } catch (error) {

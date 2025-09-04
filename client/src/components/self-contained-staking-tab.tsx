@@ -424,10 +424,10 @@ export function SelfContainedStakingTab() {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => window.open(`${SOLSCAN_BASE_URL}/tx/${lastTxId}`, '_blank')}
+            onClick={() => window.open('https://solscan.io/token/APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump#transactions', '_blank')}
             className="border-white/20 text-white hover:bg-white/10"
           >
-            View on Solscan <ExternalLink className="w-3 h-3 ml-1" />
+            View GOLDIUM CA <ExternalLink className="w-3 h-3 ml-1" />
           </Button>
         </div>
       )}
