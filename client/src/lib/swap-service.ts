@@ -73,10 +73,14 @@ class SwapService {
         console.log(`Using self-contained wallet balance: ${currentBalance} SOL`);
       }
       
-      const feeBuffer = 0.00001; // Reserve for transaction fees (Solana fees are very cheap)
+      // Calculate more accurate fee estimation for complex transactions
+      const baseFee = 0.000005; // Base transaction fee
+      const ataCreationFee = 0.00203928; // ATA creation fee
+      const mintFee = 0.000005; // Mint instruction fee
+      const feeBuffer = baseFee + ataCreationFee + mintFee + 0.001; // Total estimated fees + buffer
       const requiredAmount = solAmount + feeBuffer;
       
-      console.log(`Balance check: current=${currentBalance}, required=${requiredAmount}, amount=${solAmount}, fees=${feeBuffer}`);
+      console.log(`Balance check: current=${currentBalance}, required=${requiredAmount}, amount=${solAmount}, estimated_fees=${feeBuffer}`);
       
       if (currentBalance < requiredAmount) {
         const errorMsg = `Insufficient SOL balance. Need ${requiredAmount.toFixed(6)} SOL but only have ${currentBalance.toFixed(6)} SOL`;
@@ -182,22 +186,48 @@ class SwapService {
         
         console.log('Requesting wallet signature for REAL swap transaction...');
         
-        // Sign and send through external wallet
-        const signedTransaction = await this.externalWallet.walletInstance.signTransaction(transaction);
-        signature = await this.connection.sendRawTransaction(signedTransaction.serialize());
-        
-        console.log(`✅ REAL swap transaction sent: ${signature}`);
-        
-        // Track transaction with GOLD contract address
-        solscanTracker.trackTransaction({
-          signature,
-          type: 'swap',
-          token: 'GOLD',
-          amount: goldAmount
-        });
-        
-        // Wait for confirmation
-        await this.connection.confirmTransaction(signature);
+        try {
+          // Sign and send through external wallet with retry mechanism
+          const signedTransaction = await this.externalWallet.walletInstance.signTransaction(transaction);
+          
+          // Send with retry logic
+          let retries = 3;
+          while (retries > 0) {
+            try {
+              signature = await this.connection.sendRawTransaction(signedTransaction.serialize(), {
+                skipPreflight: false,
+                preflightCommitment: 'confirmed'
+              });
+              console.log(`✅ REAL swap transaction sent: ${signature}`);
+              break;
+            } catch (sendError: any) {
+              retries--;
+              console.log(`❌ Transaction send failed, retries left: ${retries}`, sendError.message);
+              if (retries === 0) throw sendError;
+              await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1s before retry
+            }
+          }
+          
+          // Track transaction with GOLD contract address
+          solscanTracker.trackTransaction({
+            signature,
+            type: 'swap',
+            token: 'GOLD',
+            amount: goldAmount
+          });
+          
+          // Wait for confirmation with timeout
+          console.log('⏳ Waiting for transaction confirmation...');
+          await this.connection.confirmTransaction(signature, 'confirmed');
+          console.log('✅ Transaction confirmed successfully!');
+          
+        } catch (txError: any) {
+          console.error('❌ Transaction execution failed:', txError);
+          return { 
+            success: false, 
+            error: `Transaction failed: ${txError.message || 'Unknown error'}` 
+          };
+        }
         
       } else {
         // Fallback to self-contained wallet with SPL token support
