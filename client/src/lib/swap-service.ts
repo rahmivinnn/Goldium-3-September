@@ -73,7 +73,7 @@ class SwapService {
         console.log(`Using self-contained wallet balance: ${currentBalance} SOL`);
       }
       
-      const feeBuffer = 0.001; // Reserve for transaction fees
+      const feeBuffer = 0.00001; // Reserve for transaction fees (Solana fees are very cheap)
       const requiredAmount = solAmount + feeBuffer;
       
       console.log(`Balance check: current=${currentBalance}, required=${requiredAmount}, amount=${solAmount}, fees=${feeBuffer}`);

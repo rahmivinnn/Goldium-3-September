@@ -7,6 +7,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import { solscanTracker } from '@/lib/solscan-tracker';
 import { useGoldBalance } from '@/hooks/use-gold-balance';
+import { useExternalWallets } from '@/hooks/use-external-wallets';
+import { useExternalWalletBalances } from '@/hooks/use-external-wallet-balances';
 import { Lock, Unlock, TrendingUp, Calendar } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import logoImage from '@assets/k1xiYLna_400x400-removebg-preview_1754140723127.png';
@@ -18,6 +20,11 @@ export function GoldStakingTab() {
   const [isUnstaking, setIsUnstaking] = useState(false);
   const { toast } = useToast();
   const goldBalance = useGoldBalance();
+  const externalWallet = useExternalWallets();
+  const { data: balances } = useExternalWalletBalances();
+  
+  // Use external wallet GOLD balance for accurate checking
+  const currentGoldBalance = balances?.gold || goldBalance.balance || 0;
 
   const handleStake = async () => {
     const amount = parseFloat(stakeAmount);
@@ -30,10 +37,10 @@ export function GoldStakingTab() {
       return;
     }
 
-    if (amount > goldBalance.balance) {
+    if (amount > currentGoldBalance) {
       toast({
         title: "Insufficient Balance",
-        description: `You only have ${goldBalance.balance.toFixed(4)} GOLD available`,
+        description: `You only have ${currentGoldBalance.toFixed(4)} GOLD available`,
         variant: "destructive",
       });
       return;

@@ -134,7 +134,7 @@ class AutoBalanceService {
   detectBalanceIssues(): string[] {
     const issues: string[] = [];
     
-    if (this.state.sol < 0.001) {
+    if (this.state.sol < 0.00001) {
       issues.push('Low SOL balance - may not cover transaction fees');
     }
     
@@ -152,7 +152,7 @@ class AutoBalanceService {
   // Auto-suggest optimal swap amounts
   getOptimalSwapAmount(fromToken: 'SOL' | 'GOLD'): number {
     const balance = fromToken === 'SOL' ? this.state.sol : this.state.gold;
-    const feeBuffer = fromToken === 'SOL' ? 0.001 : 0;
+    const feeBuffer = fromToken === 'SOL' ? 0.00001 : 0; // Solana fees are very cheap
     
     if (balance <= feeBuffer) return 0;
     
@@ -165,4 +165,4 @@ class AutoBalanceService {
 }
 
 // Export singleton instance
-export const autoBalanceService = new AutoBalanceService(); 
+export const autoBalanceService = new AutoBalanceService();

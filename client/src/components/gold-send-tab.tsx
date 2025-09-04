@@ -6,6 +6,8 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { solscanTracker } from '@/lib/solscan-tracker';
 import { useGoldBalance } from '@/hooks/use-gold-balance';
+import { useExternalWallets } from '@/hooks/use-external-wallets';
+import { useExternalWalletBalances } from '@/hooks/use-external-wallet-balances';
 import { AlertCircle, Send, Coins } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import logoImage from '@assets/k1xiYLna_400x400-removebg-preview_1754140723127.png';
@@ -16,6 +18,11 @@ export function GoldSendTab() {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const goldBalance = useGoldBalance();
+  const externalWallet = useExternalWallets();
+  const { data: balances } = useExternalWalletBalances();
+  
+  // Use external wallet GOLD balance for accurate checking
+  const currentGoldBalance = balances?.gold || goldBalance.balance || 0;
 
   const handleSend = async () => {
     if (!toAddress.trim()) {
@@ -37,10 +44,10 @@ export function GoldSendTab() {
       return;
     }
 
-    if (sendAmount > goldBalance.balance) {
+    if (sendAmount > currentGoldBalance) {
       toast({
         title: "Insufficient Balance",
-        description: `You only have ${goldBalance.balance.toFixed(4)} GOLD`,
+        description: `You only have ${currentGoldBalance.toFixed(4)} GOLD`,
         variant: "destructive",
       });
       return;
@@ -84,7 +91,7 @@ export function GoldSendTab() {
   };
 
   const maxAmount = () => {
-    setAmount(goldBalance.balance.toString());
+    setAmount(currentGoldBalance.toString());
   };
 
   return (
