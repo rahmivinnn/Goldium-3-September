@@ -28,12 +28,20 @@ const WalletLogos = {
   trust: '🔷'
 };
 
-// Wallet Logo Images (official URLs from trusted sources)
+// Wallet Logo Images (local fallback)
 const WalletImages = {
-  phantom: 'https://phantom.app/img/phantom-logo.png',
-  solflare: 'https://solflare.com/img/logo.png',
-  backpack: 'https://backpack.app/logo.png',
-  trust: 'https://trustwallet.com/assets/images/media/assets/trust_platform.png'
+  phantom: '/wallets/phantom.png',
+  solflare: '/wallets/solflare.png',
+  backpack: '/wallets/backpack.png',
+  trust: '/wallets/trust.png'
+};
+
+// Wallet Logo Emojis (primary display)
+const WalletEmojis = {
+  phantom: '👻',
+  solflare: '☀️',
+  backpack: '🎒',
+  trust: '🛡️'
 };
 
 const walletOptions: WalletOption[] = [
@@ -172,7 +180,11 @@ export function ExternalWalletSelector() {
                           className="w-6 h-6 rounded-full object-contain"
                           onError={(e) => {
                             const target = e.target as HTMLImageElement;
-                            target.src = `https://raw.githubusercontent.com/solana-labs/wallet-adapter/master/packages/wallets/${walletOption.icon}/icon.png`;
+                            target.style.display = 'none';
+                            const emojiSpan = document.createElement('span');
+                            emojiSpan.textContent = WalletEmojis[walletOption.icon as keyof typeof WalletEmojis] || '💼';
+                            emojiSpan.className = 'text-xl';
+                            target.parentNode?.appendChild(emojiSpan);
                           }}
                         />
                       </div>
@@ -272,7 +284,11 @@ export function ExternalWalletSelector() {
                     className="w-5 h-5 rounded-full object-contain"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
-                      target.src = `https://raw.githubusercontent.com/solana-labs/wallet-adapter/master/packages/wallets/${currentWallet.icon}/icon.png`;
+                      target.style.display = 'none';
+                      const emojiSpan = document.createElement('span');
+                      emojiSpan.textContent = WalletEmojis[currentWallet.icon as keyof typeof WalletEmojis] || '💼';
+                      emojiSpan.className = 'text-lg';
+                      target.parentNode?.appendChild(emojiSpan);
                     }}
                   />
                 ) : (

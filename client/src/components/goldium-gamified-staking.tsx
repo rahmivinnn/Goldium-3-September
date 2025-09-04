@@ -26,36 +26,68 @@ interface StageInfo {
 
 const STAKING_STAGES: StageInfo[] = [
   {
-    name: "Golden Egg",
+    name: "K1 Warrior",
     minDays: 0,
     apy: 10,
-    icon: "/assets/golden-egg.svg",
-    description: "Your GOLD is incubating...",
-    color: "from-black to-black"
+    icon: "/K1.png",
+    description: "Beginning your evolution journey...",
+    color: "from-blue-400 to-purple-500"
   },
   {
-    name: "Cracked Egg",
+    name: "K2 Guardian",
     minDays: 7,
     apy: 12,
-    icon: "/assets/cracked-egg.svg",
-    description: "Something is stirring inside!",
-    color: "from-orange-400 to-gray-900"
+    icon: "/K2.png",
+    description: "Growing stronger each day!",
+    color: "from-green-400 to-blue-500"
   },
   {
-    name: "Baby Dragon",
+    name: "K3 Champion",
+    minDays: 15,
+    apy: 14,
+    icon: "/K3.png",
+    description: "Your power is awakening!",
+    color: "from-yellow-400 to-orange-500"
+  },
+  {
+    name: "K4 Master",
     minDays: 30,
-    apy: 15,
-    icon: "/assets/baby-dragon.svg",
-    description: "Your dragon has hatched!",
-    color: "from-red-400 to-orange-500"
+    apy: 16,
+    icon: "/K4.png",
+    description: "Mastering the ancient arts!",
+    color: "from-red-400 to-pink-500"
   },
   {
-    name: "Golden Dragon",
-    minDays: 90,
+    name: "K5 Legend",
+    minDays: 45,
+    apy: 18,
+    icon: "/K5.png",
+    description: "Legendary status achieved!",
+    color: "from-purple-400 to-indigo-500"
+  },
+  {
+    name: "K6 Mythic",
+    minDays: 60,
     apy: 20,
-    icon: "/assets/full-dragon.svg",
-    description: "Legendary Golden Dragon!",
-    color: "from-black to-black"
+    icon: "/K6.png",
+    description: "Mythical powers unlocked!",
+    color: "from-indigo-400 to-purple-600"
+  },
+  {
+    name: "K7 Divine",
+    minDays: 75,
+    apy: 22,
+    icon: "/K7.png",
+    description: "Divine transformation complete!",
+    color: "from-pink-400 to-rose-500"
+  },
+  {
+    name: "K8 Supreme",
+    minDays: 90,
+    apy: 25,
+    icon: "/K8.png",
+    description: "Supreme evolution achieved!",
+    color: "from-yellow-300 to-amber-500"
   }
 ];
 
@@ -393,9 +425,9 @@ const GoldiumGamifiedStaking: React.FC = () => {
         <CardHeader>
           <CardTitle className="font-card-title text-white flex items-center gap-2">
             <Trophy className="w-6 h-6" />
-            Dragon Staking Evolution
+            YG Character Evolution
           </CardTitle>
-          <p className="font-small text-white/70 mt-2">Evolve your dragon through staking milestones</p>
+          <p className="font-small text-white/70 mt-2">Evolve your character through staking milestones</p>
         </CardHeader>
       </Card>
 
@@ -405,7 +437,7 @@ const GoldiumGamifiedStaking: React.FC = () => {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-white">
               <Star className="w-5 h-5" />
-              Dragon Evolution
+              Character Evolution
             </CardTitle>
           </CardHeader>
           <CardContent className="text-center bg-black">
@@ -446,8 +478,8 @@ const GoldiumGamifiedStaking: React.FC = () => {
               
               {!stakingData && (
                 <div className="text-center">
-                  <p className="text-white text-sm">🐉 Start staking to begin your dragon evolution journey!</p>
-                  <p className="text-white text-xs mt-1">Your dragon awaits...</p>
+                  <p className="text-white text-sm">⚡ Start staking to begin your character evolution journey!</p>
+                  <p className="text-white text-xs mt-1">Your character awaits...</p>
                 </div>
               )}
             </div>

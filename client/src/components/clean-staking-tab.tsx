@@ -13,7 +13,7 @@ import { realGoldStakingService } from '@/lib/real-gold-staking-service';
 import { SOLSCAN_BASE_URL } from '@/lib/constants';
 import logoImage from '@assets/k1xiYLna_400x400-removebg-preview_1754275575442.png';
 
-const STAKING_APY = 12.5;
+const STAKING_APY = 8.5;
 const MIN_STAKE_AMOUNT = 10;
 
 export function CleanStakingTab() {

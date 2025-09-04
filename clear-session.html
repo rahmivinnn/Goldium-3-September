@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clear Session Storage</title>
+</head>
+<body>
+    <h1>Clearing Session Storage...</h1>
+    <script>
+        // Clear session storage
+        sessionStorage.clear();
+        
+        // Redirect to main app
+        setTimeout(() => {
+            window.location.href = 'http://localhost:5000';
+        }, 1000);
+    </script>
+    <p>Redirecting to main app in 1 second...</p>
+</body>
+</html>

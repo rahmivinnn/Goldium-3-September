@@ -19,8 +19,8 @@ export const SOL_MINT_ADDRESS_STRING = 'So11111111111111111111111111111111111111
 // Default slippage percentage
 export const DEFAULT_SLIPPAGE = 0.5;
 
-// Staking configuration - 5% APY as specified
-export const STAKING_APY = 5.0; // 5% APY as per user requirements
+// Staking configuration - 8.5% APY for consistency
+export const STAKING_APY = 8.5; // 8.5% APY consistent with real-time data service
 export const STAKING_POOL_ADDRESS = TREASURY_WALLET; // Use treasury wallet for staking
 
 // Transaction confirmation requirements

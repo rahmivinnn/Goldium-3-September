@@ -38,10 +38,11 @@ function Router() {
 }
 
 function App() {
-  // Check if splash has been shown in this session
+  // Always show splash screen on fresh page load (not just session)
   const [showSplash, setShowSplash] = useState(() => {
-    const hasShownSplash = sessionStorage.getItem('goldium-splash-shown');
-    return !hasShownSplash;
+    // Clear any existing splash storage to ensure it shows every time
+    sessionStorage.removeItem('goldium-splash-shown');
+    return true;
   });
 
   const handleSplashComplete = () => {

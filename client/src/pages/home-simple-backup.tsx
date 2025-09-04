@@ -48,17 +48,17 @@ export default function HomeSimple() {
         setTokenData(data);
       } catch (error) {
         console.error('Failed to fetch token data:', error);
-        // Fallback to default data
+        // Fallback to consistent data
         setTokenData({
-          currentPrice: 0.0089,
+          currentPrice: 0.0085,
           priceChange24h: 12.8,
-          volume24h: 485000,
-          marketCap: 890000,
-          totalSupply: 1000000000, // 1 Billion tokens
-          circulatingSupply: 600000000, // 600M circulating (60% of total supply)
-          stakingAPY: 8.5,
-          totalStaked: 21000000,
-          holders: 1247
+          volume24h: 382000, // $382K 24h volume
+          marketCap: 5100000, // $5.10M market cap
+          totalSupply: 1000000000, // 1.00B total supply
+          circulatingSupply: 600000000, // 600.00M circulating supply
+          stakingAPY: 8.5, // 8.5% staking APY (consistent)
+          totalStaked: 210000000, // 210.00M total staked
+          holders: 1200 // 1.2K token holders
         });
       } finally {
         setLoading(false);

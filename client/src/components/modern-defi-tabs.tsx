@@ -104,7 +104,7 @@ export function ModernDeFiTabs() {
               STAKE
             </TabsTrigger>
 
-            {/* DRAGON TAB */}
+            {/* CHARACTER TAB */}
             <TabsTrigger 
               value="dragon" 
               className="
@@ -136,7 +136,7 @@ export function ModernDeFiTabs() {
                 hover:tab-glow
               "
             >
-              DRAGON
+              CHARACTER
             </TabsTrigger>
 
             {/* SEND TAB */}
