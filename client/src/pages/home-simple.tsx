@@ -21,8 +21,8 @@ import { TwitterEmbed } from '@/components/twitter-embed';
 import { EfficientWalletBalance } from '@/components/efficient-wallet-balance';
 import { AnimatedNumber } from '@/components/animated-number';
 import { ClientWalletTester } from '@/components/client-wallet-tester';
-import { AnimatedDashboardBackground } from '@/components/animated-dashboard-background';
-import { PowerfulAnimatedCard } from '@/components/powerful-animated-card';
+import { PremiumCinematicBackground } from '@/components/premium-cinematic-background';
+import { EnterpriseCard } from '@/components/enterprise-card';
 
 export default function HomeSimple() {
   console.log('🏠 HomeSimple component is rendering - MAINNET PRODUCTION...');
@@ -170,8 +170,8 @@ export default function HomeSimple() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white relative overflow-hidden">
-      {/* Animated Background */}
-      <AnimatedDashboardBackground />
+      {/* Premium Cinematic Background */}
+      <PremiumCinematicBackground />
       {/* Header */}
       <nav className="container mx-auto px-4 py-6 relative z-10">
         <div className="flex items-center justify-between">
@@ -201,41 +201,68 @@ export default function HomeSimple() {
         transition={{ duration: 1, delay: 0.2 }}
       >
         <div className="text-center space-y-6 max-w-4xl mx-auto">
-          <motion.div className="relative">
+          <motion.div className="relative perspective-1000">
+            {/* Premium Title with Cinematic Entry */}
             <motion.h1 
-              className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-500 bg-clip-text text-transparent relative z-10"
-              initial={{ scale: 0.5, opacity: 0, rotateX: -90 }}
+              className="text-6xl md:text-8xl font-black tracking-wider bg-gradient-to-r from-yellow-400 via-yellow-200 to-yellow-400 bg-clip-text text-transparent relative z-20"
+              initial={{ 
+                scale: 0.3, 
+                opacity: 0, 
+                rotateX: -120,
+                y: 100,
+                filter: "blur(20px)"
+              }}
               animate={{ 
                 scale: 1, 
                 opacity: 1, 
                 rotateX: 0,
-                textShadow: [
-                  "0 0 20px rgba(250, 204, 21, 0.5)",
-                  "0 0 40px rgba(250, 204, 21, 0.8)", 
-                  "0 0 20px rgba(250, 204, 21, 0.5)"
-                ]
+                y: 0,
+                filter: "blur(0px)"
               }}
               transition={{ 
-                duration: 1.2, 
-                delay: 0.3, 
+                duration: 2, 
+                delay: 0.5, 
                 type: "spring", 
-                stiffness: 80,
-                textShadow: { duration: 2, repeat: Infinity }
+                stiffness: 50,
+                damping: 20
               }}
               whileHover={{ 
-                scale: 1.05,
-                textShadow: "0 0 60px rgba(250, 204, 21, 1)"
+                scale: 1.02,
+                rotateX: -5,
+                transition: { duration: 0.3 }
+              }}
+              style={{
+                textShadow: "0 10px 30px rgba(0,0,0,0.8), 0 0 50px rgba(255,215,0,0.3)",
+                letterSpacing: "0.1em"
               }}
             >
-              Goldium DeFi
+              GOLDIUM DEFI
             </motion.h1>
             
-            {/* Glowing Underline */}
+            {/* Sophisticated Underline System */}
+            <motion.div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+              {[...Array(5)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="h-1 bg-yellow-400"
+                  initial={{ width: 0, opacity: 0 }}
+                  animate={{ width: "20px", opacity: 0.8 }}
+                  transition={{ 
+                    duration: 0.8, 
+                    delay: 2 + i * 0.1,
+                    type: "spring",
+                    stiffness: 200
+                  }}
+                />
+              ))}
+            </motion.div>
+            
+            {/* Premium Glow Effect */}
             <motion.div
-              className="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-1 bg-gradient-to-r from-transparent via-yellow-400 to-transparent"
-              initial={{ width: 0, opacity: 0 }}
-              animate={{ width: "80%", opacity: 0.8 }}
-              transition={{ duration: 1, delay: 1.5 }}
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-yellow-400/5 to-transparent blur-3xl"
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 3, delay: 1 }}
             />
           </motion.div>
           <motion.p 
@@ -247,13 +274,17 @@ export default function HomeSimple() {
             The Future of Decentralized Finance on Solana
           </motion.p>
           
-          {/* Token Status - Sleek Black Design */}
+          {/* Enterprise Token Status */}
           <motion.div 
-            className="bg-black/80 backdrop-blur-xl border border-yellow-400/30 rounded-xl p-6 max-w-2xl mx-auto shadow-2xl"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.7 }}
-            whileHover={{ scale: 1.02, borderColor: 'rgba(250, 204, 21, 0.6)' }}
+            className="enterprise-backdrop rounded-2xl p-8 max-w-3xl mx-auto enterprise-glow"
+            initial={{ opacity: 0, scale: 0.8, rotateX: 30 }}
+            animate={{ opacity: 1, scale: 1, rotateX: 0 }}
+            transition={{ duration: 1.5, delay: 2.8, type: "spring", stiffness: 80 }}
+            whileHover={{ 
+              scale: 1.02, 
+              rotateX: -2,
+              transition: { duration: 0.4 }
+            }}
           >
             <div className="flex items-center justify-center gap-2 text-yellow-400 font-bold mb-4">
               <ExternalLink className="w-5 h-5" />
@@ -299,141 +330,173 @@ export default function HomeSimple() {
             </div>
           </motion.div>
           
-          {/* Powerful Price Cards */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12">
-            <PowerfulAnimatedCard
-              delay={1.0}
-              borderColor="border-yellow-400/40"
-              hoverColor="border-yellow-400/80"
-              glowColor="rgba(250, 204, 21, 0.4)"
-            >
-              <motion.div 
-                className="text-3xl font-bold text-yellow-400"
-                initial={{ scale: 0.5 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 0.8, delay: 1.2 }}
-              >
-                <AnimatedNumber value={tokenData.currentPrice} decimals={6} prefix="$" />
-              </motion.div>
-              <div className="text-sm text-gray-300 mt-2 font-medium">Estimated Price</div>
-            </PowerfulAnimatedCard>
+          {/* Enterprise-Grade Data Cards */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16">
+            <EnterpriseCard delay={2.5} index={0}>
+              <div className="space-y-3">
+                <motion.div 
+                  className="text-4xl font-black text-yellow-400 tracking-wide"
+                  initial={{ opacity: 0, scale: 0.3 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 1, delay: 3, type: "spring", stiffness: 200 }}
+                >
+                  <AnimatedNumber value={tokenData.currentPrice} decimals={6} prefix="$" />
+                </motion.div>
+                <div className="text-sm text-gray-300 font-medium tracking-wider uppercase">Estimated Price</div>
+                <div className="h-px bg-gradient-to-r from-transparent via-yellow-400/50 to-transparent" />
+              </div>
+            </EnterpriseCard>
 
-            <PowerfulAnimatedCard
-              delay={1.1}
-              borderColor="border-green-400/40"
-              hoverColor="border-green-400/80"
-              glowColor="rgba(34, 197, 94, 0.4)"
-            >
-              <motion.div 
-                className="text-3xl font-bold text-green-400"
-                initial={{ scale: 0.5 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 0.8, delay: 1.3 }}
-              >
-                +<AnimatedNumber value={tokenData.priceChange24h} decimals={1} suffix="%" />
-              </motion.div>
-              <div className="text-sm text-gray-300 mt-2 font-medium">24h Change</div>
-            </PowerfulAnimatedCard>
+            <EnterpriseCard delay={2.7} index={1}>
+              <div className="space-y-3">
+                <motion.div 
+                  className="text-4xl font-black text-green-400 tracking-wide"
+                  initial={{ opacity: 0, scale: 0.3 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 1, delay: 3.2, type: "spring", stiffness: 200 }}
+                >
+                  +<AnimatedNumber value={tokenData.priceChange24h} decimals={1} suffix="%" />
+                </motion.div>
+                <div className="text-sm text-gray-300 font-medium tracking-wider uppercase">24h Change</div>
+                <div className="h-px bg-gradient-to-r from-transparent via-green-400/50 to-transparent" />
+              </div>
+            </EnterpriseCard>
 
-            <PowerfulAnimatedCard
-              delay={1.2}
-              borderColor="border-blue-400/40"
-              hoverColor="border-blue-400/80"
-              glowColor="rgba(59, 130, 246, 0.4)"
-            >
-              <motion.div 
-                className="text-3xl font-bold text-blue-400"
-                initial={{ scale: 0.5 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 0.8, delay: 1.4 }}
-              >
-                $<AnimatedNumber value={tokenData.volume24h / 1000} decimals={0} suffix="K" />
-              </motion.div>
-              <div className="text-sm text-gray-300 mt-2 font-medium">24h Volume</div>
-            </PowerfulAnimatedCard>
+            <EnterpriseCard delay={2.9} index={2}>
+              <div className="space-y-3">
+                <motion.div 
+                  className="text-4xl font-black text-blue-400 tracking-wide"
+                  initial={{ opacity: 0, scale: 0.3 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 1, delay: 3.4, type: "spring", stiffness: 200 }}
+                >
+                  $<AnimatedNumber value={tokenData.volume24h / 1000} decimals={0} suffix="K" />
+                </motion.div>
+                <div className="text-sm text-gray-300 font-medium tracking-wider uppercase">24h Volume</div>
+                <div className="h-px bg-gradient-to-r from-transparent via-blue-400/50 to-transparent" />
+              </div>
+            </EnterpriseCard>
 
-            <PowerfulAnimatedCard
-              delay={1.3}
-              borderColor="border-purple-400/40"
-              hoverColor="border-purple-400/80"
-              glowColor="rgba(168, 85, 247, 0.4)"
-            >
-              <motion.div 
-                className="text-3xl font-bold text-purple-400"
-                initial={{ scale: 0.5 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 0.8, delay: 1.5 }}
-              >
-                <AnimatedNumber value={tokenData.holders} decimals={0} />
-              </motion.div>
-              <div className="text-sm text-gray-300 mt-2 font-medium">Holders</div>
-            </PowerfulAnimatedCard>
+            <EnterpriseCard delay={3.1} index={3}>
+              <div className="space-y-3">
+                <motion.div 
+                  className="text-4xl font-black text-purple-400 tracking-wide"
+                  initial={{ opacity: 0, scale: 0.3 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 1, delay: 3.6, type: "spring", stiffness: 200 }}
+                >
+                  <AnimatedNumber value={tokenData.holders} decimals={0} />
+                </motion.div>
+                <div className="text-sm text-gray-300 font-medium tracking-wider uppercase">Holders</div>
+                <div className="h-px bg-gradient-to-r from-transparent via-purple-400/50 to-transparent" />
+              </div>
+            </EnterpriseCard>
           </div>
 
-          {/* Powerful Action Buttons */}
+          {/* Enterprise-Grade Action Center */}
           <motion.div 
-            className="flex flex-col sm:flex-row gap-6 justify-center mt-12"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.6 }}
+            className="flex flex-col sm:flex-row gap-8 justify-center mt-20"
+            initial={{ opacity: 0, y: 50, rotateX: 45 }}
+            animate={{ opacity: 1, y: 0, rotateX: 0 }}
+            transition={{ duration: 1.5, delay: 4, type: "spring", stiffness: 80 }}
           >
             <motion.div
-              whileHover={{ scale: 1.1, rotateX: 5 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 300 }}
+              className="group perspective-1000"
+              whileHover={{ 
+                scale: 1.05, 
+                rotateX: -8,
+                rotateY: 5,
+                z: 50
+              }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
             >
               <Button 
                 size="lg" 
-                className="bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-black hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700 font-bold px-8 py-4 text-lg shadow-2xl hover:shadow-yellow-400/50 border border-yellow-300/50 relative overflow-hidden"
+                className="bg-black border-2 border-yellow-400/60 text-yellow-400 hover:bg-yellow-400/5 hover:border-yellow-400 font-black px-12 py-6 text-xl tracking-wide shadow-2xl relative overflow-hidden transform-gpu"
                 onClick={handleBuyGoldium}
                 disabled={buyingToken}
               >
-                {/* Button Shine Effect */}
+                {/* Enterprise Border Animation */}
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                  initial={{ x: '-100%' }}
-                  whileHover={{ x: '100%' }}
-                  transition={{ duration: 0.6 }}
+                  className="absolute inset-0 border-2 border-yellow-400/0"
+                  whileHover={{
+                    borderColor: [
+                      "rgba(250, 204, 21, 0)",
+                      "rgba(250, 204, 21, 0.8)",
+                      "rgba(250, 204, 21, 0.4)"
+                    ]
+                  }}
+                  transition={{ duration: 1, repeat: Infinity }}
                 />
                 
-                <div className="relative z-10">
+                {/* Sophisticated Scan Effect */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-yellow-400/10 to-transparent"
+                  initial={{ x: '-100%', skewX: -30 }}
+                  whileHover={{ x: '100%' }}
+                  transition={{ duration: 1.2, ease: "easeOut" }}
+                />
+                
+                <div className="relative z-10 flex items-center gap-3">
                   {buyingToken ? (
-                    <div className="flex items-center gap-3">
+                    <>
                       <motion.div 
-                        className="w-5 h-5 border-2 border-black/40 border-t-black rounded-full"
+                        className="w-6 h-6 border-2 border-yellow-400/60 border-t-yellow-400 rounded-full"
                         animate={{ rotate: 360 }}
-                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                        transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
                       />
-                      Buying...
-                    </div>
+                      <span>PROCESSING...</span>
+                    </>
                   ) : (
-                    'Buy Goldium'
+                    <>
+                      <DollarSign className="w-6 h-6" />
+                      <span>ACQUIRE GOLDIUM</span>
+                    </>
                   )}
                 </div>
               </Button>
             </motion.div>
 
             <motion.div
-              whileHover={{ scale: 1.1, rotateX: 5 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 300 }}
+              className="group perspective-1000"
+              whileHover={{ 
+                scale: 1.05, 
+                rotateX: -8,
+                rotateY: -5,
+                z: 50
+              }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
             >
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="border-2 border-white/40 text-white hover:bg-white/10 hover:border-white/70 px-8 py-4 text-lg font-bold shadow-2xl hover:shadow-white/30 relative overflow-hidden"
+                className="bg-black/80 border-2 border-gray-600/60 text-white hover:bg-white/5 hover:border-gray-400 px-12 py-6 text-xl font-black tracking-wide shadow-2xl relative overflow-hidden transform-gpu"
               >
-                {/* Button Shine Effect */}
+                {/* Enterprise Border Animation */}
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                  initial={{ x: '-100%' }}
-                  whileHover={{ x: '100%' }}
-                  transition={{ duration: 0.6 }}
+                  className="absolute inset-0 border-2 border-gray-400/0"
+                  whileHover={{
+                    borderColor: [
+                      "rgba(156, 163, 175, 0)",
+                      "rgba(156, 163, 175, 0.8)",
+                      "rgba(156, 163, 175, 0.4)"
+                    ]
+                  }}
+                  transition={{ duration: 1, repeat: Infinity }}
                 />
                 
-                <div className="relative z-10 flex items-center gap-2">
-                  <ExternalLink className="w-5 h-5" />
-                  Learn More
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"
+                  initial={{ x: '-100%', skewX: -30 }}
+                  whileHover={{ x: '100%' }}
+                  transition={{ duration: 1.2, ease: "easeOut" }}
+                />
+                
+                <div className="relative z-10 flex items-center gap-3">
+                  <ExternalLink className="w-6 h-6" />
+                  <span>DOCUMENTATION</span>
                 </div>
               </Button>
             </motion.div>
