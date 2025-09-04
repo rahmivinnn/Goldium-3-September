@@ -586,6 +586,7 @@ export function useExternalWallets() {
     connectWallet,
     disconnectWallet,
     refreshBalance,
+    refreshRealBalance,
     getKeypair,
     signTransaction,
   };

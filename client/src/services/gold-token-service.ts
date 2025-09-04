@@ -337,8 +337,9 @@ export class GoldTokenService {
     try {
       const publicKey = wallet.publicKey;
       
-      // Calculate GOLD amount (1 SOL = 10 GOLD for demo)
-      const goldAmount = solAmount * 10;
+      // Calculate GOLD amount using real rate from Solscan data
+      const { SOL_TO_GOLD_RATE } = await import('../lib/constants');
+      const goldAmount = solAmount * SOL_TO_GOLD_RATE;
       
       const transaction = new Transaction();
       

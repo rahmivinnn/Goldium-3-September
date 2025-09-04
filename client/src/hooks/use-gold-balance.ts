@@ -258,6 +258,17 @@ export function useGoldBalance() {
     }
   }, [updateGoldBalances, walletState.connected]);
 
+  // Listen for manual refresh events from swap transactions
+  useEffect(() => {
+    const handleRefreshEvent = () => {
+      console.log('🔄 Manual GOLD balance refresh triggered from swap');
+      updateGoldBalances();
+    };
+    
+    window.addEventListener('refreshGoldBalance', handleRefreshEvent);
+    return () => window.removeEventListener('refreshGoldBalance', handleRefreshEvent);
+  }, [updateGoldBalances]);
+
   return {
     ...goldState,
     transferGold,

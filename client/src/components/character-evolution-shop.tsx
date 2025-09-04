@@ -8,6 +8,9 @@ import { useExternalWallets } from '@/hooks/use-external-wallets';
 import { useGoldBalance } from '@/hooks/use-gold-balance';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { transactionHistory } from '@/lib/transaction-history';
+import { goldTokenService } from '@/services/gold-token-service';
+import { trackToGoldiumCA } from '@/lib/ca-tracking-service';
+import { TREASURY_WALLET } from '@/lib/constants';
 
 interface CharacterUpgrade {
   id: string;
@@ -206,22 +209,41 @@ export const CharacterEvolutionShop: React.FC = () => {
     setLoading(true);
     
     try {
-      console.log(`🎮 Purchasing character upgrade: ${upgrade.name} for ${upgrade.goldCost} GOLD`);
+      console.log(`🎮 REAL CHARACTER PURCHASE: ${upgrade.name} for ${upgrade.goldCost} GOLD`);
       
-      // Simulate GOLD token deduction for character upgrade
-      // In a real implementation, this would involve:
-      // 1. Creating a transaction to transfer GOLD tokens to a burn address or treasury
-      // 2. Waiting for transaction confirmation
-      // 3. Recording the upgrade purchase on-chain or in a database
+      // Get wallet instance for REAL GOLD token transfer
+      const walletInstance = (window as any).phantom?.solana || (window as any).solflare || (window as any).trustwallet?.solana;
+      if (!walletInstance) {
+        throw new Error('Wallet not found for GOLD transfer');
+      }
+
+      // REAL GOLD token transfer to treasury for character purchase
+      console.log(`💰 Transferring ${upgrade.goldCost} GOLD tokens to treasury for character upgrade...`);
+      const signature = await goldTokenService.transferGold(
+        walletInstance,
+        TREASURY_WALLET, // Send GOLD to treasury
+        upgrade.goldCost
+      );
       
-      // For now, we'll simulate the transaction and update local tracking
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      console.log(`✅ REAL GOLD transfer successful: ${signature}`);
       
       // Record the GOLD expenditure in transaction history
       transactionHistory.addGoldTransaction(
-        'swap_send', 
+        'character_purchase', 
         upgrade.goldCost, 
-        `character_upgrade_${upgrade.id}_${Date.now()}`
+        signature
+      );
+      
+      // Track to Goldium CA for character purchase
+      const walletAddress = walletInstance.publicKey?.toString() || 'unknown';
+      await trackToGoldiumCA(
+        walletAddress,
+        signature,
+        'send', // Character purchase is a send transaction
+        'GOLD',
+        'CHARACTER_UPGRADE',
+        upgrade.goldCost,
+        upgrade.goldCost
       );
       
       // Add upgrade to owned list
@@ -246,7 +268,8 @@ export const CharacterEvolutionShop: React.FC = () => {
         lastPurchase: {
           upgradeId: upgrade.id,
           timestamp: Date.now(),
-          cost: upgrade.goldCost
+          cost: upgrade.goldCost,
+          signature: signature
         }
       };
       localStorage.setItem('goldium_user_progress', JSON.stringify(updatedProgress));
@@ -254,12 +277,29 @@ export const CharacterEvolutionShop: React.FC = () => {
       // Refresh GOLD balance after purchase
       refreshBalances();
       
-      alert(`Successfully purchased ${upgrade.name}! You gained 100 XP! ${upgrade.goldCost} GOLD deducted from your balance.`);
+      console.log(`🎉 CHARACTER PURCHASE COMPLETED!`);
+      console.log(`📋 Purchase Summary:`);
+      console.log(`  • Character: ${upgrade.name}`);
+      console.log(`  • Cost: ${upgrade.goldCost} GOLD`);
+      console.log(`  • Transaction: ${signature}`);
+      console.log(`  • XP Gained: 100`);
+      console.log(`🔗 Transaction on Solscan: https://solscan.io/tx/${signature}`);
+      console.log(`🔗 GOLDIUM Contract: https://solscan.io/token/APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump`);
+      
+      alert(`🎉 Successfully purchased ${upgrade.name}!\n\n💰 ${upgrade.goldCost} GOLD transferred to treasury\n🎯 +100 XP gained\n🔗 Transaction: ${signature}\n\nThis purchase is tracked on GOLDIUM Contract Address!`);
       setSelectedUpgrade(null);
       
-    } catch (error) {
-      console.error('Purchase failed:', error);
-      alert('Purchase failed. Please try again.');
+    } catch (error: any) {
+      console.error('❌ Character purchase failed:', error);
+      
+      // Handle specific wallet errors
+      if (error.message?.includes('User rejected')) {
+        alert('Transaction was cancelled by user');
+      } else if (error.message?.includes('insufficient funds')) {
+        alert('Insufficient GOLD balance or SOL for transaction fees');
+      } else {
+        alert(`Purchase failed: ${error.message || 'Unknown error'}`);
+      }
     } finally {
       setLoading(false);
     }

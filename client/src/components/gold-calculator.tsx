@@ -10,8 +10,8 @@ export function GoldCalculator() {
   const [inputAmount, setInputAmount] = useState('100');
   const [goldOutput, setGoldOutput] = useState(0);
   const [solPrice] = useState(195.50); // Current SOL price
-  const [goldPrice] = useState(0.000047); // Current GOLD price in USD
-  const [solToGoldRate] = useState(21486.893); // SOL to GOLD rate
+  const [goldPrice] = useState(0.00849); // Current GOLD price in USD (from Solscan)
+  const [solToGoldRate] = useState(23041); // SOL to GOLD rate (calculated from real prices)
 
   const calculateGold = () => {
     const amount = Number(inputAmount) || 0;

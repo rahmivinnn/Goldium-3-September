@@ -206,16 +206,18 @@ export function BalanceCards() {
             </div>
           </div>
           <div className="space-y-3">
-            <p className="font-stats tracking-tight">
-              {isCheckingBalance ? (
-                <span className="animate-pulse holographic-gold">Checking...</span>
-              ) : (
-                <>
-                  <span className="holographic-gold golden-3d">{currentBalance.toFixed(4)}</span>
-                  <span className="text-lg font-normal text-white/70 ml-2">SOL</span>
-                </>
-              )}
-            </p>
+            <div className="min-w-fit overflow-visible">
+              <p className="font-stats tracking-tight whitespace-nowrap">
+                {isCheckingBalance ? (
+                  <span className="animate-pulse holographic-gold">Checking...</span>
+                ) : (
+                  <>
+                    <span className="holographic-gold golden-3d">{currentBalance.toFixed(4)}</span>
+                    <span className="text-lg font-normal text-white/70 ml-2">SOL</span>
+                  </>
+                )}
+              </p>
+            </div>
             <div className="flex items-center justify-between">
               <p className="font-small text-white/70">
                 ≈ ${(currentBalance * 195.5).toFixed(2)} USD
@@ -283,10 +285,12 @@ export function BalanceCards() {
             </div>
           </div>
           <div className="space-y-3">
-            <p className="font-stats tracking-tight">
-              <span className="holographic-gold golden-3d">{safeBalances.gold.toFixed(2)}</span>
-              <span className="text-lg font-normal text-white/70 ml-2">GOLD</span>
-            </p>
+            <div className="min-w-fit overflow-visible">
+              <p className="font-stats tracking-tight whitespace-nowrap">
+                <span className="holographic-gold golden-3d">{safeBalances.gold.toFixed(2)}</span>
+                <span className="text-lg font-normal text-white/70 ml-2">GOLD</span>
+              </p>
+            </div>
             <div className="flex items-center justify-between">
               <p className="font-small text-white/70">
                 ≈ ${(safeBalances.gold * 20).toFixed(2)} USD
@@ -346,10 +350,12 @@ export function BalanceCards() {
             </div>
           </div>
           <div className="space-y-3">
-            <p className="text-4xl font-black text-white tracking-tight font-mono">
-              {safeBalances.stakedGold.toFixed(2)}
-              <span className="text-lg font-normal text-emerald-300/80 ml-2">GOLD</span>
-            </p>
+            <div className="min-w-fit overflow-visible">
+              <p className="text-4xl font-black text-white tracking-tight font-mono whitespace-nowrap">
+                {safeBalances.stakedGold.toFixed(2)}
+                <span className="text-lg font-normal text-emerald-300/80 ml-2">GOLD</span>
+              </p>
+            </div>
             <div className="flex items-center justify-between">
               <p className="text-sm font-semibold text-slate-300">
                 ≈ ${(safeBalances.stakedGold * 20).toFixed(2)} USD

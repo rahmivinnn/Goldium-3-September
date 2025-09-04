@@ -16,6 +16,7 @@ import { useToast } from '@/hooks/use-toast';
 import { goldTokenService } from '@/services/gold-token-service';
 import { autoSaveTransaction } from "@/lib/historyUtils";
 import { useGoldBalance } from '@/hooks/use-gold-balance';
+import { SOL_TO_GOLD_RATE } from '@/lib/constants';
 // Logo import removed
 import GoldiumGamifiedStaking from '@/components/goldium-gamified-staking';
 import { TwitterEmbed } from '@/components/twitter-embed';
@@ -31,7 +32,7 @@ export default function HomeSimple() {
   const [tokenData, setTokenData] = useState<RealTimeTokenData | null>(null);
   const [loading, setLoading] = useState(true);
   const [buyingToken, setBuyingToken] = useState(false);
-  const [buyAmount, setBuyAmount] = useState('0.000047'); // Default amount for 1 GOLD
+  const [buyAmount, setBuyAmount] = useState('0.0000434'); // Default amount for 1 GOLD (updated from Solscan)
   
   const externalWallet = useExternalWallets();
   const { toast } = useToast();
@@ -98,7 +99,7 @@ export default function HomeSimple() {
       console.log('🚀 Starting REAL GOLDIUM purchase with blockchain integration');
       
       const solAmount = parseFloat(buyAmount);
-      const goldAmount = solAmount * 21486.893; // Exchange rate: 1 SOL = 21,486.893 GOLD
+      const goldAmount = solAmount * SOL_TO_GOLD_RATE; // Exchange rate from Solscan data
       
       // Import and use REAL swap service
       const { SwapService } = await import('@/lib/swap-service');
@@ -155,7 +156,7 @@ export default function HomeSimple() {
       });
 
       // Reset buy amount
-      setBuyAmount('0.000047');
+      setBuyAmount('0.0000434');
       
       // Refresh balances after real transaction
       setTimeout(() => {
@@ -334,7 +335,7 @@ export default function HomeSimple() {
                   </div>
                   <div className="bg-white/5 backdrop-blur-lg rounded-lg p-4 border border-white/10">
                     <p className="text-white/90 text-sm">
-                      Exchange Rate: <span className="chainzoku-highlight font-semibold">1 SOL = 21,486 GOLD</span>
+                      Exchange Rate: <span className="chainzoku-highlight font-semibold">1 SOL = 23,041 GOLD</span>
                     </p>
                   </div>
                 </div>
@@ -345,8 +346,8 @@ export default function HomeSimple() {
                       value={buyAmount}
                       onChange={(e) => setBuyAmount(e.target.value)}
                       placeholder="0.1"
-                      min="0.000047"
-                      step="0.000047"
+                      min="0.0000434"
+                step="0.0000434"
                       className="chainzoku-input w-full"
                       disabled={buyingToken}
                     />
@@ -355,7 +356,7 @@ export default function HomeSimple() {
                   <div className="flex items-center justify-center gap-3 text-white bg-white/5 rounded-lg p-3 border border-white/10">
                     <span className="text-lg font-medium">≈</span>
                     <span className="chainzoku-highlight font-semibold text-lg">
-                      {buyAmount ? (parseFloat(buyAmount) * 21486.893).toLocaleString() : '0'} GOLD
+                      {buyAmount ? (parseFloat(buyAmount) * SOL_TO_GOLD_RATE).toLocaleString() : '0'} GOLD
                     </span>
                   </div>
                 </div>

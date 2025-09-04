@@ -37,14 +37,16 @@ export const SOL_DECIMALS = 9;
 export const GOLD_DECIMALS = 9;
 
 // Minimum amounts for transactions
-export const MIN_SOL_AMOUNT = 0.000047; // Minimum SOL for 1 GOLD
+export const MIN_SOL_AMOUNT = 0.0000434; // Minimum SOL for 1 GOLD (based on real price)
 export const MIN_GOLD_AMOUNT = 1; // Minimum 1 GOLD
 
 // Program IDs for real transactions
 export const JUPITER_PROGRAM_ID = 'JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4'; // Jupiter V6 for swaps
 export const STAKE_PROGRAM_ID = 'Stake11111111111111111111111111111111111112'; // Native stake program
 
-// Exchange rates (based on REAL GOLDIUM mainnet market data)
-// Current price $0.21, SOL ~$240, so 1 GOLDIUM = 0.21/240 = 0.000875 SOL
-export const GOLD_TO_SOL_RATE = 0.000875; // 1 GOLDIUM = 0.000875 SOL (REAL mainnet price)
-export const SOL_TO_GOLD_RATE = 1 / GOLD_TO_SOL_RATE; // 1 SOL = ~1,143 GOLDIUM (REAL rate)
+// Exchange rates (based on REAL GOLDIUM mainnet market data from Solscan)
+// Current GOLD price: $0.00849, SOL price: ~$195.50
+// 1 GOLD = $0.00849, 1 SOL = $195.50
+// So 1 GOLD = 0.00849/195.50 = 0.0000434 SOL
+export const GOLD_TO_SOL_RATE = 0.0000434; // 1 GOLD = 0.0000434 SOL (from Solscan data)
+export const SOL_TO_GOLD_RATE = 1 / GOLD_TO_SOL_RATE; // 1 SOL = ~23,041 GOLD (calculated from real prices)

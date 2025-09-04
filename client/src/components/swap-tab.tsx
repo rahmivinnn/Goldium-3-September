@@ -144,8 +144,24 @@ export function SwapTab() {
         ),
       });
 
+      // Update transaction history with wallet address for proper balance tracking
+      if (externalWallet.connected && externalWallet.address) {
+        const { transactionHistory } = await import('@/lib/transaction-history');
+        transactionHistory.setCurrentWallet(externalWallet.address);
+        console.log(`✅ Transaction history updated for wallet: ${externalWallet.address}`);
+      }
+      
       // Refresh balances after successful swap
-      setTimeout(() => refetch(), 2000);
+      setTimeout(() => {
+        refetch();
+        // Also refresh external wallet balance
+        if (externalWallet.connected) {
+          externalWallet.refreshRealBalance();
+        }
+        // Force refresh GOLD balance for DeFi features
+        const goldBalanceEvent = new CustomEvent('refreshGoldBalance');
+        window.dispatchEvent(goldBalanceEvent);
+      }, 2000);
       
     } catch (error: any) {
       console.error('Swap failed:', error);

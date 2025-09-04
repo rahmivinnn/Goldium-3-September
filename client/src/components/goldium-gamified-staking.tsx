@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSolanaWallet } from '@/components/solana-wallet-provider';
+import { useGoldBalance } from '@/hooks/use-gold-balance';
 import { Connection, PublicKey, LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -93,8 +94,8 @@ const STAKING_STAGES: StageInfo[] = [
 
 const GoldiumGamifiedStaking: React.FC = () => {
   const { connected, publicKey } = useSolanaWallet();
+  const goldBalance = useGoldBalance();
   const [stakingData, setStakingData] = useState<StakingData | null>(null);
-  const [goldBalance, setGoldBalance] = useState<number>(0);
   const [stakeAmount, setStakeAmount] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [currentStage, setCurrentStage] = useState<StageInfo>(STAKING_STAGES[0]);
@@ -107,7 +108,6 @@ const GoldiumGamifiedStaking: React.FC = () => {
 
   useEffect(() => {
     if (connected && publicKey) {
-      fetchGoldBalance();
       loadStakingData();
     }
   }, [connected, publicKey]);
@@ -121,37 +121,7 @@ const GoldiumGamifiedStaking: React.FC = () => {
     }
   }, [stakingData]);
 
-  const fetchGoldBalance = async () => {
-    if (!publicKey) return;
-    
-    try {
-      // Real GOLD balance - fetch SPL token balance from Solana
-      const { getAssociatedTokenAddress } = await import('@solana/spl-token');
-      
-      // GOLD token mint address
-      const GOLD_MINT = new PublicKey('GLD1111111111111111111111111111111111111111');
-      
-      // Get user's GOLD token account
-      const userTokenAccount = await getAssociatedTokenAddress(
-        GOLD_MINT,
-        publicKey
-      );
-      
-      // Get token account info
-      const tokenAccountInfo = await connection.getTokenAccountBalance(userTokenAccount);
-      
-      if (tokenAccountInfo.value) {
-        const balance = parseFloat(tokenAccountInfo.value.amount) / Math.pow(10, tokenAccountInfo.value.decimals);
-        setGoldBalance(balance);
-      } else {
-        setGoldBalance(0);
-      }
-    } catch (error) {
-      console.error('Error fetching GOLD balance:', error);
-      // Fallback to 0 if token account doesn't exist or other error
-      setGoldBalance(0);
-    }
-  };
+
 
   const loadStakingData = () => {
     // Load from localStorage for demo
@@ -273,7 +243,6 @@ const GoldiumGamifiedStaking: React.FC = () => {
       
       setStakingData(newStakingData);
       saveStakingData(newStakingData);
-      setGoldBalance(prev => prev - amount);
       setStakeAmount('');
       
       alert(`Successfully staked ${amount} GOLD! Transaction: ${signature}`);
@@ -502,14 +471,14 @@ const GoldiumGamifiedStaking: React.FC = () => {
                   <div className="w-4 h-4 text-gray-400">💰</div>
                   <p className="text-sm text-gray-300">Wallet Balance</p>
                 </div>
-                <p className="font-bold text-white">0.0000 GOLD</p>
+                <p className="font-bold text-white">{goldBalance.balance.toFixed(4)} GOLD</p>
               </div>
               <div className="bg-black border border-gray-600 p-3 rounded-lg">
                 <div className="flex items-center gap-2 mb-1">
                   <div className="w-4 h-4 text-gray-400">🔒</div>
                   <p className="text-sm text-gray-300">Staked Amount</p>
                 </div>
-                <p className="font-bold text-white">{stakingData?.amount.toFixed(4) || '0.0000'} GOLD</p>
+                <p className="font-bold text-white">{goldBalance.stakedBalance.toFixed(4)} GOLD</p>
               </div>
             </div>
 
@@ -571,7 +540,7 @@ const GoldiumGamifiedStaking: React.FC = () => {
                     placeholder="Add more GOLD"
                     value={stakeAmount}
                     onChange={(e) => setStakeAmount(e.target.value)}
-                    max={goldBalance}
+                    max={goldBalance.balance}
                     className="text-sm"
                   />
                   <Button 

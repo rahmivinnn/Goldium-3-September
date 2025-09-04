@@ -43,7 +43,7 @@ export default function HomeSimple() {
   
   const [loading, setLoading] = useState(true);
   const [buyingToken, setBuyingToken] = useState(false);
-  const [buyAmount, setBuyAmount] = useState('0.000047');
+  const [buyAmount, setBuyAmount] = useState('0.0000434'); // Updated minimum for 1 GOLD based on Solscan data
   
   // Safe hook usage with error handling
   let wallet = null;

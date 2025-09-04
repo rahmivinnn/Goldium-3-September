@@ -35,7 +35,7 @@ export function LivePriceChart() {
 
     const config = intervals[timeframe];
     let baseSOL = 195.50;
-    let baseGOLD = 0.000047;
+    let baseGOLD = 0.00849; // Updated to match Solscan data
 
     for (let i = config.count; i >= 0; i--) {
       const timestamp = now - (i * config.interval);
@@ -175,7 +175,7 @@ export function LivePriceChart() {
               )}
             </div>
             <div className="text-xl font-bold text-white">
-              ${latestData?.goldPrice.toFixed(6) || '0.000047'}
+              ${latestData?.goldPrice.toFixed(6) || '0.00849'}
             </div>
             <div className={`font-small ${goldChange > 0 ? 'text-green-400' : 'text-red-400'}`}>
               {goldChange > 0 ? '+' : ''}{goldChange.toFixed(2)}%
