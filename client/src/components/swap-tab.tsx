@@ -5,8 +5,9 @@ import { Card, CardContent } from '@/components/ui/card';
 import { ArrowUpDown, ExternalLink } from 'lucide-react';
 import { useTokenAccounts } from '@/hooks/use-token-accounts';
 import { useWallet } from '@/components/multi-wallet-provider';
+import { useExternalWallets } from '@/hooks/use-external-wallets';
 import { useToast } from '@/hooks/use-toast';
-import { solanaService } from '@/lib/solana';
+import { swapService } from '@/lib/swap-service';
 import {
   GOLDIUM_TOKEN_ADDRESS,
   SOL_MINT_ADDRESS_STRING,
@@ -25,6 +26,7 @@ export function SwapTab() {
   
   const { connected, wallet, publicKey } = useWallet();
   const { balances, refetch } = useTokenAccounts();
+  const externalWallet = useExternalWallets();
   const { toast } = useToast();
 
   const exchangeRate = fromToken === 'SOL' ? 12.43 : 0.08;
@@ -69,18 +71,27 @@ export function SwapTab() {
     setIsSwapping(true);
     
     try {
-      const fromMint = fromToken === 'SOL' ? SOL_MINT_ADDRESS_STRING : GOLDIUM_TOKEN_ADDRESS;
-      const toMint = fromToken === 'SOL' ? GOLDIUM_TOKEN_ADDRESS : SOL_MINT_ADDRESS_STRING;
-
       console.log(`Executing real swap: ${amount} ${fromToken} -> ${fromToken === 'SOL' ? 'GOLD' : 'SOL'}`);
       
-      const txId = await solanaService.executeSwap(
-        fromMint,
-        toMint,
-        amount,
-        slippage,
-        wallet
-      );
+      // Set external wallet for swap service to use correct balance
+      if (externalWallet.connected) {
+        swapService.setExternalWallet(externalWallet);
+        console.log('✅ External wallet set for swap service');
+      }
+      
+      // Use swap service instead of solanaService for proper balance checking
+      let swapResult;
+      if (fromToken === 'SOL') {
+        swapResult = await swapService.swapSolToGold(amount);
+      } else {
+        swapResult = await swapService.swapGoldToSol(amount);
+      }
+      
+      if (!swapResult.success) {
+        throw new Error(swapResult.error || 'Swap failed');
+      }
+      
+      const txId = swapResult.signature!;
       
       setLastTxId(txId);
 
