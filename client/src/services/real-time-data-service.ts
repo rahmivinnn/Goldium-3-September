@@ -315,8 +315,8 @@ class RealTimeDataService {
         priceChange24h: 0.0, // No trading data available
         volume24h: 0, // No trading volume (not on major DEX)
         marketCap: 1000, // Estimated based on supply
-        totalSupply: 1000000, // REAL from mainnet RPC: 1,000,000 tokens
-         circulatingSupply: 1000000, // Same as total (no locks detected)
+        totalSupply: 1000000000, // REAL from mainnet RPC: 1,000,000,000 tokens (1 Billion)
+          circulatingSupply: 1000000000, // Same as total (no locks detected)
         stakingAPY: 0, // No staking program detected
         totalStaked: 0, // No staking
         holders: 1 // Minimal holders (creator wallet)

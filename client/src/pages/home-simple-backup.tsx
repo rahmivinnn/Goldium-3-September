@@ -54,8 +54,8 @@ export default function HomeSimple() {
           priceChange24h: 12.8,
           volume24h: 485000,
           marketCap: 890000,
-          totalSupply: 1000000,
-          circulatingSupply: 60000000,
+          totalSupply: 1000000000, // 1 Billion tokens
+          circulatingSupply: 600000000, // 600M circulating (60% of total supply)
           stakingAPY: 8.5,
           totalStaked: 21000000,
           holders: 1247

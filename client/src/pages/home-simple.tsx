@@ -33,8 +33,8 @@ export default function HomeSimple() {
     priceChange24h: 0.0, // No trading data available
     volume24h: 0, // No trading volume (not on major DEX)
     marketCap: 1000, // Estimated market cap
-    totalSupply: 1000000, // REAL from mainnet: 1,000,000 tokens
-  circulatingSupply: 1000000, // Same as total supply
+    totalSupply: 1000000000, // REAL from mainnet: 1,000,000,000 tokens (1 Billion)
+  circulatingSupply: 1000000000, // Same as total supply
     stakingAPY: 0, // No staking program
     totalStaked: 0, // No staking
     holders: 1 // Minimal holders detected
