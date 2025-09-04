@@ -6,9 +6,9 @@
 
 :root {
   /* PREMIUM GOLDIUM THEME TOKENS */
-  --gold-light: #FFD966;
-  --gold: #E6B800;
-  --gold-dark: #8C6A00;
+  --gold-light: #FFEB3B;
+  --gold: #FFD700;
+  --gold-dark: #FFC107;
   --black-elegant: #0A0A0A;
   --glass: rgba(255, 255, 255, 0.04);
   --glass-border: rgba(255, 255, 255, 0.08);
@@ -39,8 +39,8 @@
   /* MODERN BLACK COLORS */
   --chainzoku-black: #000000;               /* Pure black */
   --chainzoku-white: #FFFFFF;               /* Pure white */
-  --chainzoku-yellow: #FFFFFF;              /* White instead of yellow */
-  --chainzoku-gold: #FFFFFF;                /* White instead of gold */
+  --chainzoku-yellow: #FFEB3B;              /* Bright yellow */
+  --chainzoku-gold: #FFD700;                /* Bright gold */
   --chainzoku-orange: #FFFFFF;              /* White instead of orange */
   --chainzoku-glow: rgba(255, 255, 255, 0.3); /* White glow */
   --chainzoku-glass: rgba(0, 0, 0, 0.1);    /* Glass effect */
@@ -49,9 +49,9 @@
   --chainzoku-shadow: rgba(255, 255, 255, 0.2); /* White shadow */
 
   /* MODERN THEME COLORS */
-  --galaxy-gold: #FFFFFF;                   /* White */
-  --galaxy-yellow: #FFFFFF;                /* White */
-  --galaxy-amber: #FFFFFF;                 /* White */
+  --galaxy-gold: #FFD700;                   /* Bright gold */
+  --galaxy-yellow: #FFEB3B;                /* Bright yellow */
+  --galaxy-amber: #FFC107;                 /* Bright amber */
   --galaxy-blue: #FFFFFF;                  /* White */
   --galaxy-cyan: #FFFFFF;                  /* White */
 
@@ -60,7 +60,7 @@
   --defi-secondary: rgba(0, 0, 0, 0.8);    /* Black secondary */
   --defi-accent: #FFFFFF;                  /* White accent */
   --bronze-primary: #FFFFFF;               /* White */
-  --gold-primary: #FFFFFF;                 /* White primary */
+  --gold-primary: #FFD700;                 /* Bright gold primary */
 }
 
 /* Clean Text Effects */
@@ -1695,7 +1695,7 @@ button[aria-expanded] {
 
 /* Golden Text - Like GOLDIUM splash screen */
 .text-golden {
-  background: linear-gradient(to right, #fbbf24, #f59e0b, #d97706);
+  background: linear-gradient(to right, #FFEB3B, #FFD700, #FFC107);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -1710,30 +1710,30 @@ button[aria-expanded] {
 
 /* Golden Text Large - For big titles */
 .text-golden-large {
-  background: linear-gradient(to right, #fbbf24, #f59e0b, #d97706);
+  background: linear-gradient(to right, #FFEB3B, #FFD700, #FFC107);
   background-size: 300% 300%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: golden-glow 2s ease-in-out infinite alternate;
-  filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.3));
+  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
 }
 
 @keyframes golden-glow {
   0% { 
     background-position: 0% 50%;
-    filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.3));
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
   }
   100% { 
     background-position: 100% 50%;
-    filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.5));
+    filter: drop-shadow(0 0 20px rgba(255, 235, 59, 0.8));
   }
 }
 
 /* Golden Text Small - For labels and small text */
 .text-golden-small {
-  color: #fbbf24;
-  text-shadow: 0 0 8px rgba(251, 191, 36, 0.4);
+  color: #FFEB3B;
+  text-shadow: 0 0 8px rgba(255, 235, 59, 0.6);
 }
 
 /* ========================================
