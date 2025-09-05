@@ -40,12 +40,16 @@ export function TransactionSuccessModal({
 
   const finalTxSignature = txSignature || generateTxSignature();
   const solscanUrl = `https://solscan.io/tx/${finalTxSignature}`;
+  
+  // GOLDIUM Contract Address for display
+  const goldiumContractAddress = 'APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump';
+  const contractUrl = `https://solscan.io/token/${goldiumContractAddress}`;
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
     toast({
       title: "Copied!",
-      description: "Transaction signature copied to clipboard",
+      description: text === goldiumContractAddress ? "Contract address copied to clipboard" : "Transaction signature copied to clipboard",
     });
   };
 
@@ -129,16 +133,16 @@ export function TransactionSuccessModal({
             </CardContent>
           </Card>
 
-          {/* Transaction ID */}
+          {/* Contract Address */}
           <Card className="bg-slate-800/50 border-slate-600">
             <CardContent className="p-4">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <h4 className="font-semibold text-white">Transaction ID</h4>
+                  <h4 className="font-semibold text-white">GOLDIUM Contract Address</h4>
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => copyToClipboard(finalTxSignature)}
+                    onClick={() => copyToClipboard(goldiumContractAddress)}
                     className="h-8 w-8 p-0"
                   >
                     <Copy className="w-4 h-4" />
@@ -147,18 +151,28 @@ export function TransactionSuccessModal({
                 
                 <div className="bg-slate-900/50 p-3 rounded-lg">
                   <code className="text-xs text-slate-300 break-all font-mono">
-                    {finalTxSignature}
+                    {goldiumContractAddress}
                   </code>
                 </div>
 
-                <Button
-                  variant="outline"
-                  className="w-full border-white/20 text-white hover:bg-white/10"
-                  onClick={() => window.open(solscanUrl, '_blank')}
-                >
-                  <ExternalLink className="w-4 h-4 mr-2" />
-                  View on Solscan
-                </Button>
+                <div className="grid grid-cols-2 gap-2">
+                  <Button
+                    variant="outline"
+                    className="border-white/20 text-white hover:bg-white/10"
+                    onClick={() => window.open(contractUrl, '_blank')}
+                  >
+                    <ExternalLink className="w-4 h-4 mr-2" />
+                    View Contract
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="border-white/20 text-white hover:bg-white/10"
+                    onClick={() => window.open(solscanUrl, '_blank')}
+                  >
+                    <ExternalLink className="w-4 h-4 mr-2" />
+                    View Transaction
+                  </Button>
+                </div>
               </div>
             </CardContent>
           </Card>

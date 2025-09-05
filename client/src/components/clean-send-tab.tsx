@@ -213,18 +213,20 @@ export function CleanSendTab() {
       refetch();
       refreshTransactionHistory?.();
       
+      const goldiumContractAddress = 'APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump';
+      
       toast({
         title: "Transaction Successful!",
         description: (
           <div className="space-y-2">
             <p>Sent {sendAmount_num} {selectedToken} to {recipientAddress.slice(0, 8)}...{recipientAddress.slice(-8)}</p>
             <a 
-              href={`https://solscan.io/tx/${signature}`}
+              href={`https://solscan.io/token/${goldiumContractAddress}`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-400 hover:text-blue-300 underline block"
             >
-              View on Solscan →
+              View GOLDIUM Contract →
             </a>
           </div>
         ),

@@ -604,19 +604,22 @@ export class GoldTokenService {
           if (jupiterError.message?.includes('TOKEN_NOT_TRADABLE') || jupiterError.message?.includes('ROUTE_NOT_FOUND')) {
             throw new Error(
               `🚫 GOLDIUM Token Swap Currently Unavailable\n\n` +
-              `❌ All DEX platforms are currently unable to process GOLDIUM swaps:\n` +
-              `• Jupiter DEX: Token not tradeable (expected)\n` +
-              `• pump.fun: ${pumpError.message.includes('530') ? 'Service temporarily unavailable' : pumpError.message}\n` +
-              `• Raydium DEX: ${raydiumError.message.includes('No GOLDIUM pools') ? 'No liquidity pools found' : raydiumError.message}\n\n` +
-              `💡 What you can do:\n` +
-              `1. 🔄 Try again in a few minutes (APIs may recover)\n` +
-              `2. 🌐 Visit DEX websites directly:\n` +
+              `❌ Analysis Results:\n` +
+              `• Jupiter DEX: Token not tradeable (${jupiterError.message.includes('TOKEN_NOT_TRADABLE') ? 'TOKEN_NOT_TRADABLE' : 'ROUTE_NOT_FOUND'})\n` +
+              `• pump.fun: ${pumpError.message.includes('530') ? 'Service temporarily unavailable (Error 530)' : pumpError.message}\n` +
+              `• Raydium DEX: ${raydiumError.message.includes('ROUTE_NOT_FOUND') ? 'No liquidity pools found (ROUTE_NOT_FOUND)' : raydiumError.message}\n\n` +
+              `💡 Recommended Solutions:\n` +
+              `1. 🌐 Manual Swap on DEX Websites:\n` +
               `   • pump.fun: https://pump.fun/${GOLD_CONTRACT_ADDRESS}\n` +
               `   • Raydium: https://raydium.io/swap\n` +
               `   • Jupiter: https://jup.ag\n` +
-              `3. 📊 Check token status on Solscan: https://solscan.io/token/${GOLD_CONTRACT_ADDRESS}\n` +
-              `4. 💬 Join our community for updates on trading availability\n\n` +
-              `⏰ This is likely a temporary issue with DEX APIs. Please try again later.`
+              `   • Orca: https://www.orca.so\n` +
+              `2. 📊 Check Token Status:\n` +
+              `   • Solscan: https://solscan.io/token/${GOLD_CONTRACT_ADDRESS}\n` +
+              `   • DexScreener: https://dexscreener.com/solana/${GOLD_CONTRACT_ADDRESS}\n` +
+              `3. 🔄 Wait and Retry (APIs may recover)\n` +
+              `4. 💬 Contact Support if issue persists\n\n` +
+              `⚠️ Status: All automated swap platforms currently unavailable for GOLDIUM.`
             );
           } else if (jupiterError.message?.includes('insufficient funds')) {
             throw new Error(
@@ -634,11 +637,18 @@ export class GoldTokenService {
               `• Jupiter DEX: ${jupiterError.message}\n` +
               `• pump.fun: ${pumpError.message}\n` +
               `• Raydium DEX: ${raydiumError.message}\n\n` +
-              `💡 Recommended Actions:\n` +
-              `1. 🔄 Wait 5-10 minutes and try again\n` +
-              `2. 🌐 Try manual swapping on DEX websites\n` +
-              `3. 📊 Check if GOLDIUM is still tradeable on Solscan\n` +
-              `4. 💬 Contact support if the issue persists\n\n` +
+              `💡 Alternative Solutions:\n` +
+              `1. 🌐 Manual Swap Options:\n` +
+              `   • Visit pump.fun directly: https://pump.fun/${GOLD_CONTRACT_ADDRESS}\n` +
+              `   • Try Raydium swap: https://raydium.io/swap\n` +
+              `   • Use Jupiter aggregator: https://jup.ag\n` +
+              `2. 📊 Token Information:\n` +
+              `   • Solscan: https://solscan.io/token/${GOLD_CONTRACT_ADDRESS}\n` +
+              `   • DexScreener: https://dexscreener.com/solana/${GOLD_CONTRACT_ADDRESS}\n` +
+              `3. 🔄 Retry Strategy:\n` +
+              `   • Wait 5-10 minutes for API recovery\n` +
+              `   • Check token migration status\n` +
+              `4. 💬 Support: Contact team if issue persists\n\n` +
               `⚠️ This appears to be a temporary API issue affecting multiple DEX platforms.`
             );
           }

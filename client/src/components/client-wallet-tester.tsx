@@ -9,6 +9,7 @@ import { validateClientWallet, checkClientWalletBalance, CLIENT_WALLET_DATA } fr
 import { clientWalletService } from '@/lib/client-wallet-service';
 import { useToast } from '@/hooks/use-toast';
 import ManualSwapGuide from './ManualSwapGuide';
+import SwapStatusAlert from './SwapStatusAlert';
 
 export function ClientWalletTester() {
   const [walletValid, setWalletValid] = useState<boolean | null>(null);
@@ -18,6 +19,8 @@ export function ClientWalletTester() {
   const [sendAmount, setSendAmount] = useState('0.01');
   const [sendRecipient, setSendRecipient] = useState('');
   const [showManualGuide, setShowManualGuide] = useState(false);
+  const [showSwapAlert, setShowSwapAlert] = useState(false);
+  const [swapErrorMessage, setSwapErrorMessage] = useState<string>('');
   const { toast } = useToast();
 
   // Validate wallet on component mount
@@ -89,12 +92,13 @@ export function ClientWalletTester() {
         
         toast({
           title: "🚫 DEX APIs Unavailable",
-          description: "All DEX platforms are currently experiencing issues. Manual swap guide available.",
+          description: "All DEX platforms are currently experiencing issues. Check swap status alert for solutions.",
           variant: "destructive"
         });
         
-        // Show manual swap guide
-        setShowManualGuide(true);
+        // Show swap status alert with error details
+        setSwapErrorMessage(errorMessage);
+        setShowSwapAlert(true);
       } else {
         toast({
           title: "❌ Swap Test Failed",
@@ -290,6 +294,13 @@ export function ClientWalletTester() {
         isOpen={showManualGuide}
         onClose={() => setShowManualGuide(false)}
         solAmount={parseFloat(swapAmount)}
+      />
+      
+      {/* Swap Status Alert Modal */}
+      <SwapStatusAlert 
+        isVisible={showSwapAlert}
+        onClose={() => setShowSwapAlert(false)}
+        errorMessage={swapErrorMessage}
       />
     </div>
   );

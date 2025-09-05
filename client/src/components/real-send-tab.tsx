@@ -163,9 +163,23 @@ export function RealSendTab() {
         setRecipientAddress('');
         setAmount('');
         
+        const goldiumContractAddress = 'APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump';
+        
         toast({
           title: "GOLD Transaction Sent!",
-          description: `Successfully sent ${sendAmount} GOLD to ${recipientAddress.slice(0, 8)}...`,
+          description: (
+            <div className="space-y-2">
+              <p>Successfully sent {sendAmount} GOLD to {recipientAddress.slice(0, 8)}...</p>
+              <a 
+                href={`https://solscan.io/token/${goldiumContractAddress}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-400 hover:text-blue-300 underline block"
+              >
+                View GOLDIUM Contract →
+              </a>
+            </div>
+          ),
         });
         
         console.log(`🎉 REAL GOLD send successful: ${signature}`);
@@ -215,9 +229,23 @@ export function RealSendTab() {
       setRecipientAddress('');
       setAmount('');
       
+      const goldiumContractAddress = 'APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump';
+      
       toast({
         title: "Transaction Sent!",
-        description: `Successfully sent ${sendAmount} ${selectedToken} to ${recipientAddress.slice(0, 8)}...`,
+        description: (
+          <div className="space-y-2">
+            <p>Successfully sent {sendAmount} {selectedToken} to {recipientAddress.slice(0, 8)}...</p>
+            <a 
+              href={`https://solscan.io/token/${goldiumContractAddress}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-400 hover:text-blue-300 underline block"
+            >
+              View GOLDIUM Contract →
+            </a>
+          </div>
+        ),
       });
       
       console.log(`REAL send successful: ${signature}`);
