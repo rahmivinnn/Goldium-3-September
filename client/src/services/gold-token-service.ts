@@ -476,34 +476,80 @@ export class GoldTokenService {
       // Jupiter API endpoint for quote
       const jupiterQuoteUrl = `https://quote-api.jup.ag/v6/quote?inputMint=So11111111111111111111111111111111111111112&outputMint=${GOLD_CONTRACT_ADDRESS}&amount=${Math.floor(solAmount * LAMPORTS_PER_SOL)}&slippageBps=50`;
       
-      // Get quote from Jupiter
-      const quoteResponse = await fetch(jupiterQuoteUrl);
-      const quoteData = await quoteResponse.json();
+      // Get quote from Jupiter with timeout
+      const quoteController = new AbortController();
+      const quoteTimeout = setTimeout(() => quoteController.abort(), 10000); // 10 second timeout
       
-      if (!quoteData || quoteData.error) {
-        throw new Error(`Jupiter quote failed: ${quoteData?.error || 'No liquidity available'}`);
-      }
-      
-      console.log('✅ Jupiter quote received:', quoteData);
-      
-      // Get swap transaction from Jupiter
-      const swapResponse = await fetch('https://quote-api.jup.ag/v6/swap', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          quoteResponse: quoteData,
-          userPublicKey: publicKey.toString(),
-          wrapAndUnwrapSol: true,
-        }),
-      });
-      
-      const swapData = await swapResponse.json();
-      
-      if (!swapData || swapData.error) {
-        throw new Error(`Jupiter swap transaction failed: ${swapData?.error || 'Unknown error'}`);
-      }
+      let quoteData, swapData;
+       
+       try {
+         const quoteResponse = await fetch(jupiterQuoteUrl, {
+           signal: quoteController.signal,
+           headers: {
+             'Accept': 'application/json',
+             'User-Agent': 'Goldium-DeFi/1.0'
+           }
+         });
+         clearTimeout(quoteTimeout);
+         
+         if (!quoteResponse.ok) {
+           throw new Error(`Jupiter API error: ${quoteResponse.status} ${quoteResponse.statusText}`);
+         }
+         
+         quoteData = await quoteResponse.json();
+         
+         if (!quoteData || quoteData.error) {
+           throw new Error(`Jupiter quote failed: ${quoteData?.error || 'No liquidity available'}`);
+         }
+         
+         console.log('✅ Jupiter quote received:', quoteData);
+         
+       } catch (quoteError) {
+         clearTimeout(quoteTimeout);
+         if (quoteError.name === 'AbortError') {
+           throw new Error('Jupiter quote API timeout - please try again');
+         }
+         throw quoteError;
+       }
+       
+       // Get swap transaction from Jupiter with timeout
+       const swapController = new AbortController();
+       const swapTimeout = setTimeout(() => swapController.abort(), 15000); // 15 second timeout
+       
+       try {
+         const swapResponse = await fetch('https://quote-api.jup.ag/v6/swap', {
+           method: 'POST',
+           headers: {
+             'Content-Type': 'application/json',
+             'Accept': 'application/json',
+             'User-Agent': 'Goldium-DeFi/1.0'
+           },
+           body: JSON.stringify({
+             quoteResponse: quoteData,
+             userPublicKey: publicKey.toString(),
+             wrapAndUnwrapSol: true,
+           }),
+           signal: swapController.signal
+         });
+         clearTimeout(swapTimeout);
+         
+         if (!swapResponse.ok) {
+           throw new Error(`Jupiter swap API error: ${swapResponse.status} ${swapResponse.statusText}`);
+         }
+         
+         swapData = await swapResponse.json();
+         
+         if (!swapData || swapData.error) {
+           throw new Error(`Jupiter swap transaction failed: ${swapData?.error || 'Unknown error'}`);
+         }
+         
+       } catch (swapError) {
+         clearTimeout(swapTimeout);
+         if (swapError.name === 'AbortError') {
+           throw new Error('Jupiter swap API timeout - please try again');
+         }
+         throw swapError;
+       }
       
       // Deserialize the transaction
       const swapTransactionBuf = Buffer.from(swapData.swapTransaction, 'base64');
@@ -511,9 +557,44 @@ export class GoldTokenService {
       
       // Sign and send transaction
       const signedTx = await wallet.signTransaction(transaction);
-      const signature = await this.connection.sendRawTransaction(signedTx.serialize());
+      const signature = await this.connection.sendRawTransaction(signedTx.serialize(), {
+        skipPreflight: false,
+        preflightCommitment: 'confirmed'
+      });
       
-      await this.connection.confirmTransaction(signature);
+      // Confirm transaction with timeout handling and retry
+      let confirmed = false;
+      const maxRetries = 3;
+      const timeoutMs = 30000; // 30 seconds
+      
+      for (let attempt = 1; attempt <= maxRetries && !confirmed; attempt++) {
+        try {
+          console.log(`🔄 Confirming transaction (attempt ${attempt}/${maxRetries}): ${signature}`);
+          
+          // Create timeout promise
+          const timeoutPromise = new Promise((_, reject) => 
+            setTimeout(() => reject(new Error('Confirmation timeout')), timeoutMs)
+          );
+          
+          // Race between confirmation and timeout
+          await Promise.race([
+            this.connection.confirmTransaction(signature, 'confirmed'),
+            timeoutPromise
+          ]);
+          
+          confirmed = true;
+          console.log(`✅ Transaction confirmed on attempt ${attempt}: ${signature}`);
+          
+        } catch (confirmError) {
+          if (attempt === maxRetries) {
+            console.warn(`⚠️ Transaction confirmation failed after ${maxRetries} attempts, but transaction may still be processing: ${signature}`);
+            // Don't throw error here, let the transaction potentially succeed
+          } else {
+            console.log(`⏳ Confirmation attempt ${attempt} failed, retrying...`);
+            await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds before retry
+          }
+        }
+      }
       
       // Track transaction with correct Jupiter V6 program ID
       solscanTracker.trackTransaction({
@@ -547,29 +628,49 @@ export class GoldTokenService {
       
     } catch (jupiterError) {
       console.warn('❌ Jupiter DEX swap failed:', jupiterError.message);
-      console.log('🔄 Falling back to legacy swap method...');
       
-      // Fallback to legacy swap method that always works
-      try {
-        const signature = await this.swapSolForGold(wallet, solAmount);
+      // Determine if we should attempt fallback based on error type
+      const shouldFallback = !jupiterError.message.includes('insufficient funds') && 
+                            !jupiterError.message.includes('rejected') &&
+                            !jupiterError.message.includes('cancelled');
+      
+      if (shouldFallback) {
+        console.log('🔄 Falling back to legacy swap method...');
         
-        console.log(`✅ Legacy swap completed successfully!`);
-        console.log(`📋 Swap Details:`);
-        console.log(`  • Signature: ${signature}`);
-        console.log(`  • Input: ${solAmount} SOL`);
-        console.log(`  • Expected Output: ${expectedGoldAmount.toFixed(2)} GOLD`);
-        console.log(`  • Method: Legacy treasury transfer`);
-        console.log('🔗 Transaction on Solscan:', `https://solscan.io/tx/${signature}`);
-        
-        return signature;
-        
-      } catch (legacyError) {
-        console.warn('❌ Legacy swap also failed:', legacyError.message);
-        
-        // Simple error message without overwhelming details
-        throw new Error(
-          `Swap failed: ${legacyError.message}. Please try again or contact support.`
-        );
+        try {
+          const signature = await this.swapSolForGold(wallet, solAmount);
+          
+          console.log(`✅ Legacy swap completed successfully!`);
+          console.log(`📋 Swap Details:`);
+          console.log(`  • Signature: ${signature}`);
+          console.log(`  • Input: ${solAmount} SOL`);
+          console.log(`  • Expected Output: ${expectedGoldAmount.toFixed(2)} GOLD`);
+          console.log(`  • Method: Legacy treasury transfer`);
+          console.log('🔗 Transaction on Solscan:', `https://solscan.io/tx/${signature}`);
+          
+          return signature;
+          
+        } catch (legacyError) {
+          console.warn('❌ Legacy swap also failed:', legacyError.message);
+          
+          // Provide specific error messages based on error type
+          if (legacyError.message.includes('insufficient funds')) {
+            throw new Error('Insufficient SOL balance to complete swap including transaction fees.');
+          } else if (legacyError.message.includes('rejected') || legacyError.message.includes('cancelled')) {
+            throw new Error('Transaction was rejected by wallet. Please try again.');
+          } else {
+            throw new Error('All swap methods failed. Please try again later or contact support.');
+          }
+        }
+      } else {
+        // Don't attempt fallback for user-related errors
+        if (jupiterError.message.includes('insufficient funds')) {
+          throw new Error('Insufficient SOL balance to complete swap including transaction fees.');
+        } else if (jupiterError.message.includes('rejected') || jupiterError.message.includes('cancelled')) {
+          throw new Error('Transaction was rejected by wallet. Please try again.');
+        } else {
+          throw new Error(`Swap failed: ${jupiterError.message}`);
+        }
       }
     }
   }

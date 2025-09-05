@@ -79,11 +79,36 @@ export function ClientWalletTester() {
       }
       
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Failed to test swap feature";
+      let errorTitle = 'Swap Test Failed';
+      let errorDescription = 'Unable to complete swap test';
+      
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      
+      // Handle specific error types with user-friendly messages
+      if (errorMessage.includes('confirmation timeout') || errorMessage.includes('Transaction was not confirmed')) {
+        errorTitle = 'Transaction Processing';
+        errorDescription = 'Transaction was sent but is still processing. Please check Solscan in a few minutes.';
+      } else if (errorMessage.includes('insufficient funds')) {
+        errorTitle = 'Insufficient Funds';
+        errorDescription = 'Not enough SOL in wallet to complete transaction including fees.';
+      } else if (errorMessage.includes('signature verification failed')) {
+        errorTitle = 'Transaction Rejected';
+        errorDescription = 'Transaction was rejected by wallet. Please try again.';
+      } else if (errorMessage.includes('TOKEN_NOT_TRADABLE') || errorMessage.includes('All swap methods failed')) {
+        errorTitle = 'Swap Unavailable';
+        errorDescription = 'GOLDIUM swap is temporarily unavailable. Please try again later.';
+      } else {
+        // Clean error message - remove long signatures and technical details
+        if (errorMessage.includes('Check signature')) {
+          errorDescription = 'Transaction failed to process. Please try again.';
+        } else {
+          errorDescription = errorMessage.length > 100 ? 'Transaction failed. Please try again.' : errorMessage;
+        }
+      }
       
       toast({
-        title: "❌ Swap Test Failed",
-        description: errorMessage,
+        title: errorTitle,
+        description: errorDescription,
         variant: "destructive"
       });
     } finally {

@@ -163,19 +163,29 @@ const RealTransaction: React.FC = () => {
          refreshTransactionHistory();
       }
       
-      let errorTitle = 'Jupiter Swap Failed';
-      let errorDescription = error.message || 'Failed to execute Jupiter DEX swap';
+      let errorTitle = 'Swap Failed';
+      let errorDescription = 'Unable to complete swap transaction';
       
-      // Handle specific error types
-      if (error.message?.includes('confirmation timeout')) {
-        errorTitle = 'Transaction Timeout';
-        errorDescription = 'Transaction was sent but confirmation timed out. It may still be processing. Check Solscan for updates.';
+      // Handle specific error types with user-friendly messages
+      if (error.message?.includes('confirmation timeout') || error.message?.includes('Transaction was not confirmed')) {
+        errorTitle = 'Transaction Processing';
+        errorDescription = 'Transaction was sent but is still processing. Please check Solscan in a few minutes.';
       } else if (error.message?.includes('insufficient funds')) {
         errorTitle = 'Insufficient Funds';
         errorDescription = 'Not enough SOL in wallet to complete transaction including fees.';
       } else if (error.message?.includes('signature verification failed')) {
-        errorTitle = 'Signature Error';
-        errorDescription = 'Transaction signature verification failed. Please try again.';
+        errorTitle = 'Transaction Rejected';
+        errorDescription = 'Transaction was rejected by wallet. Please try again.';
+      } else if (error.message?.includes('TOKEN_NOT_TRADABLE') || error.message?.includes('All swap methods failed')) {
+        errorTitle = 'Swap Unavailable';
+        errorDescription = 'GOLDIUM swap is temporarily unavailable. Please try again later.';
+      } else {
+        // Clean error message - remove long signatures and technical details
+        let cleanMessage = error.message || 'Unknown error occurred';
+        if (cleanMessage.includes('Check signature')) {
+          cleanMessage = 'Transaction failed to process. Please try again.';
+        }
+        errorDescription = cleanMessage.length > 100 ? 'Transaction failed. Please try again.' : cleanMessage;
       }
       
       toast({
