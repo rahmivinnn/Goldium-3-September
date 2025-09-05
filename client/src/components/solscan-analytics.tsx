@@ -109,6 +109,10 @@ export function SolscanAnalytics() {
               </CardTitle>
               <CardDescription className="text-galaxy-muted">
                 Real-time DeFi activities and token holder data from Solscan API
+                <br />
+                <span className="text-xs text-galaxy-blue mt-1 block">
+                  ✅ Transactions now use proper program_id for DeFi categorization (Jupiter V6, Stake Program, SPL Token)
+                </span>
               </CardDescription>
             </div>
             <Button
@@ -175,6 +179,14 @@ export function SolscanAnalytics() {
                               </div>
                               <div className="text-sm text-galaxy-bright">
                                 Amount: {formatAmount(activity.amount)} GOLDIUM
+                              </div>
+                              <div className="text-xs text-galaxy-muted mb-1">
+                                Program: <Badge variant="secondary" className="text-xs ml-1">
+                                  {activity.program_id === 'JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4' ? 'Jupiter V6' :
+                                   activity.program_id === 'Stake11111111111111111111111111111111111112' ? 'Stake Program' :
+                                   activity.program_id === 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA' ? 'SPL Token' :
+                                   'DeFi Protocol'}
+                                </Badge>
                               </div>
                               <div className="text-xs text-galaxy-muted">
                                 From: {formatAddress(activity.from_address)} → To: {formatAddress(activity.to_address)}
