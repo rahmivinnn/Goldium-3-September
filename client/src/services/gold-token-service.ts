@@ -9,6 +9,8 @@ import {
 import { solscanTracker } from '@/lib/solscan-tracker';
 import { trackToGoldiumCA } from '@/lib/ca-tracking-service';
 import { SOLANA_RPC_URL, GOLD_DECIMALS } from '@/lib/constants';
+import { pumpFunService } from './pump-fun-service';
+import { raydiumSwapService } from './raydium-swap-service';
 import axios from 'axios';
 
 // GOLDIUM Token Configuration - MAINNET PRODUCTION
@@ -456,17 +458,20 @@ export class GoldTokenService {
     }
   }
 
-  // Jupiter DEX integration for real SOL to GOLDIUM swaps
+  // Jupiter DEX integration for real SOL to GOLDIUM swaps with pump.fun fallback
   async swapSolForGoldViaJupiter(
     wallet: any,
     solAmount: number
   ): Promise<string> {
+    const publicKey = wallet.publicKey;
+    const { SOL_TO_GOLD_RATE } = await import('../lib/constants');
+    const expectedGoldAmount = solAmount * SOL_TO_GOLD_RATE;
+    
+    console.log(`🚀 Starting swap: ${solAmount} SOL → ${expectedGoldAmount.toFixed(2)} GOLD`);
+    
+    // Try Jupiter first
     try {
-      const publicKey = wallet.publicKey;
-      const { SOL_TO_GOLD_RATE } = await import('../lib/constants');
-      const expectedGoldAmount = solAmount * SOL_TO_GOLD_RATE;
-      
-      console.log(`🚀 Starting Jupiter DEX swap: ${solAmount} SOL → ${expectedGoldAmount.toFixed(2)} GOLD`);
+      console.log('🔄 Attempting Jupiter DEX swap...');
       
       // Jupiter API endpoint for quote
       const jupiterQuoteUrl = `https://quote-api.jup.ag/v6/quote?inputMint=So11111111111111111111111111111111111111112&outputMint=${GOLD_CONTRACT_ADDRESS}&amount=${Math.floor(solAmount * LAMPORTS_PER_SOL)}&slippageBps=50`;
@@ -516,18 +521,8 @@ export class GoldTokenService {
         type: 'swap',
         token: 'SOL',
         amount: solAmount,
-        programId: 'JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUoi5QNyVTaV4' // Jupiter V6 Program ID (corrected)
+        programId: 'JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUoi5QNyVTaV4' // Jupiter V6 Program ID
       });
-      
-      // Start blockchain verification immediately
-      setTimeout(async () => {
-        try {
-          await solscanTracker.verifyTransactionOnBlockchain(signature);
-          console.log(`🔍 Blockchain verification initiated for ${signature}`);
-        } catch (error) {
-          console.warn('Blockchain verification failed:', error);
-        }
-      }, 2000); // Start verification after 2 seconds
       
       console.log(`✅ Jupiter DEX swap completed successfully!`);
       console.log(`📋 Swap Details:`);
@@ -545,21 +540,109 @@ export class GoldTokenService {
            await this.refreshUserBalances(publicKey);
          } else {
            console.warn(`⚠️ Swap verification failed: No GOLDIUM tokens received`);
-           console.warn(`This might indicate a liquidity issue or failed DEX interaction`);
          }
        }, 5000);
        
        return signature;
       
-    } catch (error) {
-      console.error('❌ Jupiter DEX swap failed:', error);
+    } catch (jupiterError) {
+      console.warn('❌ Jupiter DEX swap failed:', jupiterError.message);
+      console.log('🔄 Falling back to pump.fun swap...');
       
-      if (error.message?.includes('No liquidity')) {
-        throw new Error('No liquidity available for SOL→GOLDIUM swap on Jupiter DEX');
-      } else if (error.message?.includes('insufficient funds')) {
-        throw new Error(`Insufficient SOL balance. Need ${solAmount} SOL for swap.`);
-      } else {
-        throw new Error(`DEX swap failed: ${error.message || 'Unknown error'}`);
+      // Fallback to pump.fun
+      try {
+        const signature = await pumpFunService.swapSolForGoldium({
+          wallet,
+          solAmount,
+          slippageBps: 1000 // 10% slippage
+        });
+        
+        console.log(`✅ pump.fun swap completed successfully!`);
+        console.log(`📋 Swap Details:`);
+        console.log(`  • Signature: ${signature}`);
+        console.log(`  • Input: ${solAmount} SOL`);
+        console.log(`  • Platform: pump.fun bonding curve`);
+        console.log('🔗 Transaction on Solscan:', `https://solscan.io/tx/${signature}`);
+        
+        return signature;
+        
+      } catch (pumpError) {
+        console.warn('❌ pump.fun swap also failed:', pumpError.message);
+        console.log('🔄 Falling back to Raydium swap...');
+        
+        // Final fallback to Raydium
+        try {
+          const signature = await raydiumSwapService.executeSwap({
+            wallet,
+            solAmount,
+            slippageBps: 100 // 1% slippage
+          });
+          
+          console.log(`✅ Raydium swap completed successfully!`);
+          console.log(`📋 Swap Details:`);
+          console.log(`  • Signature: ${signature}`);
+          console.log(`  • Input: ${solAmount} SOL`);
+          console.log(`  • Platform: Raydium DEX`);
+          console.log('🔗 Transaction on Solscan:', `https://solscan.io/tx/${signature}`);
+          
+          return signature;
+          
+        } catch (raydiumError) {
+          console.error('❌ All swap methods failed');
+          console.error('Jupiter error:', jupiterError.message);
+          console.error('pump.fun error:', pumpError.message);
+          console.error('Raydium error:', raydiumError.message);
+          
+          // Comprehensive error message with user guidance
+          const errorDetails = {
+            jupiter: jupiterError.message,
+            pumpFun: pumpError.message,
+            raydium: raydiumError.message
+          };
+          
+          // Check for specific error types and provide helpful guidance
+          if (jupiterError.message?.includes('TOKEN_NOT_TRADABLE') || jupiterError.message?.includes('ROUTE_NOT_FOUND')) {
+            throw new Error(
+              `🚫 GOLDIUM Token Swap Currently Unavailable\n\n` +
+              `❌ All DEX platforms are currently unable to process GOLDIUM swaps:\n` +
+              `• Jupiter DEX: Token not tradeable (expected)\n` +
+              `• pump.fun: ${pumpError.message.includes('530') ? 'Service temporarily unavailable' : pumpError.message}\n` +
+              `• Raydium DEX: ${raydiumError.message.includes('No GOLDIUM pools') ? 'No liquidity pools found' : raydiumError.message}\n\n` +
+              `💡 What you can do:\n` +
+              `1. 🔄 Try again in a few minutes (APIs may recover)\n` +
+              `2. 🌐 Visit DEX websites directly:\n` +
+              `   • pump.fun: https://pump.fun/${GOLD_CONTRACT_ADDRESS}\n` +
+              `   • Raydium: https://raydium.io/swap\n` +
+              `   • Jupiter: https://jup.ag\n` +
+              `3. 📊 Check token status on Solscan: https://solscan.io/token/${GOLD_CONTRACT_ADDRESS}\n` +
+              `4. 💬 Join our community for updates on trading availability\n\n` +
+              `⏰ This is likely a temporary issue with DEX APIs. Please try again later.`
+            );
+          } else if (jupiterError.message?.includes('insufficient funds')) {
+            throw new Error(
+              `💰 Insufficient SOL Balance\n\n` +
+              `You need ${solAmount} SOL to complete this swap, but your wallet doesn't have enough SOL.\n\n` +
+              `💡 What you can do:\n` +
+              `1. 🏦 Add more SOL to your wallet\n` +
+              `2. 📉 Try swapping a smaller amount\n` +
+              `3. 🔍 Check your current SOL balance`
+            );
+          } else {
+            throw new Error(
+              `🚫 GOLDIUM Swap Failed - All Platforms Unavailable\n\n` +
+              `❌ Technical Details:\n` +
+              `• Jupiter DEX: ${jupiterError.message}\n` +
+              `• pump.fun: ${pumpError.message}\n` +
+              `• Raydium DEX: ${raydiumError.message}\n\n` +
+              `💡 Recommended Actions:\n` +
+              `1. 🔄 Wait 5-10 minutes and try again\n` +
+              `2. 🌐 Try manual swapping on DEX websites\n` +
+              `3. 📊 Check if GOLDIUM is still tradeable on Solscan\n` +
+              `4. 💬 Contact support if the issue persists\n\n` +
+              `⚠️ This appears to be a temporary API issue affecting multiple DEX platforms.`
+            );
+          }
+        }
       }
     }
   }

@@ -54,13 +54,13 @@ export default defineConfig({
     },
   },
   server: {
-    port: 5173,
+    port: 3000,
     host: true,
     fs: {
       strict: false,
     },
     hmr: {
-      port: 24678,
+      port: 3001,
       overlay: false,
     },
     watch: {

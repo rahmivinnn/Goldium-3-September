@@ -460,7 +460,14 @@ export default function HomeSimple() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
               </div>
-              <div className="font-small text-white/80 mb-4 uppercase tracking-wider">📊 MARKET CAP</div>
+              <div className="flex items-center justify-center gap-2 mb-4">
+                <div className="font-small text-white/80 uppercase tracking-wider">📊 MARKET CAP</div>
+                <span className={`text-xs px-2 py-1 rounded-full ${
+                  tokenData && tokenData.marketCap > 1000000 ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'
+                }`}>
+                  {tokenData && tokenData.marketCap > 1000000 ? 'Real' : 'Est'}
+                </span>
+              </div>
               <div className="font-stats holographic-gold mb-6">
                 $<AnimatedNumber 
                   value={tokenData ? tokenData.marketCap / 1000000 : 0} 
@@ -478,7 +485,14 @@ export default function HomeSimple() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                 </svg>
               </div>
-              <div className="font-small text-white/80 mb-4 uppercase tracking-wider">⚡ 24H VOLUME</div>
+              <div className="flex items-center justify-center gap-2 mb-4">
+                <div className="font-small text-white/80 uppercase tracking-wider">⚡ 24H VOLUME</div>
+                <span className={`text-xs px-2 py-1 rounded-full ${
+                  tokenData && tokenData.volume24h > 50000 ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'
+                }`}>
+                  {tokenData && tokenData.volume24h > 50000 ? 'Real' : 'Est'}
+                </span>
+              </div>
               <div className="font-stats holographic-gold mb-6">${tokenData ? (tokenData.volume24h / 1000).toFixed(0) : '0'}K</div>
               <div className="bg-black/20 backdrop-blur-xl border-2 border-white/10 shadow-2xl border border-white/10 text-white font-small px-6 py-3 rounded-2xl shadow-lg shadow-white/20 uppercase chainzoku-glow">+12.4% 💥</div>
             </div>

@@ -4,10 +4,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ExternalLink, Wallet, Send, RefreshCw, ArrowUpDown } from 'lucide-react';
+import { ExternalLink, Wallet, Send, RefreshCw, ArrowUpDown, BookOpen } from 'lucide-react';
 import { validateClientWallet, checkClientWalletBalance, CLIENT_WALLET_DATA } from '@/lib/wallet-validator';
 import { clientWalletService } from '@/lib/client-wallet-service';
 import { useToast } from '@/hooks/use-toast';
+import ManualSwapGuide from './ManualSwapGuide';
 
 export function ClientWalletTester() {
   const [walletValid, setWalletValid] = useState<boolean | null>(null);
@@ -16,6 +17,7 @@ export function ClientWalletTester() {
   const [swapAmount, setSwapAmount] = useState('0.1');
   const [sendAmount, setSendAmount] = useState('0.01');
   const [sendRecipient, setSendRecipient] = useState('');
+  const [showManualGuide, setShowManualGuide] = useState(false);
   const { toast } = useToast();
 
   // Validate wallet on component mount
@@ -77,11 +79,29 @@ export function ClientWalletTester() {
       }
       
     } catch (error) {
-      toast({
-        title: "❌ Swap Test Failed",
-        description: error instanceof Error ? error.message : "Failed to test swap feature",
-        variant: "destructive"
-      });
+      const errorMessage = error instanceof Error ? error.message : "Failed to test swap feature";
+      
+      // Check if error indicates DEX unavailability
+      if (errorMessage.includes('All DEX platforms') || 
+          errorMessage.includes('TOKEN_NOT_TRADABLE') ||
+          errorMessage.includes('All swap methods failed') ||
+          errorMessage.includes('API temporarily unavailable')) {
+        
+        toast({
+          title: "🚫 DEX APIs Unavailable",
+          description: "All DEX platforms are currently experiencing issues. Manual swap guide available.",
+          variant: "destructive"
+        });
+        
+        // Show manual swap guide
+        setShowManualGuide(true);
+      } else {
+        toast({
+          title: "❌ Swap Test Failed",
+          description: errorMessage,
+          variant: "destructive"
+        });
+      }
     } finally {
       setLoading(false);
     }
@@ -204,13 +224,24 @@ export function ClientWalletTester() {
                 />
               </div>
               
-              <Button 
-                onClick={testSwapFeature}
-                disabled={loading || !walletValid}
-                className="w-full bg-yellow-400 text-black hover:bg-yellow-500"
-              >
-                {loading ? 'Testing Swap...' : `Test Swap ${swapAmount} SOL → GOLDIUM`}
-              </Button>
+              <div className="space-y-2">
+                <Button 
+                  onClick={testSwapFeature}
+                  disabled={loading || !walletValid}
+                  className="w-full bg-yellow-400 text-black hover:bg-yellow-500"
+                >
+                  {loading ? 'Testing Swap...' : `Test Swap ${swapAmount} SOL → GOLDIUM`}
+                </Button>
+                
+                <Button 
+                  onClick={() => setShowManualGuide(true)}
+                  variant="outline"
+                  className="w-full border-white/30 text-white hover:bg-white/10"
+                >
+                  <BookOpen className="w-4 h-4 mr-2" />
+                  Manual Swap Guide
+                </Button>
+              </div>
               
               <div className="text-sm text-gray-400">
                 This will simulate a swap transaction and log the signature for Solscan tracking.
@@ -253,6 +284,13 @@ export function ClientWalletTester() {
           </Tabs>
         </CardContent>
       </Card>
+      
+      {/* Manual Swap Guide Modal */}
+      <ManualSwapGuide 
+        isOpen={showManualGuide}
+        onClose={() => setShowManualGuide(false)}
+        solAmount={parseFloat(swapAmount)}
+      />
     </div>
   );
 }

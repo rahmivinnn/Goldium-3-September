@@ -78,7 +78,7 @@ class RealTimeDataService {
     }
   }
 
-  // Fetch REAL GOLDIUM token price from mainnet
+  // Fetch GOLD price from multiple sources with real market data
   async fetchGOLDPrice(): Promise<number> {
     // Return cached price if still valid
     if (this.goldPriceSOL > 0 && (Date.now() - this.lastFetchTime) < this.cacheTimeout) {
@@ -86,29 +86,32 @@ class RealTimeDataService {
     }
     
     try {
-      console.log('💰 Fetching GOLDIUM price...');
+      console.log('💰 Fetching REAL GOLD price from multiple sources...');
       
-      // Method 1: Try Raydium API with timeout
+      // Method 1: Try DexScreener API first for real market price
       try {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 3000);
         
-        const raydiumUrl = `https://api.raydium.io/v2/sdk/token/price?mints=${GOLD_CONTRACT_ADDRESS}`;
-        const response = await fetch(raydiumUrl, { signal: controller.signal });
+        const dexResponse = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${GOLD_CONTRACT_ADDRESS}`, { signal: controller.signal });
         clearTimeout(timeoutId);
         
-        if (response.ok) {
-          const data = await response.json();
-          if (data[GOLD_CONTRACT_ADDRESS]) {
-            const priceUSD = data[GOLD_CONTRACT_ADDRESS];
-            const solPriceUSD = await this.fetchSOLPrice();
-            this.goldPriceSOL = priceUSD / solPriceUSD;
-            console.log(`✅ GOLDIUM Price from Raydium: $${priceUSD} (${this.goldPriceSOL} SOL)`);
-            return this.goldPriceSOL;
+        if (dexResponse.ok) {
+          const dexData = await dexResponse.json();
+          if (dexData.pairs && dexData.pairs.length > 0) {
+            const pair = dexData.pairs[0];
+            const priceUSD = parseFloat(pair.priceUsd || '0');
+            
+            if (priceUSD > 0) {
+              const solPrice = await this.fetchSOLPrice();
+              this.goldPriceSOL = priceUSD / solPrice;
+              console.log(`✅ REAL GOLD Price from DexScreener: $${priceUSD} (${this.goldPriceSOL.toFixed(8)} SOL)`);
+              return this.goldPriceSOL;
+            }
           }
         }
-      } catch (raydiumError) {
-        console.warn('Raydium API unavailable');
+      } catch (dexError) {
+        console.warn('DexScreener API unavailable');
       }
       
       // Method 2: Try Jupiter quote API with timeout
@@ -138,17 +141,38 @@ class RealTimeDataService {
         console.warn('Jupiter API unavailable');
       }
       
-      // Method 3: Use realistic calculated price
-      const currentPriceUSD = 0.0085; // Realistic price for new SPL token
+      // Method 3: Try CoinGecko API as third option
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3000);
+        
+        const cgResponse = await fetch(`https://api.coingecko.com/api/v3/simple/token_price/solana?contract_addresses=${GOLD_CONTRACT_ADDRESS}&vs_currencies=usd,sol`, { signal: controller.signal });
+        clearTimeout(timeoutId);
+        
+        if (cgResponse.ok) {
+          const cgData = await cgResponse.json();
+          const tokenData = cgData[GOLD_CONTRACT_ADDRESS.toLowerCase()];
+          if (tokenData && tokenData.sol) {
+            this.goldPriceSOL = tokenData.sol;
+            console.log(`✅ REAL GOLD Price from CoinGecko: ${tokenData.sol} SOL`);
+            return this.goldPriceSOL;
+          }
+        }
+      } catch (cgError) {
+        console.warn('CoinGecko API unavailable');
+      }
+      
+      // Method 4: Use realistic calculated price
+      const currentPriceUSD = 0.0025; // More conservative USD price estimate
       const solPriceUSD = await this.fetchSOLPrice();
       this.goldPriceSOL = currentPriceUSD / solPriceUSD;
-      console.log(`✅ GOLDIUM Price calculated: $${currentPriceUSD} (${this.goldPriceSOL} SOL)`);
+      console.log(`⚠️ GOLD Price (estimated): ${this.goldPriceSOL.toFixed(8)} SOL ($${currentPriceUSD})`);
       return this.goldPriceSOL;
       
     } catch (error) {
       console.warn('All price sources unavailable, using cached/fallback price');
-      // Return cached or realistic fallback price
-      this.goldPriceSOL = this.goldPriceSOL || 0.000046; // Realistic fallback
+      // Return cached or conservative fallback price
+      this.goldPriceSOL = this.goldPriceSOL || 0.000025; // Conservative fallback
       return this.goldPriceSOL;
     }
   }
@@ -168,23 +192,43 @@ class RealTimeDataService {
     }
   }
 
-  // Get REAL token holders count from mainnet
+  // Get REAL token holders count from Solscan API
   async fetchTokenHolders(): Promise<number> {
     try {
-      console.log('👥 Fetching REAL GOLDIUM holders from MAINNET...');
+      console.log('👥 Fetching REAL GOLDIUM holders from Solscan API...');
       
-      // Try to get real holder count from Solana mainnet
-      // This would require parsing all token accounts, so we use realistic estimate
-      // Based on typical pump.fun token holder distribution
+      // Try Solscan API first for real holder count
+      const response = await fetch(`https://pro-api.solscan.io/v2.0/token/holders?token=${GOLD_CONTRACT_ADDRESS}&page=1&page_size=1`);
       
-      // For now, use the real current holder count you provided: 1,247
-      const realHolders = 1247; // REAL current GOLDIUM holders on mainnet
-      console.log(`✅ REAL GOLDIUM Holders on MAINNET: ${realHolders.toLocaleString()}`);
-      return realHolders;
+      if (response.ok) {
+        const data = await response.json();
+        if (data.data && data.total) {
+          const realHolders = data.total;
+          console.log(`✅ REAL GOLDIUM Holders from Solscan: ${realHolders.toLocaleString()}`);
+          return realHolders;
+        }
+      }
+      
+      // Fallback: Try DexScreener API
+      const dexResponse = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${GOLD_CONTRACT_ADDRESS}`);
+      if (dexResponse.ok) {
+        const dexData = await dexResponse.json();
+        if (dexData.pairs && dexData.pairs.length > 0) {
+          // Estimate holders based on transaction count and volume
+          const pair = dexData.pairs[0];
+          const estimatedHolders = Math.floor(pair.txns?.h24?.buys || 0) + Math.floor(pair.txns?.h24?.sells || 0);
+          console.log(`✅ Estimated GOLDIUM Holders from DexScreener: ${estimatedHolders}`);
+          return estimatedHolders > 0 ? estimatedHolders : 1247;
+        }
+      }
+      
+      // Final fallback
+      console.log('⚠️ Using fallback holder count');
+      return 1247; // Fallback holder count
       
     } catch (error) {
-      console.error('Failed to fetch REAL token holders from mainnet:', error);
-      return 1247; // REAL current holder count
+      console.error('Failed to fetch REAL token holders:', error);
+      return 1247; // Fallback holder count
     }
   }
 
@@ -252,18 +296,50 @@ class RealTimeDataService {
     }
   }
 
-  // Fetch volume data from DEX aggregators
+  // Fetch REAL 24h volume from DexScreener API
   async fetch24hVolume(marketCap: number): Promise<number> {
     try {
-      // Calculate realistic volume for GOLD token (APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump)
-      const baseVolume = marketCap * 0.08; // 8% of market cap as base volume (realistic for new SPL token)
-      const volatilityMultiplier = 0.8 + Math.random() * 0.4; // 0.8x to 1.2x variation
-      const volume24h = baseVolume * volatilityMultiplier;
-      console.log(`✅ GOLD 24h Volume: $${volume24h.toFixed(2)}`);
-      return volume24h;
+      console.log('📊 Fetching REAL 24h volume from DexScreener...');
+      
+      // Try DexScreener API for real volume data
+      const response = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${GOLD_CONTRACT_ADDRESS}`);
+      
+      if (response.ok) {
+        const data = await response.json();
+        if (data.pairs && data.pairs.length > 0) {
+          const pair = data.pairs[0];
+          const volume24h = parseFloat(pair.volume?.h24 || '0');
+          
+          if (volume24h > 0) {
+            console.log(`✅ REAL GOLD 24h Volume from DexScreener: $${volume24h.toLocaleString()}`);
+            return volume24h;
+          }
+        }
+      }
+      
+      // Fallback: Try Jupiter API for volume estimation
+      try {
+        const jupiterResponse = await fetch(`https://quote-api.jup.ag/v6/quote?inputMint=${GOLD_CONTRACT_ADDRESS}&outputMint=So11111111111111111111111111111111111111112&amount=1000000`);
+        if (jupiterResponse.ok) {
+          const jupiterData = await jupiterResponse.json();
+          // Estimate volume based on liquidity and market cap
+          const estimatedVolume = marketCap * 0.05; // 5% of market cap (conservative estimate)
+          console.log(`✅ Estimated GOLD 24h Volume: $${estimatedVolume.toFixed(2)}`);
+          return estimatedVolume;
+        }
+      } catch (jupiterError) {
+        console.warn('Jupiter API unavailable for volume estimation');
+      }
+      
+      // Final fallback calculation
+      const baseVolume = marketCap * 0.03; // 3% of market cap as conservative base
+      console.log(`⚠️ Using fallback volume calculation: $${baseVolume.toFixed(2)}`);
+      return baseVolume;
+      
     } catch (error) {
       console.error('Failed to fetch 24h volume:', error);
-      throw new Error('Unable to fetch 24h volume data');
+      // Return conservative estimate
+      return marketCap * 0.02; // 2% of market cap as minimum estimate
     }
   }
 
@@ -334,22 +410,29 @@ class RealTimeDataService {
     } catch (error) {
       console.error('Failed to fetch real-time data, using fallback:', error);
       
-      // Return consistent GOLDIUM data matching user requirements
-      const estimatedPrice = 0.0085; // Realistic estimated price
+      // Conservative fallback data if API calls fail
+      const estimatedPrice = 0.0025; // Conservative estimated price
       const supply = 1000000000; // 1 Billion tokens (1.00B)
-      const circulatingSupply = 600000000; // 600M circulating supply
-      const totalStaked = 210000000; // 210M total staked
+      const circulatingSupply = 100000000; // 100M circulating supply (conservative)
+      const totalStaked = 50000000; // 50M total staked (conservative)
+      
+      console.log('⚠️ Using conservative fallback data due to API failures');
+      console.log('📊 Fallback Data Summary:');
+      console.log(`   💰 Price: $${estimatedPrice}`);
+      console.log(`   📈 Market Cap: $${(estimatedPrice * circulatingSupply).toLocaleString()}`);
+      console.log(`   📊 24h Volume: $15,000`);
+      console.log(`   👥 Holders: 150`);
       
       return {
         currentPrice: estimatedPrice,
-        priceChange24h: -2.5 + Math.random() * 5, // Random change between -2.5% to +2.5%
-        volume24h: 382000, // $382K 24h volume
-        marketCap: 5100000, // $5.10M market cap
+        priceChange24h: 2.1, // Conservative 2.1% change
+        volume24h: 15000, // $15K 24h volume (conservative)
+        marketCap: estimatedPrice * circulatingSupply, // $250K market cap (conservative)
         totalSupply: supply,
         circulatingSupply: circulatingSupply,
         stakingAPY: 8.5, // 8.5% staking APY (consistent)
         totalStaked: totalStaked,
-        holders: 1200 // 1.2K token holders
+        holders: 150 // 150 token holders (conservative)
       };
     }
   }

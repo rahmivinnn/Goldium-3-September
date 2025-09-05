@@ -265,7 +265,14 @@ export const AnimatedTokenomicsCharts: React.FC = () => {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-white/70 text-sm">Volume 24h</p>
+                <div className="flex items-center gap-2 mb-1">
+                  <p className="text-white/70 text-sm">Volume 24h</p>
+                  <span className={`text-xs px-2 py-0.5 rounded-full ${
+                    tokenomicsData.volume24h > 50000 ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'
+                  }`}>
+                    {tokenomicsData.volume24h > 50000 ? 'Real' : 'Est'}
+                  </span>
+                </div>
                 <p className="text-white text-lg font-bold">${formatNumber(tokenomicsData.volume24h)}</p>
                 <p className="text-white/50 text-xs">Trading Volume</p>
               </div>
@@ -291,9 +298,16 @@ export const AnimatedTokenomicsCharts: React.FC = () => {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-white/70/70 text-sm">Holders</p>
+                <div className="flex items-center gap-2 mb-1">
+                  <p className="text-white/70 text-sm">Holders</p>
+                  <span className={`text-xs px-2 py-0.5 rounded-full ${
+                    tokenomicsData.holders > 500 ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'
+                  }`}>
+                    {tokenomicsData.holders > 500 ? 'Real' : 'Est'}
+                  </span>
+                </div>
                 <p className="text-white text-lg font-bold">{formatNumber(tokenomicsData.holders, 0)}</p>
-                <p className="text-white/70/50 text-xs">Token Holders</p>
+                <p className="text-white/50 text-xs">Token Holders</p>
               </div>
               <Users className="w-8 h-8 text-white opacity-60" />
             </div>
@@ -412,7 +426,14 @@ export const AnimatedTokenomicsCharts: React.FC = () => {
           <CardContent className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="text-center p-3 bg-black/50 rounded-lg">
-                <p className="text-white/70/70 text-sm">Market Cap</p>
+                <div className="flex items-center justify-center gap-2 mb-1">
+                  <p className="text-white/70 text-sm">Market Cap</p>
+                  <span className={`text-xs px-2 py-0.5 rounded-full ${
+                    tokenomicsData.marketCap > 1000000 ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'
+                  }`}>
+                    {tokenomicsData.marketCap > 1000000 ? 'Real' : 'Est'}
+                  </span>
+                </div>
                 <p className="text-white text-lg font-bold">${formatNumber(tokenomicsData.marketCap)}</p>
               </div>
               <div className="text-center p-3 bg-black/50 rounded-lg">

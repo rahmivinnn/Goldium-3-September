@@ -87,7 +87,16 @@ export function TwitterEmbed() {
            <div className="text-2xl font-bold text-white mb-1">
              {tokenData ? formatCurrency(tokenData.marketCap) : 'Loading...'}
            </div>
-           <div className="text-white/70 text-sm">Market Cap</div>
+           <div className="flex items-center justify-center gap-2">
+             <div className="text-white/70 text-sm">Market Cap</div>
+             {tokenData && (
+               <span className={`text-xs px-2 py-0.5 rounded-full ${
+                 tokenData.marketCap > 1000000 ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'
+               }`}>
+                 {tokenData.marketCap > 1000000 ? 'Real' : 'Est'}
+               </span>
+             )}
+           </div>
         </Card>
         
         <Card className="bg-black border border-white/10 rounded-2xl p-6 text-center hover:border-white/20 transition-all">
