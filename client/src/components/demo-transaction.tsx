@@ -11,6 +11,7 @@ import { saveTransactionHistory, type GoldiumTransactionHistory } from '@/lib/hi
 import { useSolanaWallet } from './solana-wallet-provider';
 import { useExternalWallets } from '@/hooks/use-external-wallets';
 import { GoldTokenService } from '@/services/gold-token-service';
+import { TransactionSuccessModal } from './transaction-success-modal';
 
 interface TransactionDetails {
   solAmount: number;
@@ -27,6 +28,14 @@ const RealTransaction: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [txSignature, setTxSignature] = useState('');
   const [transactionDetails, setTransactionDetails] = useState<TransactionDetails | null>(null);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [completedTransaction, setCompletedTransaction] = useState<{
+    type: 'swap';
+    amount: number;
+    tokenFrom: string;
+    tokenTo: string;
+    txSignature: string;
+  } | null>(null);
   const { toast } = useToast();
   const wallet = useExternalWallets();
   const { publicKey: walletPublicKey, connected, signTransaction, refreshBalance, refreshRealBalance } = wallet;
@@ -124,6 +133,16 @@ const RealTransaction: React.FC = () => {
       });
 
       setTxSignature(signature);
+      
+      // Set transaction details for success modal
+      setCompletedTransaction({
+        type: 'swap',
+        amount: solAmount,
+        tokenFrom: 'SOL',
+        tokenTo: 'GOLD',
+        txSignature: signature
+      });
+      setShowSuccessModal(true);
       
       // Set transaction details for display
       setTransactionDetails({
@@ -340,6 +359,19 @@ const RealTransaction: React.FC = () => {
         )}
       </CardContent>
     </Card>
+    
+    {/* Transaction Success Modal */}
+    {showSuccessModal && completedTransaction && (
+      <TransactionSuccessModal
+        isOpen={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+        transactionType={completedTransaction.type}
+        amount={completedTransaction.amount}
+        tokenFrom={completedTransaction.tokenFrom}
+        tokenTo={completedTransaction.tokenTo}
+        txSignature={completedTransaction.txSignature}
+      />
+    )}
   );
 };
 
