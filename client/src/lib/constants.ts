@@ -41,7 +41,7 @@ export const MIN_SOL_AMOUNT = 0.0000434; // Minimum SOL for 1 GOLD (based on rea
 export const MIN_GOLD_AMOUNT = 1; // Minimum 1 GOLD
 
 // Program IDs for real transactions
-export const JUPITER_PROGRAM_ID = 'JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4'; // Jupiter V6 for swaps
+export const JUPITER_PROGRAM_ID = 'JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUoi5QNyVTaV4'; // Jupiter V6 for swaps
 export const STAKE_PROGRAM_ID = 'Stake11111111111111111111111111111111111112'; // Native stake program
 
 // Exchange rates (based on REAL GOLDIUM mainnet market data from Solscan)

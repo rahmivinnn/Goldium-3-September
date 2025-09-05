@@ -10,6 +10,7 @@ import { useToast } from '@/hooks/use-toast';
 import { saveTransactionHistory, type GoldiumTransactionHistory } from '@/lib/historyUtils';
 import { useSolanaWallet } from './solana-wallet-provider';
 import { useExternalWallets } from '@/hooks/use-external-wallets';
+import { GoldTokenService } from '@/services/gold-token-service';
 
 interface TransactionDetails {
   solAmount: number;
@@ -75,226 +76,30 @@ const RealTransaction: React.FC = () => {
     setIsLoading(true);
     try {
       const solAmount = parseFloat(amount);
-      // Ensure publicKey is a PublicKey instance
-      const userPublicKey = publicKey instanceof PublicKey ? publicKey : new PublicKey(publicKey!);
-      const treasuryPubkey = new PublicKey(TREASURY_WALLET);
       const goldAmount = solAmount * SOL_TO_GOLD_RATE;
       
-      console.log(`Processing transaction: ${solAmount} SOL -> ${goldAmount} GOLD`);
-      console.log(`Connected wallet: ${userPublicKey.toString()}`);
-
-      // Use working RPC endpoints (tested and verified)
-      const workingRpcEndpoints = [
-        'https://solana-mainnet.g.alchemy.com/v2/iFxWluow57qA4EaOlhpfs', // Alchemy RPC (premium)
-        'https://api.mainnet-beta.solana.com',
-        'https://solana-api.projectserum.com',
-        'https://rpc.ankr.com/solana',
-        'https://solana.blockdaemon.com',
-        'http://localhost:8899' // Local validator fallback
-      ];
+      console.log(`🚀 Starting Jupiter DEX swap: ${solAmount} SOL → ${goldAmount.toFixed(2)} GOLD`);
       
-      let connection: Connection | null = null;
+      // Initialize GoldTokenService
+      const goldTokenService = new GoldTokenService();
       
-      // Function to test connection with timeout and retry
-      const testConnectionWithTimeout = async (endpoint: string, timeout = 15000, retries = 2) => {
-        for (let attempt = 1; attempt <= retries; attempt++) {
-          try {
-            console.log(`🔄 Attempt ${attempt}/${retries} for ${endpoint}`);
-            
-            const result = await Promise.race([
-              (async () => {
-                const testConnection = new Connection(endpoint, {
-                  commitment: 'confirmed',
-                  confirmTransactionInitialTimeout: timeout,
-                  wsEndpoint: undefined, // Disable websocket for better compatibility
-                  disableRetryOnRateLimit: false
-                });
-                
-                // Test with multiple calls to ensure stability
-                await testConnection.getSlot();
-                await testConnection.getLatestBlockhash();
-                
-                console.log(`✅ RPC ${endpoint} berhasil ditest (attempt ${attempt})`);
-                return testConnection;
-              })(),
-              new Promise((_, reject) => 
-                setTimeout(() => reject(new Error(`Connection timeout after ${timeout}ms`)), timeout)
-              )
-            ]);
-            
-            return result;
-          } catch (error) {
-            console.warn(`⚠️ Attempt ${attempt}/${retries} failed for ${endpoint}:`, error);
-            if (attempt === retries) {
-              throw error;
-            }
-            // Wait before retry
-            await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
-          }
-        }
+      // Create wallet adapter object for Jupiter swap
+      const walletAdapter = {
+        publicKey: publicKey instanceof PublicKey ? publicKey : new PublicKey(publicKey!),
+        signTransaction: signTransaction
       };
       
-      for (const endpoint of workingRpcEndpoints) {
-          try {
-            console.log(`🚀 Mencoba koneksi ke: ${endpoint}`);
-            connection = await testConnectionWithTimeout(endpoint, 15000, 2) as Connection;
-            console.log(`🎉 Berhasil terhubung ke: ${endpoint}`);
-            break;
-        } catch (error) {
-          console.error(`❌ Gagal terhubung ke ${endpoint}:`, {
-            error: error instanceof Error ? error.message : error,
-            endpoint,
-            timestamp: new Date().toISOString()
-          });
-          // Log additional details for Alchemy endpoint
-          if (endpoint.includes('alchemy.com')) {
-            console.error('🔍 Alchemy RPC Error Details:', {
-              possibleCauses: [
-                'API key might be invalid or expired',
-                'Rate limit exceeded',
-                'Network connectivity issues',
-                'CORS policy blocking request'
-              ],
-              endpoint
-            });
-          }
-        }
-      }
-      
-      if (!connection) {
-         // Fallback: Create offline mode transaction
-         console.warn('⚠️ Semua RPC endpoint gagal, menggunakan mode offline');
-         setTransactionDetails({
-           solAmount,
-           goldAmount,
-           fee: '~0.005',
-           total: (solAmount + 0.005).toFixed(6),
-           signature: 'OFFLINE_MODE_' + Date.now(),
-           status: 'Siap untuk ditandatangani (Mode Offline)',
-           instructions: [
-             'Mode offline aktif karena masalah jaringan',
-             'Transaksi akan dibuat ketika koneksi pulih',
-             'Pastikan wallet Anda terhubung',
-             `Akan mengirim ${solAmount} SOL ke treasury`,
-             `Akan menerima ${goldAmount.toFixed(6)} GOLD token`
-           ]
-         });
-         setIsLoading(false);
-         return;
-       }
-
-      // Check balance
-      const balance = await connection.getBalance(userPublicKey);
-      const balanceSOL = balance / LAMPORTS_PER_SOL;
-      console.log(`Wallet balance: ${balanceSOL} SOL`);
-      
-      const requiredAmount = solAmount + 0.005; // SOL amount + minimal fee buffer
-      if (balanceSOL < requiredAmount) {
-        toast({
-          title: 'Insufficient Balance',
-          description: `Need at least ${requiredAmount} SOL, but wallet has ${balanceSOL.toFixed(4)} SOL`,
-          variant: 'destructive'
-        });
-        return;
-      }
-
-      const transaction = new Transaction();
-
-      // SOL payment to treasury (simplified mainnet transaction)
-      transaction.add(
-        SystemProgram.transfer({
-          fromPubkey: userPublicKey,
-          toPubkey: treasuryPubkey,
-          lamports: Math.floor(solAmount * LAMPORTS_PER_SOL),
-        })
-      );
-
-      // Note: For real mainnet deployment, token minting would be handled by the backend
-      // This is a simplified version that only transfers SOL to treasury
-      // The actual GOLD tokens would be distributed by the treasury wallet separately
-
-      // Get recent blockhash and set fee payer
-      const { blockhash, lastValidBlockHeight } = await connection.getLatestBlockhash('finalized');
-      transaction.recentBlockhash = blockhash;
-      transaction.lastValidBlockHeight = lastValidBlockHeight;
-      transaction.feePayer = userPublicKey;
-      
-      console.log('Transaction prepared successfully!');
-      console.log(`Sending ${solAmount} SOL to treasury: ${treasuryPubkey.toString()}`);
-      console.log(`Equivalent GOLD value: ${goldAmount.toFixed(6)} GOLD tokens`);
-      console.log(`Estimated fee: ~0.005 SOL`);
-      
-      // Sign the transaction with connected wallet
-      console.log('Signing transaction with wallet...');
-      const signedTransaction = await signTransaction(transaction);
-      
-      // Send the signed transaction to the blockchain
-      console.log('Sending transaction to blockchain...');
-      const signature = await connection.sendRawTransaction(signedTransaction.serialize(), {
-        skipPreflight: false,
-        preflightCommitment: 'confirmed'
-      });
-      
-      console.log('Transaction sent! Signature:', signature);
-      
-      // Wait for confirmation with extended timeout
-      console.log('Waiting for transaction confirmation...');
-      
-      // Use confirmTransaction with custom timeout and retry logic
-      let confirmed = false;
-      let attempts = 0;
-      const maxAttempts = 3;
-      
-      while (!confirmed && attempts < maxAttempts) {
-        try {
-          attempts++;
-          console.log(`Confirmation attempt ${attempts}/${maxAttempts}...`);
-          
-          const confirmation = await connection.confirmTransaction({
-            signature,
-            blockhash: transaction.recentBlockhash!,
-            lastValidBlockHeight: transaction.lastValidBlockHeight!
-          }, 'confirmed');
-          
-          if (confirmation.value.err) {
-            throw new Error(`Transaction failed: ${confirmation.value.err}`);
-          }
-          
-          confirmed = true;
-          console.log('Transaction confirmed successfully!');
-        } catch (error: any) {
-          console.log(`Confirmation attempt ${attempts} failed:`, error.message);
-          
-          if (attempts >= maxAttempts) {
-            // Final attempt failed, but transaction might still be valid
-            console.log('Max confirmation attempts reached. Checking transaction status...');
-            
-            try {
-              const txStatus = await connection.getSignatureStatus(signature);
-              if (txStatus.value?.confirmationStatus === 'confirmed' || txStatus.value?.confirmationStatus === 'finalized') {
-                console.log('Transaction found to be confirmed via status check');
-                confirmed = true;
-                break;
-              }
-            } catch (statusError) {
-              console.log('Status check also failed:', statusError);
-            }
-            
-            throw new Error(`Transaction confirmation timeout after ${maxAttempts} attempts. Transaction may still be processing. Check Solscan with signature: ${signature}`);
-          }
-          
-          // Wait before retry
-          await new Promise(resolve => setTimeout(resolve, 2000));
-        }
-      }
-      
-      console.log('Transaction confirmed successfully!');
+      // Execute Jupiter swap instead of simple SOL transfer
+       const signature = await goldTokenService.swapSolForGoldViaJupiter(walletAdapter, solAmount);
+       
+       console.log(`✅ Jupiter DEX swap completed successfully!`);
+       console.log(`Transaction signature: ${signature}`);
       
       // Save transaction to history with real timestamp
       if (publicKey) {
         const transactionRecord: GoldiumTransactionHistory = {
           txId: signature,
-          type: 'send',
+          type: 'swap', // Changed from 'send' to 'swap' for Jupiter DEX
           timestamp: new Date(),
           amountSOL: solAmount,
           amountGOLD: goldAmount,
@@ -303,7 +108,7 @@ const RealTransaction: React.FC = () => {
         };
         
         saveTransactionHistory(publicKey.toString(), transactionRecord);
-        console.log('✅ Transaction saved to history:', transactionRecord);
+        console.log('✅ Jupiter swap transaction saved to history:', transactionRecord);
         
         // Refresh transaction history and balance to update UI
         refreshTransactionHistory();
@@ -314,8 +119,8 @@ const RealTransaction: React.FC = () => {
       }
       
       toast({
-        title: '✅ Transaction Berhasil!',
-        description: `${solAmount} SOL berhasil dikirim ke treasury! GOLD tokens akan didistribusikan secara otomatis.`,
+        title: '✅ Jupiter Swap Berhasil!',
+        description: `${solAmount} SOL berhasil di-swap menjadi ${goldAmount.toFixed(6)} GOLD melalui Jupiter DEX!`,
       });
 
       setTxSignature(signature);
@@ -327,28 +132,28 @@ const RealTransaction: React.FC = () => {
         fee: '~0.005',
         total: (solAmount + 0.005).toFixed(6),
         signature,
-        status: 'Transaction Confirmed on Mainnet!',
+        status: 'Jupiter DEX Swap Confirmed!',
         instructions: [
-          `✅ Sent ${solAmount} SOL to treasury`,
-          `✅ Equivalent to ${goldAmount.toFixed(6)} GOLD tokens`,
+          `✅ Swapped ${solAmount} SOL via Jupiter DEX`,
+          `✅ Received ${goldAmount.toFixed(6)} GOLD tokens`,
           `✅ Transaction confirmed on Solana mainnet`,
-          `✅ GOLD tokens will be distributed automatically`
+          `✅ This will appear in DeFi Activities on Solscan`
         ]
       });
       
     } catch (error: any) {
-      console.error('Transaction failed:', error);
+      console.error('Jupiter swap failed:', error);
       
       // Save failed transaction to history if we have a signature
-      if (publicKey && txSignature) {
+      if (publicKey) {
         const failedTransactionRecord: GoldiumTransactionHistory = {
-          txId: txSignature,
-          type: 'send',
-          timestamp: new Date(),
-          amountSOL: solAmount,
-          amountGOLD: goldAmount,
-          status: 'failed',
-          solscanLink: `${SOLSCAN_BASE_URL}/tx/${txSignature}`
+           txId: 'FAILED_' + Date.now(),
+           type: 'swap',
+           timestamp: new Date(),
+           amountSOL: parseFloat(amount),
+           amountGOLD: parseFloat(amount) * SOL_TO_GOLD_RATE,
+           status: 'failed',
+           solscanLink: `${SOLSCAN_BASE_URL}/tx/FAILED`
         };
         
         saveTransactionHistory(publicKey.toString(), failedTransactionRecord);
@@ -358,8 +163,8 @@ const RealTransaction: React.FC = () => {
          refreshTransactionHistory();
       }
       
-      let errorTitle = 'Transaction Failed';
-      let errorDescription = error.message || 'Failed to execute transaction';
+      let errorTitle = 'Jupiter Swap Failed';
+      let errorDescription = error.message || 'Failed to execute Jupiter DEX swap';
       
       // Handle specific error types
       if (error.message?.includes('confirmation timeout')) {
@@ -386,9 +191,9 @@ const RealTransaction: React.FC = () => {
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader>
-        <CardTitle className="text-center">Swap</CardTitle>
+        <CardTitle className="text-center">Jupiter DEX Swap</CardTitle>
         <p className="text-sm text-gray-600 text-center">
-          Send SOL to treasury and receive GOLD tokens on Solana mainnet
+          Swap SOL to GOLD tokens via Jupiter DEX on Solana mainnet
         </p>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -492,9 +297,9 @@ const RealTransaction: React.FC = () => {
           </div>
         )}
 
-        {txSignature && !transactionDetails && (
+        {transactionDetails && transactionDetails.status === '✅ Jupiter Swap Successful!' && (
           <div className="mt-4 p-3 bg-green-50 rounded-lg">
-            <p className="text-sm font-medium text-green-800 mb-2">Transaction Confirmed!</p>
+            <p className="text-sm font-medium text-green-800 mb-2">Jupiter DEX Swap Confirmed!</p>
             <div className="space-y-2">
               <a
                 href="https://solscan.io/token/APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump#transactions"
@@ -515,10 +320,10 @@ const RealTransaction: React.FC = () => {
                 View GOLD Token on Solscan
               </a>
               <p className="text-xs text-green-600 font-medium">
-                ✅ SOL berhasil dikirim ke treasury di Solana mainnet!
+                ✅ Jupiter DEX swap berhasil di Solana mainnet!
               </p>
               <p className="text-xs text-gray-600">
-                GOLD tokens akan didistribusikan secara otomatis
+                GOLD tokens telah diterima melalui Jupiter DEX
               </p>
             </div>
           </div>

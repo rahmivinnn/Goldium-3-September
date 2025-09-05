@@ -510,13 +510,13 @@ export class GoldTokenService {
       
       await this.connection.confirmTransaction(signature);
       
-      // Track transaction with Jupiter V6 program ID
+      // Track transaction with correct Jupiter V6 program ID
       solscanTracker.trackTransaction({
         signature,
         type: 'swap',
         token: 'SOL',
         amount: solAmount,
-        programId: 'JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUoi5QNyVTaV4' // Jupiter V6 Program ID
+        programId: 'JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUoi5QNyVTaV4' // Jupiter V6 Program ID (corrected)
       });
       
       // Start blockchain verification immediately
