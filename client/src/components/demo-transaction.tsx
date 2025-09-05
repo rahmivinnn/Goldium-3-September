@@ -218,6 +218,7 @@ const RealTransaction: React.FC = () => {
   };
 
   return (
+    <>
     <Card className="w-full max-w-md mx-auto">
       <CardHeader>
         <CardTitle className="text-center">Jupiter DEX Swap</CardTitle>
@@ -357,6 +358,8 @@ const RealTransaction: React.FC = () => {
             </div>
           </div>
         )}
+          </>
+        )}
       </CardContent>
     </Card>
     
@@ -372,10 +375,7 @@ const RealTransaction: React.FC = () => {
         txSignature={completedTransaction.txSignature}
       />
     )}
-          </>
-        )}
-      </CardContent>
-    </Card>
+  </>
   );
 };
 
