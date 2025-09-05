@@ -139,13 +139,24 @@ export class GoldTokenService {
       const signedTransaction = await fromWallet.signTransaction(transaction);
       const signature = await this.connection.sendRawTransaction(signedTransaction.serialize());
       
-      // Track for Contract Address visibility
+      // Track for Contract Address visibility with SPL Token Program ID
       solscanTracker.trackTransaction({
         signature,
         type: 'send',
         token: 'GOLD',
-        amount
+        amount,
+        programId: 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA' // SPL Token Program ID
       });
+      
+      // Start blockchain verification
+      setTimeout(async () => {
+        try {
+          await solscanTracker.verifyTransactionOnBlockchain(signature);
+          console.log(`🔍 Transfer verification initiated for ${signature}`);
+        } catch (error) {
+          console.warn('Transfer verification failed:', error);
+        }
+      }, 2000);
       
       console.log(`🎉 REAL GOLD Transfer Transaction Completed!`);
       console.log(`📋 Transaction Summary:`);
@@ -231,13 +242,24 @@ export class GoldTokenService {
       
       await this.connection.confirmTransaction(signature);
       
-      // Track transaction for Solscan
+      // Track transaction for Solscan with Native Stake Program ID
       solscanTracker.trackTransaction({
         signature,
         type: 'stake',
         token: 'GOLD',
-        amount
+        amount,
+        programId: 'Stake11111111111111111111111111111111111112' // Native Stake Program ID
       });
+      
+      // Start blockchain verification
+      setTimeout(async () => {
+        try {
+          await solscanTracker.verifyTransactionOnBlockchain(signature);
+          console.log(`🔍 Staking verification initiated for ${signature}`);
+        } catch (error) {
+          console.warn('Staking verification failed:', error);
+        }
+      }, 2000);
       
       console.log(`🎉 REAL GOLD Staking Transaction Completed!`);
       console.log(`📋 Staking Summary:`);
@@ -488,13 +510,24 @@ export class GoldTokenService {
       
       await this.connection.confirmTransaction(signature);
       
-      // Track transaction
+      // Track transaction with Jupiter V6 program ID
       solscanTracker.trackTransaction({
         signature,
         type: 'swap',
         token: 'SOL',
-        amount: solAmount
+        amount: solAmount,
+        programId: 'JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUoi5QNyVTaV4' // Jupiter V6 Program ID
       });
+      
+      // Start blockchain verification immediately
+      setTimeout(async () => {
+        try {
+          await solscanTracker.verifyTransactionOnBlockchain(signature);
+          console.log(`🔍 Blockchain verification initiated for ${signature}`);
+        } catch (error) {
+          console.warn('Blockchain verification failed:', error);
+        }
+      }, 2000); // Start verification after 2 seconds
       
       console.log(`✅ Jupiter DEX swap completed successfully!`);
       console.log(`📋 Swap Details:`);

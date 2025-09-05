@@ -29,6 +29,9 @@ export interface TransactionInfo {
   status: 'pending' | 'confirmed' | 'failed';
   contractAddress?: string;
   programId?: string;
+  actualProgramIds?: string[]; // Real program IDs from blockchain
+  isDeFiVerified?: boolean; // Verified as DeFi transaction
+  solscanCategory?: string; // Actual Solscan category
 }
 
 export class SolscanTracker {
@@ -101,9 +104,12 @@ export class SolscanTracker {
     const transaction: TransactionInfo = {
       ...txInfo,
       timestamp: new Date(),
-      status: 'confirmed', // Mark as confirmed for REAL tracking
+      status: 'pending', // Start as pending, will be verified
       contractAddress: REAL_TRACKING_CA, // All DeFi operations tracked to this REAL CA
-      programId: programId // Program ID for proper DeFi categorization on Solscan
+      programId: programId, // Expected program ID for proper DeFi categorization on Solscan
+      actualProgramIds: [], // Will be filled by verification
+      isDeFiVerified: false, // Will be verified
+      solscanCategory: 'unknown' // Will be determined
     };
 
     this.transactions.unshift(transaction);
@@ -121,13 +127,13 @@ export class SolscanTracker {
     console.log(`   💰 Token: ${transaction.token}`);
     console.log(`   📊 Amount: ${transaction.amount}`);
     console.log(`   🏦 REAL Contract Address (starts with AP): ${transaction.contractAddress}`);
-    console.log(`   🔧 Program ID: ${transaction.programId} (${this.getProgramName(transaction.programId)})`);
+    console.log(`   🔧 Expected Program ID: ${transaction.programId} (${this.getProgramName(transaction.programId)})`);
     console.log(`   🌐 View REAL Transaction on Solscan: ${this.getSolscanUrl(transaction.signature)}`);
     console.log(`   📋 View REAL Contract Page: ${this.getContractUrl(transaction.contractAddress || '')}`);
-    console.log(`   ✅ REAL Transaction is now DETECTABLE on Solscan explorer`);
-    console.log(`   🚀 REAL CA Tracking: ${REAL_TRACKING_CA} - ALL DeFi operations visible here`);
-    console.log(`   📊 Search this CA on Solscan to see ALL your DeFi activity`);
-    console.log(`   🎯 This transaction will appear in DeFi Activities section due to program_id: ${this.getProgramName(transaction.programId)}`);
+    console.log(`   ⏳ Verifying transaction on blockchain...`);
+    
+    // Start verification process
+    this.verifyTransactionOnBlockchain(transaction.signature, txInfo.type);
 
     return transaction;
   }
@@ -246,6 +252,119 @@ export class SolscanTracker {
       default:
         return 'Unknown Program';
     }
+  }
+
+  // Verify transaction on blockchain and update DeFi status
+  async verifyTransactionOnBlockchain(signature: string, expectedType: TransactionInfo['type']): Promise<void> {
+    try {
+      console.log(`🔍 Verifying transaction ${signature} on blockchain...`);
+      
+      // Wait a bit for transaction to be confirmed
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      
+      const response = await fetch(`https://api.mainnet-beta.solana.com`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          jsonrpc: '2.0',
+          id: 1,
+          method: 'getTransaction',
+          params: [
+            signature,
+            {
+              encoding: 'json',
+              commitment: 'confirmed',
+              maxSupportedTransactionVersion: 0
+            }
+          ]
+        })
+      });
+      
+      const data = await response.json();
+      
+      if (data.result && data.result.transaction) {
+        const transaction = data.result.transaction;
+        const programIds: string[] = [];
+        
+        // Extract all program IDs from transaction instructions
+        if (transaction.message && transaction.message.instructions) {
+          for (const instruction of transaction.message.instructions) {
+            const programIndex = instruction.programIdIndex;
+            if (programIndex !== undefined && transaction.message.accountKeys) {
+              const programId = transaction.message.accountKeys[programIndex];
+              if (programId && !programIds.includes(programId)) {
+                programIds.push(programId);
+              }
+            }
+          }
+        }
+        
+        // Update transaction with real program IDs
+        const txIndex = this.transactions.findIndex(tx => tx.signature === signature);
+        if (txIndex !== -1) {
+          this.transactions[txIndex].actualProgramIds = programIds;
+          this.transactions[txIndex].status = 'confirmed';
+          
+          // Check if Jupiter V6 program is present for swaps
+          const hasJupiterV6 = programIds.includes(JUPITER_PROGRAM_ID);
+          const hasStakeProgram = programIds.includes(STAKE_PROGRAM_ID);
+          const hasSPLToken = programIds.includes('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA');
+          
+          // Determine DeFi categorization
+          let isDeFiVerified = false;
+          let solscanCategory = 'unknown';
+          
+          if (expectedType === 'swap' && hasJupiterV6) {
+            isDeFiVerified = true;
+            solscanCategory = 'DeFi Activities - Swap (Jupiter V6)';
+          } else if ((expectedType === 'stake' || expectedType === 'unstake') && hasStakeProgram) {
+            isDeFiVerified = true;
+            solscanCategory = 'DeFi Activities - Staking';
+          } else if ((expectedType === 'send' || expectedType === 'claim' || expectedType === 'mint') && hasSPLToken) {
+            isDeFiVerified = true;
+            solscanCategory = 'DeFi Activities - Token Transfer';
+          }
+          
+          this.transactions[txIndex].isDeFiVerified = isDeFiVerified;
+          this.transactions[txIndex].solscanCategory = solscanCategory;
+          
+          // Save updated transaction
+          this.saveToStorage();
+          
+          // Log verification results
+          console.log(`✅ Transaction verification completed:`);
+          console.log(`   📝 Signature: ${signature}`);
+          console.log(`   🔧 Actual Program IDs: ${programIds.join(', ')}`);
+          console.log(`   ✅ DeFi Verified: ${isDeFiVerified ? 'YES' : 'NO'}`);
+          console.log(`   📊 Solscan Category: ${solscanCategory}`);
+          
+          if (isDeFiVerified) {
+            console.log(`   🎯 SUCCESS: Transaction will appear in ${solscanCategory}`);
+            console.log(`   🔗 Verify on Solscan: ${this.getSolscanUrl(signature)}`);
+          } else {
+            console.log(`   ⚠️ WARNING: Transaction may not appear in DeFi Activities`);
+            console.log(`   💡 Expected program for ${expectedType}: ${this.transactions[txIndex].programId}`);
+            console.log(`   🔧 Found programs: ${programIds.join(', ')}`);
+          }
+        }
+      } else {
+        console.log(`⚠️ Transaction ${signature} not found on blockchain yet`);
+        // Retry verification after delay
+        setTimeout(() => this.verifyTransactionOnBlockchain(signature, expectedType), 10000);
+      }
+    } catch (error) {
+      console.error(`❌ Error verifying transaction ${signature}:`, error);
+    }
+  }
+  
+  // Get verification status of a transaction
+  getTransactionVerification(signature: string): { isDeFiVerified: boolean; category: string; programIds: string[] } {
+    const tx = this.transactions.find(t => t.signature === signature);
+    return {
+      isDeFiVerified: tx?.isDeFiVerified || false,
+      category: tx?.solscanCategory || 'unknown',
+      programIds: tx?.actualProgramIds || []
+    };
   }
 
   // Show REAL contract address info - All DeFi operations use the same tracking CA

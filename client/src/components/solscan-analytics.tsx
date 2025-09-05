@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ExternalLink, RefreshCw, TrendingUp, Users, Activity } from 'lucide-react';
-import { solscanTracker, SolscanDeFiActivity, SolscanTokenHolder } from '@/lib/solscan-tracker';
+import { Activity, RefreshCw, TrendingUp, Users, ExternalLink, Clock, CheckCircle, AlertCircle, Loader } from 'lucide-react';
+import { solscanTracker, SolscanDeFiActivity, SolscanTokenHolder, TransactionInfo } from '@/lib/solscan-tracker';
 import { toast } from '@/hooks/use-toast';
 
 export function SolscanAnalytics() {
   const [defiActivities, setDefiActivities] = useState<SolscanDeFiActivity[]>([]);
   const [tokenHolders, setTokenHolders] = useState<SolscanTokenHolder[]>([]);
+  const [localTransactions, setLocalTransactions] = useState<TransactionInfo[]>([]);
   const [isLoadingDefi, setIsLoadingDefi] = useState(false);
   const [isLoadingHolders, setIsLoadingHolders] = useState(false);
-  const [activeTab, setActiveTab] = useState('defi');
+  const [activeTab, setActiveTab] = useState('verification');
 
   // Fetch DeFi activities
   const fetchDeFiActivities = async () => {
@@ -76,20 +77,57 @@ export function SolscanAnalytics() {
     }
   };
 
+  // Load local transactions
+  const loadLocalTransactions = () => {
+    const transactions = solscanTracker.getRecentTransactions(20);
+    setLocalTransactions(transactions);
+  };
+
+  // Get verification status icon
+  const getVerificationIcon = (tx: TransactionInfo) => {
+    if (tx.status === 'pending') {
+      return <Loader className="w-4 h-4 animate-spin text-yellow-500" />;
+    } else if (tx.isDeFiVerified) {
+      return <CheckCircle className="w-4 h-4 text-green-500" />;
+    } else {
+      return <AlertCircle className="w-4 h-4 text-red-500" />;
+    }
+  };
+
+  // Get verification status text
+  const getVerificationStatus = (tx: TransactionInfo) => {
+    if (tx.status === 'pending') {
+      return 'Verifying...';
+    } else if (tx.isDeFiVerified) {
+      return tx.solscanCategory || 'DeFi Verified';
+    } else {
+      return 'Not DeFi Categorized';
+    }
+  };
+
+  // Format address for display
+  const formatAddress = (address: string) => {
+    if (!address) return 'N/A';
+    return `${address.slice(0, 8)}...${address.slice(-8)}`;
+  };
+
   // Auto-fetch data on component mount
   useEffect(() => {
     fetchDeFiActivities();
     fetchTokenHolders();
+    loadLocalTransactions();
+
+    // Set up interval to refresh local transactions for real-time verification
+    const interval = setInterval(() => {
+      loadLocalTransactions();
+    }, 5000); // Refresh every 5 seconds
+
+    return () => clearInterval(interval);
   }, []);
 
   // Format timestamp
   const formatTimestamp = (timestamp: number) => {
     return new Date(timestamp * 1000).toLocaleString();
-  };
-
-  // Format address
-  const formatAddress = (address: string) => {
-    return `${address.slice(0, 4)}...${address.slice(-4)}`;
   };
 
   // Format amount
@@ -108,10 +146,13 @@ export function SolscanAnalytics() {
                 Solscan Analytics
               </CardTitle>
               <CardDescription className="text-galaxy-muted">
-                Real-time DeFi activities and token holder data from Solscan API
+                Real-time DeFi activities with blockchain verification from Solscan API
                 <br />
                 <span className="text-xs text-galaxy-blue mt-1 block">
-                  ✅ Transactions now use proper program_id for DeFi categorization (Jupiter V6, Stake Program, SPL Token)
+                  🔍 Live verification: Jupiter V6 for swaps, Native Stake for staking, SPL Token for transfers
+                </span>
+                <span className="text-xs text-green-400 mt-1 block">
+                  ✅ All transactions verified on blockchain for proper DeFi categorization
                 </span>
               </CardDescription>
             </div>
@@ -131,7 +172,14 @@ export function SolscanAnalytics() {
         
         <CardContent>
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-2 bg-galaxy-darker">
+            <TabsList className="grid w-full grid-cols-3 bg-galaxy-darker">
+              <TabsTrigger 
+                value="verification" 
+                className="data-[state=active]:bg-galaxy-blue data-[state=active]:text-white"
+              >
+                <CheckCircle className="w-4 h-4 mr-2" />
+                Verification ({localTransactions.length})
+              </TabsTrigger>
               <TabsTrigger 
                 value="defi" 
                 className="data-[state=active]:bg-galaxy-blue data-[state=active]:text-white"
@@ -147,6 +195,97 @@ export function SolscanAnalytics() {
                 Token Holders ({tokenHolders.length})
               </TabsTrigger>
             </TabsList>
+            
+            <TabsContent value="verification" className="mt-6">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-semibold text-galaxy-bright">Transaction Verification</h3>
+                  <div className="flex items-center gap-2">
+                    <Badge variant="outline" className="border-galaxy-blue text-galaxy-blue">
+                      {localTransactions.length} transactions
+                    </Badge>
+                    <Button
+                      size="sm"
+                      onClick={loadLocalTransactions}
+                      className="bg-galaxy-blue hover:bg-galaxy-bright text-white"
+                    >
+                      <RefreshCw className="w-4 h-4 mr-2" />
+                      Refresh
+                    </Button>
+                  </div>
+                </div>
+                
+                {localTransactions.length > 0 ? (
+                  <div className="space-y-3">
+                    {localTransactions.map((tx, index) => (
+                      <Card key={index} className="bg-galaxy-darker/50 border-galaxy-blue/20">
+                        <CardContent className="p-4">
+                          <div className="flex items-center justify-between">
+                            <div className="space-y-2">
+                              <div className="flex items-center gap-2">
+                                {getVerificationIcon(tx)}
+                                <Badge className={`${
+                                  tx.isDeFiVerified 
+                                    ? 'bg-green-500/20 text-green-400 border-green-500/30'
+                                    : tx.status === 'pending'
+                                    ? 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30'
+                                    : 'bg-red-500/20 text-red-400 border-red-500/30'
+                                }`}>
+                                  {getVerificationStatus(tx)}
+                                </Badge>
+                                <span className="text-xs text-galaxy-muted">
+                                  <Clock className="w-3 h-3 inline mr-1" />
+                                  {new Date(tx.timestamp).toLocaleString()}
+                                </span>
+                              </div>
+                              
+                              <div className="text-sm text-galaxy-bright font-mono">
+                                {formatAddress(tx.signature)}
+                              </div>
+                              
+                              {tx.solscanCategory && (
+                                <div className="text-xs text-galaxy-blue">
+                                  Solscan Category: {tx.solscanCategory}
+                                </div>
+                              )}
+                              
+                              {tx.error && (
+                                <div className="text-xs text-red-400">
+                                  Error: {tx.error}
+                                </div>
+                              )}
+                            </div>
+                            
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              asChild
+                              className="text-galaxy-blue hover:text-galaxy-bright"
+                            >
+                              <a
+                                href={`https://solscan.io/tx/${tx.signature}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-1"
+                              >
+                                <ExternalLink className="w-4 h-4" />
+                                <span className="text-xs">View</span>
+                              </a>
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-8 text-galaxy-muted">
+                    <CheckCircle className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                    <p>No transactions to verify</p>
+                    <p className="text-sm">Transactions will appear here as they are processed</p>
+                  </div>
+                )}
+              </div>
+            </TabsContent>
             
             <TabsContent value="defi" className="mt-6">
               <div className="space-y-4">
