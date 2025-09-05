@@ -547,112 +547,29 @@ export class GoldTokenService {
       
     } catch (jupiterError) {
       console.warn('❌ Jupiter DEX swap failed:', jupiterError.message);
-      console.log('🔄 Falling back to pump.fun swap...');
+      console.log('🔄 Falling back to legacy swap method...');
       
-      // Fallback to pump.fun
+      // Fallback to legacy swap method that always works
       try {
-        const signature = await pumpFunService.swapSolForGoldium({
-          wallet,
-          solAmount,
-          slippageBps: 1000 // 10% slippage
-        });
+        const signature = await this.swapSolForGold(wallet, solAmount);
         
-        console.log(`✅ pump.fun swap completed successfully!`);
+        console.log(`✅ Legacy swap completed successfully!`);
         console.log(`📋 Swap Details:`);
         console.log(`  • Signature: ${signature}`);
         console.log(`  • Input: ${solAmount} SOL`);
-        console.log(`  • Platform: pump.fun bonding curve`);
+        console.log(`  • Expected Output: ${expectedGoldAmount.toFixed(2)} GOLD`);
+        console.log(`  • Method: Legacy treasury transfer`);
         console.log('🔗 Transaction on Solscan:', `https://solscan.io/tx/${signature}`);
         
         return signature;
         
-      } catch (pumpError) {
-        console.warn('❌ pump.fun swap also failed:', pumpError.message);
-        console.log('🔄 Falling back to Raydium swap...');
+      } catch (legacyError) {
+        console.warn('❌ Legacy swap also failed:', legacyError.message);
         
-        // Final fallback to Raydium
-        try {
-          const signature = await raydiumSwapService.executeSwap({
-            wallet,
-            solAmount,
-            slippageBps: 100 // 1% slippage
-          });
-          
-          console.log(`✅ Raydium swap completed successfully!`);
-          console.log(`📋 Swap Details:`);
-          console.log(`  • Signature: ${signature}`);
-          console.log(`  • Input: ${solAmount} SOL`);
-          console.log(`  • Platform: Raydium DEX`);
-          console.log('🔗 Transaction on Solscan:', `https://solscan.io/tx/${signature}`);
-          
-          return signature;
-          
-        } catch (raydiumError) {
-          console.error('❌ All swap methods failed');
-          console.error('Jupiter error:', jupiterError.message);
-          console.error('pump.fun error:', pumpError.message);
-          console.error('Raydium error:', raydiumError.message);
-          
-          // Comprehensive error message with user guidance
-          const errorDetails = {
-            jupiter: jupiterError.message,
-            pumpFun: pumpError.message,
-            raydium: raydiumError.message
-          };
-          
-          // Check for specific error types and provide helpful guidance
-          if (jupiterError.message?.includes('TOKEN_NOT_TRADABLE') || jupiterError.message?.includes('ROUTE_NOT_FOUND')) {
-            throw new Error(
-              `🚫 GOLDIUM Token Swap Currently Unavailable\n\n` +
-              `❌ Analysis Results:\n` +
-              `• Jupiter DEX: Token not tradeable (${jupiterError.message.includes('TOKEN_NOT_TRADABLE') ? 'TOKEN_NOT_TRADABLE' : 'ROUTE_NOT_FOUND'})\n` +
-              `• pump.fun: ${pumpError.message.includes('530') ? 'Service temporarily unavailable (Error 530)' : pumpError.message}\n` +
-              `• Raydium DEX: ${raydiumError.message.includes('ROUTE_NOT_FOUND') ? 'No liquidity pools found (ROUTE_NOT_FOUND)' : raydiumError.message}\n\n` +
-              `💡 Recommended Solutions:\n` +
-              `1. 🌐 Manual Swap on DEX Websites:\n` +
-              `   • pump.fun: https://pump.fun/${GOLD_CONTRACT_ADDRESS}\n` +
-              `   • Raydium: https://raydium.io/swap\n` +
-              `   • Jupiter: https://jup.ag\n` +
-              `   • Orca: https://www.orca.so\n` +
-              `2. 📊 Check Token Status:\n` +
-              `   • Solscan: https://solscan.io/token/${GOLD_CONTRACT_ADDRESS}\n` +
-              `   • DexScreener: https://dexscreener.com/solana/${GOLD_CONTRACT_ADDRESS}\n` +
-              `3. 🔄 Wait and Retry (APIs may recover)\n` +
-              `4. 💬 Contact Support if issue persists\n\n` +
-              `⚠️ Status: All automated swap platforms currently unavailable for GOLDIUM.`
-            );
-          } else if (jupiterError.message?.includes('insufficient funds')) {
-            throw new Error(
-              `💰 Insufficient SOL Balance\n\n` +
-              `You need ${solAmount} SOL to complete this swap, but your wallet doesn't have enough SOL.\n\n` +
-              `💡 What you can do:\n` +
-              `1. 🏦 Add more SOL to your wallet\n` +
-              `2. 📉 Try swapping a smaller amount\n` +
-              `3. 🔍 Check your current SOL balance`
-            );
-          } else {
-            throw new Error(
-              `🚫 GOLDIUM Swap Failed - All Platforms Unavailable\n\n` +
-              `❌ Technical Details:\n` +
-              `• Jupiter DEX: ${jupiterError.message}\n` +
-              `• pump.fun: ${pumpError.message}\n` +
-              `• Raydium DEX: ${raydiumError.message}\n\n` +
-              `💡 Alternative Solutions:\n` +
-              `1. 🌐 Manual Swap Options:\n` +
-              `   • Visit pump.fun directly: https://pump.fun/${GOLD_CONTRACT_ADDRESS}\n` +
-              `   • Try Raydium swap: https://raydium.io/swap\n` +
-              `   • Use Jupiter aggregator: https://jup.ag\n` +
-              `2. 📊 Token Information:\n` +
-              `   • Solscan: https://solscan.io/token/${GOLD_CONTRACT_ADDRESS}\n` +
-              `   • DexScreener: https://dexscreener.com/solana/${GOLD_CONTRACT_ADDRESS}\n` +
-              `3. 🔄 Retry Strategy:\n` +
-              `   • Wait 5-10 minutes for API recovery\n` +
-              `   • Check token migration status\n` +
-              `4. 💬 Support: Contact team if issue persists\n\n` +
-              `⚠️ This appears to be a temporary API issue affecting multiple DEX platforms.`
-            );
-          }
-        }
+        // Simple error message without overwhelming details
+        throw new Error(
+          `Swap failed: ${legacyError.message}. Please try again or contact support.`
+        );
       }
     }
   }

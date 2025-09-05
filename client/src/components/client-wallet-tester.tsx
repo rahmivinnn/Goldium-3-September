@@ -9,7 +9,6 @@ import { validateClientWallet, checkClientWalletBalance, CLIENT_WALLET_DATA } fr
 import { clientWalletService } from '@/lib/client-wallet-service';
 import { useToast } from '@/hooks/use-toast';
 import ManualSwapGuide from './ManualSwapGuide';
-import SwapStatusAlert from './SwapStatusAlert';
 
 export function ClientWalletTester() {
   const [walletValid, setWalletValid] = useState<boolean | null>(null);
@@ -19,8 +18,6 @@ export function ClientWalletTester() {
   const [sendAmount, setSendAmount] = useState('0.01');
   const [sendRecipient, setSendRecipient] = useState('');
   const [showManualGuide, setShowManualGuide] = useState(false);
-  const [showSwapAlert, setShowSwapAlert] = useState(false);
-  const [swapErrorMessage, setSwapErrorMessage] = useState<string>('');
   const { toast } = useToast();
 
   // Validate wallet on component mount
@@ -84,28 +81,11 @@ export function ClientWalletTester() {
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "Failed to test swap feature";
       
-      // Check if error indicates DEX unavailability
-      if (errorMessage.includes('All DEX platforms') || 
-          errorMessage.includes('TOKEN_NOT_TRADABLE') ||
-          errorMessage.includes('All swap methods failed') ||
-          errorMessage.includes('API temporarily unavailable')) {
-        
-        toast({
-          title: "🚫 DEX APIs Unavailable",
-          description: "All DEX platforms are currently experiencing issues. Check swap status alert for solutions.",
-          variant: "destructive"
-        });
-        
-        // Show swap status alert with error details
-        setSwapErrorMessage(errorMessage);
-        setShowSwapAlert(true);
-      } else {
-        toast({
-          title: "❌ Swap Test Failed",
-          description: errorMessage,
-          variant: "destructive"
-        });
-      }
+      toast({
+        title: "❌ Swap Test Failed",
+        description: errorMessage,
+        variant: "destructive"
+      });
     } finally {
       setLoading(false);
     }
@@ -295,13 +275,7 @@ export function ClientWalletTester() {
         onClose={() => setShowManualGuide(false)}
         solAmount={parseFloat(swapAmount)}
       />
-      
-      {/* Swap Status Alert Modal */}
-      <SwapStatusAlert 
-        isVisible={showSwapAlert}
-        onClose={() => setShowSwapAlert(false)}
-        errorMessage={swapErrorMessage}
-      />
+
     </div>
   );
 }
