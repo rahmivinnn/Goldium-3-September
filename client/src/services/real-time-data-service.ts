@@ -127,7 +127,9 @@ class RealTimeDataService {
         if (response.ok) {
           const quote = await response.json();
           if (quote.outAmount) {
-            this.goldPriceSOL = parseFloat(quote.outAmount) / 1000000000;
+            // Safe parsing to prevent NaN
+            const rawPrice = parseFloat(quote.outAmount);
+            this.goldPriceSOL = isNaN(rawPrice) ? 0 : rawPrice / 1000000000;
             console.log(`✅ GOLDIUM Price from Jupiter: ${this.goldPriceSOL} SOL`);
             return this.goldPriceSOL;
           }

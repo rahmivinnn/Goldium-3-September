@@ -1,6 +1,5 @@
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { CleanSwapTab } from '@/components/clean-swap-tab';
 import { CleanStakingTab } from '@/components/clean-staking-tab';
 import { CleanSendTab } from '@/components/clean-send-tab';
 import { CleanTransactionHistory } from '@/components/clean-transaction-history';
@@ -10,7 +9,7 @@ import { RealTransaction } from '@/components/demo-transaction';
 export function ModernDeFiTabs() {
   return (
     <div className="w-full max-w-7xl mx-auto">
-      <Tabs defaultValue="swap" className="w-full">
+      <Tabs defaultValue="demo" className="w-full">
         
         {/* MODERN TAB NAVIGATION */}
         <div className="flex justify-center mb-12 modern-tabs-container">
@@ -35,9 +34,9 @@ export function ModernDeFiTabs() {
             md:w-auto
           ">
             
-            {/* SWAP TAB */}
+            {/* SWAP TAB (formerly Real TX) */}
             <TabsTrigger 
-              value="swap" 
+              value="demo" 
               className="
                 font-body
                 font-semibold
@@ -210,40 +209,7 @@ export function ModernDeFiTabs() {
               HISTORY
             </TabsTrigger>
 
-            {/* REAL TX TAB */}
-            <TabsTrigger 
-              value="demo" 
-              className="
-                font-body
-                font-semibold
-                text-white/70
-                uppercase
-                tracking-wider
-                px-6
-                py-3
-                rounded-xl
-                min-w-[120px]
-                h-12
-                flex
-                items-center
-                justify-center
-                transition-all
-                duration-300
-                ease-in-out
-                data-[state=active]:bg-gradient-to-br
-                data-[state=active]:from-white/15
-                data-[state=active]:to-white/5
-                data-[state=active]:text-white
-                data-[state=active]:font-bold
-                data-[state=active]:tab-active-glow
-                hover:bg-white/5
-                hover:text-white/90
-                hover:scale-[1.02]
-                hover:tab-glow
-              "
-            >
-              REAL TX
-            </TabsTrigger>
+
             
           </TabsList>
         </div>
@@ -251,11 +217,7 @@ export function ModernDeFiTabs() {
         {/* TAB CONTENT */}
         <div className="min-h-[600px]">
           
-          <TabsContent value="swap" className="p-8 m-0">
-            <div className="max-w-5xl mx-auto">
-              <CleanSwapTab />
-            </div>
-          </TabsContent>
+
           
           <TabsContent value="stake" className="p-8 m-0">
             <div className="max-w-5xl mx-auto">

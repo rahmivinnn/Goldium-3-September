@@ -23,8 +23,8 @@ export function GoldStakingTab() {
   const externalWallet = useExternalWallets();
   const { data: balances } = useExternalWalletBalances();
   
-  // Use external wallet GOLD balance for accurate checking
-  const currentGoldBalance = balances?.gold || goldBalance.balance || 0;
+  // Use new robust GOLD balance implementation
+  const currentGoldBalance = balances?.gold || (parseFloat(goldBalance.amount) || 0);
 
   const handleStake = async () => {
     const amount = parseFloat(stakeAmount);
@@ -146,7 +146,7 @@ export function GoldStakingTab() {
   };
 
   const maxStake = () => {
-    setStakeAmount(goldBalance.balance.toString());
+    setStakeAmount(goldBalance.amount || '0');
   };
 
   const maxUnstake = () => {
@@ -224,10 +224,10 @@ export function GoldStakingTab() {
                 <span className="text-galaxy-text">Available to Stake:</span>
                 <div className="text-right">
                   <div className="text-xl font-bold text-galaxy-bright">
-                    {goldBalance.balance.toFixed(4)} GOLD
+                    {goldBalance.loading ? 'Loading...' : goldBalance.error ? 'Error' : `${(parseFloat(goldBalance.amount) || 0).toFixed(4)} GOLD`}
                   </div>
                   <div className="text-sm text-galaxy-accent">
-                    ≈ ${(goldBalance.balance * 20).toFixed(2)} USD
+                    {goldBalance.error ? 'RPC Error' : `≈ $${((parseFloat(goldBalance.amount) || 0) * 20).toFixed(2)} USD`}
                   </div>
                 </div>
               </div>
@@ -248,7 +248,7 @@ export function GoldStakingTab() {
                   className="bg-gradient-to-r from-gray-900/80 to-gray-800/80 border border-white/20/30 text-white placeholder:text-gray-400 pr-16 backdrop-blur-sm"
                   step="0.0001"
                   min={goldBalance.stakingInfo.minStake}
-                  max={goldBalance.balance}
+                  max={(parseFloat(goldBalance.amount) || 0)}
                 />
                 <Button
                   type="button"
@@ -265,7 +265,7 @@ export function GoldStakingTab() {
             {/* Stake Button */}
             <Button
               onClick={handleStake}
-              disabled={isStaking || !stakeAmount || goldBalance.balance === 0}
+              disabled={isStaking || !stakeAmount || (parseFloat(goldBalance.amount) || 0) === 0 || goldBalance.loading || goldBalance.error}
               className="w-full bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white font-semibold"
             >
               {isStaking ? (

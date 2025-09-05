@@ -9,6 +9,7 @@ import {
 import { solscanTracker } from '@/lib/solscan-tracker';
 import { trackToGoldiumCA } from '@/lib/ca-tracking-service';
 import { SOLANA_RPC_URL, GOLD_DECIMALS } from '@/lib/constants';
+import axios from 'axios';
 
 // GOLDIUM Token Configuration - MAINNET PRODUCTION
 // Real GOLDIUM token on Solana mainnet - PRODUCTION READY
@@ -52,7 +53,9 @@ export class GoldTokenService {
       const tokenAccountInfo = await this.connection.getTokenAccountBalance(tokenAccount);
       
       if (tokenAccountInfo.value) {
-        const blockchainBalance = parseFloat(tokenAccountInfo.value.amount) / Math.pow(10, GOLD_DECIMALS);
+        // Safe parsing to prevent NaN
+        const rawAmount = parseFloat(tokenAccountInfo.value.amount);
+        const blockchainBalance = isNaN(rawAmount) ? 0 : rawAmount / Math.pow(10, GOLD_DECIMALS);
         console.log(`✅ GOLD balance from blockchain: ${blockchainBalance} GOLD`);
         
         // Return the higher value between blockchain and local tracking
@@ -333,7 +336,202 @@ export class GoldTokenService {
     }
   }
 
-  // Swap SOL for GOLD (real DEX interaction)
+  // Refresh user balances after transactions
+  async refreshUserBalances(publicKey: PublicKey): Promise<void> {
+    try {
+      console.log('🔄 Refreshing user balances...');
+      
+      // Get SOL balance
+      const solBalance = await this.connection.getBalance(publicKey);
+      console.log(`💰 SOL Balance: ${solBalance / LAMPORTS_PER_SOL} SOL`);
+      
+      // Get GOLDIUM token balance
+      const goldBalance = await this.getGoldBalance(publicKey);
+      console.log(`🥇 GOLDIUM Balance: ${goldBalance} GOLD`);
+      
+      // Trigger UI refresh by dispatching custom event
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('balanceRefresh', {
+          detail: {
+            sol: solBalance / LAMPORTS_PER_SOL,
+            gold: goldBalance
+          }
+        }));
+      }
+      
+    } catch (error) {
+      console.error('❌ Failed to refresh balances:', error);
+    }
+  }
+
+  // Verify swap transaction and check token transfers
+  async verifySwapTransaction(signature: string, userPublicKey: PublicKey): Promise<{
+    success: boolean;
+    solTransferred: number;
+    goldReceived: number;
+    details: any;
+  }> {
+    try {
+      console.log(`🔍 Verifying swap transaction: ${signature}`);
+      
+      // Get transaction details
+      const txDetails = await this.connection.getTransaction(signature, {
+        commitment: 'confirmed',
+        maxSupportedTransactionVersion: 0
+      });
+      
+      if (!txDetails) {
+        throw new Error('Transaction not found');
+      }
+      
+      let solTransferred = 0;
+      let goldReceived = 0;
+      
+      // Parse transaction for SOL and token transfers
+      if (txDetails.meta?.preBalances && txDetails.meta?.postBalances) {
+        const balanceChange = txDetails.meta.postBalances[0] - txDetails.meta.preBalances[0];
+        solTransferred = Math.abs(balanceChange) / LAMPORTS_PER_SOL;
+      }
+      
+      // Check for SPL token transfers
+      if (txDetails.meta?.preTokenBalances && txDetails.meta?.postTokenBalances) {
+        for (const postBalance of txDetails.meta.postTokenBalances) {
+          if (postBalance.mint === GOLD_CONTRACT_ADDRESS && 
+              postBalance.owner === userPublicKey.toString()) {
+            const preBalance = txDetails.meta.preTokenBalances.find(
+              b => b.accountIndex === postBalance.accountIndex
+            );
+            const preAmount = preBalance ? Number(preBalance.uiTokenAmount.amount) : 0;
+            const postAmount = Number(postBalance.uiTokenAmount.amount);
+            goldReceived = (postAmount - preAmount) / Math.pow(10, GOLD_DECIMALS);
+            break;
+          }
+        }
+      }
+      
+      const success = goldReceived > 0;
+      
+      console.log(`📊 Swap Verification Results:`);
+      console.log(`  • Success: ${success}`);
+      console.log(`  • SOL Transferred: ${solTransferred}`);
+      console.log(`  • GOLD Received: ${goldReceived}`);
+      
+      return {
+        success,
+        solTransferred,
+        goldReceived,
+        details: txDetails
+      };
+      
+    } catch (error) {
+      console.error('❌ Failed to verify swap transaction:', error);
+      return {
+        success: false,
+        solTransferred: 0,
+        goldReceived: 0,
+        details: null
+      };
+    }
+  }
+
+  // Jupiter DEX integration for real SOL to GOLDIUM swaps
+  async swapSolForGoldViaJupiter(
+    wallet: any,
+    solAmount: number
+  ): Promise<string> {
+    try {
+      const publicKey = wallet.publicKey;
+      const { SOL_TO_GOLD_RATE } = await import('../lib/constants');
+      const expectedGoldAmount = solAmount * SOL_TO_GOLD_RATE;
+      
+      console.log(`🚀 Starting Jupiter DEX swap: ${solAmount} SOL → ${expectedGoldAmount.toFixed(2)} GOLD`);
+      
+      // Jupiter API endpoint for quote
+      const jupiterQuoteUrl = `https://quote-api.jup.ag/v6/quote?inputMint=So11111111111111111111111111111111111111112&outputMint=${GOLD_CONTRACT_ADDRESS}&amount=${Math.floor(solAmount * LAMPORTS_PER_SOL)}&slippageBps=50`;
+      
+      // Get quote from Jupiter
+      const quoteResponse = await fetch(jupiterQuoteUrl);
+      const quoteData = await quoteResponse.json();
+      
+      if (!quoteData || quoteData.error) {
+        throw new Error(`Jupiter quote failed: ${quoteData?.error || 'No liquidity available'}`);
+      }
+      
+      console.log('✅ Jupiter quote received:', quoteData);
+      
+      // Get swap transaction from Jupiter
+      const swapResponse = await fetch('https://quote-api.jup.ag/v6/swap', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          quoteResponse: quoteData,
+          userPublicKey: publicKey.toString(),
+          wrapAndUnwrapSol: true,
+        }),
+      });
+      
+      const swapData = await swapResponse.json();
+      
+      if (!swapData || swapData.error) {
+        throw new Error(`Jupiter swap transaction failed: ${swapData?.error || 'Unknown error'}`);
+      }
+      
+      // Deserialize the transaction
+      const swapTransactionBuf = Buffer.from(swapData.swapTransaction, 'base64');
+      const transaction = Transaction.from(swapTransactionBuf);
+      
+      // Sign and send transaction
+      const signedTx = await wallet.signTransaction(transaction);
+      const signature = await this.connection.sendRawTransaction(signedTx.serialize());
+      
+      await this.connection.confirmTransaction(signature);
+      
+      // Track transaction
+      solscanTracker.trackTransaction({
+        signature,
+        type: 'swap',
+        token: 'SOL',
+        amount: solAmount
+      });
+      
+      console.log(`✅ Jupiter DEX swap completed successfully!`);
+      console.log(`📋 Swap Details:`);
+      console.log(`  • Signature: ${signature}`);
+      console.log(`  • Input: ${solAmount} SOL`);
+      console.log(`  • Expected Output: ${expectedGoldAmount.toFixed(2)} GOLD`);
+      console.log(`  • Actual Output: ${Number(quoteData.outAmount) / Math.pow(10, GOLD_DECIMALS)} GOLD`);
+      console.log('🔗 Transaction on Solscan:', solscanTracker.getSolscanUrl(signature));
+       
+       // Verify the swap transaction
+       setTimeout(async () => {
+         const verification = await this.verifySwapTransaction(signature, publicKey);
+         if (verification.success) {
+           console.log(`✅ Swap verification successful: Received ${verification.goldReceived} GOLD`);
+           await this.refreshUserBalances(publicKey);
+         } else {
+           console.warn(`⚠️ Swap verification failed: No GOLDIUM tokens received`);
+           console.warn(`This might indicate a liquidity issue or failed DEX interaction`);
+         }
+       }, 5000);
+       
+       return signature;
+      
+    } catch (error) {
+      console.error('❌ Jupiter DEX swap failed:', error);
+      
+      if (error.message?.includes('No liquidity')) {
+        throw new Error('No liquidity available for SOL→GOLDIUM swap on Jupiter DEX');
+      } else if (error.message?.includes('insufficient funds')) {
+        throw new Error(`Insufficient SOL balance. Need ${solAmount} SOL for swap.`);
+      } else {
+        throw new Error(`DEX swap failed: ${error.message || 'Unknown error'}`);
+      }
+    }
+  }
+  
+  // Legacy swap method (sends SOL to treasury)
   async swapSolForGold(
     wallet: any,
     solAmount: number
@@ -345,12 +543,15 @@ export class GoldTokenService {
       const { SOL_TO_GOLD_RATE } = await import('../lib/constants');
       const goldAmount = solAmount * SOL_TO_GOLD_RATE;
       
+      console.log(`🔄 Starting SOL→GOLD swap: ${solAmount} SOL → ${goldAmount.toFixed(2)} GOLD`);
+      
       const transaction = new Transaction();
+      const treasuryPubkey = new PublicKey('APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump');
       
       // 1. Transfer SOL to treasury (payment for GOLD)
       const swapInstruction = SystemProgram.transfer({
         fromPubkey: publicKey,
-        toPubkey: new PublicKey('APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump'), // Treasury
+        toPubkey: treasuryPubkey,
         lamports: Math.floor(solAmount * LAMPORTS_PER_SOL),
       });
       
@@ -365,7 +566,9 @@ export class GoldTokenService {
       // Check if user's ATA exists, create if not
       try {
         await this.connection.getAccountInfo(userTokenAccount);
+        console.log('✅ User GOLD token account exists');
       } catch {
+        console.log('🔧 Creating user GOLD token account...');
         transaction.add(
           createAssociatedTokenAccountInstruction(
             publicKey,
@@ -376,6 +579,32 @@ export class GoldTokenService {
             ASSOCIATED_TOKEN_PROGRAM_ID
           )
         );
+      }
+      
+      // 3. Get treasury's GOLD token account for transfer
+      const treasuryTokenAccount = await getAssociatedTokenAddress(
+        GOLD_TOKEN_MINT,
+        treasuryPubkey
+      );
+      
+      // Check if treasury has GOLD tokens to transfer
+      try {
+        const treasuryTokenInfo = await this.connection.getAccountInfo(treasuryTokenAccount);
+        if (treasuryTokenInfo) {
+          console.log('✅ Treasury GOLD token account found, adding transfer instruction');
+          
+          // 4. Transfer GOLD tokens from treasury to user
+          const goldAmountLamports = Math.floor(goldAmount * Math.pow(10, GOLD_DECIMALS));
+          
+          // Note: This would require treasury to sign the transaction
+          // For now, we'll create a placeholder that shows the intent
+          console.log(`💰 Would transfer ${goldAmountLamports} GOLD lamports to user`);
+          console.log('⚠️  Treasury signature required for GOLD transfer');
+        } else {
+          console.log('⚠️  Treasury GOLD token account not found');
+        }
+      } catch (error) {
+        console.log('⚠️  Could not verify treasury GOLD balance:', error);
       }
 
       const { blockhash } = await this.connection.getLatestBlockhash();
@@ -395,14 +624,33 @@ export class GoldTokenService {
         amount: solAmount
       });
       
-      console.log(`✅ SOL to GOLD swap successful: ${solAmount} SOL → ${goldAmount} GOLD`);
+      console.log(`✅ SOL payment completed: ${solAmount} SOL sent to treasury`);
+      console.log(`📋 Transaction Details:`);
+      console.log(`  • Signature: ${signature}`);
+      console.log(`  • SOL Amount: ${solAmount}`);
+      console.log(`  • Expected GOLD: ${goldAmount.toFixed(2)}`);
+      console.log(`  • Treasury: ${treasuryPubkey.toString()}`);
       console.log('🔗 SOL→GOLD Swap Transaction on Solscan:', solscanTracker.getSolscanUrl(signature));
+      
+      // Important: This transaction only sends SOL to treasury
+      // GOLD distribution would need to be handled by treasury or DEX
+      console.log('⚠️  Note: GOLD tokens need to be distributed by treasury or use DEX integration');
       
       return signature;
       
     } catch (error) {
-      console.error('SOL to GOLD swap failed:', error);
-      throw error; // Don't fallback to fake signatures
+      console.error('❌ SOL to GOLD swap failed:', error);
+      
+      // Enhanced error handling
+      if (error.message?.includes('insufficient funds')) {
+        throw new Error(`Insufficient SOL balance. Need ${solAmount} SOL for swap.`);
+      } else if (error.message?.includes('blockhash')) {
+        throw new Error('Transaction expired. Please try again.');
+      } else if (error.message?.includes('signature verification failed')) {
+        throw new Error('Transaction was rejected by wallet.');
+      } else {
+        throw new Error(`Swap failed: ${error.message || 'Unknown error'}`);
+      }
     }
   }
 

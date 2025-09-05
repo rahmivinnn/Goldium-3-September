@@ -6,15 +6,17 @@ import { WalletStateManager } from '@/lib/wallet-state';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useGoldBalance } from '@/hooks/use-gold-balance';
 import { useExternalWallets } from '@/hooks/use-external-wallets';
-import { RefreshCw, ExternalLink } from 'lucide-react';
+import { RefreshCw, ExternalLink, AlertCircle } from 'lucide-react';
 import logoImage from '@assets/k1xiYLna_400x400-removebg-preview_1754140723127.png';
 import { SolanaIcon } from '@/components/solana-icon';
 import { GOLDIUM_TOKEN_ADDRESS, SOLSCAN_BASE_URL } from '@/lib/constants';
+import { useWallet } from '@solana/wallet-adapter-react';
 
 export function BalanceCards() {
   const { data: balances, isLoading } = useExternalWalletBalances();
-  const goldBalance = useGoldBalance();
+  const goldBalance = useGoldBalance(); // New robust implementation
   const externalWallet = useExternalWallets();
+  const { publicKey, connected } = useWallet(); // Direct wallet adapter access
   const [walletState, setWalletState] = useState(WalletStateManager.getState());
   const [isRefreshing, setIsRefreshing] = useState(false);
   
@@ -147,11 +149,11 @@ export function BalanceCards() {
     }
   };
 
-  // Use same balance structure as Swap tab for consistency
+  // Use new robust GOLD balance implementation
   const safeBalances = {
     sol: currentBalance, // Direct balance from wallet state
-    gold: goldBalance.balance, // User's actual GOLD balance from real service
-    stakedGold: goldBalance.stakedBalance // User's actual staked amount from real service
+    gold: (parseFloat(goldBalance.amount) || 0), // From new robust implementation with NaN protection
+    stakedGold: goldBalance.stakedBalance || 0 // Keep existing staked balance logic
   };
 
   // Skip refresh balance calls to avoid RPC errors
@@ -287,57 +289,57 @@ export function BalanceCards() {
           <div className="space-y-3">
             <div className="min-w-fit overflow-visible">
               <p className="font-stats tracking-tight whitespace-nowrap">
-                <span className="holographic-gold golden-3d">{safeBalances.gold.toFixed(2)}</span>
-                <span className="text-lg font-normal text-white/70 ml-2">GOLD</span>
+                {goldBalance.loading ? (
+                  <span className="animate-pulse holographic-gold">Loading...</span>
+                ) : goldBalance.error ? (
+                  <span className="text-red-400">Error</span>
+                ) : (
+                  <>
+                    <span className="holographic-gold golden-3d">{safeBalances.gold.toFixed(2)}</span>
+                    <span className="text-lg font-normal text-white/70 ml-2">GOLD</span>
+                  </>
+                )}
               </p>
             </div>
             <div className="flex items-center justify-between">
               <p className="font-small text-white/70">
-                ≈ ${(safeBalances.gold * 20).toFixed(2)} USD
+                {goldBalance.error ? (
+                  <span className="text-red-400 text-xs">RPC Error</span>
+                ) : (
+                  `≈ $${(safeBalances.gold * 20).toFixed(2)} USD`
+                )}
               </p>
               <div className="flex items-center gap-2">
-                {goldBalance.isLoading ? (
-                  <div className="flex items-center space-x-1">
-                    <div className="w-1 h-1 bg-white rounded-full animate-bounce"></div>
-                    <div className="w-1 h-1 bg-white rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                    <div className="w-1 h-1 bg-white rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
-                  </div>
-                ) : (
+                {goldBalance.loading ? (
+                  <>
+                    <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
+                    <span className="font-small text-yellow-400">LOADING</span>
+                  </>
+                ) : goldBalance.error ? (
+                  <>
+                    <AlertCircle className="w-3 h-3 text-red-400" />
+                    <span className="font-small text-red-400">ERROR</span>
+                  </>
+                ) : connected && publicKey ? (
                   <>
                     <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                    <span className="font-small text-green-400">REAL</span>
+                    <span className="font-small text-green-400">LIVE</span>
+                  </>
+                ) : (
+                  <>
+                    <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
+                    <span className="font-small text-gray-400">NO WALLET</span>
                   </>
                 )}
                 <Button
                   size="sm"
                   variant="ghost"
-                  onClick={async () => {
-                    console.log('🔍 Force checking GOLD balance from blockchain...');
-                    const { goldTokenService } = await import('../services/gold-token-service');
-                    const { splTokenService } = await import('../lib/spl-token-service');
-                    const walletState = WalletStateManager.getState();
-                    if (walletState.connected && walletState.address) {
-                      try {
-                        const [blockchainBalance, splBalance] = await Promise.all([
-                          goldTokenService.getGoldBalance(walletState.address),
-                          splTokenService.getGoldBalance(new (await import('@solana/web3.js')).PublicKey(walletState.address))
-                        ]);
-                        console.log('🪙 Blockchain GOLD balance:', blockchainBalance);
-                        console.log('🪙 SPL Token GOLD balance:', splBalance);
-                        alert(`Blockchain: ${blockchainBalance} GOLD\nSPL Service: ${splBalance} GOLD`);
-                      } catch (error) {
-                        console.error('Debug balance check failed:', error);
-                        alert('Failed to check blockchain balance: ' + error);
-                      }
-                    } else {
-                      alert('Wallet not connected');
-                    }
-                  }}
-                  disabled={goldBalance.isLoading}
+                  onClick={goldBalance.refresh}
+                  disabled={goldBalance.loading}
                   className="h-6 w-6 p-0 hover:bg-white/10"
-                  title="Debug: Check blockchain balance"
+                  title="Refresh GOLD balance"
                 >
-                  🔍
+                  <RefreshCw className={`w-3 h-3 text-white/60 ${goldBalance.loading ? 'animate-spin' : ''}`} />
                 </Button>
               </div>
             </div>

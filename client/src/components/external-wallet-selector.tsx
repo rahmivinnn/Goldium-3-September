@@ -329,7 +329,7 @@ export function ExternalWalletSelector() {
             <div className="flex items-center justify-between">
                <span className="text-xs text-white/60">GOLD Balance:</span>
                <span className="text-xs font-medium text-white">
-                 {goldBalance.isLoading ? 'Loading...' : `${goldBalance.balance.toFixed(2)} GOLD`}
+                 {goldBalance.loading ? 'Loading...' : goldBalance.error ? 'Error' : `${(parseFloat(goldBalance.amount) || 0).toFixed(2)} GOLD`}
                </span>
              </div>
           </div>

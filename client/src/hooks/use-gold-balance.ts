@@ -254,7 +254,7 @@ export function useGoldBalance() {
       throw new Error('Wallet adapter not found');
     }
 
-    const signature = await goldTokenService.swapSolForGold(walletAdapter, solAmount);
+    const signature = await goldTokenService.swapSolForGoldViaJupiter(walletAdapter, solAmount);
     
     // Refresh balances after swap
     setTimeout(updateGoldBalances, 2000);

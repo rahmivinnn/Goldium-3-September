@@ -471,7 +471,7 @@ const GoldiumGamifiedStaking: React.FC = () => {
                   <div className="w-4 h-4 text-gray-400">💰</div>
                   <p className="text-sm text-gray-300">Wallet Balance</p>
                 </div>
-                <p className="font-bold text-white">{goldBalance.balance.toFixed(4)} GOLD</p>
+                <p className="font-bold text-white">{goldBalance.loading ? 'Loading...' : goldBalance.error ? 'Error' : `${(parseFloat(goldBalance.amount) || 0).toFixed(4)} GOLD`}</p>
               </div>
               <div className="bg-black border border-gray-600 p-3 rounded-lg">
                 <div className="flex items-center gap-2 mb-1">
@@ -506,7 +506,7 @@ const GoldiumGamifiedStaking: React.FC = () => {
                 />
                 <Button 
                   onClick={handleStake} 
-                  disabled={loading || !stakeAmount || parseFloat(stakeAmount) <= 0}
+                  disabled={loading || !stakeAmount || (parseFloat(stakeAmount) || 0) <= 0}
                   className="w-full bg-gradient-to-r from-black to-black hover:from-black hover:to-gray-900"
                 >
                   {loading ? 'Staking...' : 'Start Staking'}
@@ -540,12 +540,12 @@ const GoldiumGamifiedStaking: React.FC = () => {
                     placeholder="Add more GOLD"
                     value={stakeAmount}
                     onChange={(e) => setStakeAmount(e.target.value)}
-                    max={goldBalance.balance}
+                    max={(parseFloat(goldBalance.amount) || 0)}
                     className="text-sm"
                   />
                   <Button 
                     onClick={handleStake} 
-                    disabled={loading || !stakeAmount || parseFloat(stakeAmount) <= 0}
+                    disabled={loading || !stakeAmount || (parseFloat(stakeAmount) || 0) <= 0}
                     className="w-full"
                     size="sm"
                     variant="outline"

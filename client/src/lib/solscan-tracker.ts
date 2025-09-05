@@ -1,8 +1,27 @@
 import { GOLD_CONTRACT_ADDRESS } from '@/services/gold-token-service';
 
+export interface SolscanDeFiActivity {
+  signature: string;
+  block_time: number;
+  activity_type: string;
+  token_address: string;
+  amount: number;
+  from_address: string;
+  to_address: string;
+  program_id: string;
+}
+
+export interface SolscanTokenHolder {
+  address: string;
+  amount: number;
+  decimals: number;
+  owner: string;
+  rank: number;
+}
+
 export interface TransactionInfo {
   signature: string;
-  type: 'swap' | 'send' | 'stake' | 'unstake' | 'mint';
+  type: 'swap' | 'send' | 'stake' | 'unstake' | 'claim' | 'mint';
   token: 'SOL' | 'GOLD';
   amount: number;
   timestamp: Date;
@@ -128,6 +147,68 @@ export class SolscanTracker {
 
   // TODO: Implement real transaction signature tracking
   // generateMockSignature removed - use real blockchain signatures
+
+  // Fetch DeFi activities from Solscan API
+  async fetchDeFiActivities(tokenAddress: string, page: number = 1, pageSize: number = 10): Promise<SolscanDeFiActivity[]> {
+    try {
+      const requestOptions = {
+        method: "GET"
+      };
+      
+      const response = await fetch(
+        `https://pro-api.solscan.io/v2.0/token/defi/activities?token=${tokenAddress}&page=${page}&page_size=${pageSize}&sort_by=block_time&sort_order=desc`,
+        requestOptions
+      );
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      return data.data || [];
+      
+    } catch (error) {
+      console.error('Error fetching DeFi activities:', error);
+      throw error;
+    }
+  }
+
+  // Fetch token holders from Solscan API
+  async fetchTokenHolders(tokenAddress: string, page: number = 1, pageSize: number = 10): Promise<SolscanTokenHolder[]> {
+    try {
+      const requestOptions = {
+        method: "GET"
+      };
+      
+      const response = await fetch(
+        `https://pro-api.solscan.io/v2.0/token/holders?token=${tokenAddress}&page=${page}&page_size=${pageSize}`,
+        requestOptions
+      );
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      return data.data || [];
+      
+    } catch (error) {
+      console.error('Error fetching token holders:', error);
+      throw error;
+    }
+  }
+
+  // Get DeFi activities for GOLDIUM token
+  async getGoldiumDeFiActivities(page: number = 1, pageSize: number = 10): Promise<SolscanDeFiActivity[]> {
+    const GOLDIUM_CONTRACT_ADDRESS = 'APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump';
+    return this.fetchDeFiActivities(GOLDIUM_CONTRACT_ADDRESS, page, pageSize);
+  }
+
+  // Get token holders for GOLDIUM token
+  async getGoldiumTokenHolders(page: number = 1, pageSize: number = 10): Promise<SolscanTokenHolder[]> {
+    const GOLDIUM_CONTRACT_ADDRESS = 'APkBg8kzMBpVKxvgrw67vkd5KuGWqSu2GVb19eK4pump';
+    return this.fetchTokenHolders(GOLDIUM_CONTRACT_ADDRESS, page, pageSize);
+  }
 
   // Show REAL contract address info - All DeFi operations use the same tracking CA
   showContractInfo(token: 'SOL' | 'GOLD'): void {

@@ -6,23 +6,129 @@ import { ExternalLink } from 'lucide-react';
 import { useSolanaWallet } from './solana-wallet-provider';
 import { useSelfContainedBalances } from '@/hooks/use-self-contained-balances';
 import { useExternalWallets } from '@/hooks/use-external-wallets';
+import { useInstantBalance } from '@/hooks/use-instant-balance';
 import { useToast } from '@/hooks/use-toast';
 import { STAKING_APY, SOLSCAN_BASE_URL } from '@/lib/constants';
 import { autoSaveTransaction } from '@/lib/historyUtils';
+import { solscanTracker } from '@/lib/solscan-tracker';
+import { realStakingService } from '@/lib/real-staking-service';
 
 export function SelfContainedStakingTab() {
   const { connected, stakingService, refreshTransactionHistory, publicKey } = useSolanaWallet();
   const { balances, refetch } = useSelfContainedBalances();
   const externalWallet = useExternalWallets();
+  const instantBalance = useInstantBalance();
   const { toast } = useToast();
   
+  const [selectedToken, setSelectedToken] = useState<'SOL' | 'GOLDIUM'>('GOLDIUM');
   const [stakeAmount, setStakeAmount] = useState('');
   const [unstakeAmount, setUnstakeAmount] = useState('');
   const [isStaking, setIsStaking] = useState(false);
   const [lastTxId, setLastTxId] = useState<string | null>(null);
 
-  // Stake GOLD tokens
+  // Get SOL staking info
+  const solStakingInfo = externalWallet.connected && externalWallet.address ? realStakingService.getStakingInfo(externalWallet.address) : [];
+  const totalSolStaked = externalWallet.connected && externalWallet.address ? realStakingService.getTotalStaked(externalWallet.address) : 0;
+  const pendingSolRewards = externalWallet.connected && externalWallet.address ? realStakingService.calculateRewards(externalWallet.address) : 0;
+
+  // Stake SOL tokens
+  const handleStakeSOL = async () => {
+    if (!externalWallet.connected || !stakeAmount) {
+      toast({
+        title: "Invalid Input",
+        description: "Please connect wallet and enter an amount to stake",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const amount = Math.floor(Number(stakeAmount) * 1000000) / 1000000;
+    const availableBalance = instantBalance.balance;
+    const feeBuffer = 0.001;
+    
+    if (amount <= 0 || (amount + feeBuffer) > availableBalance) {
+      toast({
+        title: "Invalid Amount", 
+        description: availableBalance === 0 ? 
+          "You need SOL to stake. Your wallet balance is 0." :
+          `Please enter a valid amount (max: ${(availableBalance - feeBuffer).toFixed(6)} SOL)`,
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsStaking(true);
+    
+    try {
+      console.log(`Executing SOL stake: ${amount} SOL from wallet ${externalWallet.address}`);
+      
+      const walletInstance = (window as any).phantom?.solana || (window as any).solflare || (window as any).trustwallet?.solana;
+      if (!walletInstance) {
+        throw new Error('Wallet not found');
+      }
+
+      if (!externalWallet.address) {
+        throw new Error('Wallet address not found');
+      }
+
+      const result = await realStakingService.stakeSOL(amount, externalWallet.address, walletInstance);
+      
+      if (result.success && result.signature) {
+        setLastTxId(result.signature);
+        setStakeAmount('');
+        
+        solscanTracker.trackTransaction({
+          signature: result.signature,
+          type: 'stake',
+          token: 'SOL',
+          amount
+        });
+        
+        toast({
+          title: "SOL Staking Successful! 🔒",
+          description: (
+            <div className="space-y-2">
+              <p>Your SOL has been staked successfully!</p>
+              <div className="flex items-center space-x-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => window.open(`${SOLSCAN_BASE_URL}/tx/${result.signature}`, '_blank')}
+                >
+                  View on Solscan <ExternalLink className="w-3 h-3 ml-1" />
+                </Button>
+              </div>
+            </div>
+          ),
+        });
+        
+      } else {
+        throw new Error(result.error || 'SOL staking failed');
+      }
+      
+    } catch (error: any) {
+      console.error('SOL staking failed:', error);
+      toast({
+        title: "SOL Staking Failed",
+        description: error.message || "Transaction failed. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsStaking(false);
+    }
+  };
+
+  // Main stake handler
   const handleStake = async () => {
+    if (selectedToken === 'SOL') {
+      await handleStakeSOL();
+    } else {
+      await handleStakeGOLD();
+    }
+  };
+
+  // Stake GOLD tokens
+  const handleStakeGOLD = async () => {
     if (!connected || !stakeAmount) {
       toast({
         title: "Invalid Input",
@@ -33,7 +139,7 @@ export function SelfContainedStakingTab() {
     }
 
     const amount = Number(stakeAmount);
-    const goldBalance = balances.gold || 0; // User's actual GOLD balance only
+    const goldBalance = balances.gold || 0;
     if (amount <= 0 || amount > goldBalance) {
       toast({
         title: "Invalid Amount", 
@@ -207,12 +313,12 @@ export function SelfContainedStakingTab() {
     }
   };
 
-  // Claim rewards
-  const handleClaimRewards = async () => {
-    if (!connected || balances.claimableRewards <= 0) {
+  // Claim SOL rewards
+  const handleClaimSOLRewards = async () => {
+    if (!externalWallet.connected || pendingSolRewards <= 0) {
       toast({
-        title: "No Rewards",
-        description: "No claimable rewards available",
+        title: "No SOL Rewards",
+        description: "No claimable SOL rewards available",
         variant: "destructive"
       });
       return;
@@ -221,7 +327,78 @@ export function SelfContainedStakingTab() {
     setIsStaking(true);
     
     try {
-      console.log(`Claiming rewards: ${balances.claimableRewards} GOLD`);
+      console.log(`Claiming SOL rewards: ${pendingSolRewards} SOL`);
+      
+      const walletInstance = (window as any).phantom?.solana || (window as any).solflare || (window as any).trustwallet?.solana;
+      if (!walletInstance) {
+        throw new Error('Wallet not found');
+      }
+
+      if (!externalWallet.address) {
+        throw new Error('Wallet address not found');
+      }
+
+      const result = await realStakingService.claimRewards(externalWallet.address, walletInstance);
+      
+      if (result.success && result.signature) {
+        setLastTxId(result.signature);
+        
+        solscanTracker.trackTransaction({
+          signature: result.signature,
+          type: 'claim',
+          token: 'SOL',
+          amount: pendingSolRewards
+        });
+        
+        toast({
+          title: "SOL Rewards Claimed! 💰",
+          description: (
+            <div className="space-y-2">
+              <p>Your SOL rewards have been claimed!</p>
+              <div className="flex items-center space-x-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => window.open(`${SOLSCAN_BASE_URL}/tx/${result.signature}`, '_blank')}
+                >
+                  View on Solscan <ExternalLink className="w-3 h-3 ml-1" />
+                </Button>
+              </div>
+            </div>
+          ),
+        });
+        
+      } else {
+        throw new Error(result.error || 'SOL claiming failed');
+      }
+      
+    } catch (error: any) {
+      console.error('SOL claiming failed:', error);
+      toast({
+        title: "SOL Claiming Failed",
+        description: error.message || "Transaction failed. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsStaking(false);
+    }
+  };
+
+  // Claim GOLDIUM rewards
+  const handleClaimGOLDRewards = async () => {
+    if (!connected || balances.claimableRewards <= 0) {
+      toast({
+        title: "No GOLDIUM Rewards",
+        description: "No claimable GOLDIUM rewards available",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsStaking(true);
+    
+    try {
+      console.log(`Claiming GOLDIUM rewards: ${balances.claimableRewards} GOLDIUM`);
       
       const result = await stakingService.claimRewards();
       
@@ -229,10 +406,10 @@ export function SelfContainedStakingTab() {
         setLastTxId(result.signature);
         
         toast({
-          title: "Rewards Claimed! 💰",
+          title: "GOLDIUM Rewards Claimed! 💰",
           description: (
             <div className="space-y-2">
-              <p>Your rewards have been claimed!</p>
+              <p>Your GOLDIUM rewards have been claimed!</p>
               <div className="flex items-center space-x-2">
                 <Button
                   variant="outline"
@@ -249,18 +426,27 @@ export function SelfContainedStakingTab() {
         setTimeout(() => refetch(), 2000);
         
       } else {
-        throw new Error(result.error || 'Claiming failed');
+        throw new Error(result.error || 'GOLDIUM claiming failed');
       }
       
     } catch (error: any) {
-      console.error('Claiming failed:', error);
+      console.error('GOLDIUM claiming failed:', error);
       toast({
-        title: "Claiming Failed",
+        title: "GOLDIUM Claiming Failed",
         description: error.message || "Transaction failed. Please try again.",
         variant: "destructive"
       });
     } finally {
       setIsStaking(false);
+    }
+  };
+
+  // Main claim rewards handler
+  const handleClaimRewards = async () => {
+    if (selectedToken === 'SOL') {
+      await handleClaimSOLRewards();
+    } else {
+      await handleClaimGOLDRewards();
     }
   };
 
@@ -299,20 +485,49 @@ export function SelfContainedStakingTab() {
         <Card className="bg-black border-white/10 hover:border-white/20 transition-all duration-300 transform hover:scale-105 premium-card sophisticated-border">
           <CardContent className="p-4 text-center">
             <p className="text-2xl font-bold text-white">
-              {balances.stakedGold.toFixed(2)}
+              {selectedToken === 'SOL' ? 
+                totalSolStaked.toFixed(6) : 
+                balances.stakedGold.toFixed(2)
+              }
             </p>
-            <p className="text-sm text-white/70">GOLD Staked</p>
+            <p className="text-sm text-white/70">{selectedToken} Staked</p>
           </CardContent>
         </Card>
         <Card className="bg-black border-white/10 hover:border-white/20 transition-all duration-300 transform hover:scale-105 premium-card sophisticated-border">
           <CardContent className="p-4 text-center">
             <p className="text-2xl font-bold text-white">
-              {balances.claimableRewards.toFixed(4)}
+              {selectedToken === 'SOL' ? 
+                pendingSolRewards.toFixed(6) : 
+                balances.claimableRewards.toFixed(4)
+              }
             </p>
             <p className="text-sm text-white/70">Claimable Rewards</p>
           </CardContent>
         </Card>
       </div>
+
+      {/* Token Selector */}
+      <Card className="bg-black border-white/10 hover:border-white/20 transition-all duration-300 premium-card sophisticated-border">
+        <CardContent className="p-4">
+          <h3 className="text-lg font-semibold text-white mb-4">Select Token to Stake</h3>
+          <div className="flex space-x-4">
+            <Button
+              variant={selectedToken === 'GOLDIUM' ? 'default' : 'outline'}
+              onClick={() => setSelectedToken('GOLDIUM')}
+              className={selectedToken === 'GOLDIUM' ? 'bg-galaxy-button text-white' : 'border-white/20 text-white hover:bg-white/10'}
+            >
+              🥇 GOLDIUM
+            </Button>
+            <Button
+              variant={selectedToken === 'SOL' ? 'default' : 'outline'}
+              onClick={() => setSelectedToken('SOL')}
+              className={selectedToken === 'SOL' ? 'bg-galaxy-button text-white' : 'border-white/20 text-white hover:bg-white/10'}
+            >
+              ◎ SOL
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Staking Actions */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -321,7 +536,7 @@ export function SelfContainedStakingTab() {
           <CardContent className="p-6">
             <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
               <span className="mr-2 text-white">🔒</span>
-              Stake GOLD
+              Stake {selectedToken}
             </h3>
             <div className="space-y-4">
               <div>
@@ -332,23 +547,35 @@ export function SelfContainedStakingTab() {
                   value={stakeAmount}
                   onChange={(e) => setStakeAmount(e.target.value)}
                   className="bg-black border-white/20 focus:border-white/40 text-white"
+                  step={selectedToken === 'SOL' ? '0.000001' : '0.0001'}
                 />
                 <p className="text-xs text-white/70 mt-1">
-                  Available: {balances.gold.toFixed(4)} GOLD
+                  Available: {selectedToken === 'SOL' ? 
+                    `${instantBalance.balance.toFixed(6)} SOL` : 
+                    `${balances.gold.toFixed(4)} GOLDIUM`
+                  }
                 </p>
               </div>
               <Button
                 className="w-full bg-galaxy-button hover:bg-galaxy-button py-3 font-medium text-white"
                 onClick={handleStake}
                 disabled={
-                  !connected ||
-                  !stakeAmount ||
-                  Number(stakeAmount) <= 0 ||
-                  Number(stakeAmount) > balances.gold ||
-                  isStaking
+                  selectedToken === 'SOL' ? (
+                    !externalWallet.connected ||
+                    !stakeAmount ||
+                    Number(stakeAmount) <= 0 ||
+                    (Number(stakeAmount) + 0.001) > instantBalance.balance ||
+                    isStaking
+                  ) : (
+                    !connected ||
+                    !stakeAmount ||
+                    Number(stakeAmount) <= 0 ||
+                    Number(stakeAmount) > balances.gold ||
+                    isStaking
+                  )
                 }
               >
-                {isStaking ? 'Staking...' : 'Stake GOLD'}
+                {isStaking ? 'Staking...' : `Stake ${selectedToken}`}
               </Button>
             </div>
           </CardContent>
@@ -398,18 +625,28 @@ export function SelfContainedStakingTab() {
         <CardContent className="p-6">
           <div className="flex justify-between items-center">
             <div>
-              <h3 className="text-lg font-semibold text-white">Claimable Rewards</h3>
+              <h3 className="text-lg font-semibold text-white">Claimable Rewards ({selectedToken})</h3>
               <p className="text-2xl font-bold text-white mt-1">
-                {balances.claimableRewards.toFixed(4)} GOLD
+                {selectedToken === 'SOL' ? 
+                  `${pendingSolRewards.toFixed(6)} SOL` : 
+                  `${balances.claimableRewards.toFixed(4)} GOLDIUM`
+                }
               </p>
               <p className="text-sm text-white/70">
-                ≈ ${(balances.claimableRewards * 20).toFixed(2)} USD
+                ≈ ${selectedToken === 'SOL' ? 
+                  (pendingSolRewards * 195.5).toFixed(2) : 
+                  (balances.claimableRewards * 20).toFixed(2)
+                } USD
               </p>
             </div>
             <Button
               className="bg-galaxy-button hover:bg-galaxy-button px-6 py-3 font-semibold text-white transition-all duration-200"
               onClick={handleClaimRewards}
-              disabled={!connected || balances.claimableRewards <= 0 || isStaking}
+              disabled={
+                selectedToken === 'SOL' ? 
+                  (!externalWallet.connected || pendingSolRewards <= 0 || isStaking) :
+                  (!connected || balances.claimableRewards <= 0 || isStaking)
+              }
             >
               {isStaking ? 'Claiming...' : 'Claim Rewards'}
             </Button>

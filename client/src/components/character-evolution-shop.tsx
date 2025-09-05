@@ -132,7 +132,10 @@ const CHARACTER_UPGRADES: CharacterUpgrade[] = [
 
 export const CharacterEvolutionShop: React.FC = () => {
   const { connected, connectWallet } = useExternalWallets();
-  const { balance: goldBalance, isLoading: goldLoading, refreshBalances } = useGoldBalance();
+  const goldBalanceHook = useGoldBalance();
+  const goldBalance = (parseFloat(goldBalanceHook.amount) || 0);
+  const goldLoading = goldBalanceHook.loading;
+  const refreshBalances = goldBalanceHook.refresh;
   const [userProgress, setUserProgress] = useState<UserProgress>({
     level: 1,
     experience: 0,

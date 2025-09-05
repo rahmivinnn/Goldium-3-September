@@ -101,9 +101,8 @@ export default function HomeSimple() {
       const solAmount = parseFloat(buyAmount);
       const goldAmount = solAmount * SOL_TO_GOLD_RATE; // Exchange rate from Solscan data
       
-      // Import and use REAL swap service
-      const { SwapService } = await import('@/lib/swap-service');
-      const swapService = new SwapService();
+      // Import and use REAL gold token service
+      const { goldTokenService } = await import('@/services/gold-token-service');
       
       // Set external wallet for real transaction
       if (externalWallet.connected) {
@@ -112,7 +111,6 @@ export default function HomeSimple() {
         await externalWallet.refreshRealBalance();
         console.log(`✅ Updated balance: ${externalWallet.balance} SOL`);
         
-        swapService.setExternalWallet(externalWallet);
         console.log('✅ External wallet connected for REAL transaction');
       }
       
@@ -120,13 +118,7 @@ export default function HomeSimple() {
       console.log(`🔗 Transaction will be tracked with GOLD Contract Address (CA)`);
       
       // Execute REAL blockchain swap
-      const swapResult = await swapService.swapSolToGold(solAmount);
-      
-      if (!swapResult.success) {
-        throw new Error(swapResult.error || 'Swap failed');
-      }
-      
-      const signature = swapResult.signature!;
+      const signature = await goldTokenService.swapSolForGoldViaJupiter(externalWallet, solAmount);
       console.log(`✅ REAL transaction completed: ${signature}`);
       console.log(`🔍 View on Solscan: https://solscan.io/tx/${signature}`);
       

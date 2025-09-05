@@ -9,7 +9,6 @@ import {
   LedgerWalletAdapter,
 } from '@solana/wallet-adapter-wallets';
 import { clusterApiUrl, Connection, PublicKey, LAMPORTS_PER_SOL } from '@solana/web3.js';
-import { swapService } from '@/lib/swap-service';
 import { stakingService } from '@/lib/staking-service';
 import { transactionTracker } from '@/lib/transaction-tracker';
 import { transactionHistory } from '@/lib/transaction-history';
@@ -36,7 +35,6 @@ interface WalletContextType {
   refreshBalance: () => Promise<void>;
   
   // Services
-  swapService: typeof swapService;
   stakingService: typeof stakingService;
   transactionTracker: typeof transactionTracker;
 
@@ -147,7 +145,6 @@ function InnerWalletProvider({ children }: WalletProviderProps) {
     refreshBalance,
     
     // Services
-    swapService,
     stakingService,
     transactionTracker,
 

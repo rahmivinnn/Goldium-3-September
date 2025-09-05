@@ -21,8 +21,8 @@ export function GoldSendTab() {
   const externalWallet = useExternalWallets();
   const { data: balances } = useExternalWalletBalances();
   
-  // Use external wallet GOLD balance for accurate checking
-  const currentGoldBalance = balances?.gold || goldBalance.balance || 0;
+  // Use new robust GOLD balance implementation
+  const currentGoldBalance = balances?.gold || (parseFloat(goldBalance.amount) || 0);
 
   const handleSend = async () => {
     if (!toAddress.trim()) {
@@ -113,13 +113,13 @@ export function GoldSendTab() {
             <span className="text-galaxy-text">Available Balance:</span>
             <div className="flex items-center gap-2">
               <span className="text-2xl font-bold text-galaxy-bright">
-                {goldBalance.balance.toFixed(4)}
+                {goldBalance.loading ? 'Loading...' : goldBalance.error ? 'Error' : (parseFloat(goldBalance.amount) || 0).toFixed(4)}
               </span>
               <span className="text-galaxy-text">GOLD</span>
             </div>
           </div>
           <div className="text-right text-sm text-galaxy-accent mt-1">
-            ≈ ${(goldBalance.balance * 20).toFixed(2)} USD
+            {goldBalance.error ? 'RPC Error' : `≈ $${((parseFloat(goldBalance.amount) || 0) * 20).toFixed(2)} USD`}
           </div>
         </div>
 
@@ -152,7 +152,7 @@ export function GoldSendTab() {
               className="bg-gradient-to-r from-gray-900/80 to-gray-800/80 border border-white/20/30 text-white placeholder:text-gray-400 pr-16 backdrop-blur-sm"
               step="0.0001"
               min="0"
-              max={goldBalance.balance}
+              max={(parseFloat(goldBalance.amount) || 0)}
             />
             <Button
               type="button"
@@ -182,7 +182,7 @@ export function GoldSendTab() {
         {/* Send Button */}
         <Button
           onClick={handleSend}
-          disabled={isLoading || !toAddress.trim() || !amount || goldBalance.balance === 0}
+          disabled={isLoading || !toAddress.trim() || !amount || (parseFloat(goldBalance.amount) || 0) === 0 || goldBalance.loading || goldBalance.error}
           className="w-full bg-gradient-to-r from-black to-gray-900 hover:from-black hover:to-gray-900 text-white font-semibold"
         >
           {isLoading ? (

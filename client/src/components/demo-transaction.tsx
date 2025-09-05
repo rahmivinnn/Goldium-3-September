@@ -7,10 +7,9 @@ import { Connection, PublicKey, Transaction, SystemProgram, LAMPORTS_PER_SOL } f
 import { getAssociatedTokenAddress, createAssociatedTokenAccountInstruction, createMintToInstruction, TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import { GOLD_TOKEN_MINT, TREASURY_WALLET, SOL_TO_GOLD_RATE, GOLD_DECIMALS, SOLSCAN_BASE_URL } from '@/lib/constants';
 import { useToast } from '@/hooks/use-toast';
-import { useWallet } from '@solana/wallet-adapter-react';
-import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { saveTransactionHistory, type GoldiumTransactionHistory } from '@/lib/historyUtils';
 import { useSolanaWallet } from './solana-wallet-provider';
+import { useExternalWallets } from '@/hooks/use-external-wallets';
 
 interface TransactionDetails {
   solAmount: number;
@@ -28,7 +27,9 @@ const RealTransaction: React.FC = () => {
   const [txSignature, setTxSignature] = useState('');
   const [transactionDetails, setTransactionDetails] = useState<TransactionDetails | null>(null);
   const { toast } = useToast();
-  const { publicKey, signTransaction, connected } = useWallet();
+  const wallet = useExternalWallets();
+  const { publicKey: walletPublicKey, connected, signTransaction, refreshBalance, refreshRealBalance } = wallet;
+  const publicKey = walletPublicKey;
   const { refreshTransactionHistory } = useSolanaWallet();
 
   // Multiple RPC endpoints for reliability
@@ -74,12 +75,13 @@ const RealTransaction: React.FC = () => {
     setIsLoading(true);
     try {
       const solAmount = parseFloat(amount);
-      const userPublicKey = publicKey;
+      // Ensure publicKey is a PublicKey instance
+      const userPublicKey = publicKey instanceof PublicKey ? publicKey : new PublicKey(publicKey!);
       const treasuryPubkey = new PublicKey(TREASURY_WALLET);
       const goldAmount = solAmount * SOL_TO_GOLD_RATE;
       
       console.log(`Processing transaction: ${solAmount} SOL -> ${goldAmount} GOLD`);
-      console.log(`Connected wallet: ${publicKey.toString()}`);
+      console.log(`Connected wallet: ${userPublicKey.toString()}`);
 
       // Use working RPC endpoints (tested and verified)
       const workingRpcEndpoints = [
@@ -303,8 +305,12 @@ const RealTransaction: React.FC = () => {
         saveTransactionHistory(publicKey.toString(), transactionRecord);
         console.log('✅ Transaction saved to history:', transactionRecord);
         
-        // Refresh transaction history to update UI
+        // Refresh transaction history and balance to update UI
         refreshTransactionHistory();
+        
+        // Refresh GOLD balance to show updated amount
+        await refreshRealBalance();
+        await refreshBalance();
       }
       
       toast({
@@ -380,7 +386,7 @@ const RealTransaction: React.FC = () => {
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader>
-        <CardTitle className="text-center">Real GOLD Transaction</CardTitle>
+        <CardTitle className="text-center">Swap</CardTitle>
         <p className="text-sm text-gray-600 text-center">
           Send SOL to treasury and receive GOLD tokens on Solana mainnet
         </p>
@@ -390,19 +396,18 @@ const RealTransaction: React.FC = () => {
           <div className="text-center space-y-4">
             <div className="flex items-center justify-center gap-2 text-gray-600">
               <Wallet className="w-5 h-5" />
-              <span>Connect your wallet to continue</span>
+              <span>Please connect your wallet using the button in the top navigation</span>
             </div>
-            <WalletMultiButton className="!bg-blue-600 hover:!bg-blue-700" />
           </div>
         ) : (
           <>
-            <div className="bg-green-50 p-3 rounded-lg border border-green-200">
-              <div className="flex items-center gap-2 text-green-800 mb-2">
+            <div className="bg-black p-3 rounded-lg border border-white/20">
+              <div className="flex items-center gap-2 text-white mb-2">
                 <Wallet className="w-4 h-4" />
                 <span className="font-medium">Wallet Connected</span>
               </div>
-              <p className="text-xs font-mono text-green-700 break-all">
-                {publicKey?.toString()}
+              <p className="text-xs font-mono text-white/80 break-all">
+                {publicKey ? (typeof publicKey === 'string' ? publicKey : publicKey.toString()) : 'No wallet connected'}
               </p>
             </div>
         
@@ -418,25 +423,25 @@ const RealTransaction: React.FC = () => {
           />
         </div>
 
-        <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-          <h3 className="font-semibold text-blue-800 mb-3">Transaction Preview</h3>
+        <div className="bg-black p-4 rounded-lg border border-white/20">
+          <h3 className="font-semibold text-white mb-3">Transaction Preview</h3>
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
-              <span className="text-gray-600">SOL Amount:</span>
-              <span className="font-mono font-semibold">{amount || '0.001'}</span>
+              <span className="text-white/70">SOL Amount:</span>
+              <span className="font-mono font-semibold text-white">{amount || '0.001'}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-600">GOLD Amount:</span>
-              <span className="font-mono font-semibold text-yellow-600">{(parseFloat(amount || '0') * SOL_TO_GOLD_RATE).toFixed(6)}</span>
+              <span className="text-white/70">GOLD Amount:</span>
+              <span className="font-mono font-semibold text-yellow-400">{(parseFloat(amount || '0') * SOL_TO_GOLD_RATE).toFixed(6)}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-600">Fee:</span>
-              <span className="font-mono font-semibold">~0.005</span>
+              <span className="text-white/70">Fee:</span>
+              <span className="font-mono font-semibold text-white">~0.005</span>
             </div>
-            <div className="border-t pt-2 mt-2">
+            <div className="border-t border-white/20 pt-2 mt-2">
               <div className="flex justify-between font-semibold">
-                <span>Total:</span>
-                <span className="font-mono">{(parseFloat(amount || '0') + 0.005).toFixed(6)} SOL</span>
+                <span className="text-white">Total:</span>
+                <span className="font-mono text-white">{(parseFloat(amount || '0') + 0.005).toFixed(6)} SOL</span>
               </div>
             </div>
           </div>
@@ -452,7 +457,7 @@ const RealTransaction: React.FC = () => {
                 disabled={isLoading}
                 className="w-full"
               >
-                {isLoading ? 'Processing Transaction...' : 'Execute Real Transaction'}
+                {isLoading ? 'Processing Swap...' : 'Execute Swap'}
               </Button>
             </div>
           </>

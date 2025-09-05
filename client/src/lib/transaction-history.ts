@@ -1,5 +1,3 @@
-import { SwapMetadata } from './swap-service';
-
 // Enhanced transaction record matching user requirements
 export interface TransactionRecord {
   id: string;

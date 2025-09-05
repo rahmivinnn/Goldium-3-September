@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { PublicKey } from '@solana/web3.js';
 import { selfContainedWallet, walletInfo } from '@/lib/wallet-service';
-import { swapService } from '@/lib/swap-service';
 import { stakingService } from '@/lib/staking-service';
 import { transactionTracker } from '@/lib/transaction-tracker';
 import { transactionHistory } from '@/lib/transaction-history';
@@ -24,7 +23,6 @@ interface WalletContextType {
   refreshBalance: () => Promise<void>;
   
   // Services
-  swapService: typeof swapService;
   stakingService: typeof stakingService;
   transactionTracker: typeof transactionTracker;
 
@@ -133,7 +131,6 @@ export function SelfContainedWalletProvider({ children }: WalletProviderProps) {
     refreshBalance,
     
     // Services
-    swapService,
     stakingService,
     transactionTracker,
 

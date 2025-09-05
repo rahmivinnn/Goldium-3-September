@@ -6,12 +6,13 @@ import { Badge } from '@/components/ui/badge';
 import { RealTimePriceTicker } from '@/components/real-time-price-ticker';
 import { RealTimeNotifications } from '@/components/real-time-notifications';
 import { PortfolioAnalytics } from '@/components/portfolio-analytics';
-import { CleanSwapTab } from '@/components/clean-swap-tab';
+import { RealTransaction } from '@/components/demo-transaction';
 import { SelfContainedStakingTab } from '@/components/self-contained-staking-tab';
 import { RealSendTab } from '@/components/real-send-tab';
 import { TransactionHistory } from '@/components/transaction-history';
 import { CharacterEvolutionShop } from '@/components/character-evolution-shop';
 import GoldPurchaseQR from '@/components/gold-purchase-qr';
+import { SolscanAnalytics } from '@/components/solscan-analytics';
 import { useSolanaWallet, WalletMultiButton } from '@/components/solana-wallet-provider';
 import { ExternalWalletSelector } from '@/components/external-wallet-selector';
 import { 
@@ -257,10 +258,14 @@ export default function Dashboard() {
               
               <CardContent>
                 <Tabs defaultValue="swap" className="w-full">
-                  <TabsList className="grid w-full grid-cols-5 bg-black/20 backdrop-blur-xl border-2 border-white/10 shadow-2xl border border-white/10">
+                  <TabsList className="grid w-full grid-cols-6 bg-black/20 backdrop-blur-xl border-2 border-white/10 shadow-2xl border border-white/10">
                     <TabsTrigger value="swap" className="text-xs font-['Inter'] font-semibold">Swap</TabsTrigger>
                     <TabsTrigger value="stake" className="text-xs font-['Inter'] font-semibold">Stake</TabsTrigger>
                     <TabsTrigger value="send" className="text-xs font-['Inter'] font-semibold">Send</TabsTrigger>
+                    <TabsTrigger value="analytics" className="text-xs font-['Inter'] font-semibold flex items-center gap-1">
+                      <Activity className="w-3 h-3" />
+                      Analytics
+                    </TabsTrigger>
                     <TabsTrigger value="evolution" className="text-xs font-['Inter'] font-semibold flex items-center gap-1">
                       <Crown className="w-3 h-3" />
                       Evolution
@@ -272,7 +277,7 @@ export default function Dashboard() {
                   </TabsList>
                   
                   <TabsContent value="swap" className="mt-4">
-                    <CleanSwapTab />
+                    <RealTransaction />
                   </TabsContent>
                   
                   <TabsContent value="stake" className="mt-4">
@@ -281,6 +286,12 @@ export default function Dashboard() {
                   
                   <TabsContent value="send" className="mt-4">
                     <RealSendTab />
+                  </TabsContent>
+                  
+                  <TabsContent value="analytics" className="mt-4">
+                    <div className="max-h-96 overflow-y-auto">
+                      <SolscanAnalytics />
+                    </div>
                   </TabsContent>
                   
                   <TabsContent value="evolution" className="mt-4">

@@ -2,7 +2,7 @@ import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { BalanceCards } from '@/components/balance-cards';
-import { CleanSwapTab } from '@/components/clean-swap-tab';
+import { RealTransaction } from '@/components/demo-transaction';
 import { SelfContainedStakingTab } from '@/components/self-contained-staking-tab';
 import { RealSendTab } from '@/components/real-send-tab';
 import { TransactionHistory } from '@/components/transaction-history';
@@ -139,7 +139,7 @@ export default function Home() {
 
               <div className="mt-8">
                 <TabsContent value="swap">
-                  <CleanSwapTab />
+                  <RealTransaction />
                 </TabsContent>
 
                 <TabsContent value="stake">

@@ -337,7 +337,7 @@ export class SolanaService {
         const accountData = account.account?.data?.parsed?.info;
         if (accountData) {
           const balance = parseFloat(accountData.tokenAmount?.uiAmount || '0');
-          totalBalance += balance;
+          totalBalance += isNaN(balance) ? 0 : balance;
         }
       }
 
