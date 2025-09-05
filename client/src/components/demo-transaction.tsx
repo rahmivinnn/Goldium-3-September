@@ -372,6 +372,10 @@ const RealTransaction: React.FC = () => {
         txSignature={completedTransaction.txSignature}
       />
     )}
+          </>
+        )}
+      </CardContent>
+    </Card>
   );
 };
 
