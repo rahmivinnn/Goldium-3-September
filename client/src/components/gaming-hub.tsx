@@ -7,36 +7,68 @@ export function GamingHub() {
 
   const games = [
     {
-      id: 'rpg',
-      name: 'Goldium RPG',
-      description: 'Battle with K1-K8 characters, upgrade skins, earn GOLD',
+      id: 'k1-warrior',
+      name: 'K1 Warrior Arena',
+      description: 'Battle with K1 Warrior - The ultimate sword master',
       icon: '⚔️',
-      color: 'from-amber-500 to-orange-500',
+      color: 'from-red-500 to-orange-500',
       status: 'Available'
     },
     {
-      id: 'solflip',
-      name: 'SolFlip Memory',
-      description: 'Test your memory with Solana-themed cards',
-      icon: '🧠',
-      color: 'from-blue-500 to-cyan-500',
+      id: 'k2-mage',
+      name: 'K2 Mage Academy',
+      description: 'Master magic with K2 Mage - The spellcaster',
+      icon: '🧙‍♂️',
+      color: 'from-purple-500 to-blue-500',
       status: 'Available'
     },
     {
-      id: 'shard-chase',
-      name: 'Shard Chase',
-      description: 'Collect golden shards in this exciting adventure',
-      icon: '💎',
-      color: 'from-amber-500 to-orange-500',
-      status: 'Available'
-    },
-    {
-      id: 'token-race',
-      name: 'Token Race',
-      description: 'Race your tokens to the finish line',
-      icon: '🏁',
+      id: 'k3-archer',
+      name: 'K3 Archer Range',
+      description: 'Perfect your aim with K3 Archer - The bow master',
+      icon: '🏹',
       color: 'from-green-500 to-emerald-500',
-      status: 'Coming Soon'
+      status: 'Available'
+    },
+    {
+      id: 'k4-tank',
+      name: 'K4 Tank Fortress',
+      description: 'Defend with K4 Tank - The ultimate shield',
+      icon: '🛡️',
+      color: 'from-gray-500 to-slate-500',
+      status: 'Available'
+    },
+    {
+      id: 'k5-assassin',
+      name: 'K5 Assassin Guild',
+      description: 'Stealth with K5 Assassin - The shadow blade',
+      icon: '🗡️',
+      color: 'from-indigo-500 to-purple-500',
+      status: 'Available'
+    },
+    {
+      id: 'k6-healer',
+      name: 'K6 Healer Temple',
+      description: 'Heal with K6 Healer - The divine mender',
+      icon: '✨',
+      color: 'from-pink-500 to-rose-500',
+      status: 'Available'
+    },
+    {
+      id: 'k7-berserker',
+      name: 'K7 Berserker Rage',
+      description: 'Rage with K7 Berserker - The fierce warrior',
+      icon: '🔥',
+      color: 'from-red-600 to-orange-600',
+      status: 'Available'
+    },
+    {
+      id: 'k8-paladin',
+      name: 'K8 Paladin Order',
+      description: 'Serve with K8 Paladin - The holy knight',
+      icon: '⚡',
+      color: 'from-yellow-500 to-amber-500',
+      status: 'Available'
     }
   ];
 
@@ -46,17 +78,17 @@ export function GamingHub() {
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-6xl font-bold text-white mb-6 tracking-tight">
-            <span className="bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent">
-              Gaming Hub
+            <span className="bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 bg-clip-text text-transparent">
+              K1-K8 Character Arena
             </span>
           </h1>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Play crypto games, earn rewards, and compete with other players in our integrated gaming ecosystem
+            Choose your champion from K1-K8 characters and battle in epic RPG adventures! Each character has unique abilities and powers.
           </p>
         </div>
 
         {/* Games Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {games.map((game) => (
             <div
               key={game.id}
@@ -65,11 +97,8 @@ export function GamingHub() {
               }`}
               onClick={() => {
                 if (game.status === 'Available') {
-                  if (game.id === 'rpg') {
-                    setShowRPG(true);
-                  } else {
-                    setSelectedGame(game);
-                  }
+                  // All K1-K8 games open the RPG game
+                  setShowRPG(true);
                 }
               }}
             >
@@ -149,10 +178,9 @@ export function GamingHub() {
               <div className="flex gap-4">
                 <button 
                   onClick={() => {
-                    if (selectedGame.id === 'rpg') {
-                      setShowRPG(true);
-                      setSelectedGame(null);
-                    }
+                    // All K1-K8 games open the RPG game
+                    setShowRPG(true);
+                    setSelectedGame(null);
                   }}
                   className="flex-1 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
                 >
