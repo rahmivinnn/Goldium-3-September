@@ -356,17 +356,29 @@ export function RPGGame() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white py-24">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 text-white py-24 relative overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-20 left-10 w-20 h-20 bg-yellow-400/20 rounded-full animate-bounce"></div>
+        <div className="absolute top-40 right-20 w-16 h-16 bg-pink-400/20 rounded-full animate-bounce animation-delay-200"></div>
+        <div className="absolute bottom-40 left-20 w-24 h-24 bg-green-400/20 rounded-full animate-bounce animation-delay-400"></div>
+        <div className="absolute bottom-20 right-10 w-18 h-18 bg-orange-400/20 rounded-full animate-bounce animation-delay-600"></div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-6xl font-bold text-white mb-6 tracking-tight">
-            <span className="bg-gradient-to-r from-amber-400 via-yellow-500 to-orange-500 bg-clip-text text-transparent">
-              Goldium RPG
-            </span>
-          </h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Battle with K1-K8 characters, upgrade skins, and earn GOLD tokens!
+          <div className="relative inline-block">
+            <h1 className="text-6xl font-bold text-white mb-6 tracking-tight animate-fade-in-up">
+              <span className="bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 bg-clip-text text-transparent animate-gradient">
+                🎮 Goldium RPG
+              </span>
+            </h1>
+            <div className="absolute -top-2 -right-2 text-4xl animate-bounce">✨</div>
+            <div className="absolute -bottom-2 -left-2 text-3xl animate-bounce animation-delay-200">🌟</div>
+          </div>
+          <p className="text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed animate-fade-in-up animation-delay-200">
+            🏰 Embark on epic adventures with K1-K8 characters! Battle monsters, collect treasures, and earn GOLD tokens! 🏆
           </p>
           <div className="mt-6 flex justify-center gap-4 flex-wrap">
             <div className="bg-gray-800/50 border border-amber-500/20 rounded-xl px-6 py-3">
@@ -404,12 +416,14 @@ export function RPGGame() {
               
               {ownedCharacters.length === 0 ? (
                 <div className="text-center py-12">
-                  <p className="text-gray-400 text-lg mb-6">No characters owned yet!</p>
+                  <div className="text-8xl mb-6 animate-bounce">🏰</div>
+                  <p className="text-gray-200 text-xl mb-6 font-semibold">No heroes in your party yet!</p>
+                  <p className="text-gray-400 text-lg mb-8">Recruit your first champion to start your adventure! 🗡️</p>
                   <button
                     onClick={() => setShowShop(true)}
-                    className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black px-8 py-4 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105 active:scale-95"
+                    className="bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 hover:from-yellow-500 hover:via-pink-600 hover:to-purple-600 text-white px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
                   >
-                    Buy Your First Character
+                    🛒 Recruit Hero
                   </button>
                 </div>
               ) : (
@@ -417,22 +431,39 @@ export function RPGGame() {
                   {ownedCharacters.map((character) => (
                     <div
                       key={character.id}
-                      className={`bg-gray-800/50 border rounded-2xl p-6 cursor-pointer transition-all duration-300 ${
+                      className={`relative bg-gradient-to-br from-purple-600/20 via-pink-600/20 to-blue-600/20 border-2 rounded-3xl p-6 cursor-pointer transition-all duration-300 transform hover:scale-105 ${
                         gameState.selectedCharacter?.id === character.id
-                          ? 'border-amber-500/50 bg-amber-500/10'
-                          : 'border-gray-700/50 hover:border-amber-500/30'
+                          ? 'border-yellow-400 bg-yellow-400/20 shadow-lg shadow-yellow-400/30'
+                          : 'border-purple-400/50 hover:border-pink-400/70 hover:shadow-lg hover:shadow-pink-400/20'
                       }`}
                       onClick={() => selectCharacter(character)}
                     >
+                      {/* Character Avatar with Glow */}
                       <div className="flex items-center gap-4 mb-4">
-                        <img
-                          src={character.image}
-                          alt={character.name}
-                          className="w-16 h-16 rounded-xl object-cover"
-                        />
+                        <div className="relative">
+                          <div className="w-20 h-20 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center text-4xl shadow-lg animate-pulse">
+                            {character.id === 'K1' && '⚔️'}
+                            {character.id === 'K2' && '🧙‍♂️'}
+                            {character.id === 'K3' && '🏹'}
+                            {character.id === 'K4' && '🛡️'}
+                            {character.id === 'K5' && '🗡️'}
+                            {character.id === 'K6' && '✨'}
+                            {character.id === 'K7' && '🔥'}
+                            {character.id === 'K8' && '⚡'}
+                          </div>
+                          {gameState.selectedCharacter?.id === character.id && (
+                            <div className="absolute -top-1 -right-1 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center text-sm animate-bounce">
+                              ✓
+                            </div>
+                          )}
+                        </div>
                         <div>
                           <h3 className="text-xl font-bold text-white">{character.name}</h3>
-                          <p className="text-amber-400">Level {character.level} • {character.skin}</p>
+                          <p className="text-yellow-400 font-semibold">Level {character.level} • {character.skin}</p>
+                          <div className="flex gap-2 mt-1">
+                            <span className="text-xs bg-red-500/20 text-red-300 px-2 py-1 rounded-full">❤️ {character.hp}</span>
+                            <span className="text-xs bg-blue-500/20 text-blue-300 px-2 py-1 rounded-full">⚔️ {character.attack}</span>
+                          </div>
                         </div>
                       </div>
                       
@@ -476,32 +507,43 @@ export function RPGGame() {
           {/* Battle Area */}
           <div className="space-y-6">
             {/* Battle Controls */}
-            <div className="bg-gray-900/50 backdrop-blur-xl border border-gray-800/50 rounded-3xl p-6">
-              <h3 className="text-2xl font-bold text-white mb-4">Battle</h3>
+            <div className="bg-gradient-to-br from-red-600/20 via-orange-600/20 to-yellow-600/20 backdrop-blur-xl border-2 border-red-400/50 rounded-3xl p-6 shadow-lg shadow-red-400/20">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="text-3xl animate-pulse">⚔️</div>
+                <h3 className="text-2xl font-bold text-white">Battle Arena</h3>
+                <div className="text-2xl animate-bounce">🏟️</div>
+              </div>
               
               {gameState.selectedCharacter && (
-                <div className="mb-4">
-                  <p className="text-gray-300 mb-2">Selected: {gameState.selectedCharacter.name}</p>
-                  <div className="w-full bg-gray-700 rounded-full h-2 mb-2">
+                <div className="mb-4 p-4 bg-gradient-to-r from-green-500/10 to-blue-500/10 rounded-2xl border border-green-400/30">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="text-2xl">🛡️</div>
+                    <p className="text-white font-bold">Hero: {gameState.selectedCharacter.name}</p>
+                  </div>
+                  <div className="w-full bg-gray-700 rounded-full h-3 mb-2 shadow-inner">
                     <div 
-                      className="bg-amber-500 h-2 rounded-full transition-all duration-300"
+                      className="bg-gradient-to-r from-green-400 to-emerald-500 h-3 rounded-full transition-all duration-500 shadow-lg"
                       style={{ width: `${(gameState.selectedCharacter.hp / gameState.selectedCharacter.maxHp) * 100}%` }}
                     ></div>
                   </div>
-                  <p className="text-sm text-gray-400">{gameState.selectedCharacter.hp}/{gameState.selectedCharacter.maxHp} HP</p>
+                  <p className="text-sm text-green-300 font-semibold">❤️ {gameState.selectedCharacter.hp}/{gameState.selectedCharacter.maxHp} HP</p>
                 </div>
               )}
 
               {gameState.isInBattle && gameState.battleEnemy && (
-                <div className="mb-4 p-4 bg-red-500/10 border border-red-500/20 rounded-xl">
-                  <p className="text-white font-bold mb-2">Enemy: {gameState.battleEnemy.name}</p>
-                  <div className="w-full bg-gray-700 rounded-full h-2 mb-2">
+                <div className="mb-4 p-4 bg-gradient-to-r from-red-500/20 to-orange-500/20 border-2 border-red-400/50 rounded-2xl shadow-lg shadow-red-400/20">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="text-2xl animate-pulse">👹</div>
+                    <p className="text-white font-bold">Enemy: {gameState.battleEnemy.name}</p>
+                    <div className="text-xl animate-bounce">💀</div>
+                  </div>
+                  <div className="w-full bg-gray-800 rounded-full h-3 mb-2 shadow-inner">
                     <div 
-                      className="bg-red-500 h-2 rounded-full transition-all duration-300"
+                      className="bg-gradient-to-r from-red-500 to-pink-500 h-3 rounded-full transition-all duration-500 shadow-lg animate-pulse"
                       style={{ width: `${(gameState.battleEnemy.hp / 150) * 100}%` }}
                     ></div>
                   </div>
-                  <p className="text-sm text-gray-400">{gameState.battleEnemy.hp} HP</p>
+                  <p className="text-sm text-red-300 font-semibold">💀 {gameState.battleEnemy.hp} HP</p>
                 </div>
               )}
 
@@ -509,29 +551,42 @@ export function RPGGame() {
                 <button
                   onClick={startBattle}
                   disabled={!gameState.selectedCharacter || gameState.isInBattle}
-                  className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 disabled:from-gray-600 disabled:to-gray-700 disabled:cursor-not-allowed text-black px-6 py-3 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105 active:scale-95 disabled:transform-none"
+                  className="w-full bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 hover:from-yellow-500 hover:via-orange-600 hover:to-red-600 disabled:from-gray-600 disabled:to-gray-700 disabled:cursor-not-allowed text-white px-6 py-4 rounded-2xl font-bold text-lg transition-all duration-200 transform hover:scale-105 active:scale-95 disabled:transform-none shadow-lg hover:shadow-xl"
                 >
-                  {gameState.isInBattle ? 'Battle in Progress...' : 'Start Battle'}
+                  {gameState.isInBattle ? '⚔️ Battle in Progress...' : '🚀 Start Epic Battle!'}
                 </button>
 
                 {gameState.isInBattle && (
                   <button
                     onClick={attackEnemy}
-                    className="w-full bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105 active:scale-95"
+                    className="w-full bg-gradient-to-r from-red-500 via-pink-500 to-purple-500 hover:from-red-600 hover:via-pink-600 hover:to-purple-600 text-white px-6 py-4 rounded-2xl font-bold text-lg transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl animate-pulse"
                   >
-                    Attack!
+                    ⚡ ATTACK! ⚡
                   </button>
                 )}
               </div>
             </div>
 
             {/* Battle Log */}
-            <div className="bg-gray-900/50 backdrop-blur-xl border border-gray-800/50 rounded-3xl p-6">
-              <h3 className="text-2xl font-bold text-white mb-4">Battle Log</h3>
-              <div className="space-y-2 max-h-64 overflow-y-auto">
+            <div className="bg-gradient-to-br from-blue-600/20 via-purple-600/20 to-pink-600/20 backdrop-blur-xl border-2 border-blue-400/50 rounded-3xl p-6 shadow-lg shadow-blue-400/20">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="text-2xl animate-bounce">📜</div>
+                <h3 className="text-2xl font-bold text-white">Battle Chronicle</h3>
+                <div className="text-xl animate-pulse">✨</div>
+              </div>
+              <div className="space-y-3 max-h-64 overflow-y-auto bg-black/20 rounded-2xl p-4 border border-blue-400/30">
                 {gameState.battleLog.map((log, index) => (
-                  <p key={index} className="text-gray-300 text-sm">{log}</p>
+                  <div key={index} className="flex items-center gap-2 p-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-lg border border-blue-400/20">
+                    <div className="text-yellow-400 animate-pulse">⚡</div>
+                    <p className="text-gray-200 text-sm font-medium">{log}</p>
+                  </div>
                 ))}
+                {gameState.battleLog.length === 0 && (
+                  <div className="text-center py-8">
+                    <div className="text-4xl mb-2">📖</div>
+                    <p className="text-gray-400">No battles yet. Start your first adventure!</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -539,13 +594,17 @@ export function RPGGame() {
 
         {/* Character Shop Modal */}
         {showShop && (
-          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-            <div className="bg-gray-900 border border-gray-800 rounded-3xl p-8 max-w-6xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <div className="bg-gradient-to-br from-purple-900/90 via-blue-900/90 to-indigo-900/90 border-2 border-purple-400/50 rounded-3xl p-8 max-w-6xl w-full max-h-[90vh] overflow-y-auto shadow-2xl shadow-purple-400/20">
               <div className="flex justify-between items-center mb-8">
-                <h2 className="text-3xl font-bold text-white">Character Shop</h2>
+                <div className="flex items-center gap-4">
+                  <div className="text-4xl animate-bounce">🛒</div>
+                  <h2 className="text-3xl font-bold text-white">Hero Recruitment Center</h2>
+                  <div className="text-3xl animate-pulse">🏰</div>
+                </div>
                 <button
                   onClick={() => setShowShop(false)}
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-400 hover:text-white transition-colors bg-red-500/20 hover:bg-red-500/30 p-2 rounded-full"
                 >
                   <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -555,39 +614,58 @@ export function RPGGame() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {characters.map((character) => (
-                  <div key={character.id} className="bg-gray-800/50 border border-gray-700/50 rounded-2xl p-6">
-                    <img
-                      src={character.image}
-                      alt={character.name}
-                      className="w-full h-32 object-cover rounded-xl mb-4"
-                    />
-                    <h3 className="text-xl font-bold text-white mb-2">{character.name}</h3>
-                    <div className="space-y-2 text-sm mb-4">
-                      <div className="flex justify-between">
-                        <span className="text-gray-400">HP:</span>
-                        <span className="text-white">{character.hp}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-400">Attack:</span>
-                        <span className="text-white">{character.attack}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-400">Defense:</span>
-                        <span className="text-white">{character.defense}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-400">Speed:</span>
-                        <span className="text-white">{character.speed}</span>
+                  <div key={character.id} className="bg-gradient-to-br from-purple-600/20 via-pink-600/20 to-blue-600/20 border-2 border-purple-400/50 rounded-3xl p-6 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-purple-400/20">
+                    {/* Character Avatar */}
+                    <div className="text-center mb-4">
+                      <div className="w-24 h-24 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center text-5xl shadow-lg mx-auto animate-pulse">
+                        {character.id === 'K1' && '⚔️'}
+                        {character.id === 'K2' && '🧙‍♂️'}
+                        {character.id === 'K3' && '🏹'}
+                        {character.id === 'K4' && '🛡️'}
+                        {character.id === 'K5' && '🗡️'}
+                        {character.id === 'K6' && '✨'}
+                        {character.id === 'K7' && '🔥'}
+                        {character.id === 'K8' && '⚡'}
                       </div>
                     </div>
+                    
+                    <h3 className="text-xl font-bold text-white mb-3 text-center">{character.name}</h3>
+                    
+                    {/* Stats */}
+                    <div className="space-y-2 text-sm mb-4">
+                      <div className="flex justify-between items-center bg-red-500/20 rounded-lg px-3 py-2">
+                        <span className="text-red-300">❤️ HP:</span>
+                        <span className="text-white font-bold">{character.hp}</span>
+                      </div>
+                      <div className="flex justify-between items-center bg-blue-500/20 rounded-lg px-3 py-2">
+                        <span className="text-blue-300">⚔️ Attack:</span>
+                        <span className="text-white font-bold">{character.attack}</span>
+                      </div>
+                      <div className="flex justify-between items-center bg-green-500/20 rounded-lg px-3 py-2">
+                        <span className="text-green-300">🛡️ Defense:</span>
+                        <span className="text-white font-bold">{character.defense}</span>
+                      </div>
+                      <div className="flex justify-between items-center bg-yellow-500/20 rounded-lg px-3 py-2">
+                        <span className="text-yellow-300">💨 Speed:</span>
+                        <span className="text-white font-bold">{character.speed}</span>
+                      </div>
+                    </div>
+                    
+                    {/* Buy Button */}
                     <button
                       onClick={() => buyCharacter(character)}
                       disabled={gameState.goldBalance < character.price || ownedCharacters.some(c => c.id === character.id)}
-                      className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 disabled:from-gray-600 disabled:to-gray-700 disabled:cursor-not-allowed text-black px-4 py-3 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105 active:scale-95 disabled:transform-none"
+                      className={`w-full px-4 py-3 rounded-2xl font-bold text-lg transition-all duration-200 transform hover:scale-105 active:scale-95 disabled:transform-none ${
+                        ownedCharacters.some(c => c.id === character.id)
+                          ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white'
+                          : gameState.goldBalance < character.price
+                          ? 'bg-gradient-to-r from-gray-600 to-gray-700 text-gray-400 cursor-not-allowed'
+                          : 'bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 hover:from-yellow-500 hover:via-pink-600 hover:to-purple-600 text-white shadow-lg hover:shadow-xl'
+                      }`}
                     >
                       {ownedCharacters.some(c => c.id === character.id) 
-                        ? 'Owned' 
-                        : `Buy ${character.price} GOLD`
+                        ? '✅ Recruited!' 
+                        : `💰 Recruit ${character.price} GOLD`
                       }
                     </button>
                   </div>
