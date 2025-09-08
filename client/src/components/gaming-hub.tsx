@@ -218,7 +218,7 @@ export function GamingHub() {
                 
                 {/* Solana Network Badge */}
                 <div className="absolute top-4 right-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold flex items-center space-x-2">
-                  <img src="/solana-logo.svg" alt="Solana" className="w-4 h-4" />
+                  <img src="/solana-logo-official.png" alt="Solana" className="w-4 h-4" />
                   <span>Solana Network</span>
                 </div>
               </div>

@@ -15,12 +15,12 @@ interface GameCard {
 }
 
 const CARD_PAIRS = [
-  { value: 'SOL', icon: '/solana-logo.svg', color: '#9945FF' },
+  { value: 'SOL', icon: '/solana-logo-official.png', color: '#9945FF' },
   { value: 'GOLD', icon: '/goldium-logo.png', color: '#FFD700' },
   { value: 'DeFi', icon: 'bank-vault', color: '#00D4AA' },
   { value: 'Swap', icon: 'arrow-cycle', color: '#FF6B6B' },
   { value: 'Phantom', icon: 'ghost-wallet', color: '#AB9FF2' },
-  { value: 'Solana', icon: '/solana-logo.svg', color: '#14F195' },
+  { value: 'Solana', icon: '/solana-logo-official.png', color: '#14F195' },
   { value: 'Token', icon: 'crypto-chip', color: '#F7931A' },
   { value: 'Stake', icon: 'lock-secure', color: '#4ECDC4' }
 ];
