@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { RPGGame } from './rpg-game';
 
 export function GamingHub() {
   const [selectedGame, setSelectedGame] = useState(null);
   const [showRPG, setShowRPG] = useState(false);
+  const [showTrailer, setShowTrailer] = useState(true);
+  const [trailerTime, setTrailerTime] = useState(0);
+  const canvasRef = useRef(null);
+  const particlesRef = useRef([]);
+  const animationRef = useRef(null);
 
   const games = [
     {
@@ -72,19 +77,171 @@ export function GamingHub() {
     }
   ];
 
+  // Particle System
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Create particles
+    const createParticles = () => {
+      particlesRef.current = [];
+      for (let i = 0; i < 50; i++) {
+        particlesRef.current.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          vx: (Math.random() - 0.5) * 0.5,
+          vy: (Math.random() - 0.5) * 0.5,
+          size: Math.random() * 2 + 1,
+          opacity: Math.random() * 0.5 + 0.1,
+          color: Math.random() > 0.5 ? '#fbbf24' : '#f59e0b'
+        });
+      }
+    };
+
+    createParticles();
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      particlesRef.current.forEach(particle => {
+        particle.x += particle.vx;
+        particle.y += particle.vy;
+        
+        if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
+        if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
+        
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+        ctx.fillStyle = particle.color + Math.floor(particle.opacity * 255).toString(16).padStart(2, '0');
+        ctx.fill();
+      });
+      
+      animationRef.current = requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    return () => {
+      window.removeEventListener('resize', resizeCanvas);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, []);
+
+  // Video trailer timer
+  useEffect(() => {
+    if (showTrailer) {
+      const timer = setInterval(() => {
+        setTrailerTime(prev => {
+          if (prev >= 15) {
+            setShowTrailer(false);
+            return 0;
+          }
+          return prev + 1;
+        });
+      }, 1000);
+      return () => clearInterval(timer);
+    }
+  }, [showTrailer]);
+
   return (
-    <div className="min-h-screen bg-black text-white py-24">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <div className="min-h-screen bg-black text-white py-24 relative overflow-hidden">
+      {/* Particle Canvas */}
+      <canvas
+        ref={canvasRef}
+        className="fixed inset-0 pointer-events-none z-0"
+        style={{ background: 'transparent' }}
+      />
+      
+      {/* Video Trailer Modal */}
+      {showTrailer && (
+        <div className="fixed inset-0 bg-black/95 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="relative w-full max-w-6xl mx-4">
+            {/* Video Container */}
+            <div className="relative bg-black rounded-2xl overflow-hidden border border-gray-800/50">
+              {/* Video Placeholder - In real app, this would be actual video */}
+              <div className="aspect-video bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center relative">
+                {/* K1-K8 Character Showcase */}
+                <div className="text-center">
+                  <div className="text-8xl mb-8 animate-pulse">
+                    ⚔️🧙‍♂️🏹🛡️🗡️✨🔥⚡
+                  </div>
+                  <h2 className="text-4xl font-bold text-white mb-4">
+                    <span className="bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 bg-clip-text text-transparent">
+                      K1-K8 Character Arena
+                    </span>
+                  </h2>
+                  <p className="text-xl text-gray-300 mb-8">
+                    Epic RPG battles on Solana Network
+                  </p>
+                  <div className="flex justify-center space-x-4 text-6xl">
+                    <span className="animate-bounce">⚔️</span>
+                    <span className="animate-bounce" style={{ animationDelay: '0.1s' }}>🧙‍♂️</span>
+                    <span className="animate-bounce" style={{ animationDelay: '0.2s' }}>🏹</span>
+                    <span className="animate-bounce" style={{ animationDelay: '0.3s' }}>🛡️</span>
+                    <span className="animate-bounce" style={{ animationDelay: '0.4s' }}>🗡️</span>
+                    <span className="animate-bounce" style={{ animationDelay: '0.5s' }}>✨</span>
+                    <span className="animate-bounce" style={{ animationDelay: '0.6s' }}>🔥</span>
+                    <span className="animate-bounce" style={{ animationDelay: '0.7s' }}>⚡</span>
+                  </div>
+                </div>
+                
+                {/* Solana Network Badge */}
+                <div className="absolute top-4 right-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                  🌐 Solana Network
+                </div>
+              </div>
+              
+              {/* Skip Button */}
+              <div className="absolute top-4 left-4">
+                <button
+                  onClick={() => setShowTrailer(false)}
+                  className="bg-gray-800/80 hover:bg-gray-700/80 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 border border-gray-600/50"
+                >
+                  Skip ({15 - trailerTime}s)
+                </button>
+              </div>
+              
+              {/* Progress Bar */}
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-800">
+                <div 
+                  className="h-full bg-gradient-to-r from-yellow-400 to-orange-500 transition-all duration-1000"
+                  style={{ width: `${(trailerTime / 15) * 100}%` }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-6xl font-bold text-white mb-6 tracking-tight">
-            <span className="bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 bg-clip-text text-transparent">
-              K1-K8 Character Arena
-            </span>
-          </h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Choose your champion from K1-K8 characters and battle in epic RPG adventures! Each character has unique abilities and powers.
-          </p>
+        <div className="text-center mb-16 relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/10 via-pink-500/10 to-purple-500/10 rounded-3xl blur-3xl"></div>
+          <div className="relative">
+            <h1 className="text-6xl font-bold text-white mb-6 tracking-tight">
+              <span className="bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 bg-clip-text text-transparent animate-pulse">
+                K1-K8 Character Arena
+              </span>
+            </h1>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+              Choose your champion from K1-K8 characters and battle in epic RPG adventures! Each character has unique abilities and powers.
+            </p>
+            <div className="mt-8 flex justify-center space-x-2">
+              <div className="w-3 h-3 bg-yellow-400 rounded-full animate-ping"></div>
+              <div className="w-3 h-3 bg-pink-500 rounded-full animate-ping" style={{ animationDelay: '0.2s' }}></div>
+              <div className="w-3 h-3 bg-purple-500 rounded-full animate-ping" style={{ animationDelay: '0.4s' }}></div>
+            </div>
+          </div>
         </div>
 
         {/* Games Grid */}
@@ -92,7 +249,7 @@ export function GamingHub() {
           {games.map((game) => (
             <div
               key={game.id}
-              className={`group bg-gray-900/50 backdrop-blur-xl border border-gray-800/50 rounded-3xl p-8 hover:border-${game.color.split(' ')[0].split('-')[1]}-500/50 transition-all duration-500 cursor-pointer hover:scale-105 hover:shadow-2xl ${
+              className={`group bg-gray-900/50 backdrop-blur-xl border border-gray-800/50 rounded-3xl p-8 hover:border-${game.color.split(' ')[0].split('-')[1]}-500/50 transition-all duration-300 cursor-pointer hover:scale-102 hover:shadow-2xl relative overflow-hidden ${
                 game.status === 'Coming Soon' ? 'opacity-60' : ''
               }`}
               onClick={() => {
@@ -102,7 +259,10 @@ export function GamingHub() {
                 }
               }}
             >
-              <div className="text-center">
+              {/* Subtle Glow Effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-gray-800/20 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              
+              <div className="text-center relative z-10">
                 <div className="w-20 h-20 bg-gray-800/50 border border-gray-600/30 rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                   <span className="text-4xl">{game.icon}</span>
                 </div>
@@ -121,8 +281,16 @@ export function GamingHub() {
         </div>
 
         {/* Leaderboard */}
-        <div className="bg-gray-900/50 backdrop-blur-xl border border-gray-800/50 rounded-3xl p-8">
-          <h2 className="text-3xl font-bold text-white mb-8 text-center">🏆 Leaderboard</h2>
+        <div className="bg-gray-900/50 backdrop-blur-xl border border-gray-800/50 rounded-3xl p-8 relative overflow-hidden">
+          {/* Subtle Background Glow */}
+          <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/5 via-pink-500/5 to-purple-500/5 rounded-3xl"></div>
+          
+          <div className="relative z-10">
+            <h2 className="text-3xl font-bold text-white mb-8 text-center">
+              <span className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
+                🏆 Leaderboard
+              </span>
+            </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="w-16 h-16 bg-gradient-to-br from-yellow-500 to-amber-500 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -148,6 +316,7 @@ export function GamingHub() {
               <p className="text-gray-300">SolanaPro</p>
               <p className="text-orange-400 font-bold">1,320 GOLD</p>
             </div>
+          </div>
           </div>
         </div>
 
