@@ -1483,6 +1483,53 @@ button[aria-expanded] {
 .animation-delay-1200 { animation-delay: 1.2s; }
 .animation-delay-1300 { animation-delay: 1.3s; }
 
+/* Smooth Dashboard Animations */
+.animate-fade-in-up {
+  animation: fade-in-up 0.7s ease-out;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Button Performance Optimizations */
+button, .btn {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+/* Smooth Scale Effects */
+.hover-scale {
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.hover-scale:active {
+  transform: scale(0.95);
+  transition: transform 0.1s ease;
+}
+
 /* ========================================
    METAVERSE BLACK BACKGROUND EFFECTS
    ======================================== */

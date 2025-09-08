@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSolanaWallet } from '@/components/solana-wallet-provider';
+import { useSolGoldIntegration } from '@/components/real-sol-gold-integration';
 
 interface Character {
   id: string;
@@ -27,12 +28,14 @@ interface GameState {
 
 export function RPGGame() {
   const wallet = useSolanaWallet();
+  const solGoldIntegration = useSolGoldIntegration();
+  const [demoMode, setDemoMode] = useState(true); // Demo mode by default
   const [gameState, setGameState] = useState<GameState>({
     selectedCharacter: null,
     battleEnemy: null,
     battleLog: [],
     isInBattle: false,
-    goldBalance: 0
+    goldBalance: demoMode ? 1000 : 0 // Demo starts with 1000 GOLD
   });
 
   const [characters, setCharacters] = useState<Character[]>([
@@ -163,22 +166,35 @@ export function RPGGame() {
 
   // Load GOLD balance
   useEffect(() => {
-    if (wallet.balance) {
-      setGameState(prev => ({ ...prev, goldBalance: wallet.balance }));
+    if (!demoMode && solGoldIntegration.goldBalance) {
+      setGameState(prev => ({ ...prev, goldBalance: solGoldIntegration.goldBalance }));
     }
-  }, [wallet.balance]);
+  }, [solGoldIntegration.goldBalance, demoMode]);
 
-  const buyCharacter = (character: Character) => {
-    if (gameState.goldBalance >= character.price) {
-      const newCharacter = { ...character };
-      setOwnedCharacters(prev => [...prev, newCharacter]);
-      setGameState(prev => ({ 
-        ...prev, 
-        goldBalance: prev.goldBalance - character.price 
-      }));
-      addBattleLog(`Purchased ${character.name} for ${character.price} GOLD!`);
+  const buyCharacter = async (character: Character) => {
+    if (demoMode) {
+      // Demo mode - just simulate purchase
+      if (gameState.goldBalance >= character.price) {
+        const newCharacter = { ...character };
+        setOwnedCharacters(prev => [...prev, newCharacter]);
+        setGameState(prev => ({ 
+          ...prev, 
+          goldBalance: prev.goldBalance - character.price 
+        }));
+        addBattleLog(`Purchased ${character.name} for ${character.price} GOLD!`);
+      } else {
+        addBattleLog(`Not enough GOLD! Need ${character.price} GOLD.`);
+      }
     } else {
-      addBattleLog(`Not enough GOLD! Need ${character.price} GOLD.`);
+      // Real mode - use actual blockchain transaction
+      try {
+        await solGoldIntegration.buyCharacterWithGold(character.price);
+        const newCharacter = { ...character };
+        setOwnedCharacters(prev => [...prev, newCharacter]);
+        addBattleLog(`Purchased ${character.name} for ${character.price} GOLD!`);
+      } catch (error) {
+        addBattleLog(`Purchase failed: ${error.message}`);
+      }
     }
   };
 
@@ -187,32 +203,63 @@ export function RPGGame() {
     addBattleLog(`Selected ${character.name} for battle!`);
   };
 
-  const upgradeSkin = (character: Character) => {
+  const upgradeSkin = async (character: Character) => {
     const upgradeCost = character.skinLevel * 50;
-    if (gameState.goldBalance >= upgradeCost) {
-      const updatedCharacter = {
-        ...character,
-        skinLevel: character.skinLevel + 1,
-        skin: `Level ${character.skinLevel + 1}`,
-        attack: character.attack + 5,
-        defense: character.defense + 3,
-        hp: character.hp + 10,
-        maxHp: character.maxHp + 10
-      };
-      
-      setOwnedCharacters(prev => 
-        prev.map(c => c.id === character.id ? updatedCharacter : c)
-      );
-      
-      setGameState(prev => ({ 
-        ...prev, 
-        goldBalance: prev.goldBalance - upgradeCost,
-        selectedCharacter: prev.selectedCharacter?.id === character.id ? updatedCharacter : prev.selectedCharacter
-      }));
-      
-      addBattleLog(`${character.name} skin upgraded to Level ${character.skinLevel + 1}!`);
+    
+    if (demoMode) {
+      // Demo mode - just simulate upgrade
+      if (gameState.goldBalance >= upgradeCost) {
+        const updatedCharacter = {
+          ...character,
+          skinLevel: character.skinLevel + 1,
+          skin: `Level ${character.skinLevel + 1}`,
+          attack: character.attack + 5,
+          defense: character.defense + 3,
+          hp: character.hp + 10,
+          maxHp: character.maxHp + 10
+        };
+        
+        setOwnedCharacters(prev => 
+          prev.map(c => c.id === character.id ? updatedCharacter : c)
+        );
+        
+        setGameState(prev => ({ 
+          ...prev, 
+          goldBalance: prev.goldBalance - upgradeCost,
+          selectedCharacter: prev.selectedCharacter?.id === character.id ? updatedCharacter : prev.selectedCharacter
+        }));
+        
+        addBattleLog(`${character.name} skin upgraded to Level ${character.skinLevel + 1}!`);
+      } else {
+        addBattleLog(`Not enough GOLD! Need ${upgradeCost} GOLD for upgrade.`);
+      }
     } else {
-      addBattleLog(`Not enough GOLD! Need ${upgradeCost} GOLD for upgrade.`);
+      // Real mode - use actual blockchain transaction
+      try {
+        await solGoldIntegration.buyCharacterWithGold(upgradeCost);
+        const updatedCharacter = {
+          ...character,
+          skinLevel: character.skinLevel + 1,
+          skin: `Level ${character.skinLevel + 1}`,
+          attack: character.attack + 5,
+          defense: character.defense + 3,
+          hp: character.hp + 10,
+          maxHp: character.maxHp + 10
+        };
+        
+        setOwnedCharacters(prev => 
+          prev.map(c => c.id === character.id ? updatedCharacter : c)
+        );
+        
+        setGameState(prev => ({ 
+          ...prev, 
+          selectedCharacter: prev.selectedCharacter?.id === character.id ? updatedCharacter : prev.selectedCharacter
+        }));
+        
+        addBattleLog(`${character.name} skin upgraded to Level ${character.skinLevel + 1}!`);
+      } catch (error) {
+        addBattleLog(`Upgrade failed: ${error.message}`);
+      }
     }
   };
 
@@ -321,15 +368,30 @@ export function RPGGame() {
           <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
             Battle with K1-K8 characters, upgrade skins, and earn GOLD tokens!
           </p>
-          <div className="mt-6 flex justify-center gap-4">
+          <div className="mt-6 flex justify-center gap-4 flex-wrap">
             <div className="bg-gray-800/50 border border-amber-500/20 rounded-xl px-6 py-3">
               <span className="text-amber-400 font-bold text-lg">{gameState.goldBalance} GOLD</span>
+              {demoMode && <span className="text-xs text-gray-400 ml-2">(DEMO)</span>}
+              {solGoldIntegration.isLoading && <span className="text-xs text-blue-400 ml-2">(Loading...)</span>}
+              {solGoldIntegration.transactionStatus === 'pending' && <span className="text-xs text-yellow-400 ml-2">(Pending...)</span>}
+              {solGoldIntegration.transactionStatus === 'success' && <span className="text-xs text-green-400 ml-2">(Success!)</span>}
+              {solGoldIntegration.transactionStatus === 'error' && <span className="text-xs text-red-400 ml-2">(Error)</span>}
             </div>
             <button
               onClick={() => setShowShop(!showShop)}
-              className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black px-6 py-3 rounded-xl font-semibold transition-all duration-300"
+              className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black px-6 py-3 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105 active:scale-95"
             >
               {showShop ? 'Hide Shop' : 'Character Shop'}
+            </button>
+            <button
+              onClick={() => setDemoMode(!demoMode)}
+              className={`px-6 py-3 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105 active:scale-95 ${
+                demoMode 
+                  ? 'bg-green-500/20 border border-green-500/30 text-green-400' 
+                  : 'bg-blue-500/20 border border-blue-500/30 text-blue-400'
+              }`}
+            >
+              {demoMode ? 'Demo Mode ON' : 'Demo Mode OFF'}
             </button>
           </div>
         </div>
@@ -345,7 +407,7 @@ export function RPGGame() {
                   <p className="text-gray-400 text-lg mb-6">No characters owned yet!</p>
                   <button
                     onClick={() => setShowShop(true)}
-                    className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black px-8 py-4 rounded-xl font-semibold transition-all duration-300"
+                    className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black px-8 py-4 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105 active:scale-95"
                   >
                     Buy Your First Character
                   </button>
@@ -399,7 +461,7 @@ export function RPGGame() {
                             e.stopPropagation();
                             upgradeSkin(character);
                           }}
-                          className="flex-1 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black px-4 py-2 rounded-lg font-semibold transition-all duration-300 text-sm"
+                          className="flex-1 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black px-4 py-2 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 active:scale-95 text-sm"
                         >
                           Upgrade ({character.skinLevel * 50} GOLD)
                         </button>
@@ -447,7 +509,7 @@ export function RPGGame() {
                 <button
                   onClick={startBattle}
                   disabled={!gameState.selectedCharacter || gameState.isInBattle}
-                  className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 disabled:from-gray-600 disabled:to-gray-700 disabled:cursor-not-allowed text-black px-6 py-3 rounded-xl font-semibold transition-all duration-300"
+                  className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 disabled:from-gray-600 disabled:to-gray-700 disabled:cursor-not-allowed text-black px-6 py-3 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105 active:scale-95 disabled:transform-none"
                 >
                   {gameState.isInBattle ? 'Battle in Progress...' : 'Start Battle'}
                 </button>
@@ -455,7 +517,7 @@ export function RPGGame() {
                 {gameState.isInBattle && (
                   <button
                     onClick={attackEnemy}
-                    className="w-full bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300"
+                    className="w-full bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105 active:scale-95"
                   >
                     Attack!
                   </button>
@@ -521,7 +583,7 @@ export function RPGGame() {
                     <button
                       onClick={() => buyCharacter(character)}
                       disabled={gameState.goldBalance < character.price || ownedCharacters.some(c => c.id === character.id)}
-                      className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 disabled:from-gray-600 disabled:to-gray-700 disabled:cursor-not-allowed text-black px-4 py-3 rounded-xl font-semibold transition-all duration-300"
+                      className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 disabled:from-gray-600 disabled:to-gray-700 disabled:cursor-not-allowed text-black px-4 py-3 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105 active:scale-95 disabled:transform-none"
                     >
                       {ownedCharacters.some(c => c.id === character.id) 
                         ? 'Owned' 
