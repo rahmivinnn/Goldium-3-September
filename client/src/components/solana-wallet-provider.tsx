@@ -117,11 +117,12 @@ function InnerWalletProvider({ children }: WalletProviderProps) {
 
   // Refresh balance when wallet connects
   useEffect(() => {
+    console.log(`🔗 Wallet status: connected=${connected}, publicKey=${publicKey?.toString()}, wallet=${wallet?.adapter?.name}`);
     if (connected && publicKey) {
       refreshBalance();
       refreshTransactionHistory();
     }
-  }, [connected, publicKey]);
+  }, [connected, publicKey, wallet]);
 
   // Refresh balance periodically
   useEffect(() => {
@@ -181,7 +182,7 @@ export function SolanaWalletProvider({ children }: WalletProviderProps) {
 
   return (
     <ConnectionProvider endpoint={endpoint}>
-      <WalletProvider wallets={wallets} autoConnect={false}>
+      <WalletProvider wallets={wallets} autoConnect={true}>
         <WalletModalProvider>
           <InnerWalletProvider>{children}</InnerWalletProvider>
         </WalletModalProvider>

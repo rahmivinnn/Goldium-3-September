@@ -8,12 +8,12 @@ import { RealSendTab } from '@/components/real-send-tab';
 import { TransactionHistory } from '@/components/transaction-history';
 import { ExternalWalletSelector } from '@/components/external-wallet-selector';
 import { BalanceStatusIndicator } from '@/components/balance-status-indicator';
-import { useSolanaWallet } from '@/components/solana-wallet-provider';
+import { useExternalWallets } from '@/hooks/use-external-wallets';
 import { GamingHub } from '@/components/gaming-hub';
 
 
 export default function Home() {
-  const wallet = useSolanaWallet();
+  const wallet = useExternalWallets();
   const [selectedGalleryItem, setSelectedGalleryItem] = useState(null);
   const [showGamingHub, setShowGamingHub] = useState(false);
 
@@ -75,7 +75,7 @@ export default function Home() {
                 <BalanceStatusIndicator
                   connected={wallet.connected}
                   balance={wallet.balance}
-                  walletType={wallet.wallet || undefined}
+                  walletType={wallet.selectedWallet || undefined}
                 />
               </div>
               <ExternalWalletSelector />
