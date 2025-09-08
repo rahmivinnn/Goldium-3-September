@@ -48,11 +48,13 @@ export default function Home() {
       <nav className="fixed top-0 w-full z-50 bg-black/95 backdrop-blur-xl border-b border-gray-800/50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
-            {/* Logo - Clean and minimal */}
+            {/* Logo - Original Goldium logo */}
             <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-amber-400 via-yellow-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg">
-                <span className="text-black font-bold text-xl">G</span>
-              </div>
+              <img 
+                src="/goldium-logo.png" 
+                alt="Goldium Logo" 
+                className="w-12 h-12 object-contain"
+              />
               <div>
                 <span className="text-2xl font-bold text-white tracking-tight">Goldium</span>
                 <p className="text-sm text-gray-400 font-medium">DeFi Platform</p>
@@ -219,9 +221,7 @@ export default function Home() {
             >
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-8 h-8 text-black" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                  </svg>
+                  <span className="text-2xl">⚡</span>
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold text-white mb-1">Lightning Swaps</h3>
@@ -244,9 +244,7 @@ export default function Home() {
             >
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-500 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M12 8v8m-4-4h8M4 12a8 8 0 1016 0A8 8 0 004 12z"/>
-                  </svg>
+                  <span className="text-2xl">💰</span>
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold text-white mb-1">Staking Rewards</h3>
@@ -269,10 +267,7 @@ export default function Home() {
             >
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M12 12a3 3 0 100-6 3 3 0 000 6z"/>
-                    <path d="M19.4 15a1 1 0 00.6-.92V11a8 8 0 10-16 0v3.08a1 1 0 00.6.92L8 17v2a4 4 0 004 4 4 4 0 004-4v-2l3.4-2z"/>
-                  </svg>
+                  <span className="text-2xl">🔐</span>
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold text-white mb-1">Secure Wallet</h3>
@@ -295,9 +290,7 @@ export default function Home() {
             >
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M8 7V3m8 4V3M3 11h18M5 19h14a2 2 0 002-2v-6H3v6a2 2 0 002 2z"/>
-                  </svg>
+                  <span className="text-2xl">📊</span>
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold text-white mb-1">Transaction History</h3>
@@ -320,9 +313,7 @@ export default function Home() {
             >
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                  </svg>
+                  <span className="text-2xl">📈</span>
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold text-white mb-1">Analytics</h3>
@@ -345,9 +336,7 @@ export default function Home() {
             >
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1.5a2.5 2.5 0 110 5H9V10z"/>
-                  </svg>
+                  <span className="text-2xl">🎮</span>
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold text-white mb-1">Gaming Hub</h3>
@@ -379,9 +368,7 @@ export default function Home() {
             <div className="group bg-gray-900/50 backdrop-blur-xl border border-gray-800/50 rounded-3xl p-8 hover:border-purple-500/50 transition-all duration-500 cursor-pointer hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/10">
               <div className="text-center">
                 <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-3xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                  <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
+                  <span className="text-4xl">👤</span>
                 </div>
                 <h3 className="text-3xl font-bold text-white mb-4">Character Trading</h3>
                 <p className="text-gray-300 mb-8 leading-relaxed">Trade and collect K1-K8 characters with unique abilities, stats, and special powers in our NFT marketplace.</p>
@@ -395,9 +382,7 @@ export default function Home() {
             <div className="group bg-gray-900/50 backdrop-blur-xl border border-gray-800/50 rounded-3xl p-8 hover:border-blue-500/50 transition-all duration-500 cursor-pointer hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/10">
               <div className="text-center">
                 <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-3xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                  <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1.5a2.5 2.5 0 110 5H9V10z" />
-                  </svg>
+                  <span className="text-4xl">🎮</span>
                 </div>
                 <h3 className="text-3xl font-bold text-white mb-4">Gaming Hub</h3>
                 <p className="text-gray-300 mb-8 leading-relaxed">Play crypto games, earn rewards, and compete with other players in our integrated gaming ecosystem.</p>
@@ -414,9 +399,7 @@ export default function Home() {
             <div className="group bg-gray-900/50 backdrop-blur-xl border border-gray-800/50 rounded-3xl p-8 hover:border-emerald-500/50 transition-all duration-500 cursor-pointer hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/10">
               <div className="text-center">
                 <div className="w-20 h-20 bg-gradient-to-br from-emerald-500 to-green-500 rounded-3xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                  <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                  </svg>
+                  <span className="text-4xl">📊</span>
                 </div>
                 <h3 className="text-3xl font-bold text-white mb-4">Analytics Dashboard</h3>
                 <p className="text-gray-300 mb-8 leading-relaxed">Track your portfolio performance, analyze market trends, and optimize your DeFi strategies with comprehensive analytics.</p>
@@ -434,9 +417,11 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center">
             <div className="flex items-center justify-center space-x-4 mb-8">
-              <div className="w-12 h-12 bg-gradient-to-br from-amber-400 via-yellow-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg">
-                <span className="text-black font-bold text-xl">G</span>
-              </div>
+              <img 
+                src="/goldium-logo.png" 
+                alt="Goldium Logo" 
+                className="w-12 h-12 object-contain"
+              />
               <span className="text-3xl font-bold text-white tracking-tight">Goldium</span>
             </div>
             <p className="text-xl text-gray-300 mb-6 font-light">The Ultimate Solana DeFi Experience</p>
