@@ -478,14 +478,16 @@ export function StakingTab() {
               onClick={() => setSelectedToken('GOLDIUM')}
               className={selectedToken === 'GOLDIUM' ? 'bg-galaxy-button text-white' : 'border-galaxy-purple/30 text-galaxy-bright hover:bg-white/10'}
             >
-              🥇 GOLDIUM
+              <img src="/goldium-logo.png" alt="GOLD" className="w-5 h-5 mr-2" />
+              GOLDIUM
             </Button>
             <Button
               variant={selectedToken === 'SOL' ? 'default' : 'outline'}
               onClick={() => setSelectedToken('SOL')}
               className={selectedToken === 'SOL' ? 'bg-galaxy-button text-white' : 'border-galaxy-purple/30 text-galaxy-bright hover:bg-white/10'}
             >
-              ◎ SOL
+              <img src="/solana-logo-official.png" alt="SOL" className="w-5 h-5 mr-2" />
+              SOL
             </Button>
           </div>
         </CardContent>
