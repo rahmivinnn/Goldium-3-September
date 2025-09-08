@@ -1,11 +1,21 @@
 import React, { useState } from 'react';
 import { RPGGame } from './rpg-game';
+import { PlayableRPGGame } from './playable-rpg-game';
 
 export function GamingHub() {
   const [selectedGame, setSelectedGame] = useState(null);
   const [showRPG, setShowRPG] = useState(false);
+  const [showPlayableRPG, setShowPlayableRPG] = useState(false);
 
   const games = [
+    {
+      id: 'playable-rpg',
+      name: 'Metaverse RPG Adventure',
+      description: 'Playable RPG with keyboard controls, collect GOLD coins in metaverse',
+      icon: '🎮',
+      color: 'from-purple-500 to-pink-500',
+      status: 'Available'
+    },
     {
       id: 'rpg',
       name: 'Goldium RPG',
@@ -67,6 +77,8 @@ export function GamingHub() {
                 if (game.status === 'Available') {
                   if (game.id === 'rpg') {
                     setShowRPG(true);
+                  } else if (game.id === 'playable-rpg') {
+                    setShowPlayableRPG(true);
                   } else {
                     setSelectedGame(game);
                   }
@@ -152,6 +164,9 @@ export function GamingHub() {
                     if (selectedGame.id === 'rpg') {
                       setShowRPG(true);
                       setSelectedGame(null);
+                    } else if (selectedGame.id === 'playable-rpg') {
+                      setShowPlayableRPG(true);
+                      setSelectedGame(null);
                     }
                   }}
                   className="flex-1 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
@@ -166,6 +181,19 @@ export function GamingHub() {
                 </button>
               </div>
             </div>
+          </div>
+        )}
+
+        {/* Playable RPG Game */}
+        {showPlayableRPG && (
+          <div>
+            <PlayableRPGGame />
+            <button
+              onClick={() => setShowPlayableRPG(false)}
+              className="fixed top-6 left-6 z-50 bg-gray-900/80 hover:bg-gray-800/80 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 border border-gray-700/50"
+            >
+              ← Back to Games
+            </button>
           </div>
         )}
 
