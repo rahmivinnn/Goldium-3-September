@@ -372,7 +372,7 @@ export default function Home() {
                 </div>
                 <h3 className="text-3xl font-bold text-white mb-4">Character Trading</h3>
                 <p className="text-gray-300 mb-8 leading-relaxed">Trade and collect K1-K8 characters with unique abilities, stats, and special powers in our NFT marketplace.</p>
-                <button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                <button className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                   Explore Characters
                 </button>
               </div>
@@ -388,7 +388,7 @@ export default function Home() {
                 <p className="text-gray-300 mb-8 leading-relaxed">Play crypto games, earn rewards, and compete with other players in our integrated gaming ecosystem.</p>
                 <button 
                   onClick={() => setShowGamingHub(true)}
-                  className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                  className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
                 >
                   Start Playing
                 </button>
@@ -403,7 +403,7 @@ export default function Home() {
                 </div>
                 <h3 className="text-3xl font-bold text-white mb-4">Analytics Dashboard</h3>
                 <p className="text-gray-300 mb-8 leading-relaxed">Track your portfolio performance, analyze market trends, and optimize your DeFi strategies with comprehensive analytics.</p>
-                <button className="bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                <button className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                   View Analytics
                 </button>
               </div>

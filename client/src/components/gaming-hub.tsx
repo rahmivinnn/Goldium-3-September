@@ -1,9 +1,19 @@
 import React, { useState } from 'react';
+import { RPGGame } from './rpg-game';
 
 export function GamingHub() {
   const [selectedGame, setSelectedGame] = useState(null);
+  const [showRPG, setShowRPG] = useState(false);
 
   const games = [
+    {
+      id: 'rpg',
+      name: 'Goldium RPG',
+      description: 'Battle with K1-K8 characters, upgrade skins, earn GOLD',
+      icon: '⚔️',
+      color: 'from-amber-500 to-orange-500',
+      status: 'Available'
+    },
     {
       id: 'solflip',
       name: 'SolFlip Memory',
@@ -26,14 +36,6 @@ export function GamingHub() {
       description: 'Race your tokens to the finish line',
       icon: '🏁',
       color: 'from-green-500 to-emerald-500',
-      status: 'Coming Soon'
-    },
-    {
-      id: 'defi-battle',
-      name: 'DeFi Battle',
-      description: 'Battle with DeFi strategies and earn rewards',
-      icon: '⚔️',
-      color: 'from-purple-500 to-pink-500',
       status: 'Coming Soon'
     }
   ];
@@ -61,7 +63,15 @@ export function GamingHub() {
               className={`group bg-gray-900/50 backdrop-blur-xl border border-gray-800/50 rounded-3xl p-8 hover:border-${game.color.split(' ')[0].split('-')[1]}-500/50 transition-all duration-500 cursor-pointer hover:scale-105 hover:shadow-2xl ${
                 game.status === 'Coming Soon' ? 'opacity-60' : ''
               }`}
-              onClick={() => game.status === 'Available' && setSelectedGame(game)}
+              onClick={() => {
+                if (game.status === 'Available') {
+                  if (game.id === 'rpg') {
+                    setShowRPG(true);
+                  } else {
+                    setSelectedGame(game);
+                  }
+                }
+              }}
             >
               <div className="text-center">
                 <div className="w-20 h-20 bg-gray-800/50 border border-gray-600/30 rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
@@ -137,7 +147,15 @@ export function GamingHub() {
                 </div>
               </div>
               <div className="flex gap-4">
-                <button className="flex-1 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                <button 
+                  onClick={() => {
+                    if (selectedGame.id === 'rpg') {
+                      setShowRPG(true);
+                      setSelectedGame(null);
+                    }
+                  }}
+                  className="flex-1 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                >
                   Start Playing
                 </button>
                 <button
@@ -148,6 +166,19 @@ export function GamingHub() {
                 </button>
               </div>
             </div>
+          </div>
+        )}
+
+        {/* RPG Game */}
+        {showRPG && (
+          <div>
+            <RPGGame />
+            <button
+              onClick={() => setShowRPG(false)}
+              className="fixed top-6 left-6 z-50 bg-gray-900/80 hover:bg-gray-800/80 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 border border-gray-700/50"
+            >
+              ← Back to Games
+            </button>
           </div>
         )}
       </div>
