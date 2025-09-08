@@ -8,7 +8,7 @@ import Home from "@/pages/home";
 import { About } from "@/pages/about";
 import Dashboard from "@/pages/dashboard";
 import NotFound from "@/pages/not-found";
-import SplashScreen from "@/components/splash-screen";
+import EnhancedSplashScreen from "@/components/enhanced-splash-screen";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { useState, useEffect } from "react";
 
@@ -52,7 +52,7 @@ function App() {
   };
 
   if (showSplash) {
-    return <SplashScreen onComplete={handleSplashComplete} />;
+    return <EnhancedSplashScreen onComplete={handleSplashComplete} />;
   }
 
   console.log('🚀 Main app is rendering...');
