@@ -13,6 +13,7 @@ import { TransactionHistory } from '@/components/transaction-history';
 import { CharacterEvolutionShop } from '@/components/character-evolution-shop';
 import GoldPurchaseQR from '@/components/gold-purchase-qr';
 import { SolscanAnalytics } from '@/components/solscan-analytics';
+import CharacterMenu from '@/components/character-menu';
 import { useSolanaWallet, WalletMultiButton } from '@/components/solana-wallet-provider';
 import { ExternalWalletSelector } from '@/components/external-wallet-selector';
 import { 
@@ -205,6 +206,22 @@ export default function Dashboard() {
 
           {/* Real-time Price Ticker */}
           <RealTimePriceTicker className="mb-8" showConnectionStatus={true} />
+          
+          {/* Character Menu Section */}
+          <Card className="mb-8 glass-card glass-hover neumorphic premium-card refined-shimmer sophisticated-border">
+            <CardHeader className="pb-4">
+              <CardTitle className="font-card-title text-golden flex items-center gap-2">
+                <Crown className="w-5 h-5 text-golden-small" />
+                Trading Characters
+              </CardTitle>
+              <p className="font-subtitle text-golden-small mt-2">
+                Choose your trading persona and unlock unique abilities
+              </p>
+            </CardHeader>
+            <CardContent>
+              <CharacterMenu />
+            </CardContent>
+          </Card>
         </div>
 
         {/* Dashboard Content */}

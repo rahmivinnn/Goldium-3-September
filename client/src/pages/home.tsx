@@ -159,6 +159,124 @@ export default function Home() {
         </div>
       </section>
 
+      {/* DeFi Feature Gallery (Scrollable) */}
+      <section className="py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-4 flex items-center justify-between">
+            <h3 className="text-2xl font-bold text-white">Solana x Goldium Features</h3>
+            <span className="text-sm text-gray-400">Scroll to explore</span>
+          </div>
+          <div className="relative">
+            {/* Horizontal scroll container */}
+            <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2" role="list" aria-label="DeFi feature gallery">
+              {/* 1. Lightning-fast Swaps */}
+              <div role="listitem" className="min-w-[260px] max-w-[280px] bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-5 shrink-0 hover:bg-white/10 transition-colors">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 to-yellow-600 flex items-center justify-center">
+                    <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                  </div>
+                  <h4 className="text-white font-semibold">Lightning-fast Swaps</h4>
+                </div>
+                <p className="text-gray-300 text-sm">Execute SOL ↔ GOLD swaps in seconds on Solana with minimal fees.</p>
+              </div>
+
+              {/* 2. Staking Rewards */}
+              <div role="listitem" className="min-w-[260px] max-w-[280px] bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-5 shrink-0 hover:bg-white/10 transition-colors">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center">
+                    <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 8v8m-4-4h8M4 12a8 8 0 1016 0A8 8 0 004 12z"/></svg>
+                  </div>
+                  <h4 className="text-white font-semibold">Staking Rewards</h4>
+                </div>
+                <p className="text-gray-300 text-sm">Stake GOLD to earn yields while supporting the Solana ecosystem.</p>
+              </div>
+
+              {/* 3. Secure Wallet */}
+              <div role="listitem" className="min-w-[260px] max-w-[280px] bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-5 shrink-0 hover:bg-white/10 transition-colors">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
+                    <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 12a3 3 0 100-6 3 3 0 000 6z"/><path d="M19.4 15a1 1 0 00.6-.92V11a8 8 0 10-16 0v3.08a1 1 0 00.6.92L8 17v2a4 4 0 004 4 4 4 0 004-4v-2l3.4-2z"/></svg>
+                  </div>
+                  <h4 className="text-white font-semibold">Secure Wallet</h4>
+                </div>
+                <p className="text-gray-300 text-sm">Connect popular Solana wallets and manage GOLD safely.</p>
+              </div>
+
+              {/* 4. Transparent History */}
+              <div role="listitem" className="min-w-[260px] max-w-[280px] bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-5 shrink-0 hover:bg-white/10 transition-colors">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-fuchsia-500 to-pink-600 flex items-center justify-center">
+                    <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M8 7V3m8 4V3M3 11h18M5 19h14a2 2 0 002-2v-6H3v6a2 2 0 002 2z"/></svg>
+                  </div>
+                  <h4 className="text-white font-semibold">Transparent History</h4>
+                </div>
+                <p className="text-gray-300 text-sm">View on-chain activity for SOL and GOLD directly in your dashboard.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Additional Menu Section */}
+      <section className="py-20 bg-gradient-to-b from-transparent to-black/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-white mb-4">Explore More Features</h2>
+            <p className="text-xl text-gray-300">Discover additional tools and services</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Menu 1 - Character Trading */}
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 cursor-pointer group">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-4">Character Trading</h3>
+                <p className="text-gray-300 mb-6">Trade and collect K1-K8 characters with unique abilities and stats</p>
+                <button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+                  Explore Characters
+                </button>
+              </div>
+            </div>
+
+            {/* Menu 2 - Gaming Hub */}
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 cursor-pointer group">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1.5a2.5 2.5 0 110 5H9V10z" />
+                  </svg>
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-4">Gaming Hub</h3>
+                <p className="text-gray-300 mb-6">Play crypto games, earn rewards, and compete with other players</p>
+                <button className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+                  Start Playing
+                </button>
+              </div>
+            </div>
+
+            {/* Menu 3 - Analytics Dashboard */}
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 cursor-pointer group">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-4">Analytics Dashboard</h3>
+                <p className="text-gray-300 mb-6">Track your portfolio, analyze market trends, and optimize strategies</p>
+                <button className="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+                  View Analytics
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="border-t border-white/10 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

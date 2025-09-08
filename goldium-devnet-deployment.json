@@ -1,0 +1,10 @@
+{
+  "mintAddress": "DWXCrhwbD6GPWiYXEgtWvuKZ3v6MuCwMD4wE7atxZTNT",
+  "payerAddress": "8mcqq8s4GGnew95N2fHZq38sFWoydrwrjMm7CaVNnbZX",
+  "tokenAccount": "8RLXM1HS7xovDRyJQ8upwoc7VFbEPEpoRxUKg8LDejXB",
+  "initialSupply": 1000000000000000000,
+  "decimals": 9,
+  "deployedAt": "2025-09-07T03:55:50.202Z",
+  "network": "devnet",
+  "solscanUrl": "https://solscan.io/?cluster=devnet&address=DWXCrhwbD6GPWiYXEgtWvuKZ3v6MuCwMD4wE7atxZTNT"
+}

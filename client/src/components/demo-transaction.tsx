@@ -358,8 +358,6 @@ const RealTransaction: React.FC = () => {
             </div>
           </div>
         )}
-          </>
-        )}
       </CardContent>
     </Card>
     

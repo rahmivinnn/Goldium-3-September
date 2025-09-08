@@ -8,7 +8,7 @@ const CRYPTO_PRICES = [
   { name: 'Bitcoin', symbol: 'BTC', basePrice: 65000 },
   { name: 'Ethereum', symbol: 'ETH', basePrice: 3200 },
   { name: 'Solana', symbol: 'SOL', basePrice: 195 },
-  { name: 'Cardano', symbol: 'ADA', basePrice: 0.45 },
+  { name: 'Solana', symbol: 'SOL', basePrice: 195 },
   { name: 'Dogecoin', symbol: 'DOGE', basePrice: 0.08 }
 ];
 
