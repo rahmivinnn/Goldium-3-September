@@ -356,23 +356,14 @@ export function RPGGame() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 text-white py-24 relative overflow-hidden">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 left-10 w-20 h-20 bg-yellow-400/20 rounded-full animate-bounce"></div>
-        <div className="absolute top-40 right-20 w-16 h-16 bg-pink-400/20 rounded-full animate-bounce animation-delay-200"></div>
-        <div className="absolute bottom-40 left-20 w-24 h-24 bg-green-400/20 rounded-full animate-bounce animation-delay-400"></div>
-        <div className="absolute bottom-20 right-10 w-18 h-18 bg-orange-400/20 rounded-full animate-bounce animation-delay-600"></div>
-      </div>
+    <div className="min-h-screen bg-black text-white py-24 relative overflow-hidden">
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="text-center mb-12">
           <div className="relative inline-block">
             <h1 className="text-6xl font-bold text-white mb-6 tracking-tight animate-fade-in-up">
-              <span className="bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 bg-clip-text text-transparent animate-gradient">
-                🎮 Goldium RPG
-              </span>
+              🎮 Goldium RPG
             </h1>
             <div className="absolute -top-2 -right-2 text-4xl animate-bounce">✨</div>
             <div className="absolute -bottom-2 -left-2 text-3xl animate-bounce animation-delay-200">🌟</div>
@@ -382,16 +373,16 @@ export function RPGGame() {
           </p>
           <div className="mt-6 flex justify-center gap-4 flex-wrap">
             <div className="bg-gray-800/50 border border-amber-500/20 rounded-xl px-6 py-3">
-              <span className="text-amber-400 font-bold text-lg">{gameState.goldBalance} GOLD</span>
+              <span className="text-white font-bold text-lg">{gameState.goldBalance} GOLD</span>
               {demoMode && <span className="text-xs text-gray-400 ml-2">(DEMO)</span>}
-              {solGoldIntegration.isLoading && <span className="text-xs text-blue-400 ml-2">(Loading...)</span>}
-              {solGoldIntegration.transactionStatus === 'pending' && <span className="text-xs text-yellow-400 ml-2">(Pending...)</span>}
-              {solGoldIntegration.transactionStatus === 'success' && <span className="text-xs text-green-400 ml-2">(Success!)</span>}
-              {solGoldIntegration.transactionStatus === 'error' && <span className="text-xs text-red-400 ml-2">(Error)</span>}
+              {solGoldIntegration.isLoading && <span className="text-xs text-gray-400 ml-2">(Loading...)</span>}
+              {solGoldIntegration.transactionStatus === 'pending' && <span className="text-xs text-gray-400 ml-2">(Pending...)</span>}
+              {solGoldIntegration.transactionStatus === 'success' && <span className="text-xs text-gray-400 ml-2">(Success!)</span>}
+              {solGoldIntegration.transactionStatus === 'error' && <span className="text-xs text-gray-400 ml-2">(Error)</span>}
             </div>
             <button
               onClick={() => setShowShop(!showShop)}
-              className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black px-6 py-3 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105 active:scale-95"
+              className="bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105 active:scale-95 border border-gray-600"
             >
               {showShop ? 'Hide Shop' : 'Character Shop'}
             </button>
@@ -399,8 +390,8 @@ export function RPGGame() {
               onClick={() => setDemoMode(!demoMode)}
               className={`px-6 py-3 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105 active:scale-95 ${
                 demoMode 
-                  ? 'bg-green-500/20 border border-green-500/30 text-green-400' 
-                  : 'bg-blue-500/20 border border-blue-500/30 text-blue-400'
+                  ? 'bg-gray-800 border border-gray-600 text-white' 
+                  : 'bg-gray-700 border border-gray-500 text-gray-300'
               }`}
             >
               {demoMode ? 'Demo Mode ON' : 'Demo Mode OFF'}
@@ -421,7 +412,7 @@ export function RPGGame() {
                   <p className="text-gray-400 text-lg mb-8">Recruit your first champion to start your adventure! 🗡️</p>
                   <button
                     onClick={() => setShowShop(true)}
-                    className="bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 hover:from-yellow-500 hover:via-pink-600 hover:to-purple-600 text-white px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
+                    className="bg-gray-800 hover:bg-gray-700 text-white px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl border border-gray-600"
                   >
                     🛒 Recruit Hero
                   </button>
@@ -431,38 +422,49 @@ export function RPGGame() {
                   {ownedCharacters.map((character) => (
                     <div
                       key={character.id}
-                      className={`relative bg-gradient-to-br from-purple-600/20 via-pink-600/20 to-blue-600/20 border-2 rounded-3xl p-6 cursor-pointer transition-all duration-300 transform hover:scale-105 ${
+                      className={`relative bg-gray-900/50 border-2 rounded-3xl p-6 cursor-pointer transition-all duration-300 transform hover:scale-105 ${
                         gameState.selectedCharacter?.id === character.id
-                          ? 'border-yellow-400 bg-yellow-400/20 shadow-lg shadow-yellow-400/30'
-                          : 'border-purple-400/50 hover:border-pink-400/70 hover:shadow-lg hover:shadow-pink-400/20'
+                          ? 'border-white bg-gray-800/50 shadow-lg shadow-white/20'
+                          : 'border-gray-600 hover:border-gray-500 hover:shadow-lg hover:shadow-gray-500/20'
                       }`}
                       onClick={() => selectCharacter(character)}
                     >
                       {/* Character Avatar with Glow */}
                       <div className="flex items-center gap-4 mb-4">
                         <div className="relative">
-                          <div className="w-20 h-20 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center text-4xl shadow-lg animate-pulse">
-                            {character.id === 'K1' && '⚔️'}
-                            {character.id === 'K2' && '🧙‍♂️'}
-                            {character.id === 'K3' && '🏹'}
-                            {character.id === 'K4' && '🛡️'}
-                            {character.id === 'K5' && '🗡️'}
-                            {character.id === 'K6' && '✨'}
-                            {character.id === 'K7' && '🔥'}
-                            {character.id === 'K8' && '⚡'}
+                          <div className="w-20 h-20 bg-gray-800 rounded-2xl flex items-center justify-center text-4xl shadow-lg">
+                            <img 
+                              src={character.image} 
+                              alt={character.name}
+                              className="w-full h-full object-cover rounded-2xl"
+                              onError={(e) => {
+                                e.target.style.display = 'none';
+                                e.target.nextSibling.style.display = 'block';
+                              }}
+                            />
+                            <div className="text-4xl hidden">
+                              {character.id === 'K1' && '⚔️'}
+                              {character.id === 'K2' && '🧙‍♂️'}
+                              {character.id === 'K3' && '🏹'}
+                              {character.id === 'K4' && '🛡️'}
+                              {character.id === 'K5' && '🗡️'}
+                              {character.id === 'K6' && '✨'}
+                              {character.id === 'K7' && '🔥'}
+                              {character.id === 'K8' && '⚡'}
+                            </div>
                           </div>
                           {gameState.selectedCharacter?.id === character.id && (
-                            <div className="absolute -top-1 -right-1 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center text-sm animate-bounce">
+                            <div className="absolute -top-1 -right-1 w-6 h-6 bg-white rounded-full flex items-center justify-center text-sm animate-bounce text-black">
                               ✓
                             </div>
                           )}
                         </div>
                         <div>
                           <h3 className="text-xl font-bold text-white">{character.name}</h3>
-                          <p className="text-yellow-400 font-semibold">Level {character.level} • {character.skin}</p>
+                          <p className="text-gray-300 font-semibold">Level {character.level} • {character.skin}</p>
                           <div className="flex gap-2 mt-1">
-                            <span className="text-xs bg-red-500/20 text-red-300 px-2 py-1 rounded-full">❤️ {character.hp}</span>
-                            <span className="text-xs bg-blue-500/20 text-blue-300 px-2 py-1 rounded-full">⚔️ {character.attack}</span>
+                            <span className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded-full border border-gray-600">❤️ {character.hp}</span>
+                            <span className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded-full border border-gray-600">⚔️ {character.attack}</span>
                           </div>
                         </div>
                       </div>
@@ -492,7 +494,7 @@ export function RPGGame() {
                             e.stopPropagation();
                             upgradeSkin(character);
                           }}
-                          className="flex-1 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black px-4 py-2 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 active:scale-95 text-sm"
+                          className="flex-1 bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 active:scale-95 text-sm border border-gray-600"
                         >
                           Upgrade ({character.skinLevel * 50} GOLD)
                         </button>
@@ -507,7 +509,7 @@ export function RPGGame() {
           {/* Battle Area */}
           <div className="space-y-6">
             {/* Battle Controls */}
-            <div className="bg-gradient-to-br from-red-600/20 via-orange-600/20 to-yellow-600/20 backdrop-blur-xl border-2 border-red-400/50 rounded-3xl p-6 shadow-lg shadow-red-400/20">
+            <div className="bg-gray-900/50 backdrop-blur-xl border-2 border-gray-600 rounded-3xl p-6 shadow-lg shadow-gray-600/20">
               <div className="flex items-center gap-3 mb-4">
                 <div className="text-3xl animate-pulse">⚔️</div>
                 <h3 className="text-2xl font-bold text-white">Battle Arena</h3>
@@ -515,23 +517,23 @@ export function RPGGame() {
               </div>
               
               {gameState.selectedCharacter && (
-                <div className="mb-4 p-4 bg-gradient-to-r from-green-500/10 to-blue-500/10 rounded-2xl border border-green-400/30">
+                <div className="mb-4 p-4 bg-gray-800/50 rounded-2xl border border-gray-600">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="text-2xl">🛡️</div>
                     <p className="text-white font-bold">Hero: {gameState.selectedCharacter.name}</p>
                   </div>
                   <div className="w-full bg-gray-700 rounded-full h-3 mb-2 shadow-inner">
                     <div 
-                      className="bg-gradient-to-r from-green-400 to-emerald-500 h-3 rounded-full transition-all duration-500 shadow-lg"
+                      className="bg-white h-3 rounded-full transition-all duration-500 shadow-lg"
                       style={{ width: `${(gameState.selectedCharacter.hp / gameState.selectedCharacter.maxHp) * 100}%` }}
                     ></div>
                   </div>
-                  <p className="text-sm text-green-300 font-semibold">❤️ {gameState.selectedCharacter.hp}/{gameState.selectedCharacter.maxHp} HP</p>
+                  <p className="text-sm text-white font-semibold">❤️ {gameState.selectedCharacter.hp}/{gameState.selectedCharacter.maxHp} HP</p>
                 </div>
               )}
 
               {gameState.isInBattle && gameState.battleEnemy && (
-                <div className="mb-4 p-4 bg-gradient-to-r from-red-500/20 to-orange-500/20 border-2 border-red-400/50 rounded-2xl shadow-lg shadow-red-400/20">
+                <div className="mb-4 p-4 bg-gray-800/50 border-2 border-gray-600 rounded-2xl shadow-lg shadow-gray-600/20">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="text-2xl animate-pulse">👹</div>
                     <p className="text-white font-bold">Enemy: {gameState.battleEnemy.name}</p>
@@ -539,11 +541,11 @@ export function RPGGame() {
                   </div>
                   <div className="w-full bg-gray-800 rounded-full h-3 mb-2 shadow-inner">
                     <div 
-                      className="bg-gradient-to-r from-red-500 to-pink-500 h-3 rounded-full transition-all duration-500 shadow-lg animate-pulse"
+                      className="bg-gray-500 h-3 rounded-full transition-all duration-500 shadow-lg animate-pulse"
                       style={{ width: `${(gameState.battleEnemy.hp / 150) * 100}%` }}
                     ></div>
                   </div>
-                  <p className="text-sm text-red-300 font-semibold">💀 {gameState.battleEnemy.hp} HP</p>
+                  <p className="text-sm text-gray-300 font-semibold">💀 {gameState.battleEnemy.hp} HP</p>
                 </div>
               )}
 
@@ -551,7 +553,7 @@ export function RPGGame() {
                 <button
                   onClick={startBattle}
                   disabled={!gameState.selectedCharacter || gameState.isInBattle}
-                  className="w-full bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 hover:from-yellow-500 hover:via-orange-600 hover:to-red-600 disabled:from-gray-600 disabled:to-gray-700 disabled:cursor-not-allowed text-white px-6 py-4 rounded-2xl font-bold text-lg transition-all duration-200 transform hover:scale-105 active:scale-95 disabled:transform-none shadow-lg hover:shadow-xl"
+                  className="w-full bg-gray-800 hover:bg-gray-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-6 py-4 rounded-2xl font-bold text-lg transition-all duration-200 transform hover:scale-105 active:scale-95 disabled:transform-none shadow-lg hover:shadow-xl border border-gray-600"
                 >
                   {gameState.isInBattle ? '⚔️ Battle in Progress...' : '🚀 Start Epic Battle!'}
                 </button>
@@ -559,7 +561,7 @@ export function RPGGame() {
                 {gameState.isInBattle && (
                   <button
                     onClick={attackEnemy}
-                    className="w-full bg-gradient-to-r from-red-500 via-pink-500 to-purple-500 hover:from-red-600 hover:via-pink-600 hover:to-purple-600 text-white px-6 py-4 rounded-2xl font-bold text-lg transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl animate-pulse"
+                    className="w-full bg-gray-800 hover:bg-gray-700 text-white px-6 py-4 rounded-2xl font-bold text-lg transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl animate-pulse border border-gray-600"
                   >
                     ⚡ ATTACK! ⚡
                   </button>
@@ -568,16 +570,16 @@ export function RPGGame() {
             </div>
 
             {/* Battle Log */}
-            <div className="bg-gradient-to-br from-blue-600/20 via-purple-600/20 to-pink-600/20 backdrop-blur-xl border-2 border-blue-400/50 rounded-3xl p-6 shadow-lg shadow-blue-400/20">
+            <div className="bg-gray-900/50 backdrop-blur-xl border-2 border-gray-600 rounded-3xl p-6 shadow-lg shadow-gray-600/20">
               <div className="flex items-center gap-3 mb-4">
                 <div className="text-2xl animate-bounce">📜</div>
                 <h3 className="text-2xl font-bold text-white">Battle Chronicle</h3>
                 <div className="text-xl animate-pulse">✨</div>
               </div>
-              <div className="space-y-3 max-h-64 overflow-y-auto bg-black/20 rounded-2xl p-4 border border-blue-400/30">
+              <div className="space-y-3 max-h-64 overflow-y-auto bg-black/20 rounded-2xl p-4 border border-gray-600">
                 {gameState.battleLog.map((log, index) => (
-                  <div key={index} className="flex items-center gap-2 p-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-lg border border-blue-400/20">
-                    <div className="text-yellow-400 animate-pulse">⚡</div>
+                  <div key={index} className="flex items-center gap-2 p-2 bg-gray-800/50 rounded-lg border border-gray-600">
+                    <div className="text-white animate-pulse">⚡</div>
                     <p className="text-gray-200 text-sm font-medium">{log}</p>
                   </div>
                 ))}
@@ -595,7 +597,7 @@ export function RPGGame() {
         {/* Character Shop Modal */}
         {showShop && (
           <div className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-            <div className="bg-gradient-to-br from-purple-900/90 via-blue-900/90 to-indigo-900/90 border-2 border-purple-400/50 rounded-3xl p-8 max-w-6xl w-full max-h-[90vh] overflow-y-auto shadow-2xl shadow-purple-400/20">
+            <div className="bg-gray-900/90 border-2 border-gray-600 rounded-3xl p-8 max-w-6xl w-full max-h-[90vh] overflow-y-auto shadow-2xl shadow-gray-600/20">
               <div className="flex justify-between items-center mb-8">
                 <div className="flex items-center gap-4">
                   <div className="text-4xl animate-bounce">🛒</div>
@@ -614,18 +616,29 @@ export function RPGGame() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {characters.map((character) => (
-                  <div key={character.id} className="bg-gradient-to-br from-purple-600/20 via-pink-600/20 to-blue-600/20 border-2 border-purple-400/50 rounded-3xl p-6 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-purple-400/20">
+                  <div key={character.id} className="bg-gray-800/50 border-2 border-gray-600 rounded-3xl p-6 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-gray-600/20">
                     {/* Character Avatar */}
                     <div className="text-center mb-4">
-                      <div className="w-24 h-24 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center text-5xl shadow-lg mx-auto animate-pulse">
-                        {character.id === 'K1' && '⚔️'}
-                        {character.id === 'K2' && '🧙‍♂️'}
-                        {character.id === 'K3' && '🏹'}
-                        {character.id === 'K4' && '🛡️'}
-                        {character.id === 'K5' && '🗡️'}
-                        {character.id === 'K6' && '✨'}
-                        {character.id === 'K7' && '🔥'}
-                        {character.id === 'K8' && '⚡'}
+                      <div className="w-24 h-24 bg-gray-800 rounded-2xl flex items-center justify-center text-5xl shadow-lg mx-auto">
+                        <img 
+                          src={character.image} 
+                          alt={character.name}
+                          className="w-full h-full object-cover rounded-2xl"
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                            e.target.nextSibling.style.display = 'block';
+                          }}
+                        />
+                        <div className="text-5xl hidden">
+                          {character.id === 'K1' && '⚔️'}
+                          {character.id === 'K2' && '🧙‍♂️'}
+                          {character.id === 'K3' && '🏹'}
+                          {character.id === 'K4' && '🛡️'}
+                          {character.id === 'K5' && '🗡️'}
+                          {character.id === 'K6' && '✨'}
+                          {character.id === 'K7' && '🔥'}
+                          {character.id === 'K8' && '⚡'}
+                        </div>
                       </div>
                     </div>
                     
@@ -657,10 +670,10 @@ export function RPGGame() {
                       disabled={gameState.goldBalance < character.price || ownedCharacters.some(c => c.id === character.id)}
                       className={`w-full px-4 py-3 rounded-2xl font-bold text-lg transition-all duration-200 transform hover:scale-105 active:scale-95 disabled:transform-none ${
                         ownedCharacters.some(c => c.id === character.id)
-                          ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white'
+                          ? 'bg-gray-700 text-white border border-gray-600'
                           : gameState.goldBalance < character.price
-                          ? 'bg-gradient-to-r from-gray-600 to-gray-700 text-gray-400 cursor-not-allowed'
-                          : 'bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 hover:from-yellow-500 hover:via-pink-600 hover:to-purple-600 text-white shadow-lg hover:shadow-xl'
+                          ? 'bg-gray-600 text-gray-400 cursor-not-allowed border border-gray-500'
+                          : 'bg-gray-800 hover:bg-gray-700 text-white shadow-lg hover:shadow-xl border border-gray-600'
                       }`}
                     >
                       {ownedCharacters.some(c => c.id === character.id) 
