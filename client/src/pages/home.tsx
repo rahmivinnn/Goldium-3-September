@@ -244,6 +244,20 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Manual Swap Button */}
+      <section className="py-8">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="text-center">
+            <button 
+              onClick={() => window.open('https://jup.ag/', '_blank')}
+              className="bg-black hover:bg-gray-900 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 border border-gray-600 hover:border-gray-500"
+            >
+              Manual Swap Guide
+            </button>
+          </div>
+        </div>
+      </section>
+
       {/* Interactive Feature Gallery - Zealy.io inspired */}
       <section id="gallery" className="py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">

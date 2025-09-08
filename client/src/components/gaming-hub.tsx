@@ -324,24 +324,33 @@ export function GamingHub() {
             </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4 border border-gray-600">
-                <span className="text-2xl">🥇</span>
+              <div className="relative w-20 h-20 mx-auto mb-4">
+                <img src="/K1.png" alt="K1 Warrior" className="w-16 h-16 rounded-full border-2 border-yellow-400 mx-auto" />
+                <div className="absolute -top-2 -right-2 w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center">
+                  <span className="text-lg">🏆</span>
+                </div>
               </div>
               <h3 className="text-xl font-bold text-white mb-2">Top Player</h3>
               <p className="text-gray-300">CryptoMaster123</p>
               <p className="text-white font-bold">2,450 GOLD</p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4 border border-gray-600">
-                <span className="text-2xl">🥈</span>
+              <div className="relative w-20 h-20 mx-auto mb-4">
+                <img src="/K2.png" alt="K2 Mage" className="w-16 h-16 rounded-full border-2 border-gray-400 mx-auto" />
+                <div className="absolute -top-2 -right-2 w-8 h-8 bg-gray-500 rounded-full flex items-center justify-center">
+                  <span className="text-lg">🥈</span>
+                </div>
               </div>
               <h3 className="text-xl font-bold text-white mb-2">Second Place</h3>
               <p className="text-gray-300">DeFiWarrior</p>
               <p className="text-gray-300 font-bold">1,890 GOLD</p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4 border border-gray-600">
-                <span className="text-2xl">🥉</span>
+              <div className="relative w-20 h-20 mx-auto mb-4">
+                <img src="/K3.png" alt="K3 Archer" className="w-16 h-16 rounded-full border-2 border-orange-400 mx-auto" />
+                <div className="absolute -top-2 -right-2 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
+                  <span className="text-lg">🥉</span>
+                </div>
               </div>
               <h3 className="text-xl font-bold text-white mb-2">Third Place</h3>
               <p className="text-gray-300">SolanaPro</p>
