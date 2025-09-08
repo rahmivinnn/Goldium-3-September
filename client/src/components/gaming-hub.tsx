@@ -15,7 +15,7 @@ export function GamingHub() {
       id: 'k1-warrior',
       name: 'Warrior Arena',
       description: 'Battle with the ultimate sword master',
-      image: '/images/k1.png',
+      image: '/K1.png',
       color: 'from-red-500 to-orange-500',
       status: 'Available'
     },
@@ -23,7 +23,7 @@ export function GamingHub() {
       id: 'k2-mage',
       name: 'Mage Academy',
       description: 'Master magic with the spellcaster',
-      image: '/images/k2.png',
+      image: '/K2.png',
       color: 'from-purple-500 to-blue-500',
       status: 'Available'
     },
@@ -31,7 +31,7 @@ export function GamingHub() {
       id: 'k3-archer',
       name: 'Archer Range',
       description: 'Perfect your aim with the bow master',
-      image: '/images/k3.png',
+      image: '/K3.png',
       color: 'from-green-500 to-emerald-500',
       status: 'Available'
     },
@@ -39,7 +39,7 @@ export function GamingHub() {
       id: 'k4-tank',
       name: 'Tank Fortress',
       description: 'Defend with the ultimate shield',
-      image: '/images/k4.png',
+      image: '/K4.png',
       color: 'from-gray-500 to-slate-500',
       status: 'Available'
     },
@@ -47,7 +47,7 @@ export function GamingHub() {
       id: 'k5-assassin',
       name: 'Assassin Guild',
       description: 'Stealth with the shadow blade',
-      image: '/images/k5.png',
+      image: '/K5.png',
       color: 'from-indigo-500 to-purple-500',
       status: 'Available'
     },
@@ -55,7 +55,7 @@ export function GamingHub() {
       id: 'k6-healer',
       name: 'Healer Temple',
       description: 'Heal with the divine mender',
-      image: '/images/k6.png',
+      image: '/K6.png',
       color: 'from-pink-500 to-rose-500',
       status: 'Available'
     },
@@ -63,7 +63,7 @@ export function GamingHub() {
       id: 'k7-berserker',
       name: 'Berserker Rage',
       description: 'Rage with the fierce warrior',
-      image: '/images/k7.png',
+      image: '/K7.png',
       color: 'from-red-600 to-orange-600',
       status: 'Available'
     },
@@ -71,7 +71,7 @@ export function GamingHub() {
       id: 'k8-paladin',
       name: 'Paladin Order',
       description: 'Serve with the holy knight',
-      image: '/images/k8.png',
+      image: '/K8.png',
       color: 'from-yellow-500 to-amber-500',
       status: 'Available'
     }
