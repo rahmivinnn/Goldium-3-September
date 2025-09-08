@@ -13,65 +13,65 @@ export function GamingHub() {
   const games = [
     {
       id: 'k1-warrior',
-      name: 'K1 Warrior Arena',
-      description: 'Battle with K1 Warrior - The ultimate sword master',
-      icon: '⚔️',
+      name: 'Warrior Arena',
+      description: 'Battle with the ultimate sword master',
+      image: '/images/k1.png',
       color: 'from-red-500 to-orange-500',
       status: 'Available'
     },
     {
       id: 'k2-mage',
-      name: 'K2 Mage Academy',
-      description: 'Master magic with K2 Mage - The spellcaster',
-      icon: '🧙‍♂️',
+      name: 'Mage Academy',
+      description: 'Master magic with the spellcaster',
+      image: '/images/k2.png',
       color: 'from-purple-500 to-blue-500',
       status: 'Available'
     },
     {
       id: 'k3-archer',
-      name: 'K3 Archer Range',
-      description: 'Perfect your aim with K3 Archer - The bow master',
-      icon: '🏹',
+      name: 'Archer Range',
+      description: 'Perfect your aim with the bow master',
+      image: '/images/k3.png',
       color: 'from-green-500 to-emerald-500',
       status: 'Available'
     },
     {
       id: 'k4-tank',
-      name: 'K4 Tank Fortress',
-      description: 'Defend with K4 Tank - The ultimate shield',
-      icon: '🛡️',
+      name: 'Tank Fortress',
+      description: 'Defend with the ultimate shield',
+      image: '/images/k4.png',
       color: 'from-gray-500 to-slate-500',
       status: 'Available'
     },
     {
       id: 'k5-assassin',
-      name: 'K5 Assassin Guild',
-      description: 'Stealth with K5 Assassin - The shadow blade',
-      icon: '🗡️',
+      name: 'Assassin Guild',
+      description: 'Stealth with the shadow blade',
+      image: '/images/k5.png',
       color: 'from-indigo-500 to-purple-500',
       status: 'Available'
     },
     {
       id: 'k6-healer',
-      name: 'K6 Healer Temple',
-      description: 'Heal with K6 Healer - The divine mender',
-      icon: '✨',
+      name: 'Healer Temple',
+      description: 'Heal with the divine mender',
+      image: '/images/k6.png',
       color: 'from-pink-500 to-rose-500',
       status: 'Available'
     },
     {
       id: 'k7-berserker',
-      name: 'K7 Berserker Rage',
-      description: 'Rage with K7 Berserker - The fierce warrior',
-      icon: '🔥',
+      name: 'Berserker Rage',
+      description: 'Rage with the fierce warrior',
+      image: '/images/k7.png',
       color: 'from-red-600 to-orange-600',
       status: 'Available'
     },
     {
       id: 'k8-paladin',
-      name: 'K8 Paladin Order',
-      description: 'Serve with K8 Paladin - The holy knight',
-      icon: '⚡',
+      name: 'Paladin Order',
+      description: 'Serve with the holy knight',
+      image: '/images/k8.png',
       color: 'from-yellow-500 to-amber-500',
       status: 'Available'
     }
@@ -170,28 +170,49 @@ export function GamingHub() {
             <div className="relative bg-black rounded-2xl overflow-hidden border border-gray-800/50">
               {/* Video Placeholder - In real app, this would be actual video */}
               <div className="aspect-video bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center relative">
-                {/* K1-K8 Character Showcase */}
+                {/* Character Showcase */}
                 <div className="text-center">
-                  <div className="text-8xl mb-8 animate-pulse">
-                    ⚔️🧙‍♂️🏹🛡️🗡️✨🔥⚡
+                  <div className="flex justify-center space-x-4 mb-8">
+                    {games.map((game, index) => (
+                      <div key={game.id} className="w-16 h-16 rounded-full overflow-hidden border-2 border-white/20">
+                        <img 
+                          src={game.image} 
+                          alt={game.name}
+                          className="w-full h-full object-cover animate-pulse"
+                          style={{ animationDelay: `${index * 0.1}s` }}
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                            e.target.nextSibling.style.display = 'block';
+                          }}
+                        />
+                        <div className="w-full h-full bg-gray-700 flex items-center justify-center text-2xl hidden">🥚</div>
+                      </div>
+                    ))}
                   </div>
                   <h2 className="text-4xl font-bold text-white mb-4">
                     <span className="bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 bg-clip-text text-transparent">
-                      K1-K8 Character Arena
+                      Character Arena
                     </span>
                   </h2>
                   <p className="text-xl text-gray-300 mb-8">
                     Epic RPG battles on Solana Network
                   </p>
-                  <div className="flex justify-center space-x-4 text-6xl">
-                    <span className="animate-bounce">⚔️</span>
-                    <span className="animate-bounce" style={{ animationDelay: '0.1s' }}>🧙‍♂️</span>
-                    <span className="animate-bounce" style={{ animationDelay: '0.2s' }}>🏹</span>
-                    <span className="animate-bounce" style={{ animationDelay: '0.3s' }}>🛡️</span>
-                    <span className="animate-bounce" style={{ animationDelay: '0.4s' }}>🗡️</span>
-                    <span className="animate-bounce" style={{ animationDelay: '0.5s' }}>✨</span>
-                    <span className="animate-bounce" style={{ animationDelay: '0.6s' }}>🔥</span>
-                    <span className="animate-bounce" style={{ animationDelay: '0.7s' }}>⚡</span>
+                  <div className="flex justify-center space-x-4">
+                    {games.map((game, index) => (
+                      <div key={game.id} className="w-12 h-12 rounded-full overflow-hidden border border-white/30">
+                        <img 
+                          src={game.image} 
+                          alt={game.name}
+                          className="w-full h-full object-cover animate-bounce"
+                          style={{ animationDelay: `${index * 0.1}s` }}
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                            e.target.nextSibling.style.display = 'block';
+                          }}
+                        />
+                        <div className="w-full h-full bg-gray-700 flex items-center justify-center text-lg hidden">🥚</div>
+                      </div>
+                    ))}
                   </div>
                 </div>
                 
@@ -230,11 +251,11 @@ export function GamingHub() {
           <div className="relative">
             <h1 className="text-6xl font-bold text-white mb-6 tracking-tight">
               <span className="bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 bg-clip-text text-transparent animate-pulse">
-                K1-K8 Character Arena
+                Character Arena
               </span>
             </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-              Choose your champion from K1-K8 characters and battle in epic RPG adventures! Each character has unique abilities and powers.
+              Choose your champion and battle in epic RPG adventures! Each character has unique abilities and powers.
             </p>
             <div className="mt-8 flex justify-center space-x-2">
               <div className="w-3 h-3 bg-yellow-400 rounded-full animate-ping"></div>
@@ -263,8 +284,17 @@ export function GamingHub() {
               <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-gray-800/20 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               
               <div className="text-center relative z-10">
-                <div className="w-20 h-20 bg-gray-800/50 border border-gray-600/30 rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                  <span className="text-4xl">{game.icon}</span>
+                <div className="w-20 h-20 bg-gray-800/50 border border-gray-600/30 rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg overflow-hidden">
+                  <img 
+                    src={game.image} 
+                    alt={game.name}
+                    className="w-full h-full object-cover rounded-3xl"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.nextSibling.style.display = 'block';
+                    }}
+                  />
+                  <span className="text-4xl hidden">🥚</span>
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-4">{game.name}</h3>
                 <p className="text-gray-300 mb-6 leading-relaxed">{game.description}</p>
@@ -336,8 +366,17 @@ export function GamingHub() {
                 </button>
               </div>
               <div className="text-center mb-8">
-                <div className="w-24 h-24 bg-gray-800/50 border border-gray-600/30 rounded-3xl flex items-center justify-center mx-auto mb-6">
-                  <span className="text-6xl">{selectedGame.icon}</span>
+                <div className="w-24 h-24 bg-gray-800/50 border border-gray-600/30 rounded-3xl flex items-center justify-center mx-auto mb-6 overflow-hidden">
+                  <img 
+                    src={selectedGame.image} 
+                    alt={selectedGame.name}
+                    className="w-full h-full object-cover rounded-3xl"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.nextSibling.style.display = 'block';
+                    }}
+                  />
+                  <span className="text-6xl hidden">🥚</span>
                 </div>
                 <p className="text-gray-300 text-lg leading-relaxed mb-6">{selectedGame.description}</p>
                 <div className="bg-green-500/20 text-green-400 border border-green-500/30 rounded-full px-6 py-3 inline-block mb-6">
