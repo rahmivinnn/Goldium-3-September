@@ -97,7 +97,7 @@ export default function Home() {
                 className="w-12 h-12 object-contain"
               />
               <div>
-                <span className="text-2xl font-bold text-white tracking-tight">Goldium</span>
+                <span className="text-2xl font-bold bg-gradient-to-r from-amber-400 via-yellow-500 to-orange-500 bg-clip-text text-transparent tracking-tight animate-gradient">Goldium</span>
                 <p className="text-sm text-gray-400 font-medium">DeFi Platform</p>
               </div>
             </div>
@@ -126,8 +126,18 @@ export default function Home() {
       </nav>
 
       {/* Hero Section - Zealy.io inspired */}
-      <section id="home" className="pt-24 pb-32">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <section id="home" className="pt-24 pb-32 relative overflow-hidden">
+        {/* Yellow Particles Background */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-yellow-400/30 rounded-full animate-pulse" style={{ animationDelay: '0s', animationDuration: '3s' }}></div>
+          <div className="absolute top-1/3 right-1/3 w-1 h-1 bg-yellow-500/40 rounded-full animate-pulse" style={{ animationDelay: '1s', animationDuration: '4s' }}></div>
+          <div className="absolute bottom-1/3 left-1/3 w-1.5 h-1.5 bg-amber-400/20 rounded-full animate-pulse" style={{ animationDelay: '2s', animationDuration: '5s' }}></div>
+          <div className="absolute top-2/3 right-1/4 w-1 h-1 bg-yellow-400/30 rounded-full animate-pulse" style={{ animationDelay: '0.5s', animationDuration: '3.5s' }}></div>
+          <div className="absolute bottom-1/4 right-1/2 w-2 h-2 bg-amber-500/25 rounded-full animate-pulse" style={{ animationDelay: '1.5s', animationDuration: '4.5s' }}></div>
+          <div className="absolute top-1/2 left-1/2 w-1 h-1 bg-yellow-500/35 rounded-full animate-pulse" style={{ animationDelay: '2.5s', animationDuration: '3.8s' }}></div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="text-center">
             {/* Main Title - Clean typography */}
             <h1 className="text-6xl md:text-8xl font-bold text-white mb-8 tracking-tight animate-fade-in-up">
@@ -137,7 +147,7 @@ export default function Home() {
             </h1>
 
             {/* Subtitle - Zealy.io style */}
-            <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed font-light animate-fade-in-up animation-delay-200">
+            <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed font-light animate-fade-in-up animation-delay-200 hover:text-white transition-colors duration-300">
               The Ultimate Solana DeFi Experience. Swap, Stake, and Earn with GOLD tokens on the fastest blockchain.
             </p>
 
@@ -159,17 +169,17 @@ export default function Home() {
 
             {/* Stats or additional info */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-amber-400 mb-2">99.9%</div>
-                <div className="text-gray-400">Uptime</div>
+              <div className="text-center group hover:scale-105 transition-transform duration-300">
+                <div className="text-3xl font-bold text-amber-400 mb-2 group-hover:text-yellow-400 transition-colors duration-300">99.9%</div>
+                <div className="text-gray-400 group-hover:text-gray-300 transition-colors duration-300">Uptime</div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-amber-400 mb-2">&lt;1s</div>
-                <div className="text-gray-400">Swap Speed</div>
+              <div className="text-center group hover:scale-105 transition-transform duration-300">
+                <div className="text-3xl font-bold text-amber-400 mb-2 group-hover:text-yellow-400 transition-colors duration-300">&lt;1s</div>
+                <div className="text-gray-400 group-hover:text-gray-300 transition-colors duration-300">Swap Speed</div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-amber-400 mb-2">0.01%</div>
-                <div className="text-gray-400">Fees</div>
+              <div className="text-center group hover:scale-105 transition-transform duration-300">
+                <div className="text-3xl font-bold text-amber-400 mb-2 group-hover:text-yellow-400 transition-colors duration-300">0.01%</div>
+                <div className="text-gray-400 group-hover:text-gray-300 transition-colors duration-300">Fees</div>
               </div>
             </div>
           </div>
@@ -189,8 +199,8 @@ export default function Home() {
       <section id="defi" className="py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold text-white mb-6 tracking-tight">DeFi Operations</h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">Swap, stake, send, and track your transactions with lightning-fast speed and minimal fees</p>
+            <h2 className="text-5xl font-bold text-white mb-6 tracking-tight hover:text-amber-400 transition-colors duration-300">DeFi Operations</h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed hover:text-white transition-colors duration-300">Swap, stake, send, and track your transactions with lightning-fast speed and minimal fees</p>
           </div>
 
           {/* Main DeFi Interface - Clean card design */}
@@ -263,8 +273,8 @@ export default function Home() {
       <section id="gallery" className="py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold text-white mb-6 tracking-tight">Platform Features</h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">Explore our comprehensive suite of DeFi tools and features</p>
+            <h2 className="text-5xl font-bold text-white mb-6 tracking-tight hover:text-amber-400 transition-colors duration-300">Platform Features</h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed hover:text-white transition-colors duration-300">Explore our comprehensive suite of DeFi tools and features</p>
           </div>
 
           {/* Interactive Gallery Grid */}
@@ -414,8 +424,8 @@ export default function Home() {
       <section id="about" className="py-24 bg-gradient-to-b from-transparent to-gray-900/20">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold text-white mb-6 tracking-tight">Additional Features</h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">Discover more tools and services to enhance your DeFi experience</p>
+            <h2 className="text-5xl font-bold text-white mb-6 tracking-tight hover:text-amber-400 transition-colors duration-300">Additional Features</h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed hover:text-white transition-colors duration-300">Discover more tools and services to enhance your DeFi experience</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
