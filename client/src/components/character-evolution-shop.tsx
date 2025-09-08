@@ -310,10 +310,10 @@ export const CharacterEvolutionShop: React.FC = () => {
 
   const getTierColor = (tier: string) => {
     switch (tier) {
-      case 'basic': return 'from-blue-400 to-blue-600';
-      case 'premium': return 'from-purple-400 to-purple-600';
-      case 'legendary': return 'from-yellow-400 to-orange-500';
-      case 'mythic': return 'from-pink-400 to-red-500';
+      case 'basic': return 'from-gray-400 to-gray-600';
+      case 'premium': return 'from-gray-500 to-gray-700';
+      case 'legendary': return 'from-gray-600 to-gray-800';
+      case 'mythic': return 'from-gray-700 to-gray-900';
       default: return 'from-gray-400 to-gray-600';
     }
   };
@@ -362,7 +362,7 @@ export const CharacterEvolutionShop: React.FC = () => {
         <Card className="bg-black/20 border-white/10">
           <CardContent className="p-4">
             <div className="flex items-center gap-2 mb-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full flex items-center justify-center">
+              <div className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center border border-gray-600">
                 ⭐
               </div>
               <div>
@@ -390,7 +390,7 @@ export const CharacterEvolutionShop: React.FC = () => {
         <Card className="bg-black/20 border-white/10">
           <CardContent className="p-4">
             <div className="flex items-center gap-2 mb-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full flex items-center justify-center">
+              <div className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center border border-gray-600">
                 🛡️
               </div>
               <div>
@@ -414,7 +414,7 @@ export const CharacterEvolutionShop: React.FC = () => {
               key={upgrade.id} 
               className={`relative overflow-hidden transition-all duration-300 hover:scale-105 ${
                 upgrade.owned 
-                  ? 'bg-green-500/20 border-green-500/30' 
+                  ? 'bg-gray-800/50 border-gray-600' 
                   : canPurchase 
                     ? 'bg-black/20 border-white/10 hover:border-white/30' 
                     : 'bg-black/10 border-white/5'
@@ -472,7 +472,7 @@ export const CharacterEvolutionShop: React.FC = () => {
                   </div>
                   
                   {upgrade.owned ? (
-                    <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
+                    <Badge className="bg-gray-800/50 text-gray-300 border-gray-600">
                       Owned
                     </Badge>
                   ) : (

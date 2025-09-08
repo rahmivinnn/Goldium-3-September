@@ -24,7 +24,7 @@ export function GamingHub() {
       name: 'Mage Academy',
       description: 'Master magic with the spellcaster',
       image: '/K2.png',
-      color: 'from-purple-500 to-blue-500',
+      color: 'from-gray-500 to-gray-600',
       status: 'Available'
     },
     {
@@ -48,7 +48,7 @@ export function GamingHub() {
       name: 'Assassin Guild',
       description: 'Stealth with the shadow blade',
       image: '/K5.png',
-      color: 'from-indigo-500 to-purple-500',
+      color: 'from-gray-500 to-gray-600',
       status: 'Available'
     },
     {
@@ -190,7 +190,7 @@ export function GamingHub() {
                     ))}
                   </div>
                   <h2 className="text-4xl font-bold text-white mb-4">
-                    <span className="bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 bg-clip-text text-transparent">
+                    <span className="text-white">
                       Character Arena
                     </span>
                   </h2>
@@ -217,7 +217,7 @@ export function GamingHub() {
                 </div>
                 
                 {/* Solana Network Badge */}
-                <div className="absolute top-4 right-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold flex items-center space-x-2">
+                <div className="absolute top-4 right-4 bg-gray-800 text-white px-4 py-2 rounded-full text-sm font-semibold flex items-center space-x-2 border border-gray-600">
                   <img src="/solana-logo-official.png" alt="Solana" className="w-4 h-4" />
                   <span>Solana Network</span>
                 </div>
@@ -248,10 +248,10 @@ export function GamingHub() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="text-center mb-16 relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/10 via-pink-500/10 to-purple-500/10 rounded-3xl blur-3xl"></div>
+          <div className="absolute inset-0 bg-gray-800/10 rounded-3xl blur-3xl"></div>
           <div className="relative">
             <h1 className="text-6xl font-bold text-white mb-6 tracking-tight">
-              <span className="bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 bg-clip-text text-transparent animate-pulse">
+              <span className="text-white">
                 Character Arena
               </span>
             </h1>
@@ -259,9 +259,9 @@ export function GamingHub() {
               Choose your champion and battle in epic RPG adventures! Each character has unique abilities and powers.
             </p>
             <div className="mt-8 flex justify-center space-x-2">
-              <div className="w-3 h-3 bg-yellow-400 rounded-full animate-ping"></div>
-              <div className="w-3 h-3 bg-pink-500 rounded-full animate-ping" style={{ animationDelay: '0.2s' }}></div>
-              <div className="w-3 h-3 bg-purple-500 rounded-full animate-ping" style={{ animationDelay: '0.4s' }}></div>
+              <div className="w-3 h-3 bg-gray-400 rounded-full animate-ping"></div>
+              <div className="w-3 h-3 bg-gray-500 rounded-full animate-ping" style={{ animationDelay: '0.2s' }}></div>
+              <div className="w-3 h-3 bg-gray-600 rounded-full animate-ping" style={{ animationDelay: '0.4s' }}></div>
             </div>
           </div>
         </div>
@@ -301,8 +301,8 @@ export function GamingHub() {
                 <p className="text-gray-300 mb-6 leading-relaxed">{game.description}</p>
                 <div className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-medium ${
                   game.status === 'Available' 
-                    ? 'bg-green-500/20 text-green-400 border border-green-500/30' 
-                    : 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
+                    ? 'bg-gray-800/50 text-gray-300 border border-gray-600' 
+                    : 'bg-gray-700/50 text-gray-400 border border-gray-500'
                 }`}>
                   {game.status}
                 </div>
@@ -314,38 +314,38 @@ export function GamingHub() {
         {/* Leaderboard */}
         <div className="bg-gray-900/50 backdrop-blur-xl border border-gray-800/50 rounded-3xl p-8 relative overflow-hidden">
           {/* Subtle Background Glow */}
-          <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/5 via-pink-500/5 to-purple-500/5 rounded-3xl"></div>
+          <div className="absolute inset-0 bg-gray-800/5 rounded-3xl"></div>
           
           <div className="relative z-10">
             <h2 className="text-3xl font-bold text-white mb-8 text-center">
-              <span className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
+              <span className="text-white">
                 🏆 Leaderboard
               </span>
             </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-yellow-500 to-amber-500 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4 border border-gray-600">
                 <span className="text-2xl">🥇</span>
               </div>
               <h3 className="text-xl font-bold text-white mb-2">Top Player</h3>
               <p className="text-gray-300">CryptoMaster123</p>
-              <p className="text-amber-400 font-bold">2,450 GOLD</p>
+              <p className="text-white font-bold">2,450 GOLD</p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-gray-400 to-gray-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4 border border-gray-600">
                 <span className="text-2xl">🥈</span>
               </div>
               <h3 className="text-xl font-bold text-white mb-2">Second Place</h3>
               <p className="text-gray-300">DeFiWarrior</p>
-              <p className="text-gray-400 font-bold">1,890 GOLD</p>
+              <p className="text-gray-300 font-bold">1,890 GOLD</p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4 border border-gray-600">
                 <span className="text-2xl">🥉</span>
               </div>
               <h3 className="text-xl font-bold text-white mb-2">Third Place</h3>
               <p className="text-gray-300">SolanaPro</p>
-              <p className="text-orange-400 font-bold">1,320 GOLD</p>
+              <p className="text-gray-300 font-bold">1,320 GOLD</p>
             </div>
           </div>
           </div>
@@ -380,7 +380,7 @@ export function GamingHub() {
                   <span className="text-6xl hidden">🥚</span>
                 </div>
                 <p className="text-gray-300 text-lg leading-relaxed mb-6">{selectedGame.description}</p>
-                <div className="bg-green-500/20 text-green-400 border border-green-500/30 rounded-full px-6 py-3 inline-block mb-6">
+                <div className="bg-gray-800/50 text-gray-300 border border-gray-600 rounded-full px-6 py-3 inline-block mb-6">
                   Available to Play
                 </div>
               </div>

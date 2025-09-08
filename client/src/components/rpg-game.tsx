@@ -606,7 +606,7 @@ export function RPGGame() {
                 </div>
                 <button
                   onClick={() => setShowShop(false)}
-                  className="text-gray-400 hover:text-white transition-colors bg-red-500/20 hover:bg-red-500/30 p-2 rounded-full"
+                  className="text-gray-400 hover:text-white transition-colors bg-gray-800 hover:bg-gray-700 p-2 rounded-full border border-gray-600"
                 >
                   <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -646,20 +646,20 @@ export function RPGGame() {
                     
                     {/* Stats */}
                     <div className="space-y-2 text-sm mb-4">
-                      <div className="flex justify-between items-center bg-red-500/20 rounded-lg px-3 py-2">
-                        <span className="text-red-300">❤️ HP:</span>
+                      <div className="flex justify-between items-center bg-gray-800/50 rounded-lg px-3 py-2 border border-gray-600">
+                        <span className="text-gray-300">❤️ HP:</span>
                         <span className="text-white font-bold">{character.hp}</span>
                       </div>
-                      <div className="flex justify-between items-center bg-blue-500/20 rounded-lg px-3 py-2">
-                        <span className="text-blue-300">⚔️ Attack:</span>
+                      <div className="flex justify-between items-center bg-gray-800/50 rounded-lg px-3 py-2 border border-gray-600">
+                        <span className="text-gray-300">⚔️ Attack:</span>
                         <span className="text-white font-bold">{character.attack}</span>
                       </div>
-                      <div className="flex justify-between items-center bg-green-500/20 rounded-lg px-3 py-2">
-                        <span className="text-green-300">🛡️ Defense:</span>
+                      <div className="flex justify-between items-center bg-gray-800/50 rounded-lg px-3 py-2 border border-gray-600">
+                        <span className="text-gray-300">🛡️ Defense:</span>
                         <span className="text-white font-bold">{character.defense}</span>
                       </div>
-                      <div className="flex justify-between items-center bg-yellow-500/20 rounded-lg px-3 py-2">
-                        <span className="text-yellow-300">💨 Speed:</span>
+                      <div className="flex justify-between items-center bg-gray-800/50 rounded-lg px-3 py-2 border border-gray-600">
+                        <span className="text-gray-300">💨 Speed:</span>
                         <span className="text-white font-bold">{character.speed}</span>
                       </div>
                     </div>
