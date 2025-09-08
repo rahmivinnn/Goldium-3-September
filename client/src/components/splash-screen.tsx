@@ -57,10 +57,10 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
           transition={{ duration: 0.5 }}
           className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black overflow-hidden"
         >
-          {/* Golden Sparkles Background */}
-          <div className="absolute inset-0">
-            {/* Golden Sparkles */}
-            {[...Array(12)].map((_, i) => (
+          {/* Enhanced Particle System Background */}
+          <div className="absolute inset-0 overflow-hidden">
+            {/* Golden Sparkles - More particles */}
+            {[...Array(25)].map((_, i) => (
               <motion.div
                 key={`sparkle-${i}`}
                 className="absolute golden-sparkle"
@@ -85,8 +85,8 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
               />
             ))}
             
-            {/* Golden Particles */}
-            {[...Array(8)].map((_, i) => (
+            {/* Golden Particles - More dynamic */}
+            {[...Array(15)].map((_, i) => (
               <motion.div
                 key={`particle-${i}`}
                 className="absolute golden-particle"
@@ -100,7 +100,8 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
                 animate={{
                   scale: [0.5, 1.2, 0.8],
                   opacity: [0.2, 0.8, 0.3],
-                  y: [0, -20, 10]
+                  y: [0, -20, 10],
+                  x: [0, Math.random() * 20 - 10, 0]
                 }}
                 transition={{
                   duration: Math.random() * 4 + 6,
@@ -111,8 +112,8 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
               />
             ))}
             
-            {/* Shooting Stars */}
-            {[...Array(2)].map((_, i) => (
+            {/* Enhanced Shooting Stars */}
+            {[...Array(4)].map((_, i) => (
               <motion.div
                 key={`star-${i}`}
                 className="absolute shooting-star"
@@ -132,6 +133,64 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
                   repeat: Infinity,
                   delay: Math.random() * 4 + i * 2,
                   ease: "linear"
+                }}
+              />
+            ))}
+
+            {/* Floating Golden Orbs */}
+            {[...Array(8)].map((_, i) => (
+              <motion.div
+                key={`orb-${i}`}
+                className="absolute"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  width: `${Math.random() * 20 + 10}px`,
+                  height: `${Math.random() * 20 + 10}px`,
+                  background: 'radial-gradient(circle, rgba(251, 191, 36, 0.3), transparent)',
+                  borderRadius: '50%',
+                  filter: 'blur(1px)'
+                }}
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{
+                  scale: [0, 1, 0.8, 1],
+                  opacity: [0, 0.6, 0.3, 0.6],
+                  y: [0, -30, 15, 0],
+                  x: [0, Math.random() * 40 - 20, 0]
+                }}
+                transition={{
+                  duration: Math.random() * 6 + 8,
+                  repeat: Infinity,
+                  delay: Math.random() * 10,
+                  ease: "easeInOut"
+                }}
+              />
+            ))}
+
+            {/* Energy Waves */}
+            {[...Array(3)].map((_, i) => (
+              <motion.div
+                key={`wave-${i}`}
+                className="absolute"
+                style={{
+                  left: '50%',
+                  top: '50%',
+                  width: '200px',
+                  height: '200px',
+                  border: '2px solid rgba(251, 191, 36, 0.2)',
+                  borderRadius: '50%',
+                  transform: 'translate(-50%, -50%)'
+                }}
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{
+                  scale: [0, 3, 0],
+                  opacity: [0, 0.4, 0]
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  delay: i * 1.5,
+                  ease: "easeOut"
                 }}
               />
             ))}
@@ -217,32 +276,77 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
             ))}
           </motion.div>
 
-          {/* Happy K1-K5 Characters */}
+          {/* K1-K8 Characters with Sliding Animation */}
           <motion.div
-            className="flex justify-center gap-4 mb-8"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
+            className="flex justify-center gap-4 mb-8 overflow-hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ delay: 1, duration: 0.8 }}
           >
-            {[1, 2, 3, 4, 5].map((num) => (
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
               <motion.div
                 key={num}
                 className="relative"
-                initial={{ scale: 0, rotate: -180 }}
-                animate={{ scale: 1, rotate: 0 }}
-                transition={{ 
-                  delay: 1.2 + (num * 0.1), 
-                  duration: 0.5,
-                  type: "spring",
-                  stiffness: 260,
-                  damping: 20
+                initial={{ 
+                  x: -200, 
+                  y: 100, 
+                  scale: 0, 
+                  rotate: -180,
+                  opacity: 0
                 }}
-                whileHover={{ scale: 1.1, y: -5 }}
+                animate={{ 
+                  x: 0, 
+                  y: 0, 
+                  scale: 1, 
+                  rotate: 0,
+                  opacity: 1
+                }}
+                transition={{ 
+                  delay: 1.2 + (num * 0.15), 
+                  duration: 0.8,
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 15
+                }}
+                whileHover={{ 
+                  scale: 1.15, 
+                  y: -8,
+                  rotate: [0, -5, 5, 0]
+                }}
+                whileTap={{ scale: 0.95 }}
               >
-                <img
+                <motion.img
                   src={`/K${num}.png`}
                   alt={`K${num}`}
-                  className="w-12 h-12 md:w-16 md:h-16 shadow-lg"
+                  className="w-12 h-12 md:w-16 md:h-16 shadow-lg rounded-lg"
+                  animate={{
+                    y: [0, -5, 0],
+                    rotate: [0, 2, -2, 0]
+                  }}
+                  transition={{
+                    duration: 2 + (num * 0.2),
+                    repeat: Infinity,
+                    delay: num * 0.3,
+                    ease: "easeInOut"
+                  }}
+                />
+                {/* Character glow effect */}
+                <motion.div
+                  className="absolute inset-0 rounded-lg"
+                  style={{
+                    background: 'radial-gradient(circle, rgba(251, 191, 36, 0.3), transparent)',
+                    filter: 'blur(8px)'
+                  }}
+                  animate={{
+                    opacity: [0.3, 0.6, 0.3],
+                    scale: [1, 1.1, 1]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    delay: num * 0.2,
+                    ease: "easeInOut"
+                  }}
                 />
               </motion.div>
             ))}

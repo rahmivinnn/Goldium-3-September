@@ -1,5 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 
+// TypeScript declaration for Twitter widgets
+declare global {
+  interface Window {
+    twttr?: {
+      widgets: {
+        load: () => void;
+      };
+    };
+  }
+}
+
 export function RealTwitterEmbed() {
   const twitterRef = useRef<HTMLDivElement>(null);
 
@@ -10,6 +21,17 @@ export function RealTwitterEmbed() {
     script.async = true;
     script.charset = 'utf-8';
     document.head.appendChild(script);
+
+    // Force Twitter widgets to load
+    const checkTwitterWidgets = () => {
+      if (window.twttr && window.twttr.widgets) {
+        window.twttr.widgets.load();
+      } else {
+        setTimeout(checkTwitterWidgets, 100);
+      }
+    };
+    
+    setTimeout(checkTwitterWidgets, 1000);
 
     // Cleanup
     return () => {
@@ -27,18 +49,34 @@ export function RealTwitterEmbed() {
       </div>
       
       <div className="bg-gray-900/50 border border-gray-800/50 rounded-3xl p-8">
-        {/* Twitter Profile Embed */}
+        {/* Twitter Timeline Embed */}
         <div className="mb-8">
-          <a 
+          <blockquote 
             className="twitter-timeline" 
             data-height="600" 
             data-theme="dark"
             data-chrome="noheader nofooter noborders transparent"
             data-tweet-limit="5"
+            data-dnt="true"
+            data-show-replies="false"
+            data-show-retweets="false"
             href="https://twitter.com/goldiumofficial"
-            ref={twitterRef}
           >
-            Loading tweets from @goldiumofficial...
+            <p>Loading tweets from <a href="https://twitter.com/goldiumofficial">@goldiumofficial</a>...</p>
+          </blockquote>
+        </div>
+        
+        {/* Alternative: Direct Twitter Profile Widget */}
+        <div className="mb-8">
+          <a 
+            className="twitter-follow-button" 
+            href="https://twitter.com/goldiumofficial"
+            data-show-count="true"
+            data-size="large"
+            data-show-screen-name="false"
+            data-dnt="true"
+          >
+            Follow @goldiumofficial
           </a>
         </div>
         
