@@ -64,7 +64,7 @@ export function GamingHub() {
               onClick={() => game.status === 'Available' && setSelectedGame(game)}
             >
               <div className="text-center">
-                <div className={`w-20 h-20 bg-gradient-to-br ${game.color} rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                <div className="w-20 h-20 bg-gray-800/50 border border-gray-600/30 rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                   <span className="text-4xl">{game.icon}</span>
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-4">{game.name}</h3>
@@ -128,7 +128,7 @@ export function GamingHub() {
                 </button>
               </div>
               <div className="text-center mb-8">
-                <div className={`w-24 h-24 bg-gradient-to-br ${selectedGame.color} rounded-3xl flex items-center justify-center mx-auto mb-6`}>
+                <div className="w-24 h-24 bg-gray-800/50 border border-gray-600/30 rounded-3xl flex items-center justify-center mx-auto mb-6">
                   <span className="text-6xl">{selectedGame.icon}</span>
                 </div>
                 <p className="text-gray-300 text-lg leading-relaxed mb-6">{selectedGame.description}</p>

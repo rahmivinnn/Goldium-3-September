@@ -220,7 +220,7 @@ export default function Home() {
               onClick={() => handleGalleryClick('swaps')}
             >
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <div className="w-16 h-16 rounded-2xl bg-gray-800/50 border border-amber-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   <span className="text-2xl">⚡</span>
                 </div>
                 <div>
@@ -243,7 +243,7 @@ export default function Home() {
               onClick={() => handleGalleryClick('staking')}
             >
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-500 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <div className="w-16 h-16 rounded-2xl bg-gray-800/50 border border-emerald-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   <span className="text-2xl">💰</span>
                 </div>
                 <div>
@@ -266,7 +266,7 @@ export default function Home() {
               onClick={() => handleGalleryClick('wallet')}
             >
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <div className="w-16 h-16 rounded-2xl bg-gray-800/50 border border-blue-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   <span className="text-2xl">🔐</span>
                 </div>
                 <div>
@@ -289,7 +289,7 @@ export default function Home() {
               onClick={() => handleGalleryClick('history')}
             >
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <div className="w-16 h-16 rounded-2xl bg-gray-800/50 border border-purple-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   <span className="text-2xl">📊</span>
                 </div>
                 <div>
@@ -312,7 +312,7 @@ export default function Home() {
               onClick={() => handleGalleryClick('analytics')}
             >
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <div className="w-16 h-16 rounded-2xl bg-gray-800/50 border border-cyan-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   <span className="text-2xl">📈</span>
                 </div>
                 <div>
@@ -335,7 +335,7 @@ export default function Home() {
               onClick={() => handleGalleryClick('gaming')}
             >
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <div className="w-16 h-16 rounded-2xl bg-gray-800/50 border border-pink-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   <span className="text-2xl">🎮</span>
                 </div>
                 <div>
@@ -367,7 +367,7 @@ export default function Home() {
             {/* Character Trading */}
             <div className="group bg-gray-900/50 backdrop-blur-xl border border-gray-800/50 rounded-3xl p-8 hover:border-purple-500/50 transition-all duration-500 cursor-pointer hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/10">
               <div className="text-center">
-                <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-3xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                <div className="w-20 h-20 bg-gray-800/50 border border-purple-500/20 rounded-3xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                   <span className="text-4xl">👤</span>
                 </div>
                 <h3 className="text-3xl font-bold text-white mb-4">Character Trading</h3>
@@ -381,7 +381,7 @@ export default function Home() {
             {/* Gaming Hub */}
             <div className="group bg-gray-900/50 backdrop-blur-xl border border-gray-800/50 rounded-3xl p-8 hover:border-blue-500/50 transition-all duration-500 cursor-pointer hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/10">
               <div className="text-center">
-                <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-3xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                <div className="w-20 h-20 bg-gray-800/50 border border-blue-500/20 rounded-3xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                   <span className="text-4xl">🎮</span>
                 </div>
                 <h3 className="text-3xl font-bold text-white mb-4">Gaming Hub</h3>
@@ -398,7 +398,7 @@ export default function Home() {
             {/* Analytics Dashboard */}
             <div className="group bg-gray-900/50 backdrop-blur-xl border border-gray-800/50 rounded-3xl p-8 hover:border-emerald-500/50 transition-all duration-500 cursor-pointer hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/10">
               <div className="text-center">
-                <div className="w-20 h-20 bg-gradient-to-br from-emerald-500 to-green-500 rounded-3xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                <div className="w-20 h-20 bg-gray-800/50 border border-emerald-500/20 rounded-3xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                   <span className="text-4xl">📊</span>
                 </div>
                 <h3 className="text-3xl font-bold text-white mb-4">Analytics Dashboard</h3>
