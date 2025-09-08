@@ -365,8 +365,8 @@ export function RPGGame() {
             <h1 className="text-6xl font-bold text-white mb-6 tracking-tight animate-fade-in-up">
               🎮 Goldium RPG
             </h1>
-            <div className="absolute -top-2 -right-2 text-4xl animate-bounce">✨</div>
-            <div className="absolute -bottom-2 -left-2 text-3xl animate-bounce animation-delay-200">🌟</div>
+            <div className="absolute -top-2 -right-2 text-4xl">✨</div>
+            <div className="absolute -bottom-2 -left-2 text-3xl">🌟</div>
           </div>
           <p className="text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed animate-fade-in-up animation-delay-200">
             🏰 Embark on epic adventures with K1-K8 characters! Battle monsters, collect treasures, and earn GOLD tokens! 🏆
@@ -407,7 +407,7 @@ export function RPGGame() {
               
               {ownedCharacters.length === 0 ? (
                 <div className="text-center py-12">
-                  <div className="text-8xl mb-6 animate-bounce">🏰</div>
+                  <div className="text-8xl mb-6">🏰</div>
                   <p className="text-gray-200 text-xl mb-6 font-semibold">No heroes in your party yet!</p>
                   <p className="text-gray-400 text-lg mb-8">Recruit your first champion to start your adventure! 🗡️</p>
                   <button
@@ -454,7 +454,7 @@ export function RPGGame() {
                             </div>
                           </div>
                           {gameState.selectedCharacter?.id === character.id && (
-                            <div className="absolute -top-1 -right-1 w-6 h-6 bg-white rounded-full flex items-center justify-center text-sm animate-bounce text-black">
+                            <div className="absolute -top-1 -right-1 w-6 h-6 bg-white rounded-full flex items-center justify-center text-sm text-black">
                               ✓
                             </div>
                           )}
@@ -511,41 +511,65 @@ export function RPGGame() {
             {/* Battle Controls */}
             <div className="bg-gray-900/50 backdrop-blur-xl border-2 border-gray-600 rounded-3xl p-6 shadow-lg shadow-gray-600/20">
               <div className="flex items-center gap-3 mb-4">
-                <div className="text-3xl animate-pulse">⚔️</div>
+                <div className="text-3xl">⚔️</div>
                 <h3 className="text-2xl font-bold text-white">Battle Arena</h3>
-                <div className="text-2xl animate-bounce">🏟️</div>
+                <div className="text-2xl">🏟️</div>
               </div>
               
               {gameState.selectedCharacter && (
                 <div className="mb-4 p-4 bg-gray-800/50 rounded-2xl border border-gray-600">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="text-2xl">🛡️</div>
-                    <p className="text-white font-bold">Hero: {gameState.selectedCharacter.name}</p>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-3">
+                      <img 
+                        src={gameState.selectedCharacter.image} 
+                        alt={gameState.selectedCharacter.name}
+                        className="w-12 h-12 rounded-lg object-cover"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.nextSibling.style.display = 'block';
+                        }}
+                      />
+                      <div className="text-2xl hidden">🛡️</div>
+                      <div>
+                        <p className="text-white font-bold">{gameState.selectedCharacter.name}</p>
+                        <p className="text-gray-300 text-sm">Level {gameState.selectedCharacter.level}</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-white font-bold">❤️ {gameState.selectedCharacter.hp}/{gameState.selectedCharacter.maxHp}</p>
+                      <p className="text-gray-300 text-sm">⚔️ {gameState.selectedCharacter.attack} ATK</p>
+                    </div>
                   </div>
-                  <div className="w-full bg-gray-700 rounded-full h-3 mb-2 shadow-inner">
+                  <div className="w-full bg-gray-700 rounded-full h-3 shadow-inner">
                     <div 
                       className="bg-white h-3 rounded-full transition-all duration-500 shadow-lg"
                       style={{ width: `${(gameState.selectedCharacter.hp / gameState.selectedCharacter.maxHp) * 100}%` }}
                     ></div>
                   </div>
-                  <p className="text-sm text-white font-semibold">❤️ {gameState.selectedCharacter.hp}/{gameState.selectedCharacter.maxHp} HP</p>
                 </div>
               )}
 
               {gameState.isInBattle && gameState.battleEnemy && (
                 <div className="mb-4 p-4 bg-gray-800/50 border-2 border-gray-600 rounded-2xl shadow-lg shadow-gray-600/20">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="text-2xl animate-pulse">👹</div>
-                    <p className="text-white font-bold">Enemy: {gameState.battleEnemy.name}</p>
-                    <div className="text-xl animate-bounce">💀</div>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 bg-gray-700 rounded-lg flex items-center justify-center text-2xl">👹</div>
+                      <div>
+                        <p className="text-white font-bold">{gameState.battleEnemy.name}</p>
+                        <p className="text-gray-300 text-sm">Enemy</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-white font-bold">💀 {gameState.battleEnemy.hp}/150</p>
+                      <p className="text-gray-300 text-sm">⚔️ {gameState.battleEnemy.attack} ATK</p>
+                    </div>
                   </div>
-                  <div className="w-full bg-gray-800 rounded-full h-3 mb-2 shadow-inner">
+                  <div className="w-full bg-gray-800 rounded-full h-3 shadow-inner">
                     <div 
-                      className="bg-gray-500 h-3 rounded-full transition-all duration-500 shadow-lg animate-pulse"
+                      className="bg-gray-500 h-3 rounded-full transition-all duration-500 shadow-lg"
                       style={{ width: `${(gameState.battleEnemy.hp / 150) * 100}%` }}
                     ></div>
                   </div>
-                  <p className="text-sm text-gray-300 font-semibold">💀 {gameState.battleEnemy.hp} HP</p>
                 </div>
               )}
 
@@ -561,7 +585,7 @@ export function RPGGame() {
                 {gameState.isInBattle && (
                   <button
                     onClick={attackEnemy}
-                    className="w-full bg-gray-800 hover:bg-gray-700 text-white px-6 py-4 rounded-2xl font-bold text-lg transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl animate-pulse border border-gray-600"
+                    className="w-full bg-gray-800 hover:bg-gray-700 text-white px-6 py-4 rounded-2xl font-bold text-lg transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl border border-gray-600"
                   >
                     ⚡ ATTACK! ⚡
                   </button>
@@ -572,14 +596,14 @@ export function RPGGame() {
             {/* Battle Log */}
             <div className="bg-gray-900/50 backdrop-blur-xl border-2 border-gray-600 rounded-3xl p-6 shadow-lg shadow-gray-600/20">
               <div className="flex items-center gap-3 mb-4">
-                <div className="text-2xl animate-bounce">📜</div>
+                <div className="text-2xl">📜</div>
                 <h3 className="text-2xl font-bold text-white">Battle Chronicle</h3>
-                <div className="text-xl animate-pulse">✨</div>
+                <div className="text-xl">✨</div>
               </div>
               <div className="space-y-3 max-h-64 overflow-y-auto bg-black/20 rounded-2xl p-4 border border-gray-600">
                 {gameState.battleLog.map((log, index) => (
                   <div key={index} className="flex items-center gap-2 p-2 bg-gray-800/50 rounded-lg border border-gray-600">
-                    <div className="text-white animate-pulse">⚡</div>
+                    <div className="text-white">⚡</div>
                     <p className="text-gray-200 text-sm font-medium">{log}</p>
                   </div>
                 ))}
@@ -600,9 +624,9 @@ export function RPGGame() {
             <div className="bg-gray-900/90 border-2 border-gray-600 rounded-3xl p-8 max-w-6xl w-full max-h-[90vh] overflow-y-auto shadow-2xl shadow-gray-600/20">
               <div className="flex justify-between items-center mb-8">
                 <div className="flex items-center gap-4">
-                  <div className="text-4xl animate-bounce">🛒</div>
+                  <div className="text-4xl">🛒</div>
                   <h2 className="text-3xl font-bold text-white">Hero Recruitment Center</h2>
-                  <div className="text-3xl animate-pulse">🏰</div>
+                  <div className="text-3xl">🏰</div>
                 </div>
                 <button
                   onClick={() => setShowShop(false)}
