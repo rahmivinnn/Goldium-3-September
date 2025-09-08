@@ -365,30 +365,30 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Character Trading */}
-            <div className="group bg-gray-900/50 backdrop-blur-xl border border-gray-800/50 rounded-3xl p-8 hover:border-purple-500/50 transition-all duration-500 cursor-pointer hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/10">
+            <div className="group bg-gray-900/50 border border-gray-800/50 rounded-3xl p-8 hover:border-purple-500/50 transition-all duration-200 cursor-pointer hover:scale-102">
               <div className="text-center">
-                <div className="w-20 h-20 bg-gray-800/50 border border-purple-500/20 rounded-3xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                <div className="w-20 h-20 bg-gray-800/50 border border-purple-500/20 rounded-3xl flex items-center justify-center mx-auto mb-8 group-hover:scale-105 transition-transform duration-200">
                   <span className="text-4xl">👤</span>
                 </div>
                 <h3 className="text-3xl font-bold text-white mb-4">Character Trading</h3>
                 <p className="text-gray-300 mb-8 leading-relaxed">Trade and collect K1-K8 characters with unique abilities, stats, and special powers in our NFT marketplace.</p>
-                <button className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black px-8 py-4 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl">
+                <button className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black px-8 py-4 rounded-xl font-semibold transition-all duration-150 transform hover:scale-105 active:scale-95">
                   Explore Characters
                 </button>
               </div>
             </div>
 
             {/* Gaming Hub */}
-            <div className="group bg-gray-900/50 backdrop-blur-xl border border-gray-800/50 rounded-3xl p-8 hover:border-blue-500/50 transition-all duration-500 cursor-pointer hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/10">
+            <div className="group bg-gray-900/50 border border-gray-800/50 rounded-3xl p-8 hover:border-blue-500/50 transition-all duration-200 cursor-pointer hover:scale-102">
               <div className="text-center">
-                <div className="w-20 h-20 bg-gray-800/50 border border-blue-500/20 rounded-3xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                <div className="w-20 h-20 bg-gray-800/50 border border-blue-500/20 rounded-3xl flex items-center justify-center mx-auto mb-8 group-hover:scale-105 transition-transform duration-200">
                   <span className="text-4xl">🎮</span>
                 </div>
                 <h3 className="text-3xl font-bold text-white mb-4">Gaming Hub</h3>
                 <p className="text-gray-300 mb-8 leading-relaxed">Play crypto games, earn rewards, and compete with other players in our integrated gaming ecosystem.</p>
                 <button 
                   onClick={() => setShowGamingHub(true)}
-                  className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black px-8 py-4 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
+                  className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black px-8 py-4 rounded-xl font-semibold transition-all duration-150 transform hover:scale-105 active:scale-95"
                 >
                   Start Playing
                 </button>
@@ -396,14 +396,14 @@ export default function Home() {
             </div>
 
             {/* Analytics Dashboard */}
-            <div className="group bg-gray-900/50 backdrop-blur-xl border border-gray-800/50 rounded-3xl p-8 hover:border-emerald-500/50 transition-all duration-500 cursor-pointer hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/10">
+            <div className="group bg-gray-900/50 border border-gray-800/50 rounded-3xl p-8 hover:border-emerald-500/50 transition-all duration-200 cursor-pointer hover:scale-102">
               <div className="text-center">
-                <div className="w-20 h-20 bg-gray-800/50 border border-emerald-500/20 rounded-3xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                <div className="w-20 h-20 bg-gray-800/50 border border-emerald-500/20 rounded-3xl flex items-center justify-center mx-auto mb-8 group-hover:scale-105 transition-transform duration-200">
                   <span className="text-4xl">📊</span>
                 </div>
                 <h3 className="text-3xl font-bold text-white mb-4">Analytics Dashboard</h3>
                 <p className="text-gray-300 mb-8 leading-relaxed">Track your portfolio performance, analyze market trends, and optimize your DeFi strategies with comprehensive analytics.</p>
-                <button className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black px-8 py-4 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl">
+                <button className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black px-8 py-4 rounded-xl font-semibold transition-all duration-150 transform hover:scale-105 active:scale-95">
                   View Analytics
                 </button>
               </div>

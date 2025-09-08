@@ -1530,6 +1530,20 @@ button, .btn {
   transition: transform 0.1s ease;
 }
 
+/* Subtle Scale Effects for Performance */
+.hover-scale-102 {
+  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-scale-102:hover {
+  transform: scale(1.02);
+}
+
+.hover-scale-102:active {
+  transform: scale(0.98);
+  transition: transform 0.1s ease;
+}
+
 /* ========================================
    METAVERSE BLACK BACKGROUND EFFECTS
    ======================================== */
