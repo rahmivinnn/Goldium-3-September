@@ -4,7 +4,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { SolanaWalletProvider } from "@/components/solana-wallet-provider";
-import Home from "@/pages/home-simple";
+import Home from "@/pages/home";
 import { About } from "@/pages/about";
 import Dashboard from "@/pages/dashboard";
 import NotFound from "@/pages/not-found";

@@ -9,13 +9,38 @@ import { TransactionHistory } from '@/components/transaction-history';
 import { ExternalWalletSelector } from '@/components/external-wallet-selector';
 import { BalanceStatusIndicator } from '@/components/balance-status-indicator';
 import { useSolanaWallet } from '@/components/solana-wallet-provider';
+import { GamingHub } from '@/components/gaming-hub';
 
 
 export default function Home() {
   const wallet = useSolanaWallet();
   const [selectedGalleryItem, setSelectedGalleryItem] = useState(null);
+  const [showGamingHub, setShowGamingHub] = useState(false);
 
   // Self-contained wallet is always connected, no need for wallet selection
+
+  // Handle gallery item clicks
+  const handleGalleryClick = (item: string) => {
+    setSelectedGalleryItem(item);
+    if (item === 'gaming') {
+      setShowGamingHub(true);
+    }
+  };
+
+  // If gaming hub is shown, render it
+  if (showGamingHub) {
+    return (
+      <div>
+        <GamingHub />
+        <button
+          onClick={() => setShowGamingHub(false)}
+          className="fixed top-6 left-6 z-50 bg-gray-900/80 hover:bg-gray-800/80 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 border border-gray-700/50"
+        >
+          ← Back to Home
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -190,7 +215,7 @@ export default function Home() {
             {/* 1. Lightning-fast Swaps */}
             <div 
               className="group bg-gray-900/50 backdrop-blur-xl border border-gray-800/50 rounded-3xl p-8 hover:border-amber-500/50 transition-all duration-500 cursor-pointer hover:scale-105 hover:shadow-2xl hover:shadow-amber-500/10"
-              onClick={() => setSelectedGalleryItem('swaps')}
+              onClick={() => handleGalleryClick('swaps')}
             >
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
@@ -215,7 +240,7 @@ export default function Home() {
             {/* 2. Staking Rewards */}
             <div 
               className="group bg-gray-900/50 backdrop-blur-xl border border-gray-800/50 rounded-3xl p-8 hover:border-emerald-500/50 transition-all duration-500 cursor-pointer hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/10"
-              onClick={() => setSelectedGalleryItem('staking')}
+              onClick={() => handleGalleryClick('staking')}
             >
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-500 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
@@ -240,7 +265,7 @@ export default function Home() {
             {/* 3. Secure Wallet */}
             <div 
               className="group bg-gray-900/50 backdrop-blur-xl border border-gray-800/50 rounded-3xl p-8 hover:border-blue-500/50 transition-all duration-500 cursor-pointer hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/10"
-              onClick={() => setSelectedGalleryItem('wallet')}
+              onClick={() => handleGalleryClick('wallet')}
             >
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
@@ -266,7 +291,7 @@ export default function Home() {
             {/* 4. Transparent History */}
             <div 
               className="group bg-gray-900/50 backdrop-blur-xl border border-gray-800/50 rounded-3xl p-8 hover:border-purple-500/50 transition-all duration-500 cursor-pointer hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/10"
-              onClick={() => setSelectedGalleryItem('history')}
+              onClick={() => handleGalleryClick('history')}
             >
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
@@ -291,7 +316,7 @@ export default function Home() {
             {/* 5. Analytics Dashboard */}
             <div 
               className="group bg-gray-900/50 backdrop-blur-xl border border-gray-800/50 rounded-3xl p-8 hover:border-cyan-500/50 transition-all duration-500 cursor-pointer hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/10"
-              onClick={() => setSelectedGalleryItem('analytics')}
+              onClick={() => handleGalleryClick('analytics')}
             >
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
@@ -316,7 +341,7 @@ export default function Home() {
             {/* 6. Gaming Hub */}
             <div 
               className="group bg-gray-900/50 backdrop-blur-xl border border-gray-800/50 rounded-3xl p-8 hover:border-pink-500/50 transition-all duration-500 cursor-pointer hover:scale-105 hover:shadow-2xl hover:shadow-pink-500/10"
-              onClick={() => setSelectedGalleryItem('gaming')}
+              onClick={() => handleGalleryClick('gaming')}
             >
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
@@ -376,7 +401,10 @@ export default function Home() {
                 </div>
                 <h3 className="text-3xl font-bold text-white mb-4">Gaming Hub</h3>
                 <p className="text-gray-300 mb-8 leading-relaxed">Play crypto games, earn rewards, and compete with other players in our integrated gaming ecosystem.</p>
-                <button className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                <button 
+                  onClick={() => setShowGamingHub(true)}
+                  className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                >
                   Start Playing
                 </button>
               </div>
