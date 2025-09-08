@@ -11,12 +11,14 @@ import { BalanceStatusIndicator } from '@/components/balance-status-indicator';
 import { useExternalWallets } from '@/hooks/use-external-wallets';
 import { GamingHub } from '@/components/gaming-hub';
 import { RealTwitterEmbed } from '@/components/real-twitter-embed';
+import { ManualSwapGuide } from '@/components/manual-swap-guide';
 
 
 export default function Home() {
   const wallet = useExternalWallets();
   const [selectedGalleryItem, setSelectedGalleryItem] = useState(null);
   const [showGamingHub, setShowGamingHub] = useState(false);
+  const [showManualSwapGuide, setShowManualSwapGuide] = useState(false);
 
   // Self-contained wallet is always connected, no need for wallet selection
 
@@ -260,7 +262,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center">
             <button 
-              onClick={() => window.open('https://jup.ag/', '_blank')}
+              onClick={() => setShowManualSwapGuide(true)}
               className="bg-black hover:bg-gray-900 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 border border-gray-600 hover:border-gray-500"
             >
               Manual Swap Guide
@@ -530,6 +532,12 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* Manual Swap Guide Modal */}
+      <ManualSwapGuide 
+        isOpen={showManualSwapGuide} 
+        onClose={() => setShowManualSwapGuide(false)} 
+      />
     </div>
   );
 }
