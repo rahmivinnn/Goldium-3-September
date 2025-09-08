@@ -19,11 +19,51 @@ export default function Home() {
 
   // Self-contained wallet is always connected, no need for wallet selection
 
-  // Handle gallery item clicks
+  // Handle gallery item clicks with realtime functionality
   const handleGalleryClick = (item: string) => {
     setSelectedGalleryItem(item);
     if (item === 'gaming') {
       setShowGamingHub(true);
+    } else if (item === 'swaps') {
+      // Scroll to DeFi section and activate swap tab
+      document.getElementById('defi')?.scrollIntoView({ behavior: 'smooth' });
+      // Trigger swap tab activation
+      setTimeout(() => {
+        const swapTab = document.querySelector('[value="swap"]') as HTMLElement;
+        if (swapTab) swapTab.click();
+      }, 500);
+    } else if (item === 'staking') {
+      // Scroll to DeFi section and activate stake tab
+      document.getElementById('defi')?.scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => {
+        const stakeTab = document.querySelector('[value="stake"]') as HTMLElement;
+        if (stakeTab) stakeTab.click();
+      }, 500);
+    } else if (item === 'wallet') {
+      // Show wallet connection modal
+      const walletButton = document.querySelector('[data-testid="wallet-selector"]') as HTMLElement;
+      if (walletButton) walletButton.click();
+    } else if (item === 'history') {
+      // Scroll to DeFi section and activate history tab
+      document.getElementById('defi')?.scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => {
+        const historyTab = document.querySelector('[value="history"]') as HTMLElement;
+        if (historyTab) historyTab.click();
+      }, 500);
+    } else if (item === 'analytics') {
+      // Show analytics modal or scroll to analytics section
+      alert('Analytics Dashboard - Coming Soon! Track your portfolio performance and market trends.');
+    }
+  };
+
+  // Handle additional features clicks
+  const handleAdditionalFeatureClick = (feature: string) => {
+    if (feature === 'characters') {
+      setShowGamingHub(true);
+    } else if (feature === 'gaming') {
+      setShowGamingHub(true);
+    } else if (feature === 'analytics') {
+      alert('Analytics Dashboard - Coming Soon! Track your portfolio performance and market trends.');
     }
   };
 
@@ -372,7 +412,10 @@ export default function Home() {
                 </div>
                 <h3 className="text-3xl font-bold text-white mb-4">Character Trading</h3>
                 <p className="text-gray-300 mb-8 leading-relaxed">Trade and collect K1-K8 characters with unique abilities, stats, and special powers in our NFT marketplace.</p>
-                <button className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black px-8 py-4 rounded-xl font-semibold transition-all duration-150 transform hover:scale-105 active:scale-95">
+                <button 
+                  onClick={() => handleAdditionalFeatureClick('characters')}
+                  className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black px-8 py-4 rounded-xl font-semibold transition-all duration-150 transform hover:scale-105 active:scale-95"
+                >
                   Explore Characters
                 </button>
               </div>
@@ -403,7 +446,10 @@ export default function Home() {
                 </div>
                 <h3 className="text-3xl font-bold text-white mb-4">Analytics Dashboard</h3>
                 <p className="text-gray-300 mb-8 leading-relaxed">Track your portfolio performance, analyze market trends, and optimize your DeFi strategies with comprehensive analytics.</p>
-                <button className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black px-8 py-4 rounded-xl font-semibold transition-all duration-150 transform hover:scale-105 active:scale-95">
+                <button 
+                  onClick={() => handleAdditionalFeatureClick('analytics')}
+                  className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black px-8 py-4 rounded-xl font-semibold transition-all duration-150 transform hover:scale-105 active:scale-95"
+                >
                   View Analytics
                 </button>
               </div>

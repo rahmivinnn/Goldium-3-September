@@ -281,8 +281,13 @@ export function RealSendTab() {
               key={token}
               variant={selectedToken === token ? "default" : "outline"}
               onClick={() => setSelectedToken(token)}
-              className="text-sm"
+              className="text-sm flex items-center gap-2"
             >
+              <img 
+                src={token === 'SOL' ? '/solana-logo-official.png' : '/goldium-logo.png'} 
+                alt={token} 
+                className="w-4 h-4" 
+              />
               {token}
             </Button>
           ))}

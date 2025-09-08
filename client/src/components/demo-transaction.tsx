@@ -247,7 +247,10 @@ const RealTransaction: React.FC = () => {
             </div>
         
         <div>
-          <label className="block text-sm font-medium mb-2">SOL Amount (Minimal)</label>
+          <label className="block text-sm font-medium mb-2 flex items-center gap-2">
+            <img src="/solana-logo-official.png" alt="SOL" className="w-5 h-5" />
+            SOL Amount (Minimal)
+          </label>
           <Input
             type="number"
             value={amount}
@@ -261,12 +264,18 @@ const RealTransaction: React.FC = () => {
         <div className="bg-black p-4 rounded-lg border border-white/20">
           <h3 className="font-semibold text-white mb-3">Transaction Preview</h3>
           <div className="space-y-2 text-sm">
-            <div className="flex justify-between">
-              <span className="text-white/70">SOL Amount:</span>
+            <div className="flex justify-between items-center">
+              <span className="text-white/70 flex items-center gap-2">
+                <img src="/solana-logo-official.png" alt="SOL" className="w-4 h-4" />
+                SOL Amount:
+              </span>
               <span className="font-mono font-semibold text-white">{amount || '0.001'}</span>
             </div>
-            <div className="flex justify-between">
-              <span className="text-white/70">GOLD Amount:</span>
+            <div className="flex justify-between items-center">
+              <span className="text-white/70 flex items-center gap-2">
+                <img src="/goldium-logo.png" alt="GOLD" className="w-4 h-4" />
+                GOLD Amount:
+              </span>
               <span className="font-mono font-semibold text-yellow-400">{(parseFloat(amount || '0') * SOL_TO_GOLD_RATE).toFixed(6)}</span>
             </div>
             <div className="flex justify-between">
@@ -303,9 +312,9 @@ const RealTransaction: React.FC = () => {
             <p className="text-lg font-bold text-white mb-3">{transactionDetails.status}</p>
             <div className="space-y-3 text-sm">
               <div className="grid grid-cols-2 gap-2">
-                <p className="text-gray-300"><strong className="text-white">SOL Amount:</strong></p>
+                <p className="text-gray-300 flex items-center gap-2"><img src="/solana-logo-official.png" alt="SOL" className="w-4 h-4" /><strong className="text-white">SOL Amount:</strong></p>
                 <p className="text-white font-mono">{transactionDetails.solAmount}</p>
-                <p className="text-gray-300"><strong className="text-white">GOLD Amount:</strong></p>
+                <p className="text-gray-300 flex items-center gap-2"><img src="/goldium-logo.png" alt="GOLD" className="w-4 h-4" /><strong className="text-white">GOLD Amount:</strong></p>
                 <p className="text-yellow-400 font-mono font-bold">{transactionDetails.goldAmount.toFixed(6)}</p>
                 <p className="text-gray-300"><strong className="text-white">Fee:</strong></p>
                 <p className="text-white font-mono">{transactionDetails.fee}</p>
