@@ -10,7 +10,7 @@ import { ExternalWalletSelector } from '@/components/external-wallet-selector';
 import { BalanceStatusIndicator } from '@/components/balance-status-indicator';
 import { useExternalWallets } from '@/hooks/use-external-wallets';
 import { GamingHub } from '@/components/gaming-hub';
-import { RealTwitterEmbed } from '@/components/real-twitter-embed';
+import { EnhancedTwitterInterface } from '@/components/enhanced-twitter-interface';
 import { ManualSwapGuide } from '@/components/manual-swap-guide';
 
 
@@ -485,10 +485,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Twitter Embed Section */}
+      {/* Enhanced Twitter Interface Section */}
       <section className="py-24 bg-gradient-to-b from-transparent to-gray-900/20">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <RealTwitterEmbed />
+          <EnhancedTwitterInterface />
         </div>
       </section>
 
